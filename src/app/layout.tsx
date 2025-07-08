@@ -1,12 +1,12 @@
 import { Inter } from "next/font/google"
-
-import type { Metadata } from "next"
 import "./globals.css"
 
+import type { Metadata } from "next"
+
 export const metadata: Metadata = {
-  title: "[Title]",
+  title: "Personal Finance App",
   description:
-    "Check out Darkstar's solution for the {challenge name} challenge on Frontend Mentor",
+    "Check out Darkstar's solution for the Personal Finance App challenge on Frontend Mentor",
 
   authors: {
     name: "Darkstar",
@@ -15,17 +15,17 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
-    url: "https://challenge-name-darkstarxdd.vercel.app/",
-    title: "devfinder",
+    url: "https://personal-finance-app-darkstar.vercel.app/",
+    title: "Personal Finance App",
 
     description:
-      "Check out Darkstar's solution for the {challenge name} challenge on Frontend Mentor",
+      "Check out Darkstar's solution for the Personal Finance App challenge on Frontend Mentor",
 
     images: {
-      url: "https://challenge-name-darkstarxdd.vercel.app/og-img.jpeg",
+      url: "https://personal-finance-app-darkstar.vercel.app/og-img.jpeg",
       type: "image/jpeg",
-      width: 1440,
-      height: 756,
+      width: 1200,
+      height: 630,
     },
   },
 }
