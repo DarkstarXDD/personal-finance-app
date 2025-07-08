@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@plugin "tailwindcss-react-aria-components" {
+  prefix: rac;
+}
 
 @theme {
   --font-inter: var(--font-inter);
