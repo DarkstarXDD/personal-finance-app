@@ -3,6 +3,7 @@ import { fileURLToPath } from "url"
 
 import { FlatCompat } from "@eslint/eslintrc"
 import eslintPluginImport from "eslint-plugin-import"
+import storybook from "eslint-plugin-storybook"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -40,6 +41,7 @@ const eslintConfig = [
       "import/newline-after-import": "error",
     },
   },
+  ...storybook.configs["flat/recommended"],
 ]
 
 export default eslintConfig
