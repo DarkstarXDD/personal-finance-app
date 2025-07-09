@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google"
+import { publicSans } from "@/lib/fonts"
 import "./globals.css"
 
 import type { Metadata } from "next"
@@ -30,11 +30,6 @@ export const metadata: Metadata = {
   },
 }
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-})
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,7 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-inter bg-zinc-800 text-white`}>
+      <body
+        className={`${publicSans.variable} font-public-sans bg-grey-900 tracking-normal text-white`}
+      >
         {children}
       </body>
     </html>
