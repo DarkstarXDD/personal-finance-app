@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${publicSans.variable} font-public-sans bg-zinc-800 tracking-normal text-white`}
+        className={`${publicSans.variable} font-public-sans bg-grey-900 tracking-normal text-white`}
       >
         {children}
       </body>
