@@ -25,7 +25,7 @@
   --color-white: hsl(0, 0%, 100%);
 
   --color-beige-100: hsl(30, 36%, 96%);
-  --color-beigr-500: hsl(23, 6%, 57%);
+  --color-beige-500: hsl(23, 6%, 57%);
   --color-grey-100: hsl(0, 0%, 95%);
 
   --color-grey-300: hsl(0, 0%, 70%);
@@ -48,4 +48,10 @@
   --color-army-green: hsl(82, 20%, 47%);
   --color-gold: hsl(47, 50%, 59%);
   --color-orange: hsl(18, 47%, 52%);
+}
+
+@layer base {
+  * {
+    @apply ring-navy;
+  }
 }

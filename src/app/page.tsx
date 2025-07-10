@@ -1,10 +1,34 @@
-import TestComponent from "@/components/test-component"
+"use client"
+
+import Button from "@/components/ui/Button"
 
 export default function Home() {
   return (
-    <main>
-      {/* <div>Hello world!</div> */}
-      <TestComponent label="Hello, World" />
+    <main className="grid gap-4">
+      <Button className="w-full" onPress={() => console.log("Clicked!")}>
+        Login
+      </Button>
+      <Button
+        className="w-full"
+        variant="secondary"
+        onPress={() => console.log("Clicked!")}
+      >
+        Login
+      </Button>
+      <Button
+        className="w-full"
+        variant="tertiary"
+        onPress={() => console.log("Clicked!")}
+      >
+        Login
+      </Button>
+      <Button
+        className="w-full"
+        variant="destructive"
+        onPress={() => console.log("Clicked!")}
+      >
+        Login
+      </Button>
     </main>
   )
 }
