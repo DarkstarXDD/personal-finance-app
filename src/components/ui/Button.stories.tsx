@@ -10,6 +10,7 @@ const meta = {
   args: {
     children: "Placeholder",
     onPress: fn(),
+    isDisabled: false,
   },
   argTypes: {
     variant: {
@@ -19,6 +20,7 @@ const meta = {
     isDisabled: {
       control: "boolean",
     },
+    className: { table: { disable: true } }, // hides from controls + docs table
   },
 } satisfies Meta<typeof Button>
 
