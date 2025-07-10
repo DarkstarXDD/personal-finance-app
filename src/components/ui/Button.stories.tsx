@@ -10,6 +10,7 @@ const meta = {
   args: {
     children: "Placeholder",
     onPress: fn(),
+    isDisabled: false,
   },
   argTypes: {
     variant: {
@@ -19,34 +20,13 @@ const meta = {
     isDisabled: {
       control: "boolean",
     },
+    className: { table: { disable: true } }, // hides from controls + docs table
   },
 } satisfies Meta<typeof Button>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
-
-export const AllVariants: Story = {
-  render: (args) => (
-    <div className="flex flex-wrap gap-4">
-      <Button {...args} variant="primary">
-        Primary
-      </Button>
-      <Button {...args} variant="secondary">
-        Secondary
-      </Button>
-      <Button {...args} variant="tertiary">
-        Tertiary
-      </Button>
-      <Button {...args} variant="destructive">
-        Destructive
-      </Button>
-      <Button {...args} variant="primary" isDisabled>
-        Disbaled
-      </Button>
-    </div>
-  ),
-}
 
 export const Primary: Story = {
   args: {
@@ -77,4 +57,27 @@ export const Disabled: Story = {
     variant: "primary",
     isDisabled: true,
   },
+}
+
+export const AllVariants: Story = {
+  render: (args) => (
+    <div className="flex flex-wrap gap-4">
+      <Button {...args} variant="primary">
+        Primary
+      </Button>
+      <Button {...args} variant="secondary">
+        Secondary
+      </Button>
+      <Button {...args} variant="tertiary">
+        Tertiary
+      </Button>
+      <Button {...args} variant="destructive">
+        Destructive
+      </Button>
+      <Button {...args} variant="primary" isDisabled>
+        Disabled
+      </Button>
+    </div>
+  ),
+  parameters: { controls: { disable: true } },
 }
