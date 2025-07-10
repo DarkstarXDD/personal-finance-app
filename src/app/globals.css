@@ -49,3 +49,9 @@
   --color-gold: hsl(47, 50%, 59%);
   --color-orange: hsl(18, 47%, 52%);
 }
+
+@layer base {
+  * {
+    @apply ring-navy;
+  }
+}
