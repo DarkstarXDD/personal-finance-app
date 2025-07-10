@@ -42,7 +42,7 @@ export const AllVariants: Story = {
         Destructive
       </Button>
       <Button {...args} variant="primary" isDisabled>
-        Disbaled
+        Disabled
       </Button>
     </div>
   ),
