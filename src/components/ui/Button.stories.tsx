@@ -26,28 +26,6 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const AllVariants: Story = {
-  render: (args) => (
-    <div className="flex flex-wrap gap-4">
-      <Button {...args} variant="primary">
-        Primary
-      </Button>
-      <Button {...args} variant="secondary">
-        Secondary
-      </Button>
-      <Button {...args} variant="tertiary">
-        Tertiary
-      </Button>
-      <Button {...args} variant="destructive">
-        Destructive
-      </Button>
-      <Button {...args} variant="primary" isDisabled>
-        Disabled
-      </Button>
-    </div>
-  ),
-}
-
 export const Primary: Story = {
   args: {
     variant: "primary",
@@ -77,4 +55,27 @@ export const Disabled: Story = {
     variant: "primary",
     isDisabled: true,
   },
+}
+
+export const AllVariants: Story = {
+  render: (args) => (
+    <div className="flex flex-wrap gap-4">
+      <Button {...args} variant="primary">
+        Primary
+      </Button>
+      <Button {...args} variant="secondary">
+        Secondary
+      </Button>
+      <Button {...args} variant="tertiary">
+        Tertiary
+      </Button>
+      <Button {...args} variant="destructive">
+        Destructive
+      </Button>
+      <Button {...args} variant="primary" isDisabled>
+        Disabled
+      </Button>
+    </div>
+  ),
+  parameters: { controls: { disable: true } },
 }
