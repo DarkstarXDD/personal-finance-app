@@ -1,6 +1,7 @@
 "use client"
 
 import Button from "@/components/ui/Button"
+import Label from "@/components/ui/Label"
 
 export default function Home() {
   return (
@@ -29,6 +30,9 @@ export default function Home() {
       >
         Login
       </Button>
+
+      <Label variant="primary">Primary Label</Label>
+      <Label variant="secondary">Secondary Label</Label>
     </main>
   )
 }
