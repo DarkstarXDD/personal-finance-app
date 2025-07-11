@@ -4,6 +4,7 @@ import { PiCurrencyDollarSimple } from "react-icons/pi"
 
 import Button from "@/components/ui/Button"
 import Label from "@/components/ui/Label"
+import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 
 export default function Home() {
@@ -36,6 +37,17 @@ export default function Home() {
 
       <Label variant="primary">Primary Label</Label>
       <Label variant="secondary">Secondary Label</Label>
+
+      <Select
+        name="fruits"
+        label="Fruits"
+        description="Pick your favorite fruit"
+      >
+        <SelectItem>Apple</SelectItem>
+        <SelectItem>Banana</SelectItem>
+        <SelectItem>Mango</SelectItem>
+        <SelectItem>Orange</SelectItem>
+      </Select>
 
       <TextField label="Email" />
       <TextField label="Email" icon={PiCurrencyDollarSimple} />
