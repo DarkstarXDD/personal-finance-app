@@ -59,7 +59,7 @@ export const Disabled: Story = {
   },
 }
 
-export const AllVariants: Story = {
+export const All: Story = {
   render: (args) => (
     <div className="flex flex-wrap gap-4">
       <Button {...args} variant="primary">
