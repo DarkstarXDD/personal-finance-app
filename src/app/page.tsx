@@ -1,7 +1,10 @@
 "use client"
 
+import { PiCurrencyDollarSimple } from "react-icons/pi"
+
 import Button from "@/components/ui/Button"
 import Label from "@/components/ui/Label"
+import TextField from "@/components/ui/TextField"
 
 export default function Home() {
   return (
@@ -33,6 +36,22 @@ export default function Home() {
 
       <Label variant="primary">Primary Label</Label>
       <Label variant="secondary">Secondary Label</Label>
+
+      <TextField label="Email" />
+      <TextField label="Email" icon={PiCurrencyDollarSimple} />
+      <TextField
+        label="Email"
+        icon={PiCurrencyDollarSimple}
+        description="Helper Text"
+      />
+      <TextField
+        label="Email"
+        icon={PiCurrencyDollarSimple}
+        description="Helper Text"
+        errorMessage="Field error message"
+        isInvalid
+        data-focus="true"
+      />
     </main>
   )
 }
