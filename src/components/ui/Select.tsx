@@ -84,8 +84,15 @@ export function Select<T extends object>({
             <RacText slot="description">{description}</RacText>
           )}
           <RacFieldError>{errorMessage}</RacFieldError>
-          <RacPopover className="border-beige-500 w-(--trigger-width) rounded-lg border bg-white px-1 py-1 shadow-xl">
-            <RacListBox items={items}>{children}</RacListBox>
+          <RacPopover>
+            <motion.div
+              initial={{ y: -12, opacity: 0.4 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
+              className="border-grey-200 w-(--trigger-width) rounded-lg border bg-white px-1 py-1 shadow-xl"
+            >
+              <RacListBox items={items}>{children}</RacListBox>
+            </motion.div>
           </RacPopover>
         </>
       )}
@@ -94,7 +101,7 @@ export function Select<T extends object>({
 }
 
 const selectItemStyles = tv({
-  base: "rac-focus-visible:bg-beige-300 rac-selected:bg-beige-300 rac-selected:font-bold rac-hover:bg-beige-300 text-grey-900 cursor-pointer rounded-md px-4 py-3 text-sm leading-normal font-normal outline-none",
+  base: "rac-focus-visible:bg-beige-300 rac-pressed:bg-beige-300 rac-selected:bg-beige-300 rac-selected:font-bold rac-hover:bg-beige-300 text-grey-900 cursor-pointer rounded-md px-4 py-3 text-sm leading-normal font-normal outline-none",
 })
 
 export function SelectItem({

@@ -2,15 +2,15 @@
 
 import { PiCurrencyDollarSimple } from "react-icons/pi"
 
-import Button from "@/components/ui/Button"
-import Label from "@/components/ui/Label"
+// import Button from "@/components/ui/Button"
+// import Label from "@/components/ui/Label"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 
 export default function Home() {
   return (
     <main className="grid gap-4">
-      <Button className="w-full" onPress={() => console.log("Clicked!")}>
+      {/* <Button className="w-full" onPress={() => console.log("Clicked!")}>
         Login
       </Button>
       <Button
@@ -36,7 +36,7 @@ export default function Home() {
       </Button>
 
       <Label variant="primary">Primary Label</Label>
-      <Label variant="secondary">Secondary Label</Label>
+      <Label variant="secondary">Secondary Label</Label> */}
 
       <Select
         name="fruits"
@@ -51,7 +51,7 @@ export default function Home() {
 
       <TextField label="Email" />
       <TextField label="Email" icon={PiCurrencyDollarSimple} />
-      <TextField
+      {/* <TextField
         label="Email"
         icon={PiCurrencyDollarSimple}
         description="Helper Text"
@@ -63,7 +63,7 @@ export default function Home() {
         errorMessage="Field error message"
         isInvalid
         data-focus="true"
-      />
+      /> */}
     </main>
   )
 }
