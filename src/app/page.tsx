@@ -1,57 +1,49 @@
 "use client"
 
-import { PiCurrencyDollarSimple } from "react-icons/pi"
-
-import Button from "@/components/ui/Button"
-import Label from "@/components/ui/Label"
-import TextField from "@/components/ui/TextField"
+import { Select, SelectItem } from "@/components/ui/Select"
 
 export default function Home() {
   return (
     <main className="grid gap-4">
-      <Button className="w-full" onPress={() => console.log("Clicked!")}>
-        Login
-      </Button>
-      <Button
-        className="w-full"
-        variant="secondary"
-        onPress={() => console.log("Clicked!")}
-      >
-        Login
-      </Button>
-      <Button
-        className="w-full"
-        variant="tertiary"
-        onPress={() => console.log("Clicked!")}
-      >
-        Login
-      </Button>
-      <Button
-        className="w-full"
-        variant="destructive"
-        onPress={() => console.log("Clicked!")}
-      >
-        Login
-      </Button>
-
-      <Label variant="primary">Primary Label</Label>
-      <Label variant="secondary">Secondary Label</Label>
-
-      <TextField label="Email" />
-      <TextField label="Email" icon={PiCurrencyDollarSimple} />
-      <TextField
-        label="Email"
-        icon={PiCurrencyDollarSimple}
-        description="Helper Text"
-      />
-      <TextField
-        label="Email"
-        icon={PiCurrencyDollarSimple}
-        description="Helper Text"
+      <Select
+        name="fruits"
+        label="Fruits"
+        description="Pick your favorite fruit"
         errorMessage="Field error message"
-        isInvalid
-        data-focus="true"
-      />
+        // isInvalid={true}
+        layout="horizontal"
+        // shouldHideOnMobile={true}
+      >
+        <SelectItem>Entertainment</SelectItem>
+        <SelectItem>Banana</SelectItem>
+        <SelectItem>Mango</SelectItem>
+        <SelectItem>Or</SelectItem>
+      </Select>
+
+      {/* <Select
+        name="fruits"
+        label="Fruits"
+        labelVariant="secondary"
+        description="Pick your favorite fruit"
+        layout="horizontal"
+      >
+        <SelectItem>Apple</SelectItem>
+        <SelectItem>Banana</SelectItem>
+        <SelectItem>Mango</SelectItem>
+        <SelectItem>Orange</SelectItem>
+      </Select>
+
+      <Select
+        name="fruits"
+        label="Fruits"
+        description="Pick your favorite fruit"
+        layout="vertical"
+      >
+        <SelectItem>Apple</SelectItem>
+        <SelectItem>Banana</SelectItem>
+        <SelectItem>Mango</SelectItem>
+        <SelectItem>Orange</SelectItem>
+      </Select> */}
     </main>
   )
 }

@@ -17,7 +17,7 @@ const labelStyles = tv({
   },
 })
 
-type LabelVariants = VariantProps<typeof labelStyles>
+export type LabelVariants = VariantProps<typeof labelStyles>
 
 export default function Label({
   children,
