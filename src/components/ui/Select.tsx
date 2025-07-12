@@ -145,14 +145,14 @@ export function Select<T extends object>({
 
             {description && !isInvalid && (
               <FieldDescription
-                description={description}
                 className={fieldDescription({ shouldHideOnMobile })}
-              />
+              >
+                {description}
+              </FieldDescription>
             )}
-            <FieldError
-              errorMessage={errorMessage}
-              className={fieldErrorMessage({ shouldHideOnMobile })}
-            />
+            <FieldError className={fieldErrorMessage({ shouldHideOnMobile })}>
+              {errorMessage}
+            </FieldError>
           </div>
 
           <RacPopover>

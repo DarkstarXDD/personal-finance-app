@@ -51,9 +51,9 @@ export default function TextField({
           className={inputStyles({ isIcon: !!Icon })}
         />
       </div>
-      <FieldError errorMessage={errorMessage} />
+      <FieldError>{errorMessage}</FieldError>
       {description && !isInvalid && (
-        <FieldDescription description={description} />
+        <FieldDescription>{description}</FieldDescription>
       )}
     </RacTextField>
   )
