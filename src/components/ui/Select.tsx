@@ -70,13 +70,13 @@ export function Select<T extends object>({
             <RacButton className="border-beige-500 text-grey-900 rac-focus-visible:ring-2 ring-beige-500 flex cursor-pointer items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal outline-none">
               <RacSelectValue />
               <MotionPiCaretDownFill
+                className="text-grey-500 shrink-0"
                 animate={isOpen ? "open" : "closed"}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 variants={{
                   open: { rotate: 180 },
                   closed: { rotate: 0 },
                 }}
-                className="text-grey-500 shrink-0"
               />
             </RacButton>
           </div>
@@ -91,7 +91,9 @@ export function Select<T extends object>({
               transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
               className="border-grey-200 w-(--trigger-width) rounded-lg border bg-white px-1 py-1 shadow-xl"
             >
-              <RacListBox items={items}>{children}</RacListBox>
+              <RacListBox className="outline-none" items={items}>
+                {children}
+              </RacListBox>
             </motion.div>
           </RacPopover>
         </>
@@ -113,7 +115,11 @@ export function SelectItem({
   className?: string
 }) {
   return (
-    <RacListBoxItem {...props} className={selectItemStyles({ className })}>
+    <RacListBoxItem
+      textValue={typeof children === "string" ? children : undefined}
+      {...props}
+      className={selectItemStyles({ className })}
+    >
       {({ isSelected }) => (
         <div className="flex w-full items-center justify-between gap-2">
           {children}
