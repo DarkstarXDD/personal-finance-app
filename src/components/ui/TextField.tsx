@@ -2,11 +2,11 @@ import {
   TextField as RacTextField,
   Input as RacInput,
   type TextFieldProps as RacTextFieldProps,
-  FieldError as RacFieldError,
 } from "react-aria-components"
 import { tv } from "tailwind-variants"
 
 import FieldDescription from "@/components/ui/FieldDescription"
+import FieldError from "@/components/ui/FieldError"
 import Label from "@/components/ui/Label"
 
 import type { IconType } from "react-icons"
@@ -51,9 +51,7 @@ export default function TextField({
           className={inputStyles({ isIcon: !!Icon })}
         />
       </div>
-      <RacFieldError className="text-red text-xs leading-normal font-normal">
-        {errorMessage}
-      </RacFieldError>
+      <FieldError errorMessage={errorMessage} />
       {description && !isInvalid && (
         <FieldDescription description={description} />
       )}

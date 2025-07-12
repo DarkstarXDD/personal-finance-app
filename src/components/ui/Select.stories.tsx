@@ -11,6 +11,8 @@ const meta = {
     label: "Label",
     labelVariant: "primary",
     shouldHideOnMobile: false,
+    errorMessage: "Field error message",
+    isInvalid: false,
   },
   argTypes: {
     layout: { control: "select", options: ["horizontal", "vertical"] },
@@ -67,6 +69,22 @@ export const HiddenInMobile: Story = {
 export const WithDescription: Story = {
   args: {
     description: "Helper text",
+  },
+  render: (args) => (
+    <Select {...args}>
+      <SelectItem>Apple</SelectItem>
+      <SelectItem>Banana</SelectItem>
+      <SelectItem>Mango</SelectItem>
+      <SelectItem>Orange</SelectItem>
+    </Select>
+  ),
+}
+
+export const WithErrorMessage: Story = {
+  args: {
+    description: "Helper text",
+    errorMessage: "Field error message",
+    isInvalid: true,
   },
   render: (args) => (
     <Select {...args}>

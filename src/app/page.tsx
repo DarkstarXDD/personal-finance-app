@@ -9,8 +9,10 @@ export default function Home() {
         name="fruits"
         label="Fruits"
         description="Pick your favorite fruit"
-        layout="vertical"
-        shouldHideOnMobile={true}
+        errorMessage="Field error message"
+        // isInvalid={true}
+        layout="horizontal"
+        // shouldHideOnMobile={true}
       >
         <SelectItem>Entertainment</SelectItem>
         <SelectItem>Banana</SelectItem>
@@ -18,7 +20,7 @@ export default function Home() {
         <SelectItem>Or</SelectItem>
       </Select>
 
-      <Select
+      {/* <Select
         name="fruits"
         label="Fruits"
         labelVariant="secondary"
@@ -41,7 +43,7 @@ export default function Home() {
         <SelectItem>Banana</SelectItem>
         <SelectItem>Mango</SelectItem>
         <SelectItem>Orange</SelectItem>
-      </Select>
+      </Select> */}
     </main>
   )
 }

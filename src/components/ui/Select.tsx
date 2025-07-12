@@ -8,7 +8,6 @@ import {
   Popover as RacPopover,
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
-  FieldError as RacFieldError,
   type SelectProps as RacSelectProps,
   type ListBoxItemProps as RacListBoxItemProps,
 } from "react-aria-components"
@@ -17,6 +16,7 @@ import { PiCaretDownFill, PiSortAscendingFill } from "react-icons/pi"
 import { tv, type VariantProps } from "tailwind-variants"
 
 import FieldDescription from "@/components/ui/FieldDescription"
+import FieldError from "@/components/ui/FieldError"
 import Label, { type LabelVariants } from "@/components/ui/Label"
 
 import type { ReactNode } from "react"
@@ -25,9 +25,10 @@ const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
 const selectStyles = tv({
   slots: {
-    layoutWrapper: "flex",
-    fieldLabel: "",
-    fieldDescription: "",
+    layoutWrapper: "grid gap-x-2 gap-y-1",
+    fieldLabel: "self-center",
+    fieldDescription: "[grid-area:c]",
+    fieldErrorMessage: "[grid-area:c]",
     button:
       "rac-focus-visible:ring-2 text-grey-900 ring-beige-500 cursor-pointer outline-none sm:w-full",
     buttonSpan:
@@ -40,10 +41,10 @@ const selectStyles = tv({
   variants: {
     layout: {
       vertical: {
-        layoutWrapper: "flex-col items-start gap-1",
+        layoutWrapper: "justify-items-start [grid-template-areas:'a''b''c']",
       },
       horizontal: {
-        layoutWrapper: "flex-row items-center gap-2",
+        layoutWrapper: "grid-cols-[auto_1fr] [grid-template-areas:'a_b''a_c']",
       },
     },
 
@@ -51,6 +52,7 @@ const selectStyles = tv({
       true: {
         fieldLabel: "sr-only sm:not-sr-only",
         fieldDescription: "sr-only sm:not-sr-only",
+        fieldErrorMessage: "sr-only sm:not-sr-only",
         button: "rounded sm:rounded-lg",
         buttonSpan: "hidden sm:flex",
         mobileIcon: "block sm:hidden",
@@ -78,6 +80,7 @@ const {
   mobileIcon,
   popoverDiv,
   fieldDescription,
+  fieldErrorMessage,
 } = selectStyles()
 
 type SelectStyles = VariantProps<typeof selectStyles>
@@ -110,39 +113,46 @@ export function Select<T extends object>({
     <RacSelect isInvalid={isInvalid} {...props}>
       {({ isOpen }) => (
         <>
-          <div className="grid gap-1">
-            <div className={layoutWrapper({ layout })}>
-              <Label
-                variant={labelVariant}
-                className={fieldLabel({ shouldHideOnMobile })}
-              >
-                {label}
-              </Label>
-              <RacButton className={button({ shouldHideOnMobile })}>
-                <span className={buttonSpan({ shouldHideOnMobile })}>
-                  <RacSelectValue />
-                  <MotionPiCaretDownFill
-                    className="text-grey-500 shrink-0"
-                    animate={isOpen ? "open" : "closed"}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    variants={{
-                      open: { rotate: 180 },
-                      closed: { rotate: 0 },
-                    }}
-                  />
-                </span>
-                <PiSortAscendingFill
-                  className={mobileIcon({ shouldHideOnMobile })}
+          <div className={layoutWrapper({ layout })}>
+            <Label
+              variant={labelVariant}
+              className={fieldLabel({ shouldHideOnMobile })}
+            >
+              {label}
+            </Label>
+
+            <RacButton className={button({ shouldHideOnMobile })}>
+              <span className={buttonSpan({ shouldHideOnMobile })}>
+                <RacSelectValue />
+                <MotionPiCaretDownFill
+                  className="text-grey-500 shrink-0"
+                  animate={isOpen ? "open" : "closed"}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
+                  }}
+                  variants={{
+                    open: { rotate: 180 },
+                    closed: { rotate: 0 },
+                  }}
                 />
-              </RacButton>
-            </div>
+              </span>
+              <PiSortAscendingFill
+                className={mobileIcon({ shouldHideOnMobile })}
+              />
+            </RacButton>
+
             {description && !isInvalid && (
               <FieldDescription
                 description={description}
                 className={fieldDescription({ shouldHideOnMobile })}
               />
             )}
-            <RacFieldError>{errorMessage}</RacFieldError>
+            <FieldError
+              errorMessage={errorMessage}
+              className={fieldErrorMessage({ shouldHideOnMobile })}
+            />
           </div>
 
           <RacPopover>
