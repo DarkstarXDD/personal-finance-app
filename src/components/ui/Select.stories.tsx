@@ -10,12 +10,12 @@ const meta = {
   args: {
     label: "Label",
     labelVariant: "primary",
+    shouldHideOnMobile: false,
   },
   argTypes: {
     layout: { control: "select", options: ["horizontal", "vertical"] },
     labelVariant: { control: "select", options: ["primary", "secondary"] },
     items: { table: { disable: true } },
-    className: { table: { disable: true } },
     children: { table: { disable: true } },
   },
 } satisfies Meta<typeof Select>
@@ -38,6 +38,35 @@ export const Default: Story = {
 export const HorizontalLayout: Story = {
   args: {
     layout: "horizontal",
+  },
+  render: (args) => (
+    <Select {...args}>
+      <SelectItem>Apple</SelectItem>
+      <SelectItem>Banana</SelectItem>
+      <SelectItem>Mango</SelectItem>
+      <SelectItem>Orange</SelectItem>
+    </Select>
+  ),
+}
+
+export const HiddenInMobile: Story = {
+  args: {
+    shouldHideOnMobile: true,
+  },
+
+  render: (args) => (
+    <Select {...args}>
+      <SelectItem>Apple</SelectItem>
+      <SelectItem>Banana</SelectItem>
+      <SelectItem>Mango</SelectItem>
+      <SelectItem>Orange</SelectItem>
+    </Select>
+  ),
+}
+
+export const WithDescription: Story = {
+  args: {
+    description: "Helper text",
   },
   render: (args) => (
     <Select {...args}>

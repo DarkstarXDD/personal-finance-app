@@ -1,12 +1,12 @@
 import {
   TextField as RacTextField,
   Input as RacInput,
-  Text as RacText,
   type TextFieldProps as RacTextFieldProps,
   FieldError as RacFieldError,
 } from "react-aria-components"
 import { tv } from "tailwind-variants"
 
+import FieldDescription from "@/components/ui/FieldDescription"
 import Label from "@/components/ui/Label"
 
 import type { IconType } from "react-icons"
@@ -55,12 +55,7 @@ export default function TextField({
         {errorMessage}
       </RacFieldError>
       {description && !isInvalid && (
-        <RacText
-          slot="description"
-          className="text-grey-500 justify-self-end text-xs leading-normal font-normal"
-        >
-          {description}
-        </RacText>
+        <FieldDescription description={description} />
       )}
     </RacTextField>
   )
