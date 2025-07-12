@@ -17,7 +17,7 @@ import { FaCheck } from "react-icons/fa6"
 import { PiCaretDownFill } from "react-icons/pi"
 import { tv, type VariantProps } from "tailwind-variants"
 
-import Label from "@/components/ui/Label"
+import Label, { type LabelVariants } from "@/components/ui/Label"
 
 import type { ReactNode } from "react"
 
@@ -27,7 +27,7 @@ const selectStyles = tv({
   base: "flex",
   variants: {
     layout: {
-      vertical: "flex-col gap-1",
+      vertical: "flex-col items-start gap-1",
       horizontal: "flex-row items-center gap-2",
     },
   },
@@ -43,6 +43,7 @@ type SelectProps<T extends object> = Omit<
   "children" | "className"
 > & {
   label?: string
+  labelVariant?: LabelVariants["variant"]
   description?: string
   errorMessage?: string
   items?: Iterable<T>
@@ -52,6 +53,7 @@ type SelectProps<T extends object> = Omit<
 
 export function Select<T extends object>({
   label,
+  labelVariant,
   description,
   errorMessage,
   isInvalid,
@@ -66,8 +68,8 @@ export function Select<T extends object>({
       {({ isOpen }) => (
         <>
           <div className={selectStyles({ layout })}>
-            <Label className="self-start">{label}</Label>
-            <RacButton className="border-beige-500 text-grey-900 rac-focus-visible:ring-2 ring-beige-500 flex cursor-pointer items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal outline-none">
+            <Label variant={labelVariant}>{label}</Label>
+            <RacButton className="border-beige-500 text-grey-900 rac-focus-visible:ring-2 ring-beige-500 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal outline-none">
               <RacSelectValue />
               <MotionPiCaretDownFill
                 className="text-grey-500 shrink-0"

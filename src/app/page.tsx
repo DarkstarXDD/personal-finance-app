@@ -1,11 +1,11 @@
 "use client"
 
-import { PiCurrencyDollarSimple } from "react-icons/pi"
+// import { PiCurrencyDollarSimple } from "react-icons/pi"
 
 // import Button from "@/components/ui/Button"
 // import Label from "@/components/ui/Label"
 import { Select, SelectItem } from "@/components/ui/Select"
-import TextField from "@/components/ui/TextField"
+// import TextField from "@/components/ui/TextField"
 
 export default function Home() {
   return (
@@ -42,6 +42,7 @@ export default function Home() {
         name="fruits"
         label="Fruits"
         description="Pick your favorite fruit"
+        layout="horizontal"
       >
         <SelectItem>Apple</SelectItem>
         <SelectItem>Banana</SelectItem>
@@ -49,8 +50,33 @@ export default function Home() {
         <SelectItem>Orange</SelectItem>
       </Select>
 
-      <TextField label="Email" />
-      <TextField label="Email" icon={PiCurrencyDollarSimple} />
+      <Select
+        name="fruits"
+        label="Fruits"
+        labelVariant="secondary"
+        description="Pick your favorite fruit"
+        layout="horizontal"
+      >
+        <SelectItem>Apple</SelectItem>
+        <SelectItem>Banana</SelectItem>
+        <SelectItem>Mango</SelectItem>
+        <SelectItem>Orange</SelectItem>
+      </Select>
+
+      <Select
+        name="fruits"
+        label="Fruits"
+        description="Pick your favorite fruit"
+        layout="vertical"
+      >
+        <SelectItem>Apple</SelectItem>
+        <SelectItem>Banana</SelectItem>
+        <SelectItem>Mango</SelectItem>
+        <SelectItem>Orange</SelectItem>
+      </Select>
+
+      {/* <TextField label="Email" />
+      <TextField label="Email" icon={PiCurrencyDollarSimple} /> */}
       {/* <TextField
         label="Email"
         icon={PiCurrencyDollarSimple}
