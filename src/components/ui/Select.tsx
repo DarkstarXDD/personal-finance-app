@@ -14,7 +14,7 @@ import {
   type ListBoxItemProps as RacListBoxItemProps,
 } from "react-aria-components"
 import { FaCheck } from "react-icons/fa6"
-import { PiCaretDownFill } from "react-icons/pi"
+import { PiCaretDownFill, PiSortAscendingFill } from "react-icons/pi"
 import { tv, type VariantProps } from "tailwind-variants"
 
 import Label, { type LabelVariants } from "@/components/ui/Label"
@@ -24,17 +24,58 @@ import type { ReactNode } from "react"
 const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
 const selectStyles = tv({
-  base: "flex",
+  slots: {
+    layoutWrapper: "flex",
+    fieldLabel: "",
+    button:
+      "rac-focus-visible:ring-2 text-grey-900 ring-beige-500 cursor-pointer outline-none sm:w-full",
+    buttonSpan:
+      "border-beige-500 w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
+    mobileIcon: "size-5",
+    popoverDiv:
+      "border-grey-200 w-(--trigger-width) rounded-lg border bg-white px-1 py-1 shadow-xl",
+  },
+
   variants: {
     layout: {
-      vertical: "flex-col items-start gap-1",
-      horizontal: "flex-row items-center gap-2",
+      vertical: {
+        layoutWrapper: "flex-col items-start gap-1",
+      },
+      horizontal: {
+        layoutWrapper: "flex-row items-center gap-2",
+      },
+    },
+
+    shouldHideOnMobile: {
+      true: {
+        fieldLabel: "sr-only sm:not-sr-only",
+        button: "rounded sm:rounded-lg",
+        buttonSpan: "hidden sm:flex",
+        mobileIcon: "block sm:hidden",
+        popoverDiv: "min-w-50 sm:max-w-full",
+      },
+      false: {
+        mobileIcon: "hidden",
+        button: "w-full rounded-lg",
+        buttonSpan: "flex",
+      },
     },
   },
+
   defaultVariants: {
     layout: "vertical",
+    shouldHideOnMobile: false,
   },
 })
+
+const {
+  layoutWrapper,
+  fieldLabel,
+  button,
+  buttonSpan,
+  mobileIcon,
+  popoverDiv,
+} = selectStyles()
 
 type SelectStyles = VariantProps<typeof selectStyles>
 
@@ -58,8 +99,8 @@ export function Select<T extends object>({
   errorMessage,
   isInvalid,
   items,
-  // className,
   layout,
+  shouldHideOnMobile,
   children,
   ...props
 }: SelectProps<T>) {
@@ -67,18 +108,29 @@ export function Select<T extends object>({
     <RacSelect isInvalid={isInvalid} {...props}>
       {({ isOpen }) => (
         <>
-          <div className={selectStyles({ layout })}>
-            <Label variant={labelVariant}>{label}</Label>
-            <RacButton className="border-beige-500 text-grey-900 rac-focus-visible:ring-2 ring-beige-500 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal outline-none">
-              <RacSelectValue />
-              <MotionPiCaretDownFill
-                className="text-grey-500 shrink-0"
-                animate={isOpen ? "open" : "closed"}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                variants={{
-                  open: { rotate: 180 },
-                  closed: { rotate: 0 },
-                }}
+          <div className={layoutWrapper({ layout })}>
+            <Label
+              variant={labelVariant}
+              className={fieldLabel({ shouldHideOnMobile })}
+            >
+              {label}
+            </Label>
+
+            <RacButton className={button({ shouldHideOnMobile })}>
+              <span className={buttonSpan({ shouldHideOnMobile })}>
+                <RacSelectValue />
+                <MotionPiCaretDownFill
+                  className="text-grey-500 shrink-0"
+                  animate={isOpen ? "open" : "closed"}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  variants={{
+                    open: { rotate: 180 },
+                    closed: { rotate: 0 },
+                  }}
+                />
+              </span>
+              <PiSortAscendingFill
+                className={mobileIcon({ shouldHideOnMobile })}
               />
             </RacButton>
           </div>
@@ -86,12 +138,13 @@ export function Select<T extends object>({
             <RacText slot="description">{description}</RacText>
           )}
           <RacFieldError>{errorMessage}</RacFieldError>
+
           <RacPopover>
             <motion.div
               initial={{ y: -12, opacity: 0.4 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
-              className="border-grey-200 w-(--trigger-width) rounded-lg border bg-white px-1 py-1 shadow-xl"
+              className={popoverDiv({ shouldHideOnMobile })}
             >
               <RacListBox className="outline-none" items={items}>
                 {children}
@@ -123,7 +176,7 @@ export function SelectItem({
       className={selectItemStyles({ className })}
     >
       {({ isSelected }) => (
-        <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex w-full items-center justify-between gap-6">
           {children}
           {isSelected && (
             <FaCheck className="text-grey-500 size-3.5 shrink-0" />
