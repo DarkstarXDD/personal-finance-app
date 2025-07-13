@@ -3,6 +3,7 @@ import { Meta, StoryObj } from "@storybook/nextjs-vite"
 import FieldDescription from "@/components/ui/FieldDescription"
 
 const meta = {
+  title: "Components/UI/FieldDescription",
   component: FieldDescription,
   argTypes: {
     className: { control: false },

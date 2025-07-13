@@ -3,6 +3,7 @@ import { Select, SelectItem } from "@/components/ui/Select"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
+  title: "Components/UI/Select",
   component: Select,
   parameters: {
     layout: "padded",

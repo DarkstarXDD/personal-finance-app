@@ -4,6 +4,7 @@ import { TextField } from "react-aria-components"
 import FieldError from "@/components/ui/FieldError"
 
 const meta = {
+  title: "Components/UI/FieldError",
   component: FieldError,
   // Need to wrap the FieldError in some Field component. Otherwise the FieldError won't render anything
   render: (args) => (
