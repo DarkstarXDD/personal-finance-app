@@ -1,9 +1,11 @@
 "use client"
 
+import { ReactNode } from "react"
 import {
   Button as RacButton,
   type ButtonProps as RacButtonProps,
 } from "react-aria-components"
+import { IoCloseCircleOutline } from "react-icons/io5"
 import { tv, type VariantProps } from "tailwind-variants"
 
 const buttonStyles = tv({
@@ -17,6 +19,8 @@ const buttonStyles = tv({
       tertiary: "text-grey-500 rac-hover:bg-beige-100 rac-pressed:bg-beige-100",
       destructive:
         "bg-red rac-hover:bg-red/85 rac-pressed:bg-red/85 text-white",
+      close:
+        "ring-beige-500 text-grey-500 rac-pressed:text-beige-500 rac-hover:text-beige-500 size-7 rounded-full p-0",
     },
   },
   defaultVariants: {
@@ -30,12 +34,21 @@ export default function Button({
   children,
   className,
   variant,
+  "aria-label": ariaLabel,
   ...props
-}: Omit<RacButtonProps, "className"> &
-  ButtonVariants & { className?: string }) {
+}: Omit<RacButtonProps, "children" | "className"> &
+  ButtonVariants & { children?: ReactNode; className?: string }) {
   return (
-    <RacButton {...props} className={buttonStyles({ variant, className })}>
-      {children}
+    <RacButton
+      {...props}
+      className={buttonStyles({ variant, className })}
+      aria-label={variant === "close" ? (ariaLabel ?? "Close") : ariaLabel}
+    >
+      {variant === "close" ? (
+        <IoCloseCircleOutline className="size-7 shrink-0" />
+      ) : (
+        <>{children}</>
+      )}
     </RacButton>
   )
 }

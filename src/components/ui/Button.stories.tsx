@@ -9,13 +9,23 @@ const meta = {
   component: Button,
   args: {
     children: "Placeholder",
-    onPress: fn(),
+    variant: "primary",
     isDisabled: false,
+    onPress: fn(),
   },
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "secondary", "tertiary", "destructive"],
+      description:
+        "Overall appearance of the button. Defines the background color and the corresponding foreground color.",
+      options: ["primary", "secondary", "tertiary", "destructive", "close"],
+      table: {
+        defaultValue: { summary: "primary" },
+        type: {
+          summary:
+            '"primary" | "secondary" | "tertiary" | "destructive" | "close"',
+        },
+      },
     },
     isDisabled: {
       control: "boolean",
@@ -59,6 +69,12 @@ export const Disabled: Story = {
   },
 }
 
+export const Close: Story = {
+  args: {
+    variant: "close",
+  },
+}
+
 export const All: Story = {
   render: (args) => (
     <div className="flex flex-wrap gap-4">
@@ -77,6 +93,7 @@ export const All: Story = {
       <Button {...args} variant="primary" isDisabled>
         Disabled
       </Button>
+      <Button {...args} variant="close" />
     </div>
   ),
   parameters: { controls: { disable: true } },
