@@ -1,6 +1,5 @@
 import { motion } from "motion/react"
 import {
-  Button as RacButton,
   DialogTrigger as RacDialogTrigger,
   ModalOverlay as RacModalOverlay,
   Modal as RacModal,
@@ -8,8 +7,8 @@ import {
   Heading as RacHeading,
   type ModalOverlayProps as RacModalOverlayProps,
 } from "react-aria-components"
-import { IoCloseCircleOutline } from "react-icons/io5"
 
+import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 
 import type { ReactNode } from "react"
@@ -50,13 +49,7 @@ function Dialog({
               >
                 {title}
               </RacHeading>
-              <RacButton
-                slot="close"
-                aria-label="Close"
-                className="rac-focus-visible:ring-2 ring-beige-500 text-grey-500 rac-pressed:text-beige-500 rac-hover:text-beige-500 cursor-pointer rounded-full transition-colors outline-none"
-              >
-                <IoCloseCircleOutline className="size-7 shrink-0" />
-              </RacButton>
+              <Button variant="close" slot="close" aria-label="Close" />
             </div>
             {children}
           </Card>
