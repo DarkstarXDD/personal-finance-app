@@ -34,11 +34,16 @@ export default function Button({
   children,
   className,
   variant,
+  "aria-label": ariaLabel,
   ...props
 }: Omit<RacButtonProps, "children" | "className"> &
   ButtonVariants & { children?: ReactNode; className?: string }) {
   return (
-    <RacButton {...props} className={buttonStyles({ variant, className })}>
+    <RacButton
+      {...props}
+      className={buttonStyles({ variant, className })}
+      aria-label={variant === "close" ? (ariaLabel ?? "Close") : ariaLabel}
+    >
       {variant === "close" ? (
         <IoCloseCircleOutline className="size-7 shrink-0" />
       ) : (

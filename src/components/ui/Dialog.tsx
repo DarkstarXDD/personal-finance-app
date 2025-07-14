@@ -49,7 +49,7 @@ function Dialog({
               >
                 {title}
               </RacHeading>
-              <Button variant="close" slot="close" aria-label="Close" />
+              <Button variant="close" slot="close" />
             </div>
             {children}
           </Card>
