@@ -26,7 +26,7 @@ function Dialog({
   ...props
 }: Omit<RacModalOverlayProps, "children"> & {
   title: string
-  children: ReactNode
+  children?: ReactNode
   role?: "dialog" | "alertdialog"
 }) {
   return (
