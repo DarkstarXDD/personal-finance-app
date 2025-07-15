@@ -1,52 +1,16 @@
 "use client"
 
-import { useState } from "react"
-import { DialogTrigger } from "react-aria-components"
-
-import Button from "@/components/ui/Button"
-import { Dialog } from "@/components/ui/Dialog"
-import Heading from "@/components/ui/Heading"
+import Link from "@/components/ui/Link"
 
 export default function Home() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-
   return (
     <main className="grid gap-10">
-      <DialogTrigger>
-        <Button>Open Dialog (Uncontrolled)</Button>
-        <Dialog title="Add New Budget">
-          <div className="grid gap-4">
-            <p>
-              This is a dialog content area. You can place any content here,
-              such as forms, text, or other components.
-            </p>
-            <Button slot="close">Close Dialog</Button>
-          </div>
-        </Dialog>
-      </DialogTrigger>
-
-      {/* Controlled Dialog without the DialogTrigger */}
-      <Button onPress={() => setIsDialogOpen((prev) => !prev)}>
-        Open Dialog (Controlled)
-      </Button>
-      <Dialog
-        title="Add New Budget"
-        isOpen={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-      >
-        <div className="grid gap-4">
-          <p>
-            This is a dialog content area. You can place any content here, such
-            as forms, text, or other components.
-          </p>
-          <Button slot="close">Close Dialog</Button>
-        </div>
-      </Dialog>
-
-      <Heading as="h1">Title</Heading>
-      <Heading as="h2" variant="secondary">
-        Title
-      </Heading>
+      <Link href="/test" className="font-bold">
+        This is a Link
+      </Link>
+      <Link href="/test" className="font-bold" withIcon={true}>
+        Sign Up
+      </Link>
     </main>
   )
 }
