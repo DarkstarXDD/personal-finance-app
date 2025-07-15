@@ -5,6 +5,7 @@ import { DialogTrigger } from "react-aria-components"
 
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
+import Heading from "@/components/ui/Heading"
 
 export default function Home() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -41,6 +42,11 @@ export default function Home() {
           <Button slot="close">Close Dialog</Button>
         </div>
       </Dialog>
+
+      <Heading as="h1">Title</Heading>
+      <Heading as="h2" variant="secondary">
+        Title
+      </Heading>
     </main>
   )
 }
