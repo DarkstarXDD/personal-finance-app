@@ -1,5 +1,6 @@
 import Image from "next/image"
 import NextLink from "next/link"
+import { Button as RacButton } from "react-aria-components"
 import { PiArrowFatLinesLeft } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
@@ -12,18 +13,22 @@ import type { IconType } from "react-icons"
 
 export function Navbar({ children }: { children: ReactNode }) {
   return (
-    <nav className="bg-grey-900 rounded-t-lg px-4 pt-2 lg:grid lg:w-75 lg:gap-6 lg:rounded-none lg:rounded-r-lg lg:p-0 lg:pr-6">
-      <div className="hidden px-8 py-10 lg:block">
-        <Image src={logoLarge} alt="Finance" />
-      </div>
-      <div className="flex items-center justify-between lg:flex-col lg:items-start">
-        {children}
-      </div>
-      <button className="text-grey-300 hover:text-grey-100 flex cursor-pointer items-center justify-start gap-4 px-9 py-4">
-        <PiArrowFatLinesLeft className="size-6 shrink-0" />
-        <p className="text-base leading-normal font-bold">Minimize Menu</p>
-      </button>
-    </nav>
+    <div className="flex min-h-dvh flex-col justify-end lg:justify-start">
+      <nav className="bg-grey-900 rounded-t-lg px-4 pt-2 lg:flex lg:min-h-full lg:w-75 lg:flex-col lg:justify-start lg:gap-6 lg:rounded-none lg:rounded-r-xl lg:p-0 lg:pr-6 lg:pb-6">
+        <div className="hidden px-8 py-10 lg:block">
+          <Image src={logoLarge} alt="Finance" />
+        </div>
+        <div className="flex items-center justify-between lg:grow lg:flex-col lg:items-start lg:justify-start">
+          {children}
+        </div>
+        <RacButton className="text-grey-300 rac-hover:text-grey-100 rac-pressed:text-grey-100 rac-focus-visible:ring-2 ring-grey-300 hidden cursor-pointer items-center justify-start gap-4 rounded-lg px-9 py-4 transition-colors outline-none lg:flex">
+          <PiArrowFatLinesLeft className="size-6 shrink-0" />
+          <span className="text-base leading-normal font-bold">
+            Minimize Menu
+          </span>
+        </RacButton>
+      </nav>
+    </div>
   )
 }
 
