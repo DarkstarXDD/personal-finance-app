@@ -1,16 +1,10 @@
 "use client"
-
-import Link from "@/components/ui/Link"
+import Navbar from "@/components/ui/Navbar"
 
 export default function Home() {
   return (
     <main className="grid gap-10">
-      <Link href="/test" className="font-bold">
-        This is a Link
-      </Link>
-      <Link href="/test" className="font-bold" withIcon={true}>
-        Sign Up
-      </Link>
+      <Navbar></Navbar>
     </main>
   )
 }
