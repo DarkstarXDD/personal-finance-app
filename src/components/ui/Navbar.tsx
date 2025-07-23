@@ -116,7 +116,8 @@ const navbarItemStyles = tv({
   variants: {
     isActive: {
       true: {
-        navLink: "bg-beige-100 text-green border-green hover:text-green",
+        navLink:
+          "bg-beige-100 text-green border-green hover:text-green active:text-green",
         navLinkSpan: "text-grey-900",
       },
     },
