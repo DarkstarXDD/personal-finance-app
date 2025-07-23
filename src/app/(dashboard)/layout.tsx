@@ -1,4 +1,6 @@
+import { Navbar } from "@/components/ui/Navbar"
 import { publicSans } from "@/lib/fonts"
+
 import "../globals.css"
 
 import type { Metadata } from "next"
@@ -38,9 +40,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 tracking-normal`}
+        className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 min-h-dvh tracking-normal lg:grid lg:grid-cols-[auto_1fr]`}
       >
-        {children}
+        <Navbar className="absolute bottom-0 lg:static" />
+        <div className="px-4 py-6 md:px-10 md:py-8">{children}</div>
       </body>
     </html>
   )
