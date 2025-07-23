@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import NextLink from "next/link"
+import { useSelectedLayoutSegment } from "next/navigation"
 import { useState, createContext, useContext } from "react"
 import { Button as RacButton } from "react-aria-components"
 import {
@@ -115,7 +116,8 @@ const navbarItemStyles = tv({
   variants: {
     isActive: {
       true: {
-        navLink: "bg-beige-100 text-green border-green hover:text-green",
+        navLink:
+          "bg-beige-100 text-green border-green hover:text-green active:text-green",
         navLinkSpan: "text-grey-900",
       },
     },
@@ -130,23 +132,35 @@ const { navLink, navLinkSpan } = navbarItemStyles()
 
 export function NavbarItem({
   label,
+  href,
   icon: Icon,
-  TEMP_CURRENT = false,
   ...props
 }: Omit<ComponentProps<typeof NextLink>, "children" | "className"> & {
   label: string
   icon: IconType
-  TEMP_CURRENT?: boolean
 }) {
   const { isExpanded } = useContext(NavbarContext)
+  const currentSegment = useSelectedLayoutSegment()
+
+  let segmentNameFromHref: string | null = null
+
+  if (typeof href === "string") {
+    segmentNameFromHref = href.split("/").filter(Boolean)[0] || null
+  }
+
+  const isActive = currentSegment === segmentNameFromHref
 
   return (
     <NextLink
       {...props}
-      className={navLink({ isActive: TEMP_CURRENT, isExpanded })}
+      href={href}
+      className={navLink({
+        isActive: isActive,
+        isExpanded,
+      })}
     >
       <Icon className="size-6 shrink-0" />
-      <span className={navLinkSpan({ isActive: TEMP_CURRENT, isExpanded })}>
+      <span className={navLinkSpan({ isActive: isActive, isExpanded })}>
         {label}
       </span>
     </NextLink>
