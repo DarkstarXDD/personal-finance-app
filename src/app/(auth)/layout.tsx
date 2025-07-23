@@ -1,4 +1,9 @@
+import Image from "next/image"
+
+import LogoLarge from "@/components/icons/LogoLarge"
 import { publicSans } from "@/lib/fonts"
+
+import brandImage from "../../../public/illustration-authentication.svg"
 import "../globals.css"
 
 import type { Metadata } from "next"
@@ -30,7 +35,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -38,9 +43,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 tracking-normal`}
+        className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 grid min-h-dvh grid-rows-[auto_1fr] tracking-normal lg:grid-cols-[auto_1fr] lg:grid-rows-1`}
       >
-        {children}
+        <div className="bg-grey-900 grid w-full justify-items-center rounded-b-lg px-10 py-6 lg:hidden">
+          <LogoLarge />
+        </div>
+        <div className="hidden p-5 lg:block">
+          <Image
+            src={brandImage}
+            alt=""
+            priority={true}
+            className="rounded-xl"
+          />
+        </div>
+        <div className="grid place-content-center px-4 py-6 md:px-10 md:py-8">
+          {children}
+        </div>
       </body>
     </html>
   )
