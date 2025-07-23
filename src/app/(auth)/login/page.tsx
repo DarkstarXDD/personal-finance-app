@@ -1,3 +1,9 @@
+import LoginForm from "@/components/auth/LoginForm"
+
 export default function page() {
-  return <h1>Login</h1>
+  return (
+    <main>
+      <LoginForm />
+    </main>
+  )
 }
