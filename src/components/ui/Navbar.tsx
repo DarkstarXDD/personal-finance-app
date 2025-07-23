@@ -78,7 +78,7 @@ export function Navbar({ className }: { className?: string }) {
           <Image src={logoLarge} alt="Finance" />
         </div>
         <div className={navItemsWrapper()}>
-          <NavbarItem href="/overview" label="Overview" icon={OverviewIcon} />
+          <NavbarItem href="/" label="Overview" icon={OverviewIcon} />
           <NavbarItem
             href="/transactions"
             label="Transactions"

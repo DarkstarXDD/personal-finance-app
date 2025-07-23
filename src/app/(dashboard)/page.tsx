@@ -1,3 +1,3 @@
-export default function Home() {
-  return <main className="grid gap-10">Hello, World!</main>
+export default function OverviewPage() {
+  return <h1>Overview</h1>
 }

@@ -1,3 +1,3 @@
-export default function page() {
+export default function BudgetsPage() {
   return <h1>Budgets</h1>
 }
