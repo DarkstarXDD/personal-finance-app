@@ -1,5 +1,7 @@
+import { Navbar } from "@/components/ui/Navbar"
 import { publicSans } from "@/lib/fonts"
-import "./globals.css"
+
+import "../globals.css"
 
 import type { Metadata } from "next"
 
@@ -15,14 +17,14 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
-    url: "https://personal-finance-app-darkstar.vercel.app/",
+    url: "https://personal-finance-darkstar.vercel.app/",
     title: "Personal Finance App",
 
     description:
       "Check out Darkstar's solution for the Personal Finance App challenge on Frontend Mentor",
 
     images: {
-      url: "https://personal-finance-app-darkstar.vercel.app/og-img.jpeg",
+      url: "https://personal-finance-darkstar.vercel.app/og-img.jpeg",
       type: "image/jpeg",
       width: 1200,
       height: 630,
@@ -38,9 +40,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 tracking-normal`}
+        className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 min-h-dvh tracking-normal lg:grid lg:grid-cols-[auto_1fr]`}
       >
-        {children}
+        <Navbar className="absolute bottom-0 lg:static" />
+        <div className="px-4 py-6 md:px-10 md:py-8">{children}</div>
       </body>
     </html>
   )
