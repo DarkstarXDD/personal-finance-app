@@ -1,6 +1,9 @@
 import React from "react"
+import { tv } from "tailwind-variants"
 
-export default function LogoLarge() {
+const svgStyles = tv({ base: "h-5.5 w-30.5" })
+
+export default function LogoLarge({ className }: { className?: string }) {
   return (
     <svg
       fill="none"
@@ -9,6 +12,7 @@ export default function LogoLarge() {
       width="122"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Finance"
+      className={svgStyles({ className })}
     >
       <g fill="#fff">
         <path d="m8.192 21.44h-6.016v-11.2h-2.176v-4.928h2.304c.64-3.04 3.616-5.312 8.896-5.312h1.28v4.288h-2.24c-1.664 0-2.464.16-2.432 1.024h4.672v4.928h-4.288z" />
