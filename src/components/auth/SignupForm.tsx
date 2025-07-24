@@ -6,26 +6,32 @@ import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import TextField from "@/components/ui/TextField"
 
-export default function LoginForm() {
+export default function SignupForm() {
   return (
-    <Card className="mx-auto max-w-[35rem]">
+    <Card padding="lg" className="mx-auto max-w-[35rem]">
       <div className="grid justify-items-center gap-8">
         <form className="grid w-full gap-8">
-          <Heading as="h1">Login</Heading>
+          <Heading as="h1">Sign Up</Heading>
           <div className="grid gap-4">
+            <TextField label="Name" name="name" />
             <TextField label="Email" name="email" />
-            <TextField label="Password" type="password" name="password" />
+            <TextField
+              label="Create Password"
+              name="password"
+              type="password"
+              description="Passwords must be at least 8 characters"
+            />
           </div>
           <Button type="submit" className="w-full">
-            Login
+            Create Account
           </Button>
         </form>
         <p className="flex items-center gap-2">
           <span className="text-grey-500 text-sm leading-normal font-normal">
-            Need to create an account?
+            Already have an account?
           </span>
-          <Link href="/signup" className="font-bold">
-            Sign Up
+          <Link href="/login" className="font-bold">
+            Login
           </Link>
         </p>
       </div>

@@ -1,3 +1,9 @@
-export default function page() {
-  return <h1>Signup</h1>
+import SignupForm from "@/components/auth/SignupForm"
+
+export default function SignupPage() {
+  return (
+    <main>
+      <SignupForm />
+    </main>
+  )
 }
