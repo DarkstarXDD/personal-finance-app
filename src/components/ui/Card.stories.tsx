@@ -12,6 +12,7 @@ const meta = {
     padding: "lg",
   },
   argTypes: {
+    className: { table: { disable: true } },
     theme: {
       control: "select",
       description:

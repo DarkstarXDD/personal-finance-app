@@ -26,8 +26,11 @@ type CardVariants = VariantProps<typeof cardStyles>
 
 export default function Card({
   children,
+  className,
   theme,
   padding,
-}: { children: ReactNode } & CardVariants) {
-  return <div className={cardStyles({ theme, padding })}>{children}</div>
+}: { children: ReactNode; className?: string } & CardVariants) {
+  return (
+    <div className={cardStyles({ theme, padding, className })}>{children}</div>
+  )
 }
