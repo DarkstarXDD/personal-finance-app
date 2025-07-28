@@ -19,7 +19,7 @@ export default function SignupForm() {
               label="Create Password"
               name="password"
               type="password"
-              description="Passwords must be at least 8 characters"
+              description="Password must be at least 8 characters"
             />
           </div>
           <Button type="submit" className="w-full">
