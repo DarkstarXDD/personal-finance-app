@@ -1,3 +1,6 @@
+"use client"
+
+import { type Ref } from "react"
 import {
   TextField as RacTextField,
   Input as RacInput,
@@ -18,6 +21,7 @@ export default function TextField({
   description,
   errorMessage,
   isInvalid,
+  ref,
   ...props
 }: RacTextFieldProps & {
   label?: string
@@ -25,6 +29,7 @@ export default function TextField({
   placeholder?: string
   description?: string
   errorMessage?: string
+  ref?: Ref<HTMLInputElement>
 }) {
   const inputStyles = tv({
     base: "border-beige-500 placeholder:text-beige-500 rac-invalid:border-red rac-invalid:ring-red rac-focus:ring-2 ring-beige-500 text-grey-900 w-full min-w-0 rounded-lg border px-5 py-3 text-sm leading-normal font-normal transition-colors outline-none",
@@ -49,6 +54,7 @@ export default function TextField({
         <RacInput
           placeholder={placeholder}
           className={inputStyles({ isIcon: !!Icon })}
+          ref={ref}
         />
       </div>
       <FieldError>{errorMessage}</FieldError>
