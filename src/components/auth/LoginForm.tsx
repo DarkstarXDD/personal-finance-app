@@ -1,8 +1,10 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { startTransition, useActionState, useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
+import { loginUser } from "@/actions/auth"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -11,20 +13,38 @@ import TextField from "@/components/ui/TextField"
 import { loginSchema } from "@/lib/schemas"
 
 export default function LoginForm() {
-  const { handleSubmit, control } = useForm({
+  const [loginError, loginAction, isPending] = useActionState(loginUser, null)
+
+  const { handleSubmit, control, setError } = useForm({
     defaultValues: { email: "", password: "" },
     resolver: zodResolver(loginSchema),
   })
+
+  useEffect(() => {
+    if (loginError) {
+      setError("email", {
+        type: "server",
+        message: loginError,
+      })
+    }
+  }, [loginError, setError])
 
   return (
     <Card className="mx-auto max-w-[35rem]">
       <div className="grid justify-items-center gap-8">
         <form
           className="grid w-full gap-8"
-          onSubmit={handleSubmit(
-            (data) => console.log(data),
-            (errors) => console.log(errors)
-          )}
+          onSubmit={(e) => {
+            e.preventDefault()
+            const handleFormSubmit = handleSubmit((data) => {
+              const formData = new FormData()
+              Object.entries(data).forEach(([key, value]) => {
+                formData.append(key, value)
+              })
+              startTransition(() => loginAction(formData))
+            })
+            handleFormSubmit()
+          }}
         >
           <Heading as="h1">Login</Heading>
           <div className="grid gap-4">
@@ -34,8 +54,8 @@ export default function LoginForm() {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Email"
-                  {...field}
                   autoComplete="email"
+                  {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
                 />
@@ -47,16 +67,16 @@ export default function LoginForm() {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Password"
+                  autoComplete="current-password"
                   type="password"
                   {...field}
-                  autoComplete="email"
                   isInvalid={invalid}
                   errorMessage={error?.message}
                 />
               )}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" isPending={isPending}>
             Login
           </Button>
         </form>

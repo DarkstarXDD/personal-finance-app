@@ -36,10 +36,10 @@ export default function SignupForm() {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Name"
+                  autoComplete="name"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  autoComplete="name"
                 />
               )}
             />
@@ -49,10 +49,10 @@ export default function SignupForm() {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Email"
+                  autoComplete="email"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  autoComplete="email"
                 />
               )}
             />
@@ -62,11 +62,11 @@ export default function SignupForm() {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Create Password"
+                  autoComplete="new-password"
                   type="password"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  autoComplete="new-password"
                   description="Password must be at least 8 characters"
                 />
               )}

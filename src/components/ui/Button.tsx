@@ -9,7 +9,7 @@ import { IoCloseCircleOutline } from "react-icons/io5"
 import { tv, type VariantProps } from "tailwind-variants"
 
 const buttonStyles = tv({
-  base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed cursor-pointer rounded-lg p-4 text-sm leading-normal font-bold transition-colors outline-none",
+  base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed cursor-pointer rounded-lg p-4 text-sm leading-normal font-bold transition-colors outline-none",
   variants: {
     variant: {
       primary:
@@ -35,19 +35,21 @@ export default function Button({
   className,
   variant,
   "aria-label": ariaLabel,
+  isPending,
   ...props
 }: Omit<RacButtonProps, "children" | "className"> &
   ButtonVariants & { children?: ReactNode; className?: string }) {
   return (
     <RacButton
       {...props}
+      isPending={isPending}
       className={buttonStyles({ variant, className })}
       aria-label={variant === "close" ? (ariaLabel ?? "Close") : ariaLabel}
     >
       {variant === "close" ? (
         <IoCloseCircleOutline className="size-7 shrink-0" />
       ) : (
-        <>{children}</>
+        <>{isPending ? "Loading..." : children}</>
       )}
     </RacButton>
   )
