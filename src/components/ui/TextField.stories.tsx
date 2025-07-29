@@ -14,6 +14,7 @@ const meta = {
   },
   argTypes: {
     icon: { table: { disable: true } },
+    ref: { table: { disable: true } },
     isInvalid: { control: "boolean" },
   },
 } satisfies Meta<typeof TextField>
@@ -38,7 +39,6 @@ export const WithDescription: Story = {
 
 export const WithErrorMessage: Story = {
   args: {
-    description: "Helper text",
     errorMessage: "Field error message",
     isInvalid: true,
   },
