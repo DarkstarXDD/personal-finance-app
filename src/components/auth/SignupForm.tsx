@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
+import { registerUser } from "@/actions/auth"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -11,22 +12,27 @@ import TextField from "@/components/ui/TextField"
 import { signupSchema } from "@/lib/schemas"
 
 export default function SignupForm() {
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { isSubmitting },
+  } = useForm({
     defaultValues: { name: "", email: "", password: "" },
     resolver: zodResolver(signupSchema),
   })
-
-  console.log("Component re-rendered!")
 
   return (
     <Card padding="lg" className="mx-auto max-w-[35rem]">
       <div className="grid justify-items-center gap-8">
         <form
           className="grid w-full gap-8"
-          onSubmit={handleSubmit(
-            (data) => console.log(data),
-            (errors) => console.log(errors)
-          )}
+          onSubmit={handleSubmit(async (data) => {
+            const response = await registerUser(data)
+            if (response) {
+              setError("email", { message: response })
+            }
+          })}
         >
           <Heading as="h1">Sign Up</Heading>
           <div className="grid gap-4">
@@ -72,7 +78,7 @@ export default function SignupForm() {
               )}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" isPending={isSubmitting}>
             Create Account
           </Button>
         </form>

@@ -30,7 +30,7 @@ export default function LoginForm() {
           onSubmit={handleSubmit(async (data) => {
             const response = await loginUser(data)
             if (response) {
-              setError("email", { message: response ?? undefined })
+              setError("email", { message: response })
             }
           })}
         >
