@@ -10,10 +10,68 @@ datasource db {
 }
 
 model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  password     String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  budgets      Budget[]
+  pots         Pot[]
+  transactions Transaction[]
+}
+
+model Category {
+  id          String        @id @default(cuid())
+  name        String        @unique
+  label       String        @unique
+  budgets     Budget[]
+  transaction Transaction[]
+}
+
+model Color {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  label   String   @unique
+  value   String   @unique
+  budgets Budget[]
+  pots    Pot[]
+}
+
+model Budget {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  category     Category @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  maximumSpend Decimal  @db.Decimal(12, 2)
+  color        Color    @relation(fields: [colorId], references: [id])
+  colorId      String
+}
+
+model Pot {
   id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  name      String   @unique
+  target    Decimal  @db.Decimal(12, 2)
+  color     Color    @relation(fields: [colorId], references: [id])
+  colorId   String
+}
+
+model Transaction {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  date         DateTime
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  counterparty String
+  category     Category @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  amount       Decimal  @db.Decimal(12, 2)
 }
