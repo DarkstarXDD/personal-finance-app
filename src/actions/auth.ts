@@ -57,8 +57,25 @@ export async function loginUser(
     const errors = z.flattenError(parsed.error).fieldErrors
     return errors
   }
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: parsed.data.email },
+      select: { id: true, password: true },
+    })
+    if (!user)
+      return {
+        email: [
+          "No account found with this email address. Please check your email or sign up for a new account.",
+        ],
+      }
+    const isPasswordValid = await bcrypt.compare(
+      parsed.data.password,
+      user.password
+    )
+    if (!isPasswordValid)
+      return { password: ["Incorrect password. Please try again."] }
+  } catch {
+    return { email: ["Something went wrong. Please try again."] }
+  }
   return null
 }
-
-// const password = await bcrypt.compare("jane1234", passwordHash)
-// console.log(password)
