@@ -9,7 +9,7 @@ import {
 } from "react-aria-components"
 
 import Card from "@/components/ui/Card"
-import CloseButton from "@/components/ui/CloseButton"
+import IconButton from "@/components/ui/IconButton"
 
 import type { ReactNode } from "react"
 
@@ -49,7 +49,7 @@ function Dialog({
               >
                 {title}
               </RacHeading>
-              <CloseButton slot="close" />
+              <IconButton variant="close" slot="close" />
             </div>
             {children}
           </Card>
