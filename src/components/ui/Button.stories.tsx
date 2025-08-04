@@ -5,12 +5,13 @@ import Button from "@/components/ui/Button"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
-  title: "Components/UI/Button",
+  title: "Components/UI/Buttons/Button",
   component: Button,
   args: {
     children: "Placeholder",
     variant: "primary",
     isDisabled: false,
+    isPending: false,
     onPress: fn(),
   },
   argTypes: {
@@ -20,7 +21,6 @@ const meta = {
         "Overall appearance of the button. Defines the background color and the corresponding foreground color.",
       options: ["primary", "secondary", "tertiary", "destructive", "close"],
       table: {
-        defaultValue: { summary: "primary" },
         type: {
           summary:
             '"primary" | "secondary" | "tertiary" | "destructive" | "close"',
@@ -62,16 +62,17 @@ export const Destructive: Story = {
   },
 }
 
+export const Loading: Story = {
+  args: {
+    variant: "primary",
+    isPending: true,
+  },
+}
+
 export const Disabled: Story = {
   args: {
     variant: "primary",
     isDisabled: true,
-  },
-}
-
-export const Close: Story = {
-  args: {
-    variant: "close",
   },
 }
 
@@ -90,10 +91,12 @@ export const All: Story = {
       <Button {...args} variant="destructive">
         Destructive
       </Button>
+      <Button {...args} variant="primary" isPending>
+        Disabled
+      </Button>
       <Button {...args} variant="primary" isDisabled>
         Disabled
       </Button>
-      <Button {...args} variant="close" />
     </div>
   ),
   parameters: { controls: { disable: true } },

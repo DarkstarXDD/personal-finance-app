@@ -8,8 +8,8 @@ import {
   type ModalOverlayProps as RacModalOverlayProps,
 } from "react-aria-components"
 
-import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
+import IconButton from "@/components/ui/IconButton"
 
 import type { ReactNode } from "react"
 
@@ -49,7 +49,7 @@ function Dialog({
               >
                 {title}
               </RacHeading>
-              <Button variant="close" slot="close" />
+              <IconButton variant="close" slot="close" />
             </div>
             {children}
           </Card>

@@ -61,7 +61,9 @@ export const Controlled: Story = {
 
       return (
         <>
-          <Button onPress={() => setIsDialogOpen(true)}>Open Dialog</Button>
+          <Button variant="primary" onPress={() => setIsDialogOpen(true)}>
+            Open Dialog
+          </Button>
           <Dialog
             {...args}
             isOpen={isDialogOpen}
@@ -72,7 +74,9 @@ export const Controlled: Story = {
                 This is a dialog content area. You can place any content here,
                 such as forms, text, or other components.
               </p>
-              <Button slot="close">Close Dialog</Button>
+              <Button variant="primary" slot="close">
+                Close Dialog
+              </Button>
             </div>
           </Dialog>
         </>

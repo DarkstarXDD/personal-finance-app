@@ -73,7 +73,7 @@ export default function LoginForm() {
               )}
             />
           </div>
-          <Button type="submit" className="w-full" isPending={isSubmitting}>
+          <Button variant="primary" type="submit" isPending={isSubmitting}>
             Login
           </Button>
         </form>
