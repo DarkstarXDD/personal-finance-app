@@ -11,6 +11,7 @@ const meta = {
     children: "Placeholder",
     variant: "primary",
     isDisabled: false,
+    isPending: false,
     onPress: fn(),
   },
   argTypes: {
@@ -61,6 +62,13 @@ export const Destructive: Story = {
   },
 }
 
+export const Loading: Story = {
+  args: {
+    variant: "primary",
+    isPending: true,
+  },
+}
+
 export const Disabled: Story = {
   args: {
     variant: "primary",
@@ -82,6 +90,9 @@ export const All: Story = {
       </Button>
       <Button {...args} variant="destructive">
         Destructive
+      </Button>
+      <Button {...args} variant="primary" isPending>
+        Disabled
       </Button>
       <Button {...args} variant="primary" isDisabled>
         Disabled
