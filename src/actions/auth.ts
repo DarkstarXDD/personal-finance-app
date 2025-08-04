@@ -1,6 +1,7 @@
 "use server"
 
 import bcrypt from "bcryptjs"
+import { redirect } from "next/navigation"
 import z from "zod"
 
 import { prisma, Prisma } from "@/lib/prisma"
@@ -42,7 +43,7 @@ export async function registerUser(
       }
     return { email: ["Something went wrong. Please try again."] }
   }
-  return null
+  redirect("/")
 }
 
 export type LoginUserErrors = {
@@ -80,5 +81,5 @@ export async function loginUser(
   } catch {
     return { email: ["Something went wrong. Please try again."] }
   }
-  return null
+  redirect("/")
 }
