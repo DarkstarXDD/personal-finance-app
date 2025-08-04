@@ -14,6 +14,10 @@ const dirname =
 
 export default defineConfig({
   test: {
+    coverage: {
+      include: ["src/**"],
+      exclude: ["src/generated/**"],
+    },
     projects: [
       {
         extends: true,
