@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { loginUser } from "@/actions/auth"
+import { loginUser, type LoginUserErrors } from "@/actions/auth"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -30,7 +30,16 @@ export default function LoginForm() {
           onSubmit={handleSubmit(async (data) => {
             const response = await loginUser(data)
             if (response) {
-              setError("email", { message: response })
+              const errorKeys = Object.keys(
+                response
+              ) as (keyof LoginUserErrors)[]
+              errorKeys.forEach((key) =>
+                setError(
+                  key,
+                  { message: response[key]?.[0] },
+                  { shouldFocus: true }
+                )
+              )
             }
           })}
         >
