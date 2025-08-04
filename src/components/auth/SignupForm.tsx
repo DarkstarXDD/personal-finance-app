@@ -87,7 +87,7 @@ export default function SignupForm() {
               )}
             />
           </div>
-          <Button type="submit" className="w-full" isPending={isSubmitting}>
+          <Button variant="primary" type="submit" isPending={isSubmitting}>
             Create Account
           </Button>
         </form>

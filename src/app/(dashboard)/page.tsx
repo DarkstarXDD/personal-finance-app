@@ -1,3 +1,5 @@
+import CloseButton from "@/components/ui/CloseButton"
+
 export default function OverviewPage() {
-  return <h1>Overview</h1>
+  return <CloseButton />
 }

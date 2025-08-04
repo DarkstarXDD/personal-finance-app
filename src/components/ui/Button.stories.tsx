@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
-  title: "Components/UI/Button",
+  title: "Components/UI/Buttons/Button",
   component: Button,
   args: {
     children: "Placeholder",
@@ -20,7 +20,6 @@ const meta = {
         "Overall appearance of the button. Defines the background color and the corresponding foreground color.",
       options: ["primary", "secondary", "tertiary", "destructive", "close"],
       table: {
-        defaultValue: { summary: "primary" },
         type: {
           summary:
             '"primary" | "secondary" | "tertiary" | "destructive" | "close"',
@@ -69,12 +68,6 @@ export const Disabled: Story = {
   },
 }
 
-export const Close: Story = {
-  args: {
-    variant: "close",
-  },
-}
-
 export const All: Story = {
   render: (args) => (
     <div className="flex flex-wrap gap-4">
@@ -93,7 +86,6 @@ export const All: Story = {
       <Button {...args} variant="primary" isDisabled>
         Disabled
       </Button>
-      <Button {...args} variant="close" />
     </div>
   ),
   parameters: { controls: { disable: true } },
