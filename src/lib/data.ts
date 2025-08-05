@@ -1,0 +1,17 @@
+export const colors = [
+  { id: "0", name: "army", label: "Army", value: "#7e8f5f" },
+  { id: "1", name: "blue", label: "Blue", value: "#3e81b1" },
+  { id: "2", name: "brown", label: "Brown", value: "#91664e" },
+  { id: "3", name: "cyan", label: "Cyan", value: "#82c9d7" },
+  { id: "4", name: "gold", label: "Gold", value: "#cab462" },
+  { id: "5", name: "green", label: "Green", value: "#277c77" },
+  { id: "6", name: "grey", label: "Grey", value: "#969fab" },
+  { id: "7", name: "lavender", label: "Lavender", value: "#ae81ba" },
+  { id: "8", name: "magenta", label: "Magenta", value: "#914e6d" },
+  { id: "9", name: "navy", label: "Navy", value: "#626070" },
+  { id: "10", name: "orange", label: "Orange", value: "#be6d4b" },
+  { id: "11", name: "purple", label: "Purple", value: "#826db0" },
+  { id: "12", name: "red", label: "Red", value: "#c94635" },
+  { id: "13", name: "turquoise", label: "Turquoise", value: "#597c7c" },
+  { id: "14", name: "yellow", label: "Yellow", value: "#f1ccab" },
+]

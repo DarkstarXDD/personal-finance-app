@@ -20,6 +20,7 @@ const meta = {
     labelVariant: { control: "select", options: ["primary", "secondary"] },
     items: { table: { disable: true } },
     children: { table: { disable: true } },
+    ref: { table: { disable: true } },
   },
 } satisfies Meta<typeof Select>
 

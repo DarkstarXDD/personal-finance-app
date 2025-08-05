@@ -1,32 +1,117 @@
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm, Controller } from "react-hook-form"
+
+import { createNewPot, CreateNewPotErrors } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
+import { colors } from "@/lib/data"
+import { potSchema } from "@/lib/schemas"
 
 export default function NewPotDialog() {
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { isSubmitting },
+  } = useForm({
+    resolver: zodResolver(potSchema),
+    defaultValues: { name: "", target: "", theme: "" },
+  })
+
   return (
     <DialogTrigger>
       <Button variant="primary">+ Add New Pot</Button>
       <Dialog title="Add New Pot">
-        <form className="grid gap-5">
+        <form
+          className="grid gap-5"
+          onSubmit={handleSubmit(async (data) => {
+            const response = await createNewPot(data)
+            if (response) {
+              const errorKeys = Object.keys(
+                response
+              ) as (keyof CreateNewPotErrors)[]
+              errorKeys.forEach((key) =>
+                setError(
+                  key,
+                  { message: response[key]?.[0] },
+                  { shouldFocus: true }
+                )
+              )
+            }
+          })}
+        >
           <p className="text-grey-500 text-sm leading-normal font-normal">
             Create a pot to set savings targets. These can help keep you on
             track as you save for special purchases.
           </p>
           <div className="grid gap-4">
-            <TextField
-              label="Pot Name"
-              placeholder="e.g. Rainy Days"
-              description="Max 30 characters"
+            <Controller
+              name="name"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  label="Pot Name"
+                  placeholder="e.g. Rainy Days"
+                  description="Max 30 characters"
+                  {...field}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                />
+              )}
             />
-            <TextField label="Target" placeholder="e.g. 2000" />
-            <Select label="Theme" placeholder="Select a color">
-              <SelectItem>Red</SelectItem>
-              <SelectItem>Green</SelectItem>
-              <SelectItem>Purple</SelectItem>
-            </Select>
+            <Controller
+              name="target"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  label="Target"
+                  placeholder="e.g. 2000"
+                  {...field}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="theme"
+              control={control}
+              render={({
+                field: { name, value, onChange, ref },
+                fieldState: { invalid, error },
+              }) => (
+                <Select
+                  label="Theme"
+                  placeholder="Select a color"
+                  name={name}
+                  selectedKey={value}
+                  onSelectionChange={(selected) => onChange(selected)}
+                  ref={ref}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                  items={colors}
+                >
+                  {(item) => (
+                    <SelectItem textValue={item.label}>
+                      <div className="flex items-center justify-start gap-3">
+                        <span
+                          className="size-4 rounded-full"
+                          style={{ backgroundColor: item.value }}
+                        />
+                        <span>{item.label}</span>
+                      </div>
+                    </SelectItem>
+                  )}
+                </Select>
+              )}
+            />
           </div>
-          <Button variant="primary">Add Pot</Button>
+          <Button variant="primary" type="submit" isPending={isSubmitting}>
+            Add Pot
+          </Button>
         </form>
       </Dialog>
     </DialogTrigger>

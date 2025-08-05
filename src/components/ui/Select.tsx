@@ -19,7 +19,7 @@ import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
 import Label, { type LabelVariants } from "@/components/ui/Label"
 
-import type { ReactNode } from "react"
+import type { ReactNode, Ref } from "react"
 
 const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
@@ -35,7 +35,7 @@ const selectStyles = tv({
       "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
     mobileIcon: "size-5",
     popoverDiv:
-      "border-grey-200 w-(--trigger-width) rounded-lg border bg-white px-1 py-1 shadow-xl",
+      "border-grey-200 max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
   },
 
   variants: {
@@ -95,6 +95,7 @@ type SelectProps<T extends object> = Omit<
   errorMessage?: string
   items?: Iterable<T>
   children?: ReactNode | ((item: T) => ReactNode)
+  ref?: Ref<HTMLDivElement>
 } & SelectStyles
 
 export function Select<T extends object>({
@@ -107,10 +108,11 @@ export function Select<T extends object>({
   layout,
   shouldHideOnMobile,
   children,
+  ref,
   ...props
 }: SelectProps<T>) {
   return (
-    <RacSelect isInvalid={isInvalid} {...props} className="group">
+    <RacSelect isInvalid={isInvalid} {...props} className="group" ref={ref}>
       {({ isOpen }) => (
         <>
           <div className={layoutWrapper({ layout })}>
@@ -174,7 +176,7 @@ export function Select<T extends object>({
 }
 
 const selectItemStyles = tv({
-  base: "rac-focus-visible:bg-beige-300 rac-pressed:bg-beige-300 rac-selected:bg-beige-300 rac-selected:font-bold rac-hover:bg-beige-300 text-grey-900 cursor-pointer rounded-md px-4 py-3 text-sm leading-normal font-normal outline-none",
+  base: "rac-focus-visible:bg-beige-100 rac-pressed:bg-beige-300 rac-selected:bg-beige-300 rac-selected:font-bold rac-hover:bg-beige-100 text-grey-900 cursor-pointer rounded-md px-4 py-3 text-sm leading-normal font-normal outline-none",
 })
 
 export function SelectItem({
