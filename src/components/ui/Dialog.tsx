@@ -37,7 +37,7 @@ function Dialog({
       className="bg-grey-900/50 fixed inset-0 flex flex-col items-center justify-center p-5"
     >
       <MotionRacModal
-        initial={{ scale: 0.75 }}
+        initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         className="w-full max-w-[35rem]"

@@ -1,3 +1,5 @@
-export default function PotsPage() {
-  return <h1>Pots</h1>
+import PotsPage from "@/components/pots/PotsPage"
+
+export default function Page() {
+  return <PotsPage />
 }
