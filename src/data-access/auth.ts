@@ -1,10 +1,11 @@
 import "server-only"
 
 import { cookies } from "next/headers"
+import { cache } from "react"
 
 import { verifyToken } from "@/lib/session"
 
-export async function verifySession() {
+export const verifySession = cache(async () => {
   const cookieStore = await cookies()
   const sessionCookie = cookieStore.get("session")
 
@@ -14,4 +15,4 @@ export async function verifySession() {
   if (!session) return null
 
   return session.userId
-}
+})
