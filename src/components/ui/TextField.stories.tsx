@@ -11,11 +11,11 @@ const meta = {
     label: "Text Field",
     placeholder: "Placeholder",
     isInvalid: false,
+    isDisabled: false,
   },
   argTypes: {
     icon: { table: { disable: true } },
     ref: { table: { disable: true } },
-    isInvalid: { control: "boolean" },
   },
 } satisfies Meta<typeof TextField>
 
@@ -26,22 +26,19 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 
 export const WithIcon: Story = {
-  args: {
-    icon: PiCurrencyDollarSimple,
-  },
+  args: { icon: PiCurrencyDollarSimple },
 }
 
 export const WithDescription: Story = {
-  args: {
-    description: "Helper text",
-  },
+  args: { description: "Helper text" },
 }
 
 export const WithErrorMessage: Story = {
-  args: {
-    errorMessage: "Field error message",
-    isInvalid: true,
-  },
+  args: { errorMessage: "Field error message", isInvalid: true },
+}
+
+export const Disabled: Story = {
+  args: { isDisabled: true },
 }
 
 export const All: Story = {
@@ -51,6 +48,7 @@ export const All: Story = {
       <TextField {...args} icon={PiCurrencyDollarSimple} />
       <TextField {...args} description="Helper text" />
       <TextField {...args} errorMessage="Field error message" isInvalid />
+      <TextField {...args} isDisabled />
     </div>
   ),
   parameters: { controls: { disable: true } },

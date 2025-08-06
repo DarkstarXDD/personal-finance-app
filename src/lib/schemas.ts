@@ -14,3 +14,15 @@ export const loginSchema = z.object({
 })
 
 export type LoginSchema = z.infer<typeof loginSchema>
+
+export const potSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, "Name cannot be empty")
+    .max(30, "Name must be 30 characters or less"),
+  target: z.string().min(1, "Target cannot be empty"),
+  theme: z.string().min(1, "Please select a color"),
+})
+
+export type PotSchema = z.infer<typeof potSchema>
