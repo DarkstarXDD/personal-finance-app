@@ -30,7 +30,7 @@ const selectStyles = tv({
     fieldDescription: "[grid-area:c]",
     fieldErrorMessage: "[grid-area:c]",
     button:
-      "rac-focus-visible:ring-2 group text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none sm:w-full",
+      "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none sm:w-full",
     buttonSpan:
       "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
     mobileIcon: "size-5",
