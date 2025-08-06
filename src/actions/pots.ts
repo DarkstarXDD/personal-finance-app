@@ -2,6 +2,7 @@
 
 import z from "zod"
 
+import * as pots from "@/data-access/pots"
 import { potSchema, type PotSchema } from "@/lib/schemas"
 
 export type CreateNewPotErrors = {
@@ -16,6 +17,9 @@ export async function createNewPot(
   const parsed = potSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  console.log(formData)
+  const response = await pots.createNewPot(formData)
+  if (!response.success)
+    return { name: ["Error creating pot. Please try again."] }
+
   return null
 }
