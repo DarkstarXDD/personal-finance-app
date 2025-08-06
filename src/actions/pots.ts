@@ -11,7 +11,7 @@ export type CreateNewPotErrors = {
 export async function createNewPot(
   formData: PotSchema
 ): Promise<CreateNewPotErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   const parsed = potSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors

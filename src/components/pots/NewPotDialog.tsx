@@ -8,10 +8,11 @@ import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
-import { colors } from "@/lib/data"
 import { potSchema } from "@/lib/schemas"
 
-export default function NewPotDialog() {
+import type { Colors } from "@/data-access/lookups"
+
+export default function NewPotDialog({ colors }: { colors: Colors }) {
   const {
     handleSubmit,
     control,
@@ -60,6 +61,7 @@ export default function NewPotDialog() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
+                  isDisabled={isSubmitting}
                 />
               )}
             />
@@ -73,6 +75,7 @@ export default function NewPotDialog() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
+                  isDisabled={isSubmitting}
                 />
               )}
             />
@@ -91,6 +94,7 @@ export default function NewPotDialog() {
                   onSelectionChange={(selected) => onChange(selected)}
                   ref={ref}
                   isInvalid={invalid}
+                  isDisabled={isSubmitting}
                   errorMessage={error?.message}
                   items={colors}
                 >
