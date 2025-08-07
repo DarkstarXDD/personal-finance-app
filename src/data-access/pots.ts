@@ -3,10 +3,14 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
-import { prisma } from "@/lib/prisma"
+import { prisma, Prisma } from "@/lib/prisma"
 import { PotSchema } from "@/lib/schemas"
 
-export async function createNewPot(formData: PotSchema) {
+import type { CreateNewPotErrors, DALReturn } from "@/lib/types"
+
+export async function createNewPot(
+  formData: PotSchema
+): Promise<DALReturn<CreateNewPotErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -20,7 +24,19 @@ export async function createNewPot(formData: PotSchema) {
       },
     })
     return { success: true }
-  } catch {
-    return { success: false }
+  } catch (e) {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === "P2002"
+    ) {
+      return {
+        success: false,
+        fieldErrors: { name: ["A pot with this name already exists."] },
+      }
+    }
+    return {
+      success: false,
+      fieldErrors: { name: ["Error creating pot. Please try again"] },
+    }
   }
 }
