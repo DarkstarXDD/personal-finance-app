@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "motion/react"
 import { ProgressBar } from "react-aria-components"
 
 import Button from "@/components/ui/Button"
@@ -25,7 +26,7 @@ export default function PotCard({ name, target, theme }: PotSchema) {
           <IconButton variant="options" className="ml-auto" />
         </div>
         <ProgressBar
-          value={159}
+          value={800}
           minValue={0}
           maxValue={Number(target)}
           formatOptions={{ style: "currency", currency: "USD" }}
@@ -39,9 +40,12 @@ export default function PotCard({ name, target, theme }: PotSchema) {
                 </span>
               </div>
               <div className="bg-beige-100 h-2 rounded">
-                <div
+                <motion.div
                   className="h-full rounded"
-                  style={{ backgroundColor: theme, width: percentage + "%" }}
+                  style={{ backgroundColor: theme }}
+                  initial={{ width: 0 }}
+                  animate={{ width: percentage + "%" }}
+                  transition={{ delay: 0.3 }}
                 />
               </div>
               <div className="text-grey-500 flex items-center justify-between text-xs leading-normal">
