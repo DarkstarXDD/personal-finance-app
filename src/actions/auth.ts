@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
-import z from "zod"
+import * as z from "zod"
 
 import { prisma, Prisma } from "@/lib/prisma"
 import {

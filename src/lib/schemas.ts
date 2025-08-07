@@ -1,4 +1,4 @@
-import z from "zod"
+import * as z from "zod"
 
 export const signupSchema = z.object({
   name: z.string().trim().min(1, "Name cannot be empty"),
