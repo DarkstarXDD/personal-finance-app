@@ -1,6 +1,6 @@
 "use server"
 
-import z from "zod"
+import * as z from "zod"
 
 import * as pots from "@/data-access/pots"
 import { potSchema, type PotSchema } from "@/lib/schemas"
