@@ -3,12 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { createNewPot, CreateNewPotErrors } from "@/actions/pots"
+import { createNewPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { potSchema } from "@/lib/schemas"
+import { CreateNewPotErrors } from "@/lib/types"
 
 import type { Colors } from "@/data-access/lookups"
 
