@@ -98,7 +98,7 @@ type SelectProps<T extends object> = Omit<
   ref?: Ref<HTMLDivElement>
 } & SelectStyles
 
-export function Select<T extends object>({
+function Select<T extends object>({
   label,
   labelVariant,
   description,
@@ -179,7 +179,7 @@ const selectItemStyles = tv({
   base: "rac-focus-visible:bg-beige-100 rac-pressed:bg-beige-300 rac-selected:bg-beige-300 rac-selected:font-bold rac-hover:bg-beige-100 text-grey-900 cursor-pointer rounded-md px-4 py-3 text-sm leading-normal font-normal outline-none",
 })
 
-export function SelectItem({
+function SelectItem({
   className,
   children,
   ...props
@@ -204,3 +204,5 @@ export function SelectItem({
     </RacListBoxItem>
   )
 }
+
+export { Select, SelectItem }
