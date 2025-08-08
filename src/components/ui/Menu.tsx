@@ -19,7 +19,7 @@ function MenuTrigger(props: RacMenuTriggerProps) {
 }
 
 const menuStyles = tv({
-  base: "border-grey-200 max-h-80 overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
+  base: "border-grey-200 max-h-80 overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl outline-none",
 })
 
 function Menu<T extends object>({
