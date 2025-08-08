@@ -45,7 +45,7 @@ export default function PotCard({ name, target, theme }: PotSchema) {
                   style={{ backgroundColor: theme }}
                   initial={{ width: 0 }}
                   animate={{ width: percentage + "%" }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.18 }}
                 />
               </div>
               <div className="text-grey-500 flex items-center justify-between text-xs leading-normal">
