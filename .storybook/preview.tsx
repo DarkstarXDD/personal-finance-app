@@ -1,5 +1,17 @@
+import { MINIMAL_VIEWPORTS } from "storybook/viewport"
+
 import type { Preview } from "@storybook/nextjs-vite"
 import "../src/app/globals.css"
+
+const customViewports = {
+  mediumMobile: {
+    name: "Medium Mobile",
+    styles: {
+      width: "375px",
+      height: "800px",
+    },
+  },
+}
 
 const preview: Preview = {
   tags: ["autodocs"],
@@ -7,12 +19,6 @@ const preview: Preview = {
   parameters: {
     layout: "centered",
     a11y: { test: "error" },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
     backgrounds: {
       options: {
         dark: { name: "Dark", value: "#201f23" },
@@ -20,6 +26,7 @@ const preview: Preview = {
         neutral: { name: "Neutral", value: "#f8f5f1" },
       },
     },
+    viewport: { options: { ...MINIMAL_VIEWPORTS, ...customViewports } },
   },
 
   initialGlobals: {

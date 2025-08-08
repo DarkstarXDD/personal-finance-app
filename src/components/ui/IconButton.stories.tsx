@@ -21,6 +21,7 @@ const meta = {
         defaultValue: { summary: "close" },
       },
     },
+    className: { table: { disable: true } },
   },
 } satisfies Meta<typeof IconButton>
 

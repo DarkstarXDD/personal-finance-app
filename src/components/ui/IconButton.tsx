@@ -9,6 +9,7 @@ import { PiDotsThreeOutlineFill as OptionsIcon } from "react-icons/pi"
 import { tv, type VariantProps } from "tailwind-variants"
 
 import { buttonStyles } from "@/components/ui/Button"
+import { cn } from "@/lib/utils"
 
 const iconStyles = tv({
   base: "shrink-0",
@@ -27,16 +28,20 @@ type IconVariants = VariantProps<typeof iconStyles>
 
 export default function IconButton({
   variant,
+  className,
   ...props
-}: Omit<RacButtonProps, "children" | "className"> & IconVariants) {
+}: Omit<RacButtonProps, "children" | "className"> &
+  IconVariants & { className?: string }) {
   const Icon = variant === "options" ? OptionsIcon : CloseIcon
   return (
     <RacButton
       aria-label={variant === "options" ? "Options" : "Close"}
       {...props}
       className={buttonStyles({
-        className:
+        className: cn(
           "ring-beige-500 text-grey-500 rac-pressed:text-beige-500 rac-hover:text-beige-500 rounded-full bg-transparent p-0",
+          className
+        ),
       })}
     >
       <Icon className={iconStyles({ variant })} />
