@@ -8,6 +8,7 @@ import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import IconButton from "@/components/ui/IconButton"
 import Label from "@/components/ui/Label"
+import { MenuTrigger, Menu, MenuItem } from "@/components/ui/Menu"
 
 import type { PotSchema } from "@/lib/schemas"
 
@@ -23,7 +24,13 @@ export default function PotCard({ name, target, theme }: PotSchema) {
           <Heading variant="secondary" as="h2">
             {name}
           </Heading>
-          <IconButton variant="options" className="ml-auto" />
+          <MenuTrigger>
+            <IconButton variant="options" className="ml-auto" />
+            <Menu>
+              <MenuItem>Edit Pot</MenuItem>
+              <MenuItem className="text-red">Delete Pot</MenuItem>
+            </Menu>
+          </MenuTrigger>
         </div>
         <ProgressBar
           value={800}
