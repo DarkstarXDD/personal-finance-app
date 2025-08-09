@@ -66,7 +66,7 @@ const {
   buttonSpan,
 } = navbarStyles()
 
-export function Navbar({ className }: { className?: string }) {
+function Navbar({ className }: { className?: string }) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
@@ -130,7 +130,7 @@ const navbarItemStyles = tv({
 
 const { navLink, navLinkSpan } = navbarItemStyles()
 
-export function NavbarItem({
+function NavbarItem({
   label,
   href,
   icon: Icon,
@@ -166,3 +166,5 @@ export function NavbarItem({
     </NextLink>
   )
 }
+
+export { Navbar, NavbarItem }
