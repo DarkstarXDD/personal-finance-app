@@ -30,7 +30,7 @@ const NavbarContext = createContext<NavbarContextType>({
 
 const navbarStyles = tv({
   slots: {
-    nav: "bg-grey-900 w-full rounded-t-lg px-4 pt-2 lg:flex lg:min-h-full lg:flex-col lg:justify-start lg:gap-6 lg:rounded-none lg:rounded-r-2xl lg:p-0 lg:pr-6 lg:pb-6",
+    nav: "bg-grey-900 w-full rounded-t-lg px-4 pt-2 lg:flex lg:max-h-dvh lg:flex-col lg:justify-start lg:gap-6 lg:rounded-none lg:rounded-r-2xl lg:p-0 lg:pr-6 lg:pb-6",
     logoDivSmall: "hidden p-10 lg:block",
     logoDivLarge: "hidden p-10 lg:block",
     navItemsWrapper:
