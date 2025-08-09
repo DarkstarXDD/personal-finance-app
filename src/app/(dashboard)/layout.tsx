@@ -42,8 +42,10 @@ export default function RootLayout({
       <body
         className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 min-h-dvh tracking-normal lg:grid lg:grid-cols-[auto_1fr]`}
       >
-        <Navbar className="absolute bottom-0 lg:static" />
-        <div className="px-4 py-6 md:px-10 md:py-8">{children}</div>
+        <Navbar className="fixed bottom-0 lg:static" />
+        <div className="px-4 py-6 pb-16.5 md:px-10 md:py-8 md:pb-26.5 lg:pb-8">
+          {children}
+        </div>
       </body>
     </html>
   )
