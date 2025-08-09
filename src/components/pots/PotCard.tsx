@@ -56,7 +56,9 @@ export default function PotCard({ name, target, theme }: PotSchema) {
                 />
               </div>
               <div className="text-grey-500 flex items-center justify-between text-xs leading-normal">
-                <span className="font-bold">{percentage}%</span>
+                <span className="font-bold">
+                  {Math.round(percentage ?? 0)}%
+                </span>
                 <span className="font-normal">Target of ${target}</span>
               </div>
             </div>
