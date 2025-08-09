@@ -78,7 +78,7 @@ function Navbar({ className }: { className?: string }) {
         <div className={logoDivLarge({ isExpanded })}>
           <Image src={logoLarge} alt="Finance" />
         </div>
-        <div className={navItemsWrapper()}>
+        <ul className={navItemsWrapper()}>
           <NavbarItem href="/" label="Overview" icon={OverviewIcon} />
           <NavbarItem
             href="/transactions"
@@ -92,7 +92,7 @@ function Navbar({ className }: { className?: string }) {
             label="Recurring Bills"
             icon={BillsIcon}
           />
-        </div>
+        </ul>
         <RacButton
           className="text-grey-300 rac-hover:text-grey-100 rac-pressed:text-grey-100 rac-focus-visible:ring-2 ring-grey-300 hidden cursor-pointer items-center justify-start gap-4 rounded-lg px-9 py-4 transition-colors outline-none lg:flex"
           onPress={() => setIsExpanded((prev) => !prev)}
@@ -108,9 +108,9 @@ function Navbar({ className }: { className?: string }) {
 const navbarItemStyles = tv({
   slots: {
     navLink:
-      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex flex-col items-center gap-1 rounded-t-lg border-b-4 px-4 pt-2 pb-2 transition-colors outline-none focus-visible:ring-3 md:px-5 lg:w-full lg:flex-row lg:justify-start lg:gap-4 lg:rounded-none lg:rounded-r-lg lg:border-b-0 lg:border-l-4 lg:px-8 lg:py-4",
-    navLinkSpan:
-      "hidden text-xs leading-normal font-bold md:block lg:text-base",
+      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex w-full flex-col items-center gap-1 rounded-t-lg border-b-4 px-4 pt-2 pb-2 transition-colors outline-none focus-visible:ring-3 md:px-5 lg:w-full lg:flex-row lg:justify-start lg:gap-4 lg:rounded-none lg:rounded-r-lg lg:border-b-0 lg:border-l-4 lg:px-8 lg:py-4",
+    navLinkText:
+      "hidden text-center text-xs leading-normal font-bold md:block lg:text-base",
   },
 
   variants: {
@@ -118,17 +118,17 @@ const navbarItemStyles = tv({
       true: {
         navLink:
           "bg-beige-100 text-green border-green hover:text-green active:text-green",
-        navLinkSpan: "text-grey-900",
+        navLinkText: "text-grey-900",
       },
     },
     isExpanded: {
-      true: { navLinkSpan: "lg:block" },
-      false: { navLinkSpan: "lg:hidden", navLink: "lg:rounded-r-none" },
+      true: { navLinkText: "lg:block" },
+      false: { navLinkText: "lg:hidden", navLink: "lg:rounded-r-none" },
     },
   },
 })
 
-const { navLink, navLinkSpan } = navbarItemStyles()
+const { navLink, navLinkText } = navbarItemStyles()
 
 function NavbarItem({
   label,
@@ -142,28 +142,25 @@ function NavbarItem({
   const { isExpanded } = useContext(NavbarContext)
   const currentSegment = useSelectedLayoutSegment()
 
-  let segmentNameFromHref: string | null = null
+  let segmentNameFromProps: string | null = null
 
   if (typeof href === "string") {
-    segmentNameFromHref = href.split("/").filter(Boolean)[0] || null
+    segmentNameFromProps = href.split("/").filter(Boolean)[0] || null
   }
 
-  const isActive = currentSegment === segmentNameFromHref
+  const isActive = currentSegment === segmentNameFromProps
 
   return (
-    <NextLink
-      {...props}
-      href={href}
-      className={navLink({
-        isActive: isActive,
-        isExpanded,
-      })}
-    >
-      <Icon className="size-6 shrink-0" />
-      <span className={navLinkSpan({ isActive: isActive, isExpanded })}>
-        {label}
-      </span>
-    </NextLink>
+    <li className="w-full max-w-26 md:max-w-none">
+      <NextLink
+        {...props}
+        href={href}
+        className={navLink({ isActive, isExpanded })}
+      >
+        <Icon className="size-6 shrink-0" />
+        <span className={navLinkText({ isActive, isExpanded })}>{label}</span>
+      </NextLink>
+    </li>
   )
 }
 
