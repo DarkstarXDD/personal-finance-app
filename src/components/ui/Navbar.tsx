@@ -35,6 +35,8 @@ const navbarStyles = tv({
     logoDivLarge: "hidden p-10 lg:block",
     navItemsWrapper:
       "flex items-center justify-between lg:grow lg:flex-col lg:items-start lg:justify-start lg:gap-1",
+    button:
+      "text-grey-300 rac-hover:text-grey-100 rac-pressed:text-grey-100 rac-focus-visible:ring-2 ring-grey-300 hidden cursor-pointer items-center justify-start gap-4 rounded-lg px-9 py-4 transition-colors outline-none lg:flex",
     buttonIcon: "size-6 shrink-0",
     buttonSpan: "text-base leading-normal font-bold",
   },
@@ -62,6 +64,7 @@ const {
   navItemsWrapper,
   logoDivSmall,
   logoDivLarge,
+  button,
   buttonIcon,
   buttonSpan,
 } = navbarStyles()
@@ -94,7 +97,7 @@ function Navbar({ className }: { className?: string }) {
           />
         </ul>
         <RacButton
-          className="text-grey-300 rac-hover:text-grey-100 rac-pressed:text-grey-100 rac-focus-visible:ring-2 ring-grey-300 hidden cursor-pointer items-center justify-start gap-4 rounded-lg px-9 py-4 transition-colors outline-none lg:flex"
+          className={button()}
           onPress={() => setIsExpanded((prev) => !prev)}
         >
           <PiArrowFatLinesLeft className={buttonIcon({ isExpanded })} />
