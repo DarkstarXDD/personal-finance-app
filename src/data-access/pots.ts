@@ -40,3 +40,15 @@ export async function createNewPot(
     }
   }
 }
+
+export async function getPots() {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  const pots = await prisma.pot.findMany({
+    where: { userId },
+    omit: { updatedAt: true, colorId: true, userId: true, createdAt: true },
+    include: { color: { select: { value: true } } },
+  })
+  return pots
+}
