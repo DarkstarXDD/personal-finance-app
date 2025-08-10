@@ -55,6 +55,7 @@ export default function SignupForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
+                  isDisabled={isSubmitting}
                 />
               )}
             />
@@ -68,6 +69,7 @@ export default function SignupForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
+                  isDisabled={isSubmitting}
                 />
               )}
             />
@@ -83,6 +85,7 @@ export default function SignupForm() {
                   isInvalid={invalid}
                   errorMessage={error?.message}
                   description="Password must be at least 8 characters"
+                  isDisabled={isSubmitting}
                 />
               )}
             />

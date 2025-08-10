@@ -55,6 +55,7 @@ export default function LoginForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
+                  isDisabled={isSubmitting}
                 />
               )}
             />
@@ -69,6 +70,7 @@ export default function LoginForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
+                  isDisabled={isSubmitting}
                 />
               )}
             />
