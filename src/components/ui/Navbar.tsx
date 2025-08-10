@@ -43,7 +43,7 @@ const navbarStyles = tv({
   variants: {
     isExpanded: {
       true: {
-        nav: "lg:w-75",
+        nav: "lg:w-70",
         logoDivSmall: "lg:hidden",
         logoDivLarge: "lg:block",
         buttonSpan: "lg:block",
