@@ -18,6 +18,7 @@ export default function NewPotDialog({ colors }: { colors: Colors }) {
     handleSubmit,
     control,
     setError,
+    reset,
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potSchema),
@@ -44,7 +45,9 @@ export default function NewPotDialog({ colors }: { colors: Colors }) {
                     { shouldFocus: true }
                   )
                 )
+                return
               }
+              reset()
               close()
             })}
           >
