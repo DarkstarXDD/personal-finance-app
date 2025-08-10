@@ -28,96 +28,99 @@ export default function NewPotDialog({ colors }: { colors: Colors }) {
     <DialogTrigger>
       <Button variant="primary">+ Add New Pot</Button>
       <Dialog title="Add New Pot">
-        <form
-          className="grid gap-5"
-          onSubmit={handleSubmit(async (data) => {
-            const response = await createNewPot(data)
-            if (response) {
-              const errorKeys = Object.keys(
-                response
-              ) as (keyof CreateNewPotErrors)[]
-              errorKeys.forEach((key) =>
-                setError(
-                  key,
-                  { message: response[key]?.[0] },
-                  { shouldFocus: true }
+        {({ close }) => (
+          <form
+            className="grid gap-5"
+            onSubmit={handleSubmit(async (data) => {
+              const response = await createNewPot(data)
+              if (response) {
+                const errorKeys = Object.keys(
+                  response
+                ) as (keyof CreateNewPotErrors)[]
+                errorKeys.forEach((key) =>
+                  setError(
+                    key,
+                    { message: response[key]?.[0] },
+                    { shouldFocus: true }
+                  )
                 )
-              )
-            }
-          })}
-        >
-          <p className="text-grey-500 text-sm leading-normal font-normal">
-            Create a pot to set savings targets. These can help keep you on
-            track as you save for special purchases.
-          </p>
-          <div className="grid gap-4">
-            <Controller
-              name="name"
-              control={control}
-              render={({ field, fieldState: { invalid, error } }) => (
-                <TextField
-                  label="Pot Name"
-                  placeholder="e.g. Rainy Days"
-                  description="Max 30 characters"
-                  {...field}
-                  isInvalid={invalid}
-                  errorMessage={error?.message}
-                  isDisabled={isSubmitting}
-                />
-              )}
-            />
-            <Controller
-              name="target"
-              control={control}
-              render={({ field, fieldState: { invalid, error } }) => (
-                <TextField
-                  label="Target"
-                  placeholder="e.g. 2000"
-                  {...field}
-                  isInvalid={invalid}
-                  errorMessage={error?.message}
-                  isDisabled={isSubmitting}
-                />
-              )}
-            />
-            <Controller
-              name="theme"
-              control={control}
-              render={({
-                field: { name, value, onChange, ref },
-                fieldState: { invalid, error },
-              }) => (
-                <Select
-                  label="Theme"
-                  placeholder="Select a color"
-                  name={name}
-                  selectedKey={value}
-                  onSelectionChange={(selected) => onChange(selected)}
-                  ref={ref}
-                  isInvalid={invalid}
-                  isDisabled={isSubmitting}
-                  errorMessage={error?.message}
-                  items={colors}
-                >
-                  {(item) => (
-                    <SelectItem textValue={item.label}>
-                      <div className="flex items-center justify-start gap-3">
-                        <span
-                          className="size-4 rounded-full"
-                          style={{ backgroundColor: item.value }}
-                        />
-                        <span>{item.label}</span>
-                      </div>
-                    </SelectItem>
-                  )}
-                </Select>
-              )}
-            />
-          </div>
-          <Button variant="primary" type="submit" isPending={isSubmitting}>
-            Add Pot
-          </Button>
-        </form>
+              }
+              close()
+            })}
+          >
+            <p className="text-grey-500 text-sm leading-normal font-normal">
+              Create a pot to set savings targets. These can help keep you on
+              track as you save for special purchases.
+            </p>
+            <div className="grid gap-4">
+              <Controller
+                name="name"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <TextField
+                    label="Pot Name"
+                    placeholder="e.g. Rainy Days"
+                    description="Max 30 characters"
+                    {...field}
+                    isInvalid={invalid}
+                    errorMessage={error?.message}
+                    isDisabled={isSubmitting}
+                  />
+                )}
+              />
+              <Controller
+                name="target"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <TextField
+                    label="Target"
+                    placeholder="e.g. 2000"
+                    {...field}
+                    isInvalid={invalid}
+                    errorMessage={error?.message}
+                    isDisabled={isSubmitting}
+                  />
+                )}
+              />
+              <Controller
+                name="theme"
+                control={control}
+                render={({
+                  field: { name, value, onChange, ref },
+                  fieldState: { invalid, error },
+                }) => (
+                  <Select
+                    label="Theme"
+                    placeholder="Select a color"
+                    name={name}
+                    selectedKey={value}
+                    onSelectionChange={(selected) => onChange(selected)}
+                    ref={ref}
+                    isInvalid={invalid}
+                    isDisabled={isSubmitting}
+                    errorMessage={error?.message}
+                    items={colors}
+                  >
+                    {(item) => (
+                      <SelectItem textValue={item.label}>
+                        <div className="flex items-center justify-start gap-3">
+                          <span
+                            className="size-4 rounded-full"
+                            style={{ backgroundColor: item.value }}
+                          />
+                          <span>{item.label}</span>
+                        </div>
+                      </SelectItem>
+                    )}
+                  </Select>
+                )}
+              />
+            </div>
+            <Button variant="primary" type="submit" isPending={isSubmitting}>
+              Add Pot
+            </Button>
+          </form>
+        )}
       </Dialog>
     </DialogTrigger>
   )

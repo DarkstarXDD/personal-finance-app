@@ -8,6 +8,7 @@ import {
   Dialog as RacDialog,
   Heading as RacHeading,
   type ModalOverlayProps as RacModalOverlayProps,
+  type DialogRenderProps as RacDialogRenderProps,
 } from "react-aria-components"
 
 import Card from "@/components/ui/Card"
@@ -28,7 +29,7 @@ function Dialog({
   ...props
 }: Omit<RacModalOverlayProps, "children"> & {
   title: string
-  children?: ReactNode
+  children?: ReactNode | ((opts: RacDialogRenderProps) => ReactNode)
   role?: "dialog" | "alertdialog"
 }) {
   return (
@@ -43,18 +44,22 @@ function Dialog({
         className="w-full max-w-[35rem]"
       >
         <RacDialog className="outline-none" role={role}>
-          <Card theme="light" padding="lg">
-            <div className="mb-6 flex items-center justify-between gap-2 md:mb-5">
-              <RacHeading
-                slot="title"
-                className="text-grey-900 text-xl leading-tight font-bold md:text-3xl"
-              >
-                {title}
-              </RacHeading>
-              <IconButton variant="close" slot="close" />
-            </div>
-            {children}
-          </Card>
+          {(dialogRenderProps) => (
+            <Card theme="light" padding="lg">
+              <div className="mb-6 flex items-center justify-between gap-2 md:mb-5">
+                <RacHeading
+                  slot="title"
+                  className="text-grey-900 text-xl leading-tight font-bold md:text-3xl"
+                >
+                  {title}
+                </RacHeading>
+                <IconButton variant="close" slot="close" />
+              </div>
+              {typeof children === "function"
+                ? children(dialogRenderProps)
+                : children}
+            </Card>
+          )}
         </RacDialog>
       </MotionRacModal>
     </RacModalOverlay>

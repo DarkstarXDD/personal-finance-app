@@ -30,6 +30,10 @@ const meta = {
         type: { summary: '"dialog" | "alertdialog"' },
       },
     },
+    children: {
+      control: { disable: true },
+      table: { type: { summary: "ReactNode | ({close}) => ReactNode" } },
+    },
   },
 } satisfies Meta<typeof Dialog>
 
