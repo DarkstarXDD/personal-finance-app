@@ -17,7 +17,7 @@ export default async function PotsPage() {
         </Heading>
         <NewPotDialog colors={colors} />
       </div>
-      <div>
+      <div className="grid gap-6 lg:grid-cols-2">
         {pots.map(({ id, name, target, color }) => (
           <PotCard
             key={id}
