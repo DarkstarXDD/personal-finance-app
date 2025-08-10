@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import * as z from "zod"
 
 import * as pots from "@/data-access/pots"
@@ -17,5 +18,6 @@ export async function createNewPot(
   const response = await pots.createNewPot(formData)
   if (!response.success) return response.fieldErrors
 
+  revalidatePath("/login")
   return null
 }
