@@ -53,13 +53,14 @@ export async function getPots() {
   return pots
 }
 
-export async function deletePot(potId: string) {
+export async function deletePot(potId: string): Promise<{ success: boolean }> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
   try {
-    await prisma.pot.delete({ where: { id: potId } })
-  } catch (e) {
-    console.log(e)
+    await prisma.pot.delete({ where: { id: potId, userId } })
+    return { success: true }
+  } catch {
+    return { success: false }
   }
 }

@@ -15,6 +15,10 @@ export const loginSchema = z.object({
 
 export type LoginSchema = z.infer<typeof loginSchema>
 
+export const idSchema = z.object({ id: z.cuid() })
+
+export type IdSchema = z.infer<typeof idSchema>
+
 export const potSchema = z.object({
   name: z
     .string()
