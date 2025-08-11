@@ -22,6 +22,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    id: "exampleid1",
     name: "New Computer",
     target: "2000",
     theme: "#277c78",

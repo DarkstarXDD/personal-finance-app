@@ -1,8 +1,10 @@
 "use client"
 
 import { motion } from "motion/react"
+import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
+import DeletePotDialog from "@/components/pots/DeletePotDialog"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -12,7 +14,14 @@ import { MenuTrigger, Menu, MenuItem } from "@/components/ui/Menu"
 
 import type { PotSchema } from "@/lib/schemas"
 
-export default function PotCard({ name, target, theme }: PotSchema) {
+export default function PotCard({
+  id,
+  name,
+  target,
+  theme,
+}: PotSchema & { id: string }) {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
   return (
     <Card padding="sm">
       <div className="grid gap-8">
@@ -28,7 +37,12 @@ export default function PotCard({ name, target, theme }: PotSchema) {
             <IconButton variant="options" className="ml-auto" />
             <Menu>
               <MenuItem>Edit Pot</MenuItem>
-              <MenuItem className="text-red">Delete Pot</MenuItem>
+              <MenuItem
+                className="text-red"
+                onAction={() => setIsDeleteDialogOpen(true)}
+              >
+                Delete Pot
+              </MenuItem>
             </Menu>
           </MenuTrigger>
         </div>
@@ -73,6 +87,13 @@ export default function PotCard({ name, target, theme }: PotSchema) {
           </Button>
         </div>
       </div>
+
+      <DeletePotDialog
+        potId={id}
+        potName={name}
+        isOpen={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      />
     </Card>
   )
 }

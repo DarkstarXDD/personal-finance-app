@@ -18,6 +18,11 @@ export async function createNewPot(
   const response = await pots.createNewPot(formData)
   if (!response.success) return response.fieldErrors
 
-  revalidatePath("/login")
+  revalidatePath("/pots")
   return null
+}
+
+export async function deletePot(potId: string) {
+  await pots.deletePot(potId)
+  revalidatePath("/pots")
 }
