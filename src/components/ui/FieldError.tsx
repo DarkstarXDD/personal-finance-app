@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants"
 
 import type { ReactNode } from "react"
 
-const fieldErrorStyles = tv({
+export const fieldErrorStyles = tv({
   base: "text-red text-xs leading-normal font-normal",
 })
 

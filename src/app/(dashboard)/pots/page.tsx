@@ -7,7 +7,6 @@ import { getPots } from "@/data-access/pots"
 export default async function PotsPage() {
   const colors = await getColors()
   const pots = await getPots()
-  console.log(pots)
 
   return (
     <main className="grid gap-8">
@@ -21,6 +20,7 @@ export default async function PotsPage() {
         {pots.map(({ id, name, target, color }) => (
           <PotCard
             key={id}
+            id={id}
             name={name}
             target={target.toString()}
             theme={color.value}
