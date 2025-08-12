@@ -17,7 +17,9 @@ export default function EditPotDialog({
   isOpen,
   onOpenChange,
 }: {
-  potData: PotWithIdSchema
+  potData: Omit<PotWithIdSchema, "color"> & {
+    color: { id: string; value: string }
+  }
   colors: Colors
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
@@ -31,11 +33,11 @@ export default function EditPotDialog({
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potWithIdSchema),
-    defaultValues: { potId, name, target, color },
+    defaultValues: { potId, name, target, color: color.id },
   })
 
   useEffect(() => {
-    reset({ potId, name, target, color })
+    reset({ potId, name, target, color: color.id })
   }, [potId, name, target, color, reset])
 
   return (

@@ -16,13 +16,17 @@ import { Colors } from "@/data-access/lookups"
 
 import type { PotWithIdSchema } from "@/lib/schemas"
 
+type PotCardProps = {
+  colors: Colors
+  potData: Omit<PotWithIdSchema, "color"> & {
+    color: { id: string; value: string }
+  }
+}
+
 export default function PotCard({
-  potId,
-  name,
-  target,
-  color,
+  potData: { potId, name, target, color },
   colors,
-}: PotWithIdSchema & { colors: Colors }) {
+}: PotCardProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
@@ -32,7 +36,7 @@ export default function PotCard({
         <div className="flex items-center justify-start gap-4">
           <span
             className="size-4 rounded-full"
-            style={{ backgroundColor: color }}
+            style={{ backgroundColor: color.value }}
           />
           <Heading variant="secondary" as="h2">
             {name}
@@ -69,7 +73,7 @@ export default function PotCard({
               <div className="bg-beige-100 h-2 rounded">
                 <motion.div
                   className="h-full rounded"
-                  style={{ backgroundColor: color }}
+                  style={{ backgroundColor: color.value }}
                   initial={{ width: 0 }}
                   animate={{ width: percentage + "%" }}
                   transition={{ delay: 0.18 }}
@@ -95,8 +99,7 @@ export default function PotCard({
       </div>
 
       <DeletePotDialog
-        potId={potId}
-        potName={name}
+        potData={{ potId, name }}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
       />

@@ -48,7 +48,7 @@ export async function getPots() {
   const pots = await prisma.pot.findMany({
     where: { userId },
     omit: { updatedAt: true, colorId: true, userId: true, createdAt: true },
-    include: { color: { select: { value: true } } },
+    include: { color: { select: { id: true, value: true } } },
   })
   return pots
 }
