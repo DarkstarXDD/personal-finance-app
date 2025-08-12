@@ -20,7 +20,7 @@ export default function PotCard({
   potId,
   name,
   target,
-  theme,
+  color,
   colors,
 }: PotWithIdSchema & { colors: Colors }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
@@ -32,7 +32,7 @@ export default function PotCard({
         <div className="flex items-center justify-start gap-4">
           <span
             className="size-4 rounded-full"
-            style={{ backgroundColor: theme }}
+            style={{ backgroundColor: color }}
           />
           <Heading variant="secondary" as="h2">
             {name}
@@ -69,7 +69,7 @@ export default function PotCard({
               <div className="bg-beige-100 h-2 rounded">
                 <motion.div
                   className="h-full rounded"
-                  style={{ backgroundColor: theme }}
+                  style={{ backgroundColor: color }}
                   initial={{ width: 0 }}
                   animate={{ width: percentage + "%" }}
                   transition={{ delay: 0.18 }}
@@ -101,7 +101,7 @@ export default function PotCard({
         onOpenChange={setIsDeleteDialogOpen}
       />
       <EditPotDialog
-        potData={{ potId, name, target, theme }}
+        potData={{ potId, name, target, color }}
         colors={colors}
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}

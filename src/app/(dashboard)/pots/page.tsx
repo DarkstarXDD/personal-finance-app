@@ -23,7 +23,7 @@ export default async function PotsPage() {
             potId={id}
             name={name}
             target={target.toString()}
-            theme={color.value}
+            color={color.value}
             colors={colors}
           />
         ))}

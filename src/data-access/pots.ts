@@ -20,7 +20,7 @@ export async function createNewPot(
         userId,
         name: formData.name,
         target: formData.target,
-        colorId: formData.theme,
+        colorId: formData.color,
       },
     })
     return { success: true }
@@ -65,7 +65,7 @@ export async function editPot(
       data: {
         name: formData.name,
         target: formData.target,
-        colorId: formData.theme,
+        colorId: formData.color,
       },
     })
     return { success: true }

@@ -11,7 +11,7 @@ import { PotWithIdSchema, potWithIdSchema } from "@/lib/schemas"
 import { CreateNewPotErrors } from "@/lib/types"
 
 export default function EditPotDialog({
-  potData: { potId, name, target, theme },
+  potData: { potId, name, target, color },
   colors,
   isOpen,
   onOpenChange,
@@ -30,10 +30,10 @@ export default function EditPotDialog({
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potWithIdSchema),
-    defaultValues: { potId, name, target, theme },
+    defaultValues: { potId, name, target, color },
   })
 
-  console.log(theme)
+  console.log(color)
 
   return (
     <Dialog title="Edit Pot" isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -95,7 +95,7 @@ export default function EditPotDialog({
               )}
             />
             <Controller
-              name="theme"
+              name="color"
               control={control}
               render={({
                 field: { name, value, onChange, ref },
