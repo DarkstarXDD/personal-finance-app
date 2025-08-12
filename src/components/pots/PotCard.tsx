@@ -5,21 +5,25 @@ import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
 import DeletePotDialog from "@/components/pots/DeletePotDialog"
+import EditPotDialog from "@/components/pots/EditPotDialog"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import IconButton from "@/components/ui/IconButton"
 import Label from "@/components/ui/Label"
 import { MenuTrigger, Menu, MenuItem } from "@/components/ui/Menu"
+import { Colors } from "@/data-access/lookups"
 
-import type { PotSchema } from "@/lib/schemas"
+import type { PotWithIdSchema } from "@/lib/schemas"
 
 export default function PotCard({
-  id,
+  potId,
   name,
   target,
   theme,
-}: PotSchema & { id: string }) {
+  colors,
+}: PotWithIdSchema & { colors: Colors }) {
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   return (
@@ -36,7 +40,9 @@ export default function PotCard({
           <MenuTrigger>
             <IconButton variant="options" className="ml-auto" />
             <Menu>
-              <MenuItem>Edit Pot</MenuItem>
+              <MenuItem onAction={() => setIsEditDialogOpen(true)}>
+                Edit Pot
+              </MenuItem>
               <MenuItem
                 className="text-red"
                 onAction={() => setIsDeleteDialogOpen(true)}
@@ -89,10 +95,16 @@ export default function PotCard({
       </div>
 
       <DeletePotDialog
-        potId={id}
+        potId={potId}
         potName={name}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
+      />
+      <EditPotDialog
+        potData={{ potId, name, target, theme }}
+        colors={colors}
+        isOpen={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
       />
     </Card>
   )

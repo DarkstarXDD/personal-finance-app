@@ -20,10 +20,11 @@ export default async function PotsPage() {
         {pots.map(({ id, name, target, color }) => (
           <PotCard
             key={id}
-            id={id}
+            potId={id}
             name={name}
             target={target.toString()}
             theme={color.value}
+            colors={colors}
           />
         ))}
       </div>
