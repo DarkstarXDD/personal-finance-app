@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
 import { editPot } from "@/actions/pots"
@@ -33,7 +34,9 @@ export default function EditPotDialog({
     defaultValues: { potId, name, target, color },
   })
 
-  console.log(color)
+  useEffect(() => {
+    reset({ potId, name, target, color })
+  }, [potId, name, target, color, reset])
 
   return (
     <Dialog title="Edit Pot" isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -55,7 +58,6 @@ export default function EditPotDialog({
               )
               return
             }
-            reset()
             close()
           })}
         >
