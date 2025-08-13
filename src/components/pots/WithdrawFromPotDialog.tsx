@@ -58,6 +58,10 @@ export default function WithdrawFromPotDialog({
               formatOptions={{ style: "currency", currency: "USD" }}
             >
               {({ percentage, valueText }) => {
+                const currentAmountAsPercentage = Math.round(
+                  (Number(currentAmount) / Number(target)) * 100
+                )
+
                 const amountInInputAsPercentage = Math.round(
                   (Number(amountInInput) / Number(target)) * 100
                 )
@@ -82,9 +86,14 @@ export default function WithdrawFromPotDialog({
                         }}
                       />
                       <motion.div
-                        className="bg-red h-full origin-right rounded-r"
+                        className={`bg-red h-full origin-right ${draftAmountInPot < 0 ? "rounded" : "rounded-r"}`}
                         initial={{ width: 0 }}
-                        animate={{ width: amountInInputAsPercentage + "%" }}
+                        animate={{
+                          width:
+                            draftAmountInPot < 0
+                              ? currentAmountAsPercentage + "%"
+                              : amountInInputAsPercentage + "%",
+                        }}
                       />
                     </div>
                     <div className="text-grey-500 flex items-center justify-between text-xs leading-normal">
