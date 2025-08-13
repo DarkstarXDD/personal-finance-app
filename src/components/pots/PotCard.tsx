@@ -6,6 +6,7 @@ import { ProgressBar } from "react-aria-components"
 
 import DeletePotDialog from "@/components/pots/DeletePotDialog"
 import EditPotDialog from "@/components/pots/EditPotDialog"
+import WithdrawFromPotDialog from "@/components/pots/WithdrawFromPotDialog"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -92,9 +93,7 @@ export default function PotCard({
           <Button variant="secondary" className="w-full">
             + Add Money
           </Button>
-          <Button variant="secondary" className="w-full">
-            Withdraw
-          </Button>
+          <WithdrawFromPotDialog />
         </div>
       </div>
 
