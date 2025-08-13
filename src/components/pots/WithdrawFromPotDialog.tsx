@@ -34,11 +34,11 @@ export default function WithdrawFromPotDialog({
   })
 
   useEffect(() => {
-    reset({ potId, amountToUpdate: "0" })
+    reset({ potId, amountToUpdate: "" })
   }, [potId, currentAmount, reset])
 
   const amountInInput = watch("amountToUpdate")
-  const draftAmountInPot = Number(currentAmount) + Number(amountInInput)
+  const draftAmountInPot = Number(currentAmount) - Number(amountInInput)
 
   return (
     <DialogTrigger>
@@ -58,12 +58,12 @@ export default function WithdrawFromPotDialog({
               formatOptions={{ style: "currency", currency: "USD" }}
             >
               {({ percentage, valueText }) => {
-                const currentAmountAsPercentage = Math.round(
-                  (Number(currentAmount) / Number(target)) * 100
-                )
-
                 const amountInInputAsPercentage = Math.round(
                   (Number(amountInInput) / Number(target)) * 100
+                )
+
+                const draftAmountAsPercentage = Math.round(
+                  percentage ?? 0 - amountInInputAsPercentage
                 )
 
                 return (
@@ -75,12 +75,14 @@ export default function WithdrawFromPotDialog({
                       </span>
                     </div>
                     <div className="bg-beige-100 flex h-2 rounded">
-                      <div
+                      <motion.div
                         className="bg-grey-900 h-full shrink-0 rounded-l"
-                        style={{ width: currentAmountAsPercentage + "%" }}
+                        animate={{
+                          width: draftAmountAsPercentage + "%",
+                        }}
                       />
                       <motion.div
-                        className="bg-red h-full rounded-r"
+                        className="bg-red h-full origin-right rounded-r"
                         initial={{ width: 0 }}
                         animate={{ width: amountInInputAsPercentage + "%" }}
                       />
@@ -131,7 +133,6 @@ export default function WithdrawFromPotDialog({
                   />
                 )}
               />
-
               <Button type="submit" variant="primary" isPending={isSubmitting}>
                 Confirm Withdrawal
               </Button>
