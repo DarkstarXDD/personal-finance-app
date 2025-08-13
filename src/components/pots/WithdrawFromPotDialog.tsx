@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { motion } from "motion/react"
 import { ProgressBar } from "react-aria-components"
 import { useForm, Controller } from "react-hook-form"
 import { PiCurrencyDollarSimple } from "react-icons/pi"
@@ -24,11 +25,15 @@ export default function WithdrawFromPotDialog({
     control,
     setError,
     // reset,
+    watch,
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potUpdateSchema),
     defaultValues: { potId, amountToUpdate: "" },
   })
+
+  const amountInInput = watch("amountToUpdate")
+  const draftAmountInPot = Number(currentAmount) + Number(amountInInput)
 
   return (
     <DialogTrigger>
@@ -41,33 +46,50 @@ export default function WithdrawFromPotDialog({
             Move money from your pot to your balance.
           </p>
           <ProgressBar
-            value={Number(currentAmount)}
+            value={draftAmountInPot}
             minValue={0}
             maxValue={Number(target)}
             formatOptions={{ style: "currency", currency: "USD" }}
           >
-            {({ percentage, valueText }) => (
-              <div className="grid gap-4">
-                <div className="flex items-center justify-between">
-                  <Label variant="secondary">New Amount</Label>
-                  <span className="text-grey-900 text-3xl leading-tight font-bold">
-                    {valueText}
-                  </span>
+            {({ percentage, valueText }) => {
+              const currentAmountAsPercentage = Math.round(
+                (Number(currentAmount) / Number(target)) * 100
+              )
+
+              const amountInInputAsPercentage = Math.round(
+                (Number(amountInInput) / Number(target)) * 100
+              )
+
+              console.log(amountInInputAsPercentage)
+
+              return (
+                <div className="grid gap-4">
+                  <div className="flex items-center justify-between">
+                    <Label variant="secondary">New Amount</Label>
+                    <span className="text-grey-900 text-3xl leading-tight font-bold">
+                      {valueText}
+                    </span>
+                  </div>
+                  <div className="bg-beige-100 flex h-2 rounded">
+                    <div
+                      className="bg-grey-900 h-full shrink-0 rounded-l"
+                      style={{ width: currentAmountAsPercentage + "%" }}
+                    />
+                    <motion.div
+                      className="bg-red h-full rounded-r"
+                      initial={{ width: 0 }}
+                      animate={{ width: amountInInputAsPercentage + "%" }}
+                    />
+                  </div>
+                  <div className="text-grey-500 flex items-center justify-between text-xs leading-normal">
+                    <span className="font-bold">
+                      {Math.round(percentage ?? 0)}%
+                    </span>
+                    <span className="font-normal">Target of ${target}</span>
+                  </div>
                 </div>
-                <div className="bg-beige-100 h-2 rounded">
-                  <div
-                    className="bg-grey-900 h-full rounded"
-                    style={{ width: percentage + "%" }}
-                  />
-                </div>
-                <div className="text-grey-500 flex items-center justify-between text-xs leading-normal">
-                  <span className="font-bold">
-                    {Math.round(percentage ?? 0)}%
-                  </span>
-                  <span className="font-normal">Target of ${target}</span>
-                </div>
-              </div>
-            )}
+              )
+            }}
           </ProgressBar>
           <form
             className="grid gap-5"
