@@ -19,19 +19,21 @@ export const idSchema = z.object({ id: z.cuid() })
 export type IdSchema = z.infer<typeof idSchema>
 
 export const potSchema = z.object({
+  potId: z.cuid(),
   name: z
     .string()
     .trim()
     .min(1, "Name cannot be empty")
     .max(30, "Name must be 30 characters or less"),
   target: z.string().min(1, "Target cannot be empty"),
-  color: z.string().min(1, "Please select a color"),
+  currentAmount: z.string().trim().min(1, "Amount cannot be empty"),
+  colorId: z.cuid(),
+  colorValue: z.string().min(1, "Please select a color"),
 })
-
 export type PotSchema = z.infer<typeof potSchema>
 
-export const potWithIdSchema = potSchema.extend({
+export const potUpdateSchema = z.object({
   potId: z.cuid(),
+  amountToUpdate: z.string().trim().min(1, "Amount cannot be empty."),
 })
-
-export type PotWithIdSchema = z.infer<typeof potWithIdSchema>
+export type PotUpdateSchema = z.infer<typeof potUpdateSchema>

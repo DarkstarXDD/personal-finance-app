@@ -17,10 +17,17 @@ export default async function PotsPage() {
         <NewPotDialog colors={colors} />
       </div>
       <div className="grid gap-6 lg:grid-cols-2">
-        {pots.map(({ id, name, target, color }) => (
+        {pots.map(({ id, name, target, currentAmount, color }) => (
           <PotCard
             key={id}
-            potData={{ potId: id, name, target: target.toString(), color }}
+            potData={{
+              potId: id,
+              name,
+              target: target.toString(),
+              colorId: color.id,
+              colorValue: color.value,
+              currentAmount: currentAmount.toString(),
+            }}
             colors={colors}
           />
         ))}

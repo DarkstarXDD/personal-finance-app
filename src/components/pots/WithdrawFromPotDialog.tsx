@@ -1,25 +1,47 @@
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
 import { ProgressBar } from "react-aria-components"
+import { useForm, Controller } from "react-hook-form"
 import { PiCurrencyDollarSimple } from "react-icons/pi"
 
+import { withdrawFromPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
 import TextField from "@/components/ui/TextField"
+import { potUpdateSchema, type PotSchema } from "@/lib/schemas"
+import { WithdrawFromPotErrors } from "@/lib/types"
 
-export default function WithdrawFromPotDialog() {
-  const target = "800"
+export default function WithdrawFromPotDialog({
+  potData: { potId, name, target, currentAmount },
+}: {
+  potData: Omit<PotSchema, "colorId" | "colorValue">
+}) {
+  const {
+    handleSubmit,
+    register,
+    control,
+    setError,
+    // reset,
+    formState: { isSubmitting },
+  } = useForm({
+    resolver: zodResolver(potUpdateSchema),
+    defaultValues: { potId, amountToUpdate: "" },
+  })
+
   return (
     <DialogTrigger>
       <Button variant="secondary" className="w-full">
         Withdraw
       </Button>
-      <Dialog title="Withdraw from ‘Savings’">
+      <Dialog title={`Withdraw from ‘${name}’`}>
         <div className="grid gap-5">
           <p className="text-grey-500 text-sm leading-normal font-normal">
             Move money from your pot to your balance.
           </p>
           <ProgressBar
-            value={800}
+            value={Number(currentAmount)}
             minValue={0}
             maxValue={Number(target)}
             formatOptions={{ style: "currency", currency: "USD" }}
@@ -47,12 +69,44 @@ export default function WithdrawFromPotDialog() {
               </div>
             )}
           </ProgressBar>
-          <form className="grid gap-5">
-            <TextField
-              label="Amount to Withdraw"
-              icon={PiCurrencyDollarSimple}
+          <form
+            className="grid gap-5"
+            onSubmit={handleSubmit(async (data) => {
+              const response = await withdrawFromPot(data)
+              if (response) {
+                const errorKeys = Object.keys(
+                  response
+                ) as (keyof WithdrawFromPotErrors)[]
+                errorKeys.forEach((key) =>
+                  setError(
+                    key,
+                    { message: response[key]?.[0] },
+                    { shouldFocus: true }
+                  )
+                )
+                return
+              }
+              close()
+            })}
+          >
+            <input {...register("potId")} type="hidden" />
+            <Controller
+              name="amountToUpdate"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  label="Amount to Withdraw"
+                  icon={PiCurrencyDollarSimple}
+                  placeholder="0"
+                  {...field}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                  isDisabled={isSubmitting}
+                />
+              )}
             />
-            <Button type="submit" variant="primary">
+
+            <Button type="submit" variant="primary" isPending={isSubmitting}>
               Confirm Withdrawal
             </Button>
           </form>

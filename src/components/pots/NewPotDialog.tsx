@@ -9,9 +9,9 @@ import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { potSchema } from "@/lib/schemas"
-import { CreateNewPotErrors } from "@/lib/types"
 
 import type { Colors } from "@/data-access/lookups"
+import type { CreateNewPotErrors } from "@/lib/types"
 
 export default function NewPotDialog({ colors }: { colors: Colors }) {
   const {
@@ -21,8 +21,10 @@ export default function NewPotDialog({ colors }: { colors: Colors }) {
     reset,
     formState: { isSubmitting },
   } = useForm({
-    resolver: zodResolver(potSchema),
-    defaultValues: { name: "", target: "", color: "" },
+    resolver: zodResolver(
+      potSchema.pick({ name: true, target: true, colorId: true })
+    ),
+    defaultValues: { name: "", target: "", colorId: "" },
   })
 
   return (
@@ -86,7 +88,7 @@ export default function NewPotDialog({ colors }: { colors: Colors }) {
                 )}
               />
               <Controller
-                name="color"
+                name="colorId"
                 control={control}
                 render={({
                   field: { name, value, onChange, ref },
