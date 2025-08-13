@@ -22,7 +22,7 @@ export default function NewPotDialog({ colors }: { colors: Colors }) {
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potSchema),
-    defaultValues: { name: "", target: "", theme: "" },
+    defaultValues: { name: "", target: "", color: "" },
   })
 
   return (
@@ -86,7 +86,7 @@ export default function NewPotDialog({ colors }: { colors: Colors }) {
                 )}
               />
               <Controller
-                name="theme"
+                name="color"
                 control={control}
                 render={({
                   field: { name, value, onChange, ref },

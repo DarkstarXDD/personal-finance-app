@@ -5,21 +5,29 @@ import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
 import DeletePotDialog from "@/components/pots/DeletePotDialog"
+import EditPotDialog from "@/components/pots/EditPotDialog"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import IconButton from "@/components/ui/IconButton"
 import Label from "@/components/ui/Label"
 import { MenuTrigger, Menu, MenuItem } from "@/components/ui/Menu"
+import { Colors } from "@/data-access/lookups"
 
-import type { PotSchema } from "@/lib/schemas"
+import type { PotWithIdSchema } from "@/lib/schemas"
+
+type PotCardProps = {
+  colors: Colors
+  potData: Omit<PotWithIdSchema, "color"> & {
+    color: { id: string; value: string }
+  }
+}
 
 export default function PotCard({
-  id,
-  name,
-  target,
-  theme,
-}: PotSchema & { id: string }) {
+  potData: { potId, name, target, color },
+  colors,
+}: PotCardProps) {
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   return (
@@ -28,7 +36,7 @@ export default function PotCard({
         <div className="flex items-center justify-start gap-4">
           <span
             className="size-4 rounded-full"
-            style={{ backgroundColor: theme }}
+            style={{ backgroundColor: color.value }}
           />
           <Heading variant="secondary" as="h2">
             {name}
@@ -36,7 +44,9 @@ export default function PotCard({
           <MenuTrigger>
             <IconButton variant="options" className="ml-auto" />
             <Menu>
-              <MenuItem>Edit Pot</MenuItem>
+              <MenuItem onAction={() => setIsEditDialogOpen(true)}>
+                Edit Pot
+              </MenuItem>
               <MenuItem
                 className="text-red"
                 onAction={() => setIsDeleteDialogOpen(true)}
@@ -63,7 +73,7 @@ export default function PotCard({
               <div className="bg-beige-100 h-2 rounded">
                 <motion.div
                   className="h-full rounded"
-                  style={{ backgroundColor: theme }}
+                  style={{ backgroundColor: color.value }}
                   initial={{ width: 0 }}
                   animate={{ width: percentage + "%" }}
                   transition={{ delay: 0.18 }}
@@ -89,10 +99,15 @@ export default function PotCard({
       </div>
 
       <DeletePotDialog
-        potId={id}
-        potName={name}
+        potData={{ potId, name }}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
+      />
+      <EditPotDialog
+        potData={{ potId, name, target, color }}
+        colors={colors}
+        isOpen={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
       />
     </Card>
   )

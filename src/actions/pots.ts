@@ -4,7 +4,13 @@ import { revalidatePath } from "next/cache"
 import * as z from "zod"
 
 import * as pots from "@/data-access/pots"
-import { potSchema, type PotSchema, idSchema } from "@/lib/schemas"
+import {
+  potSchema,
+  type PotSchema,
+  idSchema,
+  potWithIdSchema,
+  PotWithIdSchema,
+} from "@/lib/schemas"
 import { CreateNewPotErrors } from "@/lib/types"
 
 export async function createNewPot(
@@ -16,6 +22,21 @@ export async function createNewPot(
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   const response = await pots.createNewPot(formData)
+  if (!response.success) return response.fieldErrors
+
+  revalidatePath("/pots")
+  return null
+}
+
+export async function editPot(
+  formData: PotWithIdSchema
+): Promise<CreateNewPotErrors | null> {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  const parsed = potWithIdSchema.safeParse(formData)
+  if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
+
+  const response = await pots.editPot(formData)
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")
