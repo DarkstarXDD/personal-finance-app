@@ -4,12 +4,16 @@ import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
 import { prisma, Prisma } from "@/lib/prisma"
-import { PotSchema, PotWithIdSchema } from "@/lib/schemas"
 
-import type { CreateNewPotErrors, DALReturn } from "@/lib/types"
+import type { PotSchema, PotUpdateSchema } from "@/lib/schemas"
+import type {
+  CreateNewPotErrors,
+  DALReturn,
+  WithdrawFromPotErrors,
+} from "@/lib/types"
 
 export async function createNewPot(
-  formData: PotSchema
+  formData: Pick<PotSchema, "name" | "target" | "colorId">
 ): Promise<DALReturn<CreateNewPotErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -20,7 +24,7 @@ export async function createNewPot(
         userId,
         name: formData.name,
         target: formData.target,
-        colorId: formData.color,
+        colorId: formData.colorId,
       },
     })
     return { success: true }
@@ -54,7 +58,7 @@ export async function getPots() {
 }
 
 export async function editPot(
-  formData: PotWithIdSchema
+  formData: Omit<PotSchema, "currentAmount" | "colorValue">
 ): Promise<DALReturn<CreateNewPotErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -65,7 +69,7 @@ export async function editPot(
       data: {
         name: formData.name,
         target: formData.target,
-        colorId: formData.color,
+        colorId: formData.colorId,
       },
     })
     return { success: true }
@@ -95,5 +99,31 @@ export async function deletePot(potId: string): Promise<{ success: boolean }> {
     return { success: true }
   } catch {
     return { success: false }
+  }
+}
+
+export async function withdrawFromPot(
+  formData: PotUpdateSchema
+): Promise<DALReturn<WithdrawFromPotErrors>> {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  const { potId, amountToUpdate } = formData
+
+  try {
+    const amountToUpdateAsDecimal = new Prisma.Decimal(amountToUpdate)
+
+    await prisma.pot.update({
+      where: { userId, id: potId },
+      data: { currentAmount: { decrement: amountToUpdateAsDecimal } },
+    })
+    return { success: true }
+  } catch {
+    return {
+      success: false,
+      fieldErrors: {
+        amountToUpdate: ["Error updating pot. Please try again."],
+      },
+    }
   }
 }

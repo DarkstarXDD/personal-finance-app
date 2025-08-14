@@ -5,23 +5,26 @@ import * as z from "zod"
 
 import * as pots from "@/data-access/pots"
 import {
-  potSchema,
-  type PotSchema,
   idSchema,
-  potWithIdSchema,
-  PotWithIdSchema,
+  potSchema,
+  potUpdateSchema,
+  PotUpdateSchema,
+  type PotSchema,
 } from "@/lib/schemas"
-import { CreateNewPotErrors } from "@/lib/types"
+
+import type { CreateNewPotErrors, WithdrawFromPotErrors } from "@/lib/types"
 
 export async function createNewPot(
-  formData: PotSchema
+  formData: Pick<PotSchema, "name" | "target" | "colorId">
 ): Promise<CreateNewPotErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  const parsed = potSchema.safeParse(formData)
+  const parsed = potSchema
+    .pick({ name: true, target: true, colorId: true })
+    .safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.createNewPot(formData)
+  const response = await pots.createNewPot(parsed.data)
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")
@@ -29,14 +32,16 @@ export async function createNewPot(
 }
 
 export async function editPot(
-  formData: PotWithIdSchema
+  formData: Omit<PotSchema, "currentAmount" | "colorValue">
 ): Promise<CreateNewPotErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  const parsed = potWithIdSchema.safeParse(formData)
+  const parsed = potSchema
+    .omit({ currentAmount: true, colorValue: true })
+    .safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.editPot(formData)
+  const response = await pots.editPot(parsed.data)
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")
@@ -56,7 +61,23 @@ export async function deletePot(
   }
 
   const response = await pots.deletePot(parsed.data.id)
-  if (!response.success) return "Error deleting pot. Please try agian."
+  if (!response.success) return "Error deleting pot. Please try again."
+
+  revalidatePath("/pots")
+  return null
+}
+
+export async function withdrawFromPot(
+  formData: PotUpdateSchema
+): Promise<WithdrawFromPotErrors | null> {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  const parsed = potUpdateSchema.safeParse(formData)
+
+  if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
+
+  const response = await pots.withdrawFromPot(parsed.data)
+  if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")
   return null

@@ -6,14 +6,15 @@ import { deletePot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
 import { fieldErrorStyles } from "@/components/ui/FieldError"
-import { PotWithIdSchema } from "@/lib/schemas"
+
+import type { PotSchema } from "@/lib/schemas"
 
 export default function DeletePotDialog({
   potData: { name, potId },
   isOpen,
   onOpenChange,
 }: {
-  potData: Pick<PotWithIdSchema, "potId" | "name">
+  potData: Pick<PotSchema, "potId" | "name">
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
 }) {
