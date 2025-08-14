@@ -7,7 +7,7 @@ import { ProgressBar } from "react-aria-components"
 import { useForm, Controller } from "react-hook-form"
 import { PiCurrencyDollarSimple } from "react-icons/pi"
 
-import { withdrawFromPot } from "@/actions/pots"
+import { AddToPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
@@ -103,7 +103,7 @@ export default function AddToPotDialog({
             <form
               className="grid gap-5"
               onSubmit={handleSubmit(async (data) => {
-                const response = await withdrawFromPot(data)
+                const response = await AddToPot(data)
                 if (response) {
                   const errorKeys = Object.keys(
                     response

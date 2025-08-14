@@ -67,13 +67,27 @@ export async function deletePot(
   return null
 }
 
+export async function AddToPot(
+  formData: PotUpdateSchema
+): Promise<AddToPotErrors | null> {
+  await new Promise((resolve) => setTimeout(resolve, 600))
+
+  const parsed = potUpdateSchema.safeParse(formData)
+  if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
+
+  const response = await pots.AddToPot(parsed.data)
+  if (!response.success) return response.fieldErrors
+
+  revalidatePath("/pots")
+  return null
+}
+
 export async function withdrawFromPot(
   formData: PotUpdateSchema
 ): Promise<AddToPotErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const parsed = potUpdateSchema.safeParse(formData)
-
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   const response = await pots.withdrawFromPot(parsed.data)
