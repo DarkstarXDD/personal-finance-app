@@ -75,7 +75,7 @@ export async function AddToPot(
   const parsed = potUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.AddToPot(parsed.data)
+  const response = await pots.updatePotAmount(parsed.data, "increment")
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")
@@ -90,7 +90,7 @@ export async function withdrawFromPot(
   const parsed = potUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.withdrawFromPot(parsed.data)
+  const response = await pots.updatePotAmount(parsed.data, "decrement")
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")

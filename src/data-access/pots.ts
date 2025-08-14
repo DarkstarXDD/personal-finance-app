@@ -102,8 +102,9 @@ export async function deletePot(potId: string): Promise<{ success: boolean }> {
   }
 }
 
-export async function AddToPot(
-  formData: PotUpdateSchema
+export async function updatePotAmount(
+  formData: PotUpdateSchema,
+  operation: "increment" | "decrement"
 ): Promise<DALReturn<PotUpdateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -115,33 +116,7 @@ export async function AddToPot(
 
     await prisma.pot.update({
       where: { userId, id: potId },
-      data: { currentAmount: { increment: amountToUpdateAsDecimal } },
-    })
-    return { success: true }
-  } catch {
-    return {
-      success: false,
-      fieldErrors: {
-        amountToUpdate: ["Error updating pot. Please try again."],
-      },
-    }
-  }
-}
-
-export async function withdrawFromPot(
-  formData: PotUpdateSchema
-): Promise<DALReturn<PotUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
-
-  const { potId, amountToUpdate } = formData
-
-  try {
-    const amountToUpdateAsDecimal = new Prisma.Decimal(amountToUpdate)
-
-    await prisma.pot.update({
-      where: { userId, id: potId },
-      data: { currentAmount: { decrement: amountToUpdateAsDecimal } },
+      data: { currentAmount: { [operation]: amountToUpdateAsDecimal } },
     })
     return { success: true }
   } catch {
