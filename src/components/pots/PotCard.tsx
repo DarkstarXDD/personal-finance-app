@@ -4,10 +4,10 @@ import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
+import AddToPotDialog from "@/components/pots/AddToPotDialog"
 import DeletePotDialog from "@/components/pots/DeletePotDialog"
 import EditPotDialog from "@/components/pots/EditPotDialog"
 import WithdrawFromPotDialog from "@/components/pots/WithdrawFromPotDialog"
-import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import IconButton from "@/components/ui/IconButton"
@@ -86,9 +86,7 @@ export default function PotCard({
           )}
         </ProgressBar>
         <div className="flex justify-center gap-4">
-          <Button variant="secondary" className="w-full">
-            + Add Money
-          </Button>
+          <AddToPotDialog potData={{ potId, name, target, currentAmount }} />
           <WithdrawFromPotDialog
             potData={{ potId, name, target, currentAmount }}
           />
