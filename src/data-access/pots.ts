@@ -111,9 +111,11 @@ export async function withdrawFromPot(
   const { potId, amountToUpdate } = formData
 
   try {
+    const amountToUpdateAsDecimal = new Prisma.Decimal(amountToUpdate)
+
     await prisma.pot.update({
       where: { userId, id: potId },
-      data: { currentAmount: amountToUpdate },
+      data: { currentAmount: { decrement: amountToUpdateAsDecimal } },
     })
     return { success: true }
   } catch {
