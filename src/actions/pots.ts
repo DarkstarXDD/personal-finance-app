@@ -12,7 +12,7 @@ import {
   type PotSchema,
 } from "@/lib/schemas"
 
-import type { CreateNewPotErrors, AddToPotErrors } from "@/lib/types"
+import type { CreateNewPotErrors, PotUpdateErrors } from "@/lib/types"
 
 export async function createNewPot(
   formData: Pick<PotSchema, "name" | "target" | "colorId">
@@ -69,7 +69,7 @@ export async function deletePot(
 
 export async function AddToPot(
   formData: PotUpdateSchema
-): Promise<AddToPotErrors | null> {
+): Promise<PotUpdateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 600))
 
   const parsed = potUpdateSchema.safeParse(formData)
@@ -84,7 +84,7 @@ export async function AddToPot(
 
 export async function withdrawFromPot(
   formData: PotUpdateSchema
-): Promise<AddToPotErrors | null> {
+): Promise<PotUpdateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const parsed = potUpdateSchema.safeParse(formData)

@@ -8,6 +8,6 @@ export type CreateNewPotErrors = {
   [Key in keyof Pick<PotSchema, "name" | "target" | "colorId">]?: string[]
 }
 
-export type AddToPotErrors = {
+export type PotUpdateErrors = {
   [Key in keyof PotUpdateSchema]?: string[]
 }
