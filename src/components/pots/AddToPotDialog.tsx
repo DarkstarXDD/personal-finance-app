@@ -13,7 +13,7 @@ import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
 import TextField from "@/components/ui/TextField"
 import { potUpdateSchema, type PotSchema } from "@/lib/schemas"
-import { WithdrawFromPotErrors } from "@/lib/types"
+import { AddToPotErrors } from "@/lib/types"
 
 export default function AddToPotDialog({
   potData: { potId, name, target, currentAmount },
@@ -107,7 +107,7 @@ export default function AddToPotDialog({
                 if (response) {
                   const errorKeys = Object.keys(
                     response
-                  ) as (keyof WithdrawFromPotErrors)[]
+                  ) as (keyof AddToPotErrors)[]
                   errorKeys.forEach((key) =>
                     setError(
                       key,

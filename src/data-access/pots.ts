@@ -6,11 +6,7 @@ import { verifySession } from "@/data-access/auth"
 import { prisma, Prisma } from "@/lib/prisma"
 
 import type { PotSchema, PotUpdateSchema } from "@/lib/schemas"
-import type {
-  CreateNewPotErrors,
-  DALReturn,
-  WithdrawFromPotErrors,
-} from "@/lib/types"
+import type { CreateNewPotErrors, DALReturn, AddToPotErrors } from "@/lib/types"
 
 export async function createNewPot(
   formData: Pick<PotSchema, "name" | "target" | "colorId">
@@ -104,7 +100,7 @@ export async function deletePot(potId: string): Promise<{ success: boolean }> {
 
 export async function withdrawFromPot(
   formData: PotUpdateSchema
-): Promise<DALReturn<WithdrawFromPotErrors>> {
+): Promise<DALReturn<AddToPotErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
