@@ -12,7 +12,7 @@ import {
   type PotSchema,
 } from "@/lib/schemas"
 
-import type { CreateNewPotErrors, WithdrawFromPotErrors } from "@/lib/types"
+import type { CreateNewPotErrors, PotUpdateErrors } from "@/lib/types"
 
 export async function createNewPot(
   formData: Pick<PotSchema, "name" | "target" | "colorId">
@@ -67,16 +67,30 @@ export async function deletePot(
   return null
 }
 
+export async function AddToPot(
+  formData: PotUpdateSchema
+): Promise<PotUpdateErrors | null> {
+  await new Promise((resolve) => setTimeout(resolve, 600))
+
+  const parsed = potUpdateSchema.safeParse(formData)
+  if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
+
+  const response = await pots.updatePotAmount(parsed.data, "increment")
+  if (!response.success) return response.fieldErrors
+
+  revalidatePath("/pots")
+  return null
+}
+
 export async function withdrawFromPot(
   formData: PotUpdateSchema
-): Promise<WithdrawFromPotErrors | null> {
+): Promise<PotUpdateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const parsed = potUpdateSchema.safeParse(formData)
-
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.withdrawFromPot(parsed.data)
+  const response = await pots.updatePotAmount(parsed.data, "decrement")
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")

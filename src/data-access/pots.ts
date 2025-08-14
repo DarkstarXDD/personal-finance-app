@@ -9,7 +9,7 @@ import type { PotSchema, PotUpdateSchema } from "@/lib/schemas"
 import type {
   CreateNewPotErrors,
   DALReturn,
-  WithdrawFromPotErrors,
+  PotUpdateErrors,
 } from "@/lib/types"
 
 export async function createNewPot(
@@ -102,9 +102,10 @@ export async function deletePot(potId: string): Promise<{ success: boolean }> {
   }
 }
 
-export async function withdrawFromPot(
-  formData: PotUpdateSchema
-): Promise<DALReturn<WithdrawFromPotErrors>> {
+export async function updatePotAmount(
+  formData: PotUpdateSchema,
+  operation: "increment" | "decrement"
+): Promise<DALReturn<PotUpdateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -115,7 +116,7 @@ export async function withdrawFromPot(
 
     await prisma.pot.update({
       where: { userId, id: potId },
-      data: { currentAmount: { decrement: amountToUpdateAsDecimal } },
+      data: { currentAmount: { [operation]: amountToUpdateAsDecimal } },
     })
     return { success: true }
   } catch {

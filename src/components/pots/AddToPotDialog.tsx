@@ -7,7 +7,7 @@ import { ProgressBar } from "react-aria-components"
 import { useForm, Controller } from "react-hook-form"
 import { PiCurrencyDollarSimple } from "react-icons/pi"
 
-import { withdrawFromPot } from "@/actions/pots"
+import { AddToPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
@@ -15,7 +15,7 @@ import TextField from "@/components/ui/TextField"
 import { potUpdateSchema, type PotSchema } from "@/lib/schemas"
 import { PotUpdateErrors } from "@/lib/types"
 
-export default function WithdrawFromPotDialog({
+export default function AddToPotDialog({
   potData: { potId, name, target, currentAmount },
 }: {
   potData: Omit<PotSchema, "colorId" | "colorValue">
@@ -38,18 +38,19 @@ export default function WithdrawFromPotDialog({
   }, [potId, currentAmount, reset])
 
   const amountInInput = watch("amountToUpdate")
-  const draftAmountInPot = Number(currentAmount) - Number(amountInInput)
+  const draftAmountInPot = Number(currentAmount) + Number(amountInInput)
 
   return (
     <DialogTrigger>
       <Button variant="secondary" className="w-full">
-        Withdraw
+        + Add Money
       </Button>
-      <Dialog title={`Withdraw from ‘${name}’`}>
+      <Dialog title={`Add to ‘${name}’`}>
         {({ close }) => (
           <div className="grid gap-5">
             <p className="text-grey-500 text-sm leading-normal font-normal">
-              Move money from your pot to your balance.
+              Add money to your pot to grow your savings and get closer to your
+              goal.
             </p>
             <ProgressBar
               value={draftAmountInPot}
@@ -66,10 +67,6 @@ export default function WithdrawFromPotDialog({
                   (Number(amountInInput) / Number(target)) * 100
                 )
 
-                const draftAmountAsPercentage = Math.round(
-                  percentage ?? 0 - amountInInputAsPercentage
-                )
-
                 return (
                   <div className="grid gap-4">
                     <div className="flex items-center justify-between">
@@ -82,17 +79,14 @@ export default function WithdrawFromPotDialog({
                       <motion.div
                         className="bg-grey-900 h-full shrink-0 rounded-l"
                         animate={{
-                          width: draftAmountAsPercentage + "%",
+                          width: currentAmountAsPercentage + "%",
                         }}
                       />
                       <motion.div
-                        className={`bg-red h-full origin-right ${draftAmountInPot < 0 ? "rounded" : "rounded-r"}`}
+                        className="bg-green h-full origin-right rounded-r"
                         initial={{ width: 0 }}
                         animate={{
-                          width:
-                            draftAmountInPot < 0
-                              ? currentAmountAsPercentage + "%"
-                              : amountInInputAsPercentage + "%",
+                          width: amountInInputAsPercentage + "%",
                         }}
                       />
                     </div>
@@ -109,7 +103,7 @@ export default function WithdrawFromPotDialog({
             <form
               className="grid gap-5"
               onSubmit={handleSubmit(async (data) => {
-                const response = await withdrawFromPot(data)
+                const response = await AddToPot(data)
                 if (response) {
                   const errorKeys = Object.keys(
                     response
@@ -132,7 +126,7 @@ export default function WithdrawFromPotDialog({
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
-                    label="Amount to Withdraw"
+                    label="Amount to Add"
                     icon={PiCurrencyDollarSimple}
                     placeholder="0"
                     {...field}
@@ -143,7 +137,7 @@ export default function WithdrawFromPotDialog({
                 )}
               />
               <Button type="submit" variant="primary" isPending={isSubmitting}>
-                Confirm Withdrawal
+                Confirm Addition
               </Button>
             </form>
           </div>
