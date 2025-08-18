@@ -15,3 +15,16 @@ export const colors = [
   { id: "13", name: "turquoise", label: "Turquoise", value: "#597c7c" },
   { id: "14", name: "yellow", label: "Yellow", value: "#f1ccab" },
 ]
+
+export const categories = [
+  { id: "0", name: "bills", label: "Bills" },
+  { id: "1", name: "entertainment", label: "Entertainment" },
+  { id: "2", name: "food-drink", label: "Food & Drinks" },
+  { id: "3", name: "general", label: "General" },
+  { id: "4", name: "groceries", label: "Groceries" },
+  { id: "5", name: "health", label: "Health" },
+  { id: "6", name: "personal-care", label: "Personal Care" },
+  { id: "7", name: "shopping", label: "Shopping" },
+  { id: "8", name: "transportation", label: "Transportation" },
+  { id: "9", name: "travel", label: "Travel" },
+]
