@@ -16,8 +16,8 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   includeIgnoreFile(gitignorePath, "Imported .gitignore patterns"),
-
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...storybook.configs["flat/recommended"],
   {
     plugins: {
       import: eslintPluginImport,
@@ -45,7 +45,6 @@ const eslintConfig = [
       "import/newline-after-import": "error",
     },
   },
-  ...storybook.configs["flat/recommended"],
 ]
 
 export default eslintConfig
