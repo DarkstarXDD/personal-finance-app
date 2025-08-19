@@ -1,4 +1,8 @@
-import { PotUpdateSchema, type PotSchema } from "@/lib/schemas"
+import type {
+  PotUpdateSchema,
+  PotSchema,
+  TransactionCreate,
+} from "@/lib/schemas"
 
 export type DALReturn<T extends Record<string, string[]>> =
   | { success: true }
@@ -10,4 +14,8 @@ export type CreateNewPotErrors = {
 
 export type PotUpdateErrors = {
   [Key in keyof PotUpdateSchema]?: string[]
+}
+
+export type CreateTransactionErrors = {
+  [Key in keyof TransactionCreate]?: string[]
 }

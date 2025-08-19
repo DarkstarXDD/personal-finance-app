@@ -23,9 +23,9 @@ export const potSchema = z.object({
     .trim()
     .min(1, "Name cannot be empty")
     .max(30, "Name must be 30 characters or less"),
-  target: z.string().min(1, "Target cannot be empty"),
+  target: z.string().trim().min(1, "Target cannot be empty"),
   currentAmount: z.string().trim().min(1, "Amount cannot be empty"),
-  colorId: z.cuid(),
+  colorId: z.cuid("Please select a color."),
   colorValue: z.string().min(1, "Please select a color"),
 })
 export type PotSchema = z.infer<typeof potSchema>
@@ -35,3 +35,10 @@ export const potUpdateSchema = z.object({
   amountToUpdate: z.string().trim().min(1, "Amount cannot be empty."),
 })
 export type PotUpdateSchema = z.infer<typeof potUpdateSchema>
+
+export const transactionCreateSchema = z.object({
+  counterparty: z.string().trim().min(1, "Counterparty name cannot be empty."),
+  amount: z.string().min(1, "Amount cannot be empty."),
+  categoryId: z.cuid("Please select a category."),
+})
+export type TransactionCreate = z.infer<typeof transactionCreateSchema>
