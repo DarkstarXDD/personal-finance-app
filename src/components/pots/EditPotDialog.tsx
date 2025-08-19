@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
-import { Colors } from "@/data-access/lookups"
+import { Color } from "@/data-access/lookups"
 import { potSchema, type PotSchema } from "@/lib/schemas"
 
 import type { CreateNewPotErrors } from "@/lib/types"
@@ -19,7 +19,7 @@ export default function EditPotDialog({
   onOpenChange,
 }: {
   potData: Omit<PotSchema, "currentAmount" | "colorValue">
-  colors: Colors
+  colors: Color[]
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
 }) {

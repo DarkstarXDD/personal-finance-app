@@ -10,10 +10,10 @@ import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { potSchema } from "@/lib/schemas"
 
-import type { Colors } from "@/data-access/lookups"
+import type { Color } from "@/data-access/lookups"
 import type { CreateNewPotErrors } from "@/lib/types"
 
-export default function NewPotDialog({ colors }: { colors: Colors }) {
+export default function NewPotDialog({ colors }: { colors: Color[] }) {
   const {
     handleSubmit,
     control,
