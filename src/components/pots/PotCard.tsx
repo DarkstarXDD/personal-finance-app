@@ -14,14 +14,14 @@ import IconButton from "@/components/ui/IconButton"
 import Label from "@/components/ui/Label"
 import { MenuTrigger, Menu, MenuItem } from "@/components/ui/Menu"
 
-import type { Colors } from "@/data-access/lookups"
+import type { Color } from "@/data-access/lookups"
 import type { PotSchema } from "@/lib/schemas"
 
 export default function PotCard({
   potData: { potId, name, target, currentAmount, colorId, colorValue },
   colors,
 }: {
-  colors: Colors
+  colors: Color[]
   potData: PotSchema
 }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)

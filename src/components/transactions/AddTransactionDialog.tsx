@@ -3,17 +3,21 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { createNewPot } from "@/actions/pots"
+import { createTransaction } from "@/actions/transactions"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
-import { potSchema } from "@/lib/schemas"
+import { transactionCreateSchema } from "@/lib/schemas"
 
-import type { Color } from "@/data-access/lookups"
-import type { CreateNewPotErrors } from "@/lib/types"
+import type { Category } from "@/data-access/lookups"
+import type { CreateTransactionErrors } from "@/lib/types"
 
-export default function NewPotDialog({ colors }: { colors: Color[] }) {
+export default function AddTransactionDialog({
+  categories,
+}: {
+  categories: Category[]
+}) {
   const {
     handleSubmit,
     control,
@@ -21,25 +25,24 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
     reset,
     formState: { isSubmitting },
   } = useForm({
-    resolver: zodResolver(
-      potSchema.pick({ name: true, target: true, colorId: true })
-    ),
-    defaultValues: { name: "", target: "", colorId: "" },
+    resolver: zodResolver(transactionCreateSchema),
+    defaultValues: { counterparty: "", amount: "", categoryId: "" },
   })
 
   return (
     <DialogTrigger>
-      <Button variant="primary">+ Add New Pot</Button>
-      <Dialog title="Add New Pot">
+      <Button variant="primary">+ Add Transaction</Button>
+      <Dialog title="Add New Transaction">
         {({ close }) => (
           <form
             className="grid gap-5"
             onSubmit={handleSubmit(async (data) => {
-              const response = await createNewPot(data)
+              const response = await createTransaction(data)
               if (response) {
+                console.log(response)
                 const errorKeys = Object.keys(
                   response
-                ) as (keyof CreateNewPotErrors)[]
+                ) as (keyof CreateTransactionErrors)[]
                 errorKeys.forEach((key) =>
                   setError(
                     key,
@@ -54,17 +57,16 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
             })}
           >
             <p className="text-grey-500 text-sm leading-normal font-normal">
-              Create a pot to set savings targets. These can help keep you on
-              track as you save for special purchases.
+              Create a transaction to record your money flow.
             </p>
             <div className="grid gap-4">
               <Controller
-                name="name"
+                name="counterparty"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
-                    label="Pot Name"
-                    placeholder="e.g. Rainy Days"
+                    label="Counterparty"
+                    placeholder="e.g. Echo Game Store"
                     description="Max 30 characters"
                     {...field}
                     isInvalid={invalid}
@@ -74,11 +76,11 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
                 )}
               />
               <Controller
-                name="target"
+                name="amount"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
-                    label="Target"
+                    label="Transaction Amount"
                     placeholder="e.g. 2000"
                     {...field}
                     isInvalid={invalid}
@@ -88,15 +90,15 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
                 )}
               />
               <Controller
-                name="colorId"
+                name="categoryId"
                 control={control}
                 render={({
                   field: { name, value, onChange, ref },
                   fieldState: { invalid, error },
                 }) => (
                   <Select
-                    label="Theme"
-                    placeholder="Select a color"
+                    label="Category"
+                    placeholder="Select a Category"
                     name={name}
                     selectedKey={value}
                     onSelectionChange={(selected) => onChange(selected)}
@@ -104,17 +106,11 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
                     isInvalid={invalid}
                     isDisabled={isSubmitting}
                     errorMessage={error?.message}
-                    items={colors}
+                    items={categories}
                   >
                     {(item) => (
                       <SelectItem textValue={item.label}>
-                        <div className="flex items-center justify-start gap-3">
-                          <span
-                            className="size-4 rounded-full"
-                            style={{ backgroundColor: item.value }}
-                          />
-                          <span>{item.label}</span>
-                        </div>
+                        <span>{item.label}</span>
                       </SelectItem>
                     )}
                   </Select>
@@ -122,7 +118,7 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
               />
             </div>
             <Button variant="primary" type="submit" isPending={isSubmitting}>
-              Add Pot
+              Add Transaction
             </Button>
           </form>
         )}
