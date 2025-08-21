@@ -43,10 +43,6 @@ const transactionSelect = {
   category: true,
 } satisfies Prisma.TransactionSelect
 
-export type Transaction = Prisma.TransactionGetPayload<{
-  select: typeof transactionSelect
-}>
-
 export async function getTransactions() {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -55,5 +51,17 @@ export async function getTransactions() {
     where: { userId },
     select: transactionSelect,
   })
-  return transactions
+
+  return transactions.map((t) => ({
+    ...t,
+    amount: t.amount.toString(),
+  }))
+}
+
+type TransactionRaw = Prisma.TransactionGetPayload<{
+  select: typeof transactionSelect
+}>
+
+export type Transaction = Omit<TransactionRaw, "amount"> & {
+  amount: string
 }

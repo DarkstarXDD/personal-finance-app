@@ -1,0 +1,108 @@
+"use client"
+
+import {
+  getCoreRowModel,
+  useReactTable,
+  createColumnHelper,
+  flexRender,
+} from "@tanstack/react-table"
+import { format } from "date-fns"
+
+import type { Transaction } from "@/data-access/transactions"
+
+const currencyFormat = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+})
+
+const columnHelper = createColumnHelper<Transaction>()
+
+const columns = [
+  columnHelper.accessor("counterparty", {
+    header: "Recipient / Sender",
+    cell: (data) => (
+      <span className="text-grey-900 text-sm leading-normal font-bold">
+        {data.getValue()}
+      </span>
+    ),
+  }),
+  columnHelper.accessor("category", {
+    header: "Category",
+    cell: (data) => (
+      <span className="text-grey-500 text-xs leading-normal font-normal">
+        {data.getValue().label}
+      </span>
+    ),
+  }),
+  columnHelper.accessor("createdAt", {
+    header: "Transaction Date",
+    cell: (data) => (
+      <span className="text-grey-500 text-xs leading-normal font-normal">
+        {format(data.getValue(), "dd MMM yyyy")}
+      </span>
+    ),
+  }),
+  columnHelper.accessor("amount", {
+    header: () => <span className="block w-full text-end">Amount</span>,
+    cell: (data) => (
+      <span className="text-grey-900 block w-full text-end text-sm leading-normal font-bold">
+        {currencyFormat.format(Number(data.getValue()))}
+      </span>
+    ),
+  }),
+]
+
+export default function TableDesktop({
+  transactions,
+}: {
+  transactions: Transaction[]
+}) {
+  const table = useReactTable({
+    data: transactions,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  })
+
+  return (
+    <div className="hidden w-full md:block">
+      <table className="w-full" style={{ minWidth: table.getTotalSize() }}>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  className="text-grey-500 px-4 pt-3 pb-5 text-start text-xs leading-normal font-normal"
+                  style={{ width: header.getSize() }}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="border-grey-100 group hover:bg-beige-100 border-b transition-colors first:border-t last:border-none"
+            >
+              {row.getAllCells().map((cell) => (
+                <td
+                  key={cell.id}
+                  style={{ width: cell.column.getSize() }}
+                  className="px-4 py-4"
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
