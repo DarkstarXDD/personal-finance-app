@@ -7,8 +7,9 @@ import {
   flexRender,
 } from "@tanstack/react-table"
 import { format } from "date-fns"
+import { tv } from "tailwind-variants"
 
-import { Transaction } from "@/data-access/transactions"
+import type { Transaction } from "@/data-access/transactions"
 
 const currencyFormat = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -19,7 +20,7 @@ const columnHelper = createColumnHelper<Transaction>()
 
 const columns = [
   columnHelper.accessor("counterparty", {
-    header: "Recipient / Sender",
+    header: () => <span className="block w-full">Recipient / Sender</span>,
     cell: (data) => (
       <span className="text-grey-900 text-sm leading-normal font-bold">
         {data.getValue()}
@@ -52,6 +53,28 @@ const columns = [
   }),
 ]
 
+const tableStyles = tv({
+  slots: {
+    tableElement: "w-full",
+    headCells:
+      "text-grey-50 border-b-grey-100 relative border-b px-4 py-3 text-start text-xs leading-normal font-normal",
+    bodyRows: "border-b-grey-100 border-b last:border-none",
+    bodyCells: "px-4 py-4",
+    resizeHandler:
+      "bg-beige-500 absolute top-1/2 right-0 h-1/2 w-1.5 -translate-y-1/2 cursor-ew-resize rounded opacity-20 transition-all hover:opacity-80 active:opacity-80",
+  },
+  variants: {
+    isResizing: {
+      true: {
+        resizeHandler: "h-2/3",
+      },
+    },
+  },
+})
+
+const { tableElement, headCells, bodyRows, bodyCells, resizeHandler } =
+  tableStyles()
+
 export default function TableDesktop({
   transactions,
 }: {
@@ -61,26 +84,34 @@ export default function TableDesktop({
     data: transactions,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    columnResizeMode: "onChange",
   })
 
   console.log(table)
 
   return (
     <div className="hidden md:block">
-      <table className="w-full">
+      <table className={tableElement()}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="py-4">
+            <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="text-grey-500 border-b-grey-100 border-b py-3 text-start text-xs leading-normal font-normal"
+                  className={headCells()}
                   style={{ width: header.getSize() }}
                 >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
                   )}
+                  <span
+                    onMouseDown={header.getResizeHandler()}
+                    onTouchStart={header.getResizeHandler()}
+                    className={resizeHandler({
+                      isResizing: header.column.getIsResizing(),
+                    })}
+                  />
                 </th>
               ))}
             </tr>
@@ -88,15 +119,12 @@ export default function TableDesktop({
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              className="border-b-grey-100 border-b last:border-none"
-            >
+            <tr key={row.id} className={bodyRows()}>
               {row.getAllCells().map((cell) => (
                 <td
                   key={cell.id}
                   style={{ width: cell.column.getSize() }}
-                  className="py-4"
+                  className={bodyCells()}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
