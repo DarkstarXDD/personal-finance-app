@@ -25,6 +25,7 @@ const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
 const selectStyles = tv({
   slots: {
+    select: "group",
     layoutWrapper: "grid gap-x-2 gap-y-1",
     fieldLabel: "self-center",
     fieldDescription: "[grid-area:c]",
@@ -76,6 +77,7 @@ const selectStyles = tv({
 })
 
 const {
+  select,
   layoutWrapper,
   fieldLabel,
   button,
@@ -99,6 +101,7 @@ type SelectProps<T extends object> = Omit<
   items?: Iterable<T>
   children?: ReactNode | ((item: T) => ReactNode)
   ref?: Ref<HTMLDivElement>
+  className?: string
 } & SelectStyles
 
 function Select<T extends object>({
@@ -112,10 +115,16 @@ function Select<T extends object>({
   shouldHideOnMobile,
   children,
   ref,
+  className,
   ...props
 }: SelectProps<T>) {
   return (
-    <RacSelect isInvalid={isInvalid} {...props} className="group" ref={ref}>
+    <RacSelect
+      isInvalid={isInvalid}
+      {...props}
+      className={select({ className })}
+      ref={ref}
+    >
       {({ isOpen }) => (
         <>
           <div className={layoutWrapper({ layout, shouldHideOnMobile })}>

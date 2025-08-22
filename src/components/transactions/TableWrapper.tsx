@@ -46,11 +46,12 @@ export default function TableWrapper({
       <div className="flex items-start justify-end gap-6">
         <Select
           label="Sort by"
-          layout="horizontal"
+          // layout="horizontal"
           aria-label="Sort by"
           selectedKey={searchParams.get("sortby") ?? "latest"}
           onSelectionChange={onSortByChange}
           shouldHideOnMobile
+          className="w-full max-w-62"
         >
           <SelectItem id="latest">Latest</SelectItem>
           <SelectItem id="oldest">Oldest</SelectItem>
@@ -62,11 +63,12 @@ export default function TableWrapper({
 
         <Select
           label="Category"
-          layout="horizontal"
+          // layout="horizontal"
           aria-label="Category"
           selectedKey={searchParams.get("category") ?? "all"}
           onSelectionChange={onCategoryChange}
           shouldHideOnMobile
+          className="w-full max-w-70"
           items={categoriesWithAll}
         >
           {(category) => (
