@@ -25,6 +25,7 @@ const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
 const selectStyles = tv({
   slots: {
+    select: "group",
     layoutWrapper: "grid gap-x-2 gap-y-1",
     fieldLabel: "self-center",
     fieldDescription: "[grid-area:c]",
@@ -41,15 +42,18 @@ const selectStyles = tv({
   variants: {
     layout: {
       vertical: {
-        layoutWrapper: "justify-items-start [grid-template-areas:'a''b''c']",
+        layoutWrapper:
+          "justify-items-start [grid-template-areas:'a''b''c'] sm:[grid-template-areas:'a''b''c']",
       },
       horizontal: {
-        layoutWrapper: "grid-cols-[auto_1fr] [grid-template-areas:'a_b''a_c']",
+        layoutWrapper:
+          "grid-cols-[auto_1fr] [grid-template-areas:'a_b''a_c'] sm:grid-cols-[auto_1fr] sm:[grid-template-areas:'a_b''a_c']",
       },
     },
 
     shouldHideOnMobile: {
       true: {
+        layoutWrapper: "grid-cols-1 [grid-template-areas:none]",
         fieldLabel: "sr-only sm:not-sr-only",
         fieldDescription: "sr-only sm:not-sr-only",
         fieldErrorMessage: "sr-only sm:not-sr-only",
@@ -73,6 +77,7 @@ const selectStyles = tv({
 })
 
 const {
+  select,
   layoutWrapper,
   fieldLabel,
   button,
@@ -96,6 +101,7 @@ type SelectProps<T extends object> = Omit<
   items?: Iterable<T>
   children?: ReactNode | ((item: T) => ReactNode)
   ref?: Ref<HTMLDivElement>
+  className?: string
 } & SelectStyles
 
 function Select<T extends object>({
@@ -109,13 +115,19 @@ function Select<T extends object>({
   shouldHideOnMobile,
   children,
   ref,
+  className,
   ...props
 }: SelectProps<T>) {
   return (
-    <RacSelect isInvalid={isInvalid} {...props} className="group" ref={ref}>
+    <RacSelect
+      isInvalid={isInvalid}
+      {...props}
+      className={select({ className })}
+      ref={ref}
+    >
       {({ isOpen }) => (
         <>
-          <div className={layoutWrapper({ layout })}>
+          <div className={layoutWrapper({ layout, shouldHideOnMobile })}>
             <Label
               variant={labelVariant}
               className={fieldLabel({ shouldHideOnMobile })}
