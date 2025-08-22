@@ -43,7 +43,7 @@ export default function TableWrapper({
 
   return (
     <Card className="grid gap-6">
-      <div className="flex items-center justify-end gap-6">
+      <div className="flex items-start justify-end gap-6">
         <Select
           label="Sort by"
           layout="horizontal"

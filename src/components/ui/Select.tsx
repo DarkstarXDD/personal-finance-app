@@ -41,15 +41,18 @@ const selectStyles = tv({
   variants: {
     layout: {
       vertical: {
-        layoutWrapper: "justify-items-start [grid-template-areas:'a''b''c']",
+        layoutWrapper:
+          "justify-items-start [grid-template-areas:'a''b''c'] sm:[grid-template-areas:'a''b''c']",
       },
       horizontal: {
-        layoutWrapper: "grid-cols-[auto_1fr] [grid-template-areas:'a_b''a_c']",
+        layoutWrapper:
+          "grid-cols-[auto_1fr] [grid-template-areas:'a_b''a_c'] sm:grid-cols-[auto_1fr] sm:[grid-template-areas:'a_b''a_c']",
       },
     },
 
     shouldHideOnMobile: {
       true: {
+        layoutWrapper: "grid-cols-1 [grid-template-areas:none]",
         fieldLabel: "sr-only sm:not-sr-only",
         fieldDescription: "sr-only sm:not-sr-only",
         fieldErrorMessage: "sr-only sm:not-sr-only",
@@ -115,7 +118,7 @@ function Select<T extends object>({
     <RacSelect isInvalid={isInvalid} {...props} className="group" ref={ref}>
       {({ isOpen }) => (
         <>
-          <div className={layoutWrapper({ layout })}>
+          <div className={layoutWrapper({ layout, shouldHideOnMobile })}>
             <Label
               variant={labelVariant}
               className={fieldLabel({ shouldHideOnMobile })}
