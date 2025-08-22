@@ -43,13 +43,39 @@ const transactionSelect = {
   category: true,
 } satisfies Prisma.TransactionSelect
 
-export async function getTransactions() {
+export async function getTransactions(sortby: string = "latest") {
   const userId = await verifySession()
   if (!userId) redirect("/login")
+
+  let orderBy: Prisma.TransactionOrderByWithRelationInput
+
+  switch (sortby) {
+    case "latest":
+      orderBy = { createdAt: "desc" }
+      break
+    case "oldest":
+      orderBy = { createdAt: "asc" }
+      break
+    case "asc":
+      orderBy = { counterparty: "asc" }
+      break
+    case "desc":
+      orderBy = { counterparty: "desc" }
+      break
+    case "highest":
+      orderBy = { amount: "desc" }
+      break
+    case "lowest":
+      orderBy = { amount: "asc" }
+      break
+    default:
+      orderBy = { createdAt: "desc" }
+  }
 
   const transactions = await prisma.transaction.findMany({
     where: { userId },
     select: transactionSelect,
+    orderBy,
   })
 
   return transactions.map((t) => ({
