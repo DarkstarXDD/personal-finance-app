@@ -43,7 +43,10 @@ const transactionSelect = {
   category: true,
 } satisfies Prisma.TransactionSelect
 
-export async function getTransactions(sortby: string = "latest") {
+export async function getTransactions(
+  sortby: string = "latest",
+  category: string = "all"
+) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -73,7 +76,10 @@ export async function getTransactions(sortby: string = "latest") {
   }
 
   const transactions = await prisma.transaction.findMany({
-    where: { userId },
+    where: {
+      userId,
+      category: { name: category != "all" ? category : undefined },
+    },
     select: transactionSelect,
     orderBy,
   })

@@ -7,12 +7,15 @@ import { getTransactions } from "@/data-access/transactions"
 export default async function TransactionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ sortby: string | undefined }>
+  searchParams: Promise<{
+    sortby: string | undefined
+    category: string | undefined
+  }>
 }) {
-  const { sortby } = await searchParams
+  const { sortby, category } = await searchParams
 
   const categories = await getCategories()
-  const transactions = await getTransactions(sortby)
+  const transactions = await getTransactions(sortby, category)
 
   return (
     <main className="grid gap-8">
@@ -22,7 +25,7 @@ export default async function TransactionsPage({
         </Heading>
         <AddTransactionDialog categories={categories} />
       </div>
-      <TableWrapper transactions={transactions} />
+      <TableWrapper categories={categories} transactions={transactions} />
     </main>
   )
 }
