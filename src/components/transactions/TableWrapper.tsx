@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import TableDesktop from "@/components/transactions/TableDesktop"
 import TableMobile from "@/components/transactions/TableMobile"
 import Card from "@/components/ui/Card"
+import SearchField from "@/components/ui/SearchField"
 import { Select, SelectItem } from "@/components/ui/Select"
 
 import type { Category } from "@/data-access/lookups"
@@ -43,38 +44,43 @@ export default function TableWrapper({
 
   return (
     <Card className="grid gap-6">
-      <div className="flex items-start justify-end gap-6">
-        <Select
-          label="Sort by"
-          // layout="horizontal"
-          aria-label="Sort by"
-          selectedKey={searchParams.get("sortby") ?? "latest"}
-          onSelectionChange={onSortByChange}
-          shouldHideOnMobile
-          className="w-full max-w-62"
-        >
-          <SelectItem id="latest">Latest</SelectItem>
-          <SelectItem id="oldest">Oldest</SelectItem>
-          <SelectItem id="asc">A to Z</SelectItem>
-          <SelectItem id="desc">Z to A</SelectItem>
-          <SelectItem id="highest">Highest</SelectItem>
-          <SelectItem id="lowest">Lowest</SelectItem>
-        </Select>
+      <div className="flex items-center justify-between gap-6 sm:items-start">
+        <SearchField
+          placeholder="Search Transactions"
+          label="Search Transactions"
+          className="max-w-80"
+        />
+        <div className="flex items-start justify-end gap-6 sm:w-full">
+          <Select
+            label="Sort by"
+            aria-label="Sort by"
+            selectedKey={searchParams.get("sortby") ?? "latest"}
+            onSelectionChange={onSortByChange}
+            shouldHideOnMobile
+            className="size-5 max-w-62 sm:w-full sm:min-w-50"
+          >
+            <SelectItem id="latest">Latest</SelectItem>
+            <SelectItem id="oldest">Oldest</SelectItem>
+            <SelectItem id="asc">A to Z</SelectItem>
+            <SelectItem id="desc">Z to A</SelectItem>
+            <SelectItem id="highest">Highest</SelectItem>
+            <SelectItem id="lowest">Lowest</SelectItem>
+          </Select>
 
-        <Select
-          label="Category"
-          // layout="horizontal"
-          aria-label="Category"
-          selectedKey={searchParams.get("category") ?? "all"}
-          onSelectionChange={onCategoryChange}
-          shouldHideOnMobile
-          className="w-full max-w-70"
-          items={categoriesWithAll}
-        >
-          {(category) => (
-            <SelectItem id={category.name}>{category.label}</SelectItem>
-          )}
-        </Select>
+          <Select
+            label="Category"
+            aria-label="Category"
+            selectedKey={searchParams.get("category") ?? "all"}
+            onSelectionChange={onCategoryChange}
+            shouldHideOnMobile
+            className="size-5 max-w-70 sm:w-full sm:min-w-55"
+            items={categoriesWithAll}
+          >
+            {(category) => (
+              <SelectItem id={category.name}>{category.label}</SelectItem>
+            )}
+          </Select>
+        </div>
       </div>
       <TableMobile transactions={transactions} />
       <TableDesktop transactions={transactions} />
