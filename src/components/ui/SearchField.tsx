@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
   SearchField as RacSearchField,
   Input as RacInput,
@@ -10,19 +11,41 @@ import { PiXCircleFill, PiMagnifyingGlassBold } from "react-icons/pi"
 
 import Label from "@/components/ui/Label"
 import { inputStyles } from "@/components/ui/TextField"
+import { cn } from "@/lib/utils"
 
 export default function SearchField({
   label,
   placeholder = "Search",
+  className,
   ...props
-}: RacSearchFieldProps & {
+}: Omit<RacSearchFieldProps, "className"> & {
   label?: string
   placeholder?: string
+  className?: string
 }) {
+  const path = usePathname()
+  const router = useRouter()
+  const readOnlySearchParams = useSearchParams()
+  const searchParams = new URLSearchParams(readOnlySearchParams)
+
+  function onSearchChange(query: string) {
+    if (query !== "") {
+      searchParams.set("query", query)
+    } else {
+      searchParams.delete("query")
+    }
+    router.push(`${path}?${searchParams.toString()}`)
+  }
+
   return (
-    <RacSearchField enterKeyHint="search" className="group" {...props}>
+    <RacSearchField
+      enterKeyHint="search"
+      className={cn("group w-full", className)}
+      {...props}
+      onChange={onSearchChange}
+    >
       {({ isEmpty }) => (
-        <>
+        <div className="grid gap-1">
           {label && <Label>{label}</Label>}
           <div className="relative w-full">
             <PiMagnifyingGlassBold className="text-beige-500 absolute top-1/2 left-5 h-4 w-4 -translate-y-1/2" />
@@ -39,7 +62,7 @@ export default function SearchField({
               </RacButton>
             )}
           </div>
-        </>
+        </div>
       )}
     </RacSearchField>
   )
