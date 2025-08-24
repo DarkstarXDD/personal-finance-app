@@ -6,6 +6,12 @@ import { useDebouncedCallback } from "use-debounce"
 import TableDesktop from "@/components/transactions/TableDesktop"
 import TableMobile from "@/components/transactions/TableMobile"
 import Card from "@/components/ui/Card"
+import {
+  PaginationPrevious,
+  PaginationNext,
+  PaginationNumber,
+  Pagination,
+} from "@/components/ui/Pagination"
 import SearchField from "@/components/ui/SearchField"
 import { Select, SelectItem } from "@/components/ui/Select"
 
@@ -94,8 +100,17 @@ export default function TableWrapper({
           </Select>
         </div>
       </div>
+
       <TableMobile transactions={transactions} />
       <TableDesktop transactions={transactions} />
+
+      <Pagination className="">
+        <PaginationPrevious href="/" className="mr-auto" />
+        <PaginationNumber href="/transactions?query=arpico" pageNumber={1} />
+        <PaginationNumber href="/" pageNumber={2} isActive={true} />
+        <PaginationNumber href="/" pageNumber={3} />
+        <PaginationNext href="/" className="ml-auto" />
+      </Pagination>
     </Card>
   )
 }
