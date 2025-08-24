@@ -16,7 +16,9 @@ export default async function TransactionsPage({
   const { query, sortby, category } = await searchParams
 
   const categories = await getCategories()
-  const transactions = await getTransactions(query, sortby, category)
+  const { transactions, total } = await getTransactions(query, sortby, category)
+
+  console.log(total)
 
   return (
     <main className="grid gap-8">

@@ -76,20 +76,28 @@ export async function getTransactions(
       orderBy = { createdAt: "desc" }
   }
 
-  const transactions = await prisma.transaction.findMany({
-    where: {
-      userId,
-      category: { name: category != "all" ? category : undefined },
-      counterparty: { contains: query, mode: "insensitive" },
-    },
-    select: transactionSelect,
-    orderBy,
-  })
+  const where: Prisma.TransactionWhereInput = {
+    userId,
+    category: { name: category != "all" ? category : undefined },
+    counterparty: { contains: query, mode: "insensitive" },
+  }
 
-  return transactions.map((t) => ({
-    ...t,
-    amount: t.amount.toString(),
-  }))
+  const [transactions, total] = await prisma.$transaction([
+    prisma.transaction.findMany({
+      where,
+      select: transactionSelect,
+      orderBy,
+    }),
+    prisma.transaction.count({ where }),
+  ])
+
+  return {
+    transactions: transactions.map((t) => ({
+      ...t,
+      amount: t.amount.toString(),
+    })),
+    total,
+  }
 }
 
 type TransactionRaw = Prisma.TransactionGetPayload<{
