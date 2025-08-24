@@ -1,6 +1,5 @@
 "use client"
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
   SearchField as RacSearchField,
   Input as RacInput,
@@ -8,7 +7,6 @@ import {
   type SearchFieldProps as RacSearchFieldProps,
 } from "react-aria-components"
 import { PiXCircleFill, PiMagnifyingGlassBold } from "react-icons/pi"
-import { useDebouncedCallback } from "use-debounce"
 
 import Label from "@/components/ui/Label"
 import { inputStyles } from "@/components/ui/TextField"
@@ -24,27 +22,11 @@ export default function SearchField({
   placeholder?: string
   className?: string
 }) {
-  const path = usePathname()
-  const router = useRouter()
-  const readOnlySearchParams = useSearchParams()
-  const searchParams = new URLSearchParams(readOnlySearchParams)
-
-  const onSearchChange = useDebouncedCallback((query: string) => {
-    if (query !== "") {
-      searchParams.set("query", query)
-    } else {
-      searchParams.delete("query")
-    }
-    router.push(`${path}?${searchParams.toString()}`)
-  }, 200)
-
   return (
     <RacSearchField
       enterKeyHint="search"
       className={cn("group w-full", className)}
       {...props}
-      defaultValue={searchParams.get("query") ?? ""}
-      onChange={onSearchChange}
     >
       {({ isEmpty }) => (
         <div className="grid gap-1">

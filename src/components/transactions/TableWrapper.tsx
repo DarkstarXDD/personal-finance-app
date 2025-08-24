@@ -1,6 +1,7 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useDebouncedCallback } from "use-debounce"
 
 import TableDesktop from "@/components/transactions/TableDesktop"
 import TableMobile from "@/components/transactions/TableMobile"
@@ -28,6 +29,15 @@ export default function TableWrapper({
     ...categories,
   ]
 
+  const onSearchChange = useDebouncedCallback((query: string) => {
+    if (query !== "") {
+      searchParams.set("query", query)
+    } else {
+      searchParams.delete("query")
+    }
+    router.push(`${path}?${searchParams.toString()}`)
+  }, 200)
+
   function onSortByChange(sortOption: Key | null) {
     if (typeof sortOption === "string") {
       searchParams.set("sortby", sortOption)
@@ -49,6 +59,8 @@ export default function TableWrapper({
           placeholder="Search Transactions"
           label="Search Transactions"
           className="max-w-80"
+          defaultValue={searchParams.get("query") ?? ""}
+          onChange={onSearchChange}
         />
         <div className="flex items-start justify-end gap-6 sm:w-full">
           <Select
