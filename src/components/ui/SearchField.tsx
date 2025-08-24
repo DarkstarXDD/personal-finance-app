@@ -8,6 +8,7 @@ import {
   type SearchFieldProps as RacSearchFieldProps,
 } from "react-aria-components"
 import { PiXCircleFill, PiMagnifyingGlassBold } from "react-icons/pi"
+import { useDebouncedCallback } from "use-debounce"
 
 import Label from "@/components/ui/Label"
 import { inputStyles } from "@/components/ui/TextField"
@@ -28,20 +29,21 @@ export default function SearchField({
   const readOnlySearchParams = useSearchParams()
   const searchParams = new URLSearchParams(readOnlySearchParams)
 
-  function onSearchChange(query: string) {
+  const onSearchChange = useDebouncedCallback((query: string) => {
     if (query !== "") {
       searchParams.set("query", query)
     } else {
       searchParams.delete("query")
     }
     router.push(`${path}?${searchParams.toString()}`)
-  }
+  }, 200)
 
   return (
     <RacSearchField
       enterKeyHint="search"
       className={cn("group w-full", className)}
       {...props}
+      defaultValue={searchParams.get("query") ?? ""}
       onChange={onSearchChange}
     >
       {({ isEmpty }) => (
