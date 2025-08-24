@@ -8,14 +8,15 @@ export default async function TransactionsPage({
   searchParams,
 }: {
   searchParams: Promise<{
+    query: string | undefined
     sortby: string | undefined
     category: string | undefined
   }>
 }) {
-  const { sortby, category } = await searchParams
+  const { query, sortby, category } = await searchParams
 
   const categories = await getCategories()
-  const transactions = await getTransactions(sortby, category)
+  const transactions = await getTransactions(query, sortby, category)
 
   return (
     <main className="grid gap-8">
