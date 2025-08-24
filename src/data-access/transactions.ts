@@ -44,6 +44,7 @@ const transactionSelect = {
 } satisfies Prisma.TransactionSelect
 
 export async function getTransactions(
+  query: string = "",
   sortby: string = "latest",
   category: string = "all"
 ) {
@@ -79,6 +80,7 @@ export async function getTransactions(
     where: {
       userId,
       category: { name: category != "all" ? category : undefined },
+      counterparty: { contains: query, mode: "insensitive" },
     },
     select: transactionSelect,
     orderBy,
