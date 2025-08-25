@@ -8,6 +8,8 @@ import { type TransactionCreate } from "@/lib/schemas"
 
 import type { CreateTransactionErrors, DALReturn } from "@/lib/types"
 
+const ITEMS_PER_PAGE = 5
+
 export async function createTransaction(
   formData: TransactionCreate
 ): Promise<DALReturn<CreateTransactionErrors>> {
@@ -43,11 +45,19 @@ const transactionSelect = {
   category: true,
 } satisfies Prisma.TransactionSelect
 
-export async function getTransactions(
-  query: string = "",
-  sortby: string = "latest",
-  category: string = "all"
-) {
+type GetTransactionsParams = {
+  query?: string
+  sortby?: string
+  category?: string
+  currentPage?: number
+}
+
+export async function getTransactions({
+  query = "",
+  sortby = "latest",
+  category = "all",
+  currentPage = 1,
+}: GetTransactionsParams) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -87,6 +97,8 @@ export async function getTransactions(
       where,
       select: transactionSelect,
       orderBy,
+      take: ITEMS_PER_PAGE,
+      skip: (currentPage - 1) * ITEMS_PER_PAGE,
     }),
     prisma.transaction.count({ where }),
   ])

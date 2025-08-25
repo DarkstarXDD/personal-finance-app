@@ -11,12 +11,19 @@ export default async function TransactionsPage({
     query: string | undefined
     sortby: string | undefined
     category: string | undefined
+    page: string | undefined
   }>
 }) {
-  const { query, sortby, category } = await searchParams
+  const { query, sortby, category, page } = await searchParams
+  const currentPage = Number(page) || 1
 
   const categories = await getCategories()
-  const { transactions, total } = await getTransactions(query, sortby, category)
+  const { transactions, total } = await getTransactions({
+    query,
+    sortby,
+    category,
+    currentPage,
+  })
 
   console.log(total)
 
