@@ -102,12 +102,14 @@ export async function getTransactions({
     prisma.transaction.count({ where }),
   ])
 
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
+
   return {
     transactions: transactions.map((t) => ({
       ...t,
       amount: t.amount.toString(),
     })),
-    totalItems,
+    pagination: { totalPages },
   }
 }
 
