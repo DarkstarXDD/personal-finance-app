@@ -25,7 +25,9 @@ export default async function TransactionsPage({
     currentPage,
   })
 
-  console.log(total)
+  const totalPages = Math.ceil(total / 5)
+  // console.log(total)
+  // console.log(totalPages)
 
   return (
     <main className="grid gap-8">
@@ -38,7 +40,7 @@ export default async function TransactionsPage({
       <TableWrapper
         categories={categories}
         transactions={transactions}
-        totalItems={total}
+        totalPages={totalPages}
       />
     </main>
   )

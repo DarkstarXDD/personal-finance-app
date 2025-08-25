@@ -22,11 +22,11 @@ import type { Key } from "react-aria-components"
 export default function TableWrapper({
   categories,
   transactions,
-  totalItems,
+  totalPages,
 }: {
   categories: Category[]
   transactions: Transaction[]
-  totalItems: number
+  totalPages: number
 }) {
   const path = usePathname()
   const router = useRouter()
@@ -38,6 +38,9 @@ export default function TableWrapper({
   ]
 
   const onSearchChange = useDebouncedCallback((query: string) => {
+    if (searchParams.get("page") !== null) {
+      searchParams.set("page", "1")
+    }
     if (query !== "") {
       searchParams.set("query", query)
     } else {
@@ -47,6 +50,9 @@ export default function TableWrapper({
   }, 200)
 
   function onSortByChange(sortOption: Key | null) {
+    if (searchParams.get("page") !== null) {
+      searchParams.set("page", "1")
+    }
     if (typeof sortOption === "string") {
       searchParams.set("sortby", sortOption)
       router.push(`${path}?${searchParams.toString()}`)
@@ -54,6 +60,9 @@ export default function TableWrapper({
   }
 
   function onCategoryChange(categoryOption: Key | null) {
+    if (searchParams.get("page") !== null) {
+      searchParams.set("page", "1")
+    }
     if (typeof categoryOption === "string") {
       searchParams.set("category", categoryOption)
       router.push(`${path}?${searchParams.toString()}`)
@@ -62,16 +71,10 @@ export default function TableWrapper({
 
   const currentPage = Number(searchParams.get("page")) || 1
 
-  if (currentPage > 1) {
-    console.log("Enable previous")
-  } else {
-    console.log("Disable previous button")
-  }
-
-  if (currentPage < totalItems) {
-    console.log("Enable Next")
-  } else {
-    console.log("Disable Next")
+  function createPageURL(pageNumber: number | string) {
+    const newSeachParams = new URLSearchParams(searchParams)
+    newSeachParams.set("page", pageNumber.toString())
+    return `${path}?${newSeachParams.toString()}`
   }
 
   return (
@@ -120,12 +123,20 @@ export default function TableWrapper({
       <TableMobile transactions={transactions} />
       <TableDesktop transactions={transactions} />
 
-      <Pagination className="">
-        <PaginationPrevious href="/" className="mr-auto" />
+      <Pagination>
+        <PaginationPrevious
+          href={createPageURL(currentPage - 1)}
+          className="mr-auto"
+          isDisabled={currentPage <= 1}
+        />
         <PaginationNumber href="/transactions?query=arpico" pageNumber={1} />
         <PaginationNumber href="/" pageNumber={2} isActive={true} />
         <PaginationNumber href="/" pageNumber={3} />
-        <PaginationNext href="/" className="ml-auto" isDisabled />
+        <PaginationNext
+          href={createPageURL(currentPage + 1)}
+          className="ml-auto"
+          isDisabled={currentPage >= totalPages}
+        />
       </Pagination>
     </Card>
   )

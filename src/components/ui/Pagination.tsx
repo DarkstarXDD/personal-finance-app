@@ -98,7 +98,7 @@ function PaginationNext({
   return (
     <li className={className}>
       <Link {...props} className={linkStyles()}>
-        <span className={textStyles()}>Prev</span>
+        <span className={textStyles()}>Next</span>
         <PiCaretRightFill className={iconStyles()} />
       </Link>
     </li>
