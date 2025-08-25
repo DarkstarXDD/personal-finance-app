@@ -2,11 +2,7 @@
 
 import Link from "next/link"
 import { ComponentProps } from "react"
-import {
-  PiCaretLeftFill,
-  PiCaretRightFill,
-  // PiDotsThreeOutlineFill,
-} from "react-icons/pi"
+import { PiCaretLeftFill, PiCaretRightFill } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
 import { cn } from "@/lib/utils"
@@ -17,10 +13,12 @@ const paginationStyles = tv({
       "ring-beige-500 active:bg-beige-100 text-grey-900 hover:bg-beige-100 border-beige-500 flex items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
     iconStyles: "text-grey-500 size-4 shrink-0",
     textStyles: "text-sm leading-normal font-normal",
+    ellipsisStyles:
+      "text-grey-900 border-beige-500 flex items-center justify-center rounded-lg border text-sm leading-normal font-normal",
   },
   variants: {
     size: {
-      sm: { linkStyles: "size-10" },
+      sm: { linkStyles: "size-10", ellipsisStyles: "size-10" },
       lg: { linkStyles: "h-10 w-12 md:w-24.5" },
     },
     isActive: {
@@ -127,4 +125,19 @@ function PaginationNumber({
   )
 }
 
-export { Pagination, PaginationPrevious, PaginationNext, PaginationNumber }
+function PaginationEllipsis({ className, ...props }: ComponentProps<"li">) {
+  const { ellipsisStyles } = paginationStyles({ size: "sm" })
+  return (
+    <li className={ellipsisStyles({ className })} {...props}>
+      ...
+    </li>
+  )
+}
+
+export {
+  Pagination,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationNumber,
+  PaginationEllipsis,
+}

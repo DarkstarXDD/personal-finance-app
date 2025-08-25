@@ -7,10 +7,11 @@ import TableDesktop from "@/components/transactions/TableDesktop"
 import TableMobile from "@/components/transactions/TableMobile"
 import Card from "@/components/ui/Card"
 import {
+  Pagination,
   PaginationPrevious,
   PaginationNext,
   PaginationNumber,
-  Pagination,
+  PaginationEllipsis,
 } from "@/components/ui/Pagination"
 import SearchField from "@/components/ui/SearchField"
 import { Select, SelectItem } from "@/components/ui/Select"
@@ -128,14 +129,18 @@ export default function TableWrapper({
           className="mr-auto"
           isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
         />
-        {pageList.map((page) => (
-          <PaginationNumber
-            key={page}
-            href={createPageURL(page)}
-            pageNumber={page}
-            isActive={page === currentPage}
-          />
-        ))}
+        {pageList.map((page, id) =>
+          page === "ellipsis" ? (
+            <PaginationEllipsis key={`ellipsis-${id}`} />
+          ) : (
+            <PaginationNumber
+              key={`page-${page}`}
+              href={createPageURL(page)}
+              pageNumber={page}
+              isActive={page === currentPage}
+            />
+          )
+        )}
         <PaginationNext
           href={createPageURL(currentPage + 1)}
           className="ml-auto"
