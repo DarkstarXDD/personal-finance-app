@@ -11,12 +11,22 @@ export default async function TransactionsPage({
     query: string | undefined
     sortby: string | undefined
     category: string | undefined
+    page: string | undefined
   }>
 }) {
-  const { query, sortby, category } = await searchParams
+  const { query, sortby, category, page } = await searchParams
+  const currentPage = Math.abs(Number(page) || 1)
 
   const categories = await getCategories()
-  const transactions = await getTransactions(query, sortby, category)
+  const {
+    transactions,
+    pagination: { totalPages },
+  } = await getTransactions({
+    query,
+    sortby,
+    category,
+    currentPage,
+  })
 
   return (
     <main className="grid gap-8">
@@ -26,7 +36,11 @@ export default async function TransactionsPage({
         </Heading>
         <AddTransactionDialog categories={categories} />
       </div>
-      <TableWrapper categories={categories} transactions={transactions} />
+      <TableWrapper
+        categories={categories}
+        transactions={transactions}
+        totalPages={totalPages}
+      />
     </main>
   )
 }

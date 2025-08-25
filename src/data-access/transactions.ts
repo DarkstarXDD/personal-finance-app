@@ -3,9 +3,10 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
+import { ITEMS_PER_PAGE } from "@/lib/constants"
 import { Prisma, prisma } from "@/lib/prisma"
-import { type TransactionCreate } from "@/lib/schemas"
 
+import type { TransactionCreate } from "@/lib/schemas"
 import type { CreateTransactionErrors, DALReturn } from "@/lib/types"
 
 export async function createTransaction(
@@ -43,11 +44,19 @@ const transactionSelect = {
   category: true,
 } satisfies Prisma.TransactionSelect
 
-export async function getTransactions(
-  query: string = "",
-  sortby: string = "latest",
-  category: string = "all"
-) {
+type GetTransactionsParams = {
+  query?: string
+  sortby?: string
+  category?: string
+  currentPage?: number
+}
+
+export async function getTransactions({
+  query = "",
+  sortby = "latest",
+  category = "all",
+  currentPage = 1,
+}: GetTransactionsParams) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -76,20 +85,32 @@ export async function getTransactions(
       orderBy = { createdAt: "desc" }
   }
 
-  const transactions = await prisma.transaction.findMany({
-    where: {
-      userId,
-      category: { name: category != "all" ? category : undefined },
-      counterparty: { contains: query, mode: "insensitive" },
-    },
-    select: transactionSelect,
-    orderBy,
-  })
+  const where: Prisma.TransactionWhereInput = {
+    userId,
+    category: { name: category != "all" ? category : undefined },
+    counterparty: { contains: query, mode: "insensitive" },
+  }
 
-  return transactions.map((t) => ({
-    ...t,
-    amount: t.amount.toString(),
-  }))
+  const [transactions, totalItems] = await prisma.$transaction([
+    prisma.transaction.findMany({
+      where,
+      select: transactionSelect,
+      orderBy,
+      take: ITEMS_PER_PAGE,
+      skip: (currentPage - 1) * ITEMS_PER_PAGE,
+    }),
+    prisma.transaction.count({ where }),
+  ])
+
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
+
+  return {
+    transactions: transactions.map((t) => ({
+      ...t,
+      amount: t.amount.toString(),
+    })),
+    pagination: { totalPages },
+  }
 }
 
 type TransactionRaw = Prisma.TransactionGetPayload<{
