@@ -3,12 +3,11 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
+import { ITEMS_PER_PAGE } from "@/lib/constants"
 import { Prisma, prisma } from "@/lib/prisma"
-import { type TransactionCreate } from "@/lib/schemas"
 
+import type { TransactionCreate } from "@/lib/schemas"
 import type { CreateTransactionErrors, DALReturn } from "@/lib/types"
-
-const ITEMS_PER_PAGE = 5
 
 export async function createTransaction(
   formData: TransactionCreate
@@ -92,7 +91,7 @@ export async function getTransactions({
     counterparty: { contains: query, mode: "insensitive" },
   }
 
-  const [transactions, total] = await prisma.$transaction([
+  const [transactions, totalItems] = await prisma.$transaction([
     prisma.transaction.findMany({
       where,
       select: transactionSelect,
@@ -108,7 +107,7 @@ export async function getTransactions({
       ...t,
       amount: t.amount.toString(),
     })),
-    total,
+    totalItems,
   }
 }
 

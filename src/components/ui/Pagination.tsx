@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils"
 const paginationStyles = tv({
   slots: {
     linkStyles:
-      "ring-beige-500 active:bg-beige-100 text-grey-900 hover:bg-beige-100 border-beige-500 flex items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2",
+      "ring-beige-500 active:bg-beige-100 text-grey-900 hover:bg-beige-100 border-beige-500 flex items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
     iconStyles: "text-grey-500 size-4 shrink-0",
     textStyles: "text-sm leading-normal font-normal",
   },
@@ -26,7 +26,7 @@ const paginationStyles = tv({
     isActive: {
       true: {
         linkStyles:
-          "bg-grey-900 border-grey-900 hover:bg-grey-900/85 text-white",
+          "bg-grey-900 border-grey-900 hover:bg-grey-900/85 active:bg-grey-900/85 text-white",
       },
     },
     isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },

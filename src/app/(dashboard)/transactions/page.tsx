@@ -3,6 +3,7 @@ import TableWrapper from "@/components/transactions/TableWrapper"
 import Heading from "@/components/ui/Heading"
 import { getCategories } from "@/data-access/lookups"
 import { getTransactions } from "@/data-access/transactions"
+import { ITEMS_PER_PAGE } from "@/lib/constants"
 
 export default async function TransactionsPage({
   searchParams,
@@ -15,17 +16,17 @@ export default async function TransactionsPage({
   }>
 }) {
   const { query, sortby, category, page } = await searchParams
-  const currentPage = Number(page) || 1
+  const currentPage = Math.abs(Number(page) || 1)
 
   const categories = await getCategories()
-  const { transactions, total } = await getTransactions({
+  const { transactions, totalItems } = await getTransactions({
     query,
     sortby,
     category,
     currentPage,
   })
 
-  const totalPages = Math.ceil(total / 5)
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
   // console.log(total)
   // console.log(totalPages)
 

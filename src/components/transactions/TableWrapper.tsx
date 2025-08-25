@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/Pagination"
 import SearchField from "@/components/ui/SearchField"
 import { Select, SelectItem } from "@/components/ui/Select"
+import { generatePagination } from "@/lib/utils"
 
 import type { Category } from "@/data-access/lookups"
 import type { Transaction } from "@/data-access/transactions"
@@ -72,7 +73,8 @@ export default function TableWrapper({
     return `${path}?${newSeachParams.toString()}`
   }
 
-  const currentPage = Number(readOnlySearchParams.get("page")) || 1
+  const currentPage = Math.abs(Number(readOnlySearchParams.get("page")) || 1)
+  const pageList = generatePagination(currentPage, totalPages)
 
   return (
     <Card className="grid gap-6">
@@ -124,11 +126,16 @@ export default function TableWrapper({
         <PaginationPrevious
           href={createPageURL(currentPage - 1)}
           className="mr-auto"
-          isDisabled={currentPage <= 1}
+          isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
         />
-        <PaginationNumber href="/transactions?query=arpico" pageNumber={1} />
-        <PaginationNumber href="/" pageNumber={2} isActive={true} />
-        <PaginationNumber href="/" pageNumber={3} />
+        {pageList.map((page) => (
+          <PaginationNumber
+            key={page}
+            href={createPageURL(page)}
+            pageNumber={page}
+            isActive={page === currentPage}
+          />
+        ))}
         <PaginationNext
           href={createPageURL(currentPage + 1)}
           className="ml-auto"
