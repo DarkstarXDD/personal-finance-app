@@ -31,51 +31,48 @@ export default function TableWrapper({
   const path = usePathname()
   const router = useRouter()
   const readOnlySearchParams = useSearchParams()
-  const searchParams = new URLSearchParams(readOnlySearchParams)
   const categoriesWithAll = [
     { id: "12345", name: "all", label: "All Transactions" },
     ...categories,
   ]
 
-  const onSearchChange = useDebouncedCallback((query: string) => {
+  function updateSearchParams(name: string, value: string) {
+    const searchParams = new URLSearchParams(readOnlySearchParams)
+
     if (searchParams.get("page") !== null) {
       searchParams.set("page", "1")
     }
-    if (query !== "") {
-      searchParams.set("query", query)
+
+    if (value == "") {
+      searchParams.delete(name)
     } else {
-      searchParams.delete("query")
+      searchParams.set(name, value)
     }
+
     router.push(`${path}?${searchParams.toString()}`)
+  }
+
+  const onSearchChange = useDebouncedCallback((query: string) => {
+    updateSearchParams("query", query)
   }, 200)
 
   function onSortByChange(sortOption: Key | null) {
-    if (searchParams.get("page") !== null) {
-      searchParams.set("page", "1")
-    }
-    if (typeof sortOption === "string") {
-      searchParams.set("sortby", sortOption)
-      router.push(`${path}?${searchParams.toString()}`)
-    }
+    if (typeof sortOption !== "string") return
+    updateSearchParams("sortby", sortOption)
   }
 
   function onCategoryChange(categoryOption: Key | null) {
-    if (searchParams.get("page") !== null) {
-      searchParams.set("page", "1")
-    }
-    if (typeof categoryOption === "string") {
-      searchParams.set("category", categoryOption)
-      router.push(`${path}?${searchParams.toString()}`)
-    }
+    if (typeof categoryOption !== "string") return
+    updateSearchParams("category", categoryOption)
   }
 
-  const currentPage = Number(searchParams.get("page")) || 1
-
   function createPageURL(pageNumber: number | string) {
-    const newSeachParams = new URLSearchParams(searchParams)
+    const newSeachParams = new URLSearchParams(readOnlySearchParams)
     newSeachParams.set("page", pageNumber.toString())
     return `${path}?${newSeachParams.toString()}`
   }
+
+  const currentPage = Number(readOnlySearchParams.get("page")) || 1
 
   return (
     <Card className="grid gap-6">
@@ -84,14 +81,14 @@ export default function TableWrapper({
           placeholder="Search Transactions"
           label="Search Transactions"
           className="max-w-80"
-          defaultValue={searchParams.get("query") ?? ""}
+          defaultValue={readOnlySearchParams.get("query") ?? ""}
           onChange={onSearchChange}
         />
         <div className="flex items-start justify-end gap-6 sm:w-full">
           <Select
             label="Sort by"
             aria-label="Sort by"
-            selectedKey={searchParams.get("sortby") ?? "latest"}
+            selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
             onSelectionChange={onSortByChange}
             shouldHideOnMobile
             className="size-5 max-w-62 sm:w-full sm:min-w-50"
@@ -107,7 +104,7 @@ export default function TableWrapper({
           <Select
             label="Category"
             aria-label="Category"
-            selectedKey={searchParams.get("category") ?? "all"}
+            selectedKey={readOnlySearchParams.get("category") ?? "all"}
             onSelectionChange={onCategoryChange}
             shouldHideOnMobile
             className="size-5 max-w-70 sm:w-full sm:min-w-55"
