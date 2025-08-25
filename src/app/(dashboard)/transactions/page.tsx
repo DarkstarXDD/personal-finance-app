@@ -35,7 +35,11 @@ export default async function TransactionsPage({
         </Heading>
         <AddTransactionDialog categories={categories} />
       </div>
-      <TableWrapper categories={categories} transactions={transactions} />
+      <TableWrapper
+        categories={categories}
+        transactions={transactions}
+        totalItems={total}
+      />
     </main>
   )
 }

@@ -22,9 +22,11 @@ import type { Key } from "react-aria-components"
 export default function TableWrapper({
   categories,
   transactions,
+  totalItems,
 }: {
   categories: Category[]
   transactions: Transaction[]
+  totalItems: number
 }) {
   const path = usePathname()
   const router = useRouter()
@@ -56,6 +58,20 @@ export default function TableWrapper({
       searchParams.set("category", categoryOption)
       router.push(`${path}?${searchParams.toString()}`)
     }
+  }
+
+  const currentPage = Number(searchParams.get("page")) || 1
+
+  if (currentPage > 1) {
+    console.log("Enable previous")
+  } else {
+    console.log("Disable previous button")
+  }
+
+  if (currentPage < totalItems) {
+    console.log("Enable Next")
+  } else {
+    console.log("Disable Next")
   }
 
   return (
@@ -109,7 +125,7 @@ export default function TableWrapper({
         <PaginationNumber href="/transactions?query=arpico" pageNumber={1} />
         <PaginationNumber href="/" pageNumber={2} isActive={true} />
         <PaginationNumber href="/" pageNumber={3} />
-        <PaginationNext href="/" className="ml-auto" />
+        <PaginationNext href="/" className="ml-auto" isDisabled />
       </Pagination>
     </Card>
   )
