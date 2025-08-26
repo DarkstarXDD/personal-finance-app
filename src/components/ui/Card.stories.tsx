@@ -25,7 +25,8 @@ const meta = {
     },
     padding: {
       control: "select",
-      description: "The padding around the content of the card.",
+      description:
+        "The padding around the content of the card.('sm' - p-5, md:p-6 | 'lg' - px-5 py-6, md:p-8)",
       options: ["sm", "lg"],
       table: {
         defaultValue: { summary: "lg" },
