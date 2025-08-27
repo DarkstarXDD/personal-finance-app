@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form"
 
 import { createTransaction } from "@/actions/transactions"
 import Button from "@/components/ui/Button"
+import Checkbox from "@/components/ui/Checkbox"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
@@ -26,7 +27,12 @@ export default function AddTransactionDialog({
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(transactionCreateSchema),
-    defaultValues: { counterparty: "", amount: "", categoryId: "" },
+    defaultValues: {
+      counterparty: "",
+      amount: "",
+      categoryId: "",
+      isRecurring: false,
+    },
   })
 
   return (
@@ -75,6 +81,7 @@ export default function AddTransactionDialog({
                   />
                 )}
               />
+
               <Controller
                 name="amount"
                 control={control}
@@ -89,6 +96,7 @@ export default function AddTransactionDialog({
                   />
                 )}
               />
+
               <Controller
                 name="categoryId"
                 control={control}
@@ -114,6 +122,16 @@ export default function AddTransactionDialog({
                       </SelectItem>
                     )}
                   </Select>
+                )}
+              />
+
+              <Controller
+                name="isRecurring"
+                control={control}
+                render={({ field: { name, value, onChange } }) => (
+                  <Checkbox name={name} isSelected={value} onChange={onChange}>
+                    Is this a recurring bill?
+                  </Checkbox>
                 )}
               />
             </div>

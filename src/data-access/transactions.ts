@@ -10,7 +10,7 @@ import type { TransactionCreate } from "@/lib/schemas"
 import type { CreateTransactionErrors, DALReturn } from "@/lib/types"
 
 export async function createTransaction(
-  formData: TransactionCreate
+  formData: TransactionCreate & { recurringBillId?: string }
 ): Promise<DALReturn<CreateTransactionErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -22,9 +22,41 @@ export async function createTransaction(
         counterparty: formData.counterparty,
         amount: formData.amount,
         categoryId: formData.categoryId,
+        recurringBillId: formData.recurringBillId,
       },
     })
     return { success: true }
+  } catch (e) {
+    console.error(e)
+    return {
+      success: false,
+      fieldErrors: {
+        counterparty: ["Error creating transaction. Please try again."],
+      },
+    }
+  }
+}
+
+export async function createRecurringBill({
+  amount,
+  counterparty,
+}: TransactionCreate): Promise<
+  DALReturn<CreateTransactionErrors> & { recurringBillId?: string }
+> {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  try {
+    const result = await prisma.recurringBill.create({
+      data: {
+        userId,
+        counterparty,
+        amount,
+        dueDayOfMonth: 20,
+      },
+      select: { id: true },
+    })
+    return { success: true, recurringBillId: result.id }
   } catch (e) {
     console.error(e)
     return {

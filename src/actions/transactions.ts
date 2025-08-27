@@ -16,8 +16,21 @@ export async function createTransaction(
   const parsed = transactionCreateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await transactions.createTransaction(parsed.data)
-  if (!response.success) return response.fieldErrors
+  if (parsed.data.isRecurring) {
+    const recurringBillResponse = await transactions.createRecurringBill(
+      parsed.data
+    )
+    if (!recurringBillResponse.success) return recurringBillResponse.fieldErrors
+
+    const response = await transactions.createTransaction({
+      ...parsed.data,
+      recurringBillId: recurringBillResponse.recurringBillId,
+    })
+    if (!response.success) return response.fieldErrors
+  } else {
+    const response = await transactions.createTransaction(parsed.data)
+    if (!response.success) return response.fieldErrors
+  }
 
   revalidatePath("/transactions")
   return null
