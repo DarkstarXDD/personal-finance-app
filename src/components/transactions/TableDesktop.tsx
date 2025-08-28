@@ -68,7 +68,7 @@ export default function TableDesktop({
       <table className="w-full" style={{ minWidth: table.getTotalSize() }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} className="border-beige-100 border-b">
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
@@ -88,7 +88,7 @@ export default function TableDesktop({
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              className="border-grey-100 group hover:bg-beige-100 border-b transition-colors first:border-t last:border-none"
+              className="border-grey-100 hover:bg-beige-100 border-b last:border-none"
             >
               {row.getAllCells().map((cell) => (
                 <td

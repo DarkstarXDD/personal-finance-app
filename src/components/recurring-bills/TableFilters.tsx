@@ -43,23 +43,22 @@ export default function TableFilters() {
         defaultValue={readOnlySearchParams.get("query") ?? ""}
         onChange={onSearchChange}
       />
-      <div className="flex items-start justify-end gap-6 sm:w-full">
-        <Select
-          label="Sort by"
-          aria-label="Sort by"
-          selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
-          onSelectionChange={onSortByChange}
-          shouldHideOnMobile
-          className="size-5 max-w-62 sm:w-full sm:min-w-50"
-        >
-          <SelectItem id="latest">Latest</SelectItem>
-          <SelectItem id="oldest">Oldest</SelectItem>
-          <SelectItem id="asc">A to Z</SelectItem>
-          <SelectItem id="desc">Z to A</SelectItem>
-          <SelectItem id="highest">Highest</SelectItem>
-          <SelectItem id="lowest">Lowest</SelectItem>
-        </Select>
-      </div>
+
+      <Select
+        label="Sort by"
+        aria-label="Sort by"
+        selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
+        onSelectionChange={onSortByChange}
+        shouldHideOnMobile
+        className="size-5 max-w-62 sm:w-full sm:min-w-50"
+      >
+        <SelectItem id="latest">Latest</SelectItem>
+        <SelectItem id="oldest">Oldest</SelectItem>
+        <SelectItem id="asc">A to Z</SelectItem>
+        <SelectItem id="desc">Z to A</SelectItem>
+        <SelectItem id="highest">Highest</SelectItem>
+        <SelectItem id="lowest">Lowest</SelectItem>
+      </Select>
     </div>
   )
 }
