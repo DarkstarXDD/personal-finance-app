@@ -43,3 +43,10 @@ export const transactionCreateSchema = z.object({
   isRecurring: z.boolean(),
 })
 export type TransactionCreate = z.infer<typeof transactionCreateSchema>
+
+export const budgetCreateSchema = z.object({
+  categoryId: z.cuid("Please select a category."),
+  maximumSpend: z.string().min(1, "Maximum spend cannot be empty."),
+  colorId: z.cuid("Please select a color."),
+})
+export type BudgetCreate = z.infer<typeof budgetCreateSchema>
