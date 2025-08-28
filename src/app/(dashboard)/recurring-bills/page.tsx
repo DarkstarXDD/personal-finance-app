@@ -24,7 +24,7 @@ export default async function RecurringBillsPage({
       <Heading as="h1">Recurring Bills</Heading>
       <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
         <Total />
-        <Card className="grid gap-6">
+        <Card className="grid gap-6 md:pb-4">
           <TableFilters />
           <TableMobile recurringBills={recurringBills} />
           <TableDesktop recurringBills={recurringBills} />

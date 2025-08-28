@@ -86,7 +86,7 @@ export default function TableDesktop({
                 <td
                   key={cell.id}
                   style={{ width: cell.column.getSize() }}
-                  className="px-4 py-4 group-last:pb-0"
+                  className="px-4 py-4"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
