@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import * as z from "zod"
 
+import * as recurringBills from "@/data-access/recurring-bills"
 import * as transactions from "@/data-access/transactions"
 import { transactionCreateSchema, type TransactionCreate } from "@/lib/schemas"
 
@@ -17,7 +18,7 @@ export async function createTransaction(
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   if (parsed.data.isRecurring) {
-    const recurringBillResponse = await transactions.createRecurringBill(
+    const recurringBillResponse = await recurringBills.createRecurringBill(
       parsed.data
     )
     if (!recurringBillResponse.success) return recurringBillResponse.fieldErrors
