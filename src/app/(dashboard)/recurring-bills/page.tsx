@@ -7,7 +7,7 @@ export default function RecurringBillsPage() {
   return (
     <main className="grid gap-8">
       <Heading as="h1">Recurring Bills</Heading>
-      <div className="grid gap-6">
+      <div className="grid gap-6 xl:grid-cols-[20rem_1fr]">
         <Total />
         <Card>
           <TableMobile />

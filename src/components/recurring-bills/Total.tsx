@@ -5,7 +5,7 @@ import Heading from "@/components/ui/Heading"
 
 export default function Total() {
   return (
-    <div className="grid gap-3 md:grid-cols-2 md:gap-6">
+    <div className="grid gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-1">
       <Card
         theme="dark"
         className="flex items-center gap-5 md:flex-col md:items-start md:gap-8"
