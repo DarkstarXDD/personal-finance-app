@@ -6,8 +6,17 @@ import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { getRecurringBills } from "@/data-access/recurring-bills"
 
-export default async function RecurringBillsPage() {
-  const recurringBills = await getRecurringBills({})
+export default async function RecurringBillsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    query: string | undefined
+    sortby: string | undefined
+  }>
+}) {
+  const { query, sortby } = await searchParams
+
+  const recurringBills = await getRecurringBills({ query, sortby })
   console.log(recurringBills)
 
   return (
