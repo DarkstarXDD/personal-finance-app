@@ -1,3 +1,5 @@
+import TableDesktop from "@/components/recurring-bills/TableDesktop"
+import TableFilters from "@/components/recurring-bills/TableFilters"
 import TableMobile from "@/components/recurring-bills/TableMobile"
 import Total from "@/components/recurring-bills/Total"
 import Card from "@/components/ui/Card"
@@ -13,8 +15,10 @@ export default async function RecurringBillsPage() {
       <Heading as="h1">Recurring Bills</Heading>
       <div className="grid gap-6 xl:grid-cols-[20rem_1fr]">
         <Total />
-        <Card>
+        <Card className="grid gap-6">
+          <TableFilters />
           <TableMobile recurringBills={recurringBills} />
+          <TableDesktop />
         </Card>
       </div>
     </main>
