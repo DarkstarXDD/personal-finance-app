@@ -10,8 +10,11 @@ import IconButton from "@/components/ui/IconButton"
 import Label from "@/components/ui/Label"
 import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
+import { currencyFormat } from "@/lib/utils"
 
-export default function BudgetCard() {
+import type { Budget } from "@/data-access/budgets"
+
+export default function BudgetCard({ budget }: { budget: Budget }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
@@ -21,9 +24,12 @@ export default function BudgetCard() {
   return (
     <Card padding="lg" className="grid gap-5">
       <div className="flex items-center justify-start gap-4">
-        <span className="bg-green size-4 rounded-full" />
+        <span
+          className="size-4 rounded-full"
+          style={{ backgroundColor: budget.color.value }}
+        />
         <Heading as="h2" variant="secondary">
-          Entertainment
+          {budget.category.label}
         </Heading>
 
         <MenuTrigger>
@@ -46,11 +52,13 @@ export default function BudgetCard() {
         <ProgressBar value={15} minValue={0} maxValue={50}>
           {({ percentage }) => (
             <div className="grid gap-4">
-              <Label variant="secondary">Maximum of $50.00</Label>
+              <Label variant="secondary">
+                Maximum of {currencyFormat.format(Number(budget.maximumSpend))}
+              </Label>
               <div className="bg-beige-100 flex h-8 w-full items-center rounded-sm p-1">
                 <motion.div
-                  className="bg-green h-full rounded-sm"
-                  // style={{backgroundColor: ""}}
+                  className="h-full rounded-sm"
+                  style={{ backgroundColor: budget.color.value }}
                   initial={{ width: 0 }}
                   animate={{ width: percentage + "%" }}
                   transition={{ delay: 0.18 }}
@@ -62,7 +70,10 @@ export default function BudgetCard() {
 
         <dl className="grid grid-cols-2">
           <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
-            <span className="bg-green row-span-2 h-full w-1 rounded-lg" />
+            <span
+              className="row-span-2 h-full w-1 rounded-lg"
+              style={{ backgroundColor: budget.color.value }}
+            />
             <dt className="text-grey-500 text-xs leading-normal font-normal">
               Spent
             </dt>

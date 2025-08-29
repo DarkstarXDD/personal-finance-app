@@ -5,6 +5,19 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// ============================================
+// ============== Currency Format =============
+// ============================================
+
+export const currencyFormat = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+})
+
+// ============================================
+// ============= Pagination Helper ============
+// ============================================
+
 export function generatePagination(
   currentPage: number,
   totalPages: number
