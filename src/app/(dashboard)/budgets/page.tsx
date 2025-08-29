@@ -1,4 +1,5 @@
 import AddBudgetDialog from "@/components/budgets/AddBudgetDialog"
+import BudgetCard from "@/components/budgets/BudgetCard"
 import Heading from "@/components/ui/Heading"
 import { getCategories, getColors } from "@/data-access/lookups"
 
@@ -14,6 +15,7 @@ export default async function RecurringBillsPage() {
         </Heading>
         <AddBudgetDialog categories={categories} colors={colors} />
       </div>
+      <BudgetCard />
     </main>
   )
 }
