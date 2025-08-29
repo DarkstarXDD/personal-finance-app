@@ -2,6 +2,7 @@ import type {
   PotUpdateSchema,
   PotSchema,
   TransactionCreate,
+  BudgetCreate,
 } from "@/lib/schemas"
 
 export type DALReturn<T extends Record<string, string[]>> =
@@ -18,4 +19,8 @@ export type PotUpdateErrors = {
 
 export type CreateTransactionErrors = {
   [Key in keyof TransactionCreate]?: string[]
+}
+
+export type BudgetCreateErrors = {
+  [key in keyof BudgetCreate]?: string[]
 }
