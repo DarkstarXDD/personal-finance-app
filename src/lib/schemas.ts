@@ -44,9 +44,18 @@ export const transactionCreateSchema = z.object({
 })
 export type TransactionCreate = z.infer<typeof transactionCreateSchema>
 
+// ============================================
+// ========= Budget Schemas and Types =========
+// ============================================
+
 export const budgetCreateSchema = z.object({
   categoryId: z.cuid("Please select a category."),
   maximumSpend: z.string().min(1, "Maximum spend cannot be empty."),
   colorId: z.cuid("Please select a color."),
 })
 export type BudgetCreate = z.infer<typeof budgetCreateSchema>
+
+export const budgetUpdateSchema = budgetCreateSchema.extend({
+  id: z.cuid(),
+})
+export type BudgetUpdate = z.infer<typeof budgetUpdateSchema>
