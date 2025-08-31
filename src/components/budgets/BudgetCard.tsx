@@ -1,5 +1,6 @@
 "use client"
 
+import { format } from "date-fns"
 import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
@@ -111,39 +112,22 @@ export default function BudgetCard({
             </Link>
           </div>
           <ul>
-            <li className="border-grey-200 grid grid-cols-2 gap-1 border-b py-3 first:pt-0 last:border-none last:pb-0">
-              <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
-                Papa Software
-              </h4>
-              <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                -$10.00
-              </p>
-              <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
-                16 Aug 2024
-              </p>
-            </li>
-            <li className="border-grey-200 grid grid-cols-2 border-b py-3 first:pt-0 last:border-none last:pb-0">
-              <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
-                Papa Software
-              </h4>
-              <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                -$10.00
-              </p>
-              <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
-                16 Aug 2024
-              </p>
-            </li>
-            <li className="border-grey-200 grid grid-cols-2 border-b py-3 first:pt-0 last:border-none last:pb-0">
-              <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
-                Papa Software
-              </h4>
-              <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                -$10.00
-              </p>
-              <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
-                16 Aug 2024
-              </p>
-            </li>
+            {budget.transactions.map((transaction) => (
+              <li
+                key={transaction.id}
+                className="border-grey-200 grid grid-cols-2 gap-1 border-b py-3 first:pt-0 last:border-none last:pb-0"
+              >
+                <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
+                  {transaction.counterparty}
+                </h4>
+                <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
+                  {currencyFormat.format(Number(transaction.amount))}
+                </p>
+                <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
+                  {format(transaction.createdAt, "dd MMM yyyy")}
+                </p>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
