@@ -31,6 +31,8 @@ export default function BudgetCard({
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
+  const remaningAmount = Number(budget.maximumSpend) - Number(budget.totalSpent)
+
   return (
     <Card padding="lg" className="grid gap-5">
       <div className="flex items-center justify-start gap-4">
@@ -59,7 +61,11 @@ export default function BudgetCard({
       </div>
 
       <div className="grid gap-4">
-        <ProgressBar value={15} minValue={0} maxValue={50}>
+        <ProgressBar
+          value={Number(budget.totalSpent)}
+          minValue={0}
+          maxValue={Number(budget.maximumSpend)}
+        >
           {({ percentage }) => (
             <div className="grid gap-4">
               <Label variant="secondary">
@@ -89,7 +95,7 @@ export default function BudgetCard({
               Spent
             </dt>
             <dd className="text-grey-900 text-sm leading-normal font-bold">
-              $25.00
+              {currencyFormatter.format(Number(budget.totalSpent))}
             </dd>
           </div>
           <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
@@ -98,7 +104,9 @@ export default function BudgetCard({
               Free
             </dt>
             <dd className="text-grey-900 text-sm leading-normal font-bold">
-              $50.00
+              {currencyFormatter.format(
+                remaningAmount < 0 ? 0 : remaningAmount
+              )}
             </dd>
           </div>
         </dl>
