@@ -16,13 +16,14 @@ import { Category, Color } from "@/data-access/lookups"
 import { currencyFormat } from "@/lib/utils"
 
 import type { Budget } from "@/data-access/budgets"
+import type { Transaction } from "@/data-access/transactions"
 
 export default function BudgetCard({
   budget,
   categories,
   colors,
 }: {
-  budget: Budget
+  budget: Budget & { transactions: Transaction[]; totalSpent: string }
   categories: Category[]
   colors: Color[]
 }) {

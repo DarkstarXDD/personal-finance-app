@@ -1,5 +1,6 @@
 import "server-only"
 
+import { startOfMonth } from "date-fns"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
@@ -8,6 +9,10 @@ import { Prisma, prisma } from "@/lib/prisma"
 
 import type { TransactionCreate } from "@/lib/schemas"
 import type { CreateTransactionErrors, DALReturn } from "@/lib/types"
+
+// ============================================
+// ============ Create Transaction ============
+// ============================================
 
 export async function createTransaction(
   formData: TransactionCreate & { recurringBillId?: string }
@@ -36,6 +41,10 @@ export async function createTransaction(
     }
   }
 }
+
+// ============================================
+// ============ Fetch Transactions ============
+// ============================================
 
 const transactionSelect = {
   id: true,
@@ -120,4 +129,43 @@ type TransactionRaw = Prisma.TransactionGetPayload<{
 
 export type Transaction = Omit<TransactionRaw, "amount"> & {
   amount: string
+}
+
+// ============================================
+// ======= Fetch Transactions for Budget ======
+// ============================================
+
+// The returned "transaction" from the below function
+// has the same shape as "type Transaction" from above
+// because the same "transactionSelect" object is used as above.
+
+export async function getTransactionsForBudget(categoryId: string) {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  const [transactions, spent] = await prisma.$transaction([
+    prisma.transaction.findMany({
+      where: { userId, categoryId },
+      select: transactionSelect,
+      orderBy: { createdAt: "desc" },
+      take: 3,
+    }),
+
+    prisma.transaction.aggregate({
+      where: {
+        userId,
+        categoryId,
+        createdAt: { gte: startOfMonth(new Date()) },
+      },
+      _sum: { amount: true },
+    }),
+  ])
+
+  return {
+    transactions: transactions.map((t) => ({
+      ...t,
+      amount: t.amount.toString(),
+    })),
+    totalSpent: spent._sum.amount?.toString() ?? "0",
+  }
 }
