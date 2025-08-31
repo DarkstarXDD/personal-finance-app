@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
+import DeleteBudgetDialog from "@/components/budgets/DeleteBudgetDialog"
 import EditBudgetDialog from "@/components/budgets/EditBudgetDialog"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -27,8 +28,6 @@ export default function BudgetCard({
 }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-
-  console.log(isDeleteDialogOpen)
 
   return (
     <Card padding="lg" className="grid gap-5">
@@ -153,6 +152,11 @@ export default function BudgetCard({
         onOpenChange={setIsEditDialogOpen}
         categories={categories}
         colors={colors}
+        budget={budget}
+      />
+      <DeleteBudgetDialog
+        isOpen={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
         budget={budget}
       />
     </Card>
