@@ -57,7 +57,7 @@ export async function updateBudget({
     console.error(e)
     return {
       success: false,
-      fieldErrors: { categoryId: ["Error creating budget."] },
+      fieldErrors: { categoryId: ["Error updating budget."] },
     }
   }
 }
