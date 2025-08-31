@@ -14,7 +14,7 @@ import Label from "@/components/ui/Label"
 import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
 import { Category, Color } from "@/data-access/lookups"
-import { currencyFormat } from "@/lib/utils"
+import { currencyFormatter } from "@/lib/utils"
 
 import type { Budget } from "@/data-access/budgets"
 import type { Transaction } from "@/data-access/transactions"
@@ -63,7 +63,8 @@ export default function BudgetCard({
           {({ percentage }) => (
             <div className="grid gap-4">
               <Label variant="secondary">
-                Maximum of {currencyFormat.format(Number(budget.maximumSpend))}
+                Maximum of{" "}
+                {currencyFormatter.format(Number(budget.maximumSpend))}
               </Label>
               <div className="bg-beige-100 flex h-8 w-full items-center rounded-sm p-1">
                 <motion.div
@@ -121,7 +122,7 @@ export default function BudgetCard({
                   {transaction.counterparty}
                 </h4>
                 <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                  {currencyFormat.format(Number(transaction.amount))}
+                  {currencyFormatter.format(Number(transaction.amount))}
                 </p>
                 <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
                   {format(transaction.createdAt, "dd MMM yyyy")}

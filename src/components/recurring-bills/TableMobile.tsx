@@ -1,3 +1,5 @@
+import { currencyFormatter } from "@/lib/utils"
+
 import type { RecurringBill } from "@/data-access/recurring-bills"
 
 export default function TableMobile({
@@ -16,7 +18,7 @@ export default function TableMobile({
             {recurringBill.counterparty}
           </h3>
           <p className="text-grey-900 text-sm leading-normal font-bold">
-            {recurringBill.amount}
+            {currencyFormatter.format(Number(recurringBill.amount))}
           </p>
           <p className="text-green text-xs leading-normal font-normal">
             Monthly - {recurringBill.dueDayOfMonth}

@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 // ============== Currency Format =============
 // ============================================
 
-export const currencyFormat = new Intl.NumberFormat("en-US", {
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 })
