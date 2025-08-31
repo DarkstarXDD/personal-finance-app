@@ -63,6 +63,25 @@ export async function updateBudget({
 }
 
 // ============================================
+// =============== Delete Budget ==============
+// ============================================
+
+export async function deleteBudget(
+  budgetId: string
+): Promise<{ success: boolean }> {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  try {
+    await prisma.budget.delete({ where: { userId, id: budgetId } })
+    return { success: true }
+  } catch (e) {
+    console.error(e)
+    return { success: false }
+  }
+}
+
+// ============================================
 // =============== Fetch Budgets ==============
 // ============================================
 
