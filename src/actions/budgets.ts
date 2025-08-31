@@ -65,10 +65,10 @@ export async function deleteBudget(
   const budgetId = formData.get("budgetId")
 
   const parsed = idSchema.safeParse({ id: budgetId })
-  if (!parsed.success) return "Error deleting pot. Please try agian."
+  if (!parsed.success) return "Error deleting budget. Please try agian."
 
   const response = await budgets.deleteBudget(parsed.data.id)
-  if (!response.success) return "Error deleting pot. Please try agian."
+  if (!response.success) return "Error deleting budget. Please try agian."
 
   revalidatePath("/budgets")
   return null
