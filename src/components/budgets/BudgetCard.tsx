@@ -1,5 +1,6 @@
 "use client"
 
+import { format } from "date-fns"
 import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
@@ -13,21 +14,24 @@ import Label from "@/components/ui/Label"
 import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
 import { Category, Color } from "@/data-access/lookups"
-import { currencyFormat } from "@/lib/utils"
+import { currencyFormatter } from "@/lib/utils"
 
 import type { Budget } from "@/data-access/budgets"
+import type { Transaction } from "@/data-access/transactions"
 
 export default function BudgetCard({
   budget,
   categories,
   colors,
 }: {
-  budget: Budget
+  budget: Budget & { transactions: Transaction[]; totalSpent: string }
   categories: Category[]
   colors: Color[]
 }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
+  const remaningAmount = Number(budget.maximumSpend) - Number(budget.totalSpent)
 
   return (
     <Card padding="lg" className="grid gap-5">
@@ -57,11 +61,16 @@ export default function BudgetCard({
       </div>
 
       <div className="grid gap-4">
-        <ProgressBar value={15} minValue={0} maxValue={50}>
+        <ProgressBar
+          value={Number(budget.totalSpent)}
+          minValue={0}
+          maxValue={Number(budget.maximumSpend)}
+        >
           {({ percentage }) => (
             <div className="grid gap-4">
               <Label variant="secondary">
-                Maximum of {currencyFormat.format(Number(budget.maximumSpend))}
+                Maximum of{" "}
+                {currencyFormatter.format(Number(budget.maximumSpend))}
               </Label>
               <div className="bg-beige-100 flex h-8 w-full items-center rounded-sm p-1">
                 <motion.div
@@ -86,7 +95,7 @@ export default function BudgetCard({
               Spent
             </dt>
             <dd className="text-grey-900 text-sm leading-normal font-bold">
-              $25.00
+              {currencyFormatter.format(Number(budget.totalSpent))}
             </dd>
           </div>
           <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
@@ -95,7 +104,9 @@ export default function BudgetCard({
               Free
             </dt>
             <dd className="text-grey-900 text-sm leading-normal font-bold">
-              $50.00
+              {currencyFormatter.format(
+                remaningAmount < 0 ? 0 : remaningAmount
+              )}
             </dd>
           </div>
         </dl>
@@ -110,39 +121,22 @@ export default function BudgetCard({
             </Link>
           </div>
           <ul>
-            <li className="border-grey-200 grid grid-cols-2 gap-1 border-b py-3 first:pt-0 last:border-none last:pb-0">
-              <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
-                Papa Software
-              </h4>
-              <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                -$10.00
-              </p>
-              <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
-                16 Aug 2024
-              </p>
-            </li>
-            <li className="border-grey-200 grid grid-cols-2 border-b py-3 first:pt-0 last:border-none last:pb-0">
-              <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
-                Papa Software
-              </h4>
-              <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                -$10.00
-              </p>
-              <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
-                16 Aug 2024
-              </p>
-            </li>
-            <li className="border-grey-200 grid grid-cols-2 border-b py-3 first:pt-0 last:border-none last:pb-0">
-              <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
-                Papa Software
-              </h4>
-              <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                -$10.00
-              </p>
-              <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
-                16 Aug 2024
-              </p>
-            </li>
+            {budget.transactions.map((transaction) => (
+              <li
+                key={transaction.id}
+                className="border-grey-200 grid grid-cols-2 gap-1 border-b py-3 first:pt-0 last:border-none last:pb-0"
+              >
+                <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
+                  {transaction.counterparty}
+                </h4>
+                <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
+                  {currencyFormatter.format(Number(transaction.amount))}
+                </p>
+                <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
+                  {format(transaction.createdAt, "dd MMM yyyy")}
+                </p>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

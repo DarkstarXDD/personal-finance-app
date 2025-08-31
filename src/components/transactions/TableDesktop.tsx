@@ -8,12 +8,9 @@ import {
 } from "@tanstack/react-table"
 import { format } from "date-fns"
 
-import type { Transaction } from "@/data-access/transactions"
+import { currencyFormatter } from "@/lib/utils"
 
-const currencyFormat = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-})
+import type { Transaction } from "@/data-access/transactions"
 
 const columnHelper = createColumnHelper<Transaction>()
 
@@ -46,7 +43,7 @@ const columns = [
     header: () => <span className="block w-full text-end">Amount</span>,
     cell: (data) => (
       <span className="text-grey-900 block w-full text-end text-sm leading-normal font-bold">
-        {currencyFormat.format(Number(data.getValue()))}
+        {currencyFormatter.format(Number(data.getValue()))}
       </span>
     ),
   }),
