@@ -4,21 +4,30 @@ import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
+import EditBudgetDialog from "@/components/budgets/EditBudgetDialog"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import IconButton from "@/components/ui/IconButton"
 import Label from "@/components/ui/Label"
 import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
+import { Category, Color } from "@/data-access/lookups"
 import { currencyFormat } from "@/lib/utils"
 
 import type { Budget } from "@/data-access/budgets"
 
-export default function BudgetCard({ budget }: { budget: Budget }) {
+export default function BudgetCard({
+  budget,
+  categories,
+  colors,
+}: {
+  budget: Budget
+  categories: Category[]
+  colors: Color[]
+}) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
-  console.log(isEditDialogOpen)
   console.log(isDeleteDialogOpen)
 
   return (
@@ -138,6 +147,14 @@ export default function BudgetCard({ budget }: { budget: Budget }) {
           </ul>
         </div>
       </div>
+
+      <EditBudgetDialog
+        isOpen={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
+        categories={categories}
+        colors={colors}
+        budget={budget}
+      />
     </Card>
   )
 }

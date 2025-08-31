@@ -19,7 +19,12 @@ export default async function RecurringBillsPage() {
       </div>
 
       {budgets.map((budget) => (
-        <BudgetCard key={budget.id} budget={budget} />
+        <BudgetCard
+          key={budget.id}
+          budget={budget}
+          categories={categories}
+          colors={colors}
+        />
       ))}
     </main>
   )
