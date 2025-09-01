@@ -7,14 +7,14 @@ import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
 import { fieldErrorStyles } from "@/components/ui/FieldError"
 
-import type { PotSchema } from "@/lib/schemas"
+import type { Pot } from "@/data-access/pots"
 
 export default function DeletePotDialog({
-  potData: { name, potId },
+  pot,
   isOpen,
   onOpenChange,
 }: {
-  potData: Pick<PotSchema, "potId" | "name">
+  pot: Pot
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
 }) {
@@ -25,13 +25,13 @@ export default function DeletePotDialog({
 
   return (
     <Dialog
-      title={`Delete '${name}'?`}
+      title={`Delete '${pot.name}'?`}
       role="alertdialog"
       isOpen={isOpen}
       onOpenChange={onOpenChange}
     >
       <form className="grid gap-5" action={deletePotAction}>
-        <input name="potId" value={potId} type="hidden" />
+        <input name="potId" value={pot.id} type="hidden" />
         <p>
           Are you sure you want to delete this pot? This action cannot be
           reversed, and all the data inside it will be removed forever.

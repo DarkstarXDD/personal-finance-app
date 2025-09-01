@@ -15,14 +15,14 @@ import Label from "@/components/ui/Label"
 import { MenuTrigger, Menu, MenuItem } from "@/components/ui/Menu"
 
 import type { Color } from "@/data-access/lookups"
-import type { PotSchema } from "@/lib/schemas"
+import type { Pot } from "@/data-access/pots"
 
 export default function PotCard({
-  potData: { potId, name, target, currentAmount, colorId, colorValue },
+  pot,
   colors,
 }: {
+  pot: Pot
   colors: Color[]
-  potData: PotSchema
 }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -33,10 +33,10 @@ export default function PotCard({
         <div className="flex items-center justify-start gap-4">
           <span
             className="size-4 rounded-full"
-            style={{ backgroundColor: colorValue }}
+            style={{ backgroundColor: pot.color.value }}
           />
           <Heading variant="secondary" as="h2">
-            {name}
+            {pot.name}
           </Heading>
           <MenuTrigger>
             <IconButton variant="options" className="ml-auto" />
@@ -54,9 +54,9 @@ export default function PotCard({
           </MenuTrigger>
         </div>
         <ProgressBar
-          value={Number(currentAmount)}
+          value={Number(pot.currentAmount)}
           minValue={0}
-          maxValue={Number(target)}
+          maxValue={Number(pot.target)}
           formatOptions={{ style: "currency", currency: "USD" }}
         >
           {({ percentage, valueText }) => (
@@ -70,7 +70,7 @@ export default function PotCard({
               <div className="bg-beige-100 h-2 rounded">
                 <motion.div
                   className="h-full rounded"
-                  style={{ backgroundColor: colorValue }}
+                  style={{ backgroundColor: pot.color.value }}
                   initial={{ width: 0 }}
                   animate={{ width: percentage + "%" }}
                   transition={{ delay: 0.18 }}
@@ -80,26 +80,24 @@ export default function PotCard({
                 <span className="font-bold">
                   {Math.round(percentage ?? 0)}%
                 </span>
-                <span className="font-normal">Target of ${target}</span>
+                <span className="font-normal">Target of ${pot.target}</span>
               </div>
             </div>
           )}
         </ProgressBar>
         <div className="flex justify-center gap-4">
-          <AddToPotDialog potData={{ potId, name, target, currentAmount }} />
-          <WithdrawFromPotDialog
-            potData={{ potId, name, target, currentAmount }}
-          />
+          <AddToPotDialog pot={pot} />
+          <WithdrawFromPotDialog pot={pot} />
         </div>
       </div>
 
       <DeletePotDialog
-        potData={{ potId, name }}
+        pot={pot}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
       />
       <EditPotDialog
-        potData={{ potId, name, target, colorId }}
+        pot={pot}
         colors={colors}
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}

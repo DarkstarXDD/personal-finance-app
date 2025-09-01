@@ -10,17 +10,18 @@ import { Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
-import { type PotSchema, potUpdateSchema } from "@/lib/schemas"
+import { potUpdateSchema } from "@/lib/schemas"
 
+import type { Pot } from "@/data-access/pots"
 import type { PotCreateErrors } from "@/lib/types"
 
 export default function EditPotDialog({
-  potData: { potId, name, target, colorId },
+  pot,
   colors,
   isOpen,
   onOpenChange,
 }: {
-  potData: Omit<PotSchema, "currentAmount" | "colorValue">
+  pot: Pot
   colors: Color[]
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
@@ -34,12 +35,22 @@ export default function EditPotDialog({
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potUpdateSchema),
-    defaultValues: { id: potId, name, target, colorId: colorId },
+    defaultValues: {
+      id: pot.id,
+      name: pot.name,
+      target: pot.target,
+      colorId: pot.color.id,
+    },
   })
 
   useEffect(() => {
-    reset({ id: potId, name, target, colorId: colorId })
-  }, [potId, name, target, colorId, reset])
+    reset({
+      id: pot.id,
+      name: pot.name,
+      target: pot.target,
+      colorId: pot.color.id,
+    })
+  }, [pot, reset])
 
   return (
     <Dialog title="Edit Pot" isOpen={isOpen} onOpenChange={onOpenChange}>

@@ -136,14 +136,36 @@ export async function updatePotAmount(
   }
 }
 
+// ============================================
+// ================ Fetch Pots ================
+// ============================================
+
+const potSelect = {
+  id: true,
+  name: true,
+  target: true,
+  currentAmount: true,
+  color: true,
+} satisfies Prisma.PotSelect
+
+type PotRaw = Prisma.PotGetPayload<{ select: typeof potSelect }>
+
+export type Pot = Omit<PotRaw, "target" | "currentAmount"> & {
+  target: string
+  currentAmount: string
+}
+
 export async function getPots() {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
   const pots = await prisma.pot.findMany({
     where: { userId },
-    omit: { updatedAt: true, colorId: true, userId: true, createdAt: true },
-    include: { color: { select: { id: true, value: true } } },
+    select: potSelect,
   })
-  return pots
+  return pots.map((pot) => ({
+    ...pot,
+    target: pot.target.toString(),
+    currentAmount: pot.currentAmount.toString(),
+  }))
 }
