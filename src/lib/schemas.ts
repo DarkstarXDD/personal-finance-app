@@ -21,8 +21,24 @@ export const loginSchema = z.object({
 })
 export type LoginSchema = z.infer<typeof loginSchema>
 
+// ============================================
+// ============ Id Schema and Type ============
+// ============================================
+
 export const idSchema = z.object({ id: z.cuid() })
 export type IdSchema = z.infer<typeof idSchema>
+
+// ============================================
+// ==== Transaction Create Schema and Type ====
+// ============================================
+
+export const transactionCreateSchema = z.object({
+  counterparty: z.string().trim().min(1, "Counterparty name cannot be empty."),
+  amount: z.string().min(1, "Amount cannot be empty."),
+  categoryId: z.cuid("Please select a category."),
+  isRecurring: z.boolean(),
+})
+export type TransactionCreate = z.infer<typeof transactionCreateSchema>
 
 // ============================================
 // ======== Pot Create Schema and Type ========
@@ -49,7 +65,7 @@ export const potUpdateSchema = potCreateSchema.extend({
 export type PotUpdate = z.infer<typeof potUpdateSchema>
 
 // ============================================
-// ======== Pot Update Schema and Type ========
+// ===== Pot Amount Update Schema and Type ====
 // ============================================
 
 export const potAmountUpdateSchema = z.object({
@@ -57,28 +73,6 @@ export const potAmountUpdateSchema = z.object({
   amountToUpdate: z.string().trim().min(1, "Amount cannot be empty."),
 })
 export type PotAmountUpdate = z.infer<typeof potAmountUpdateSchema>
-
-export const potSchema = z.object({
-  potId: z.cuid(),
-  name: z
-    .string()
-    .trim()
-    .min(1, "Name cannot be empty")
-    .max(30, "Name must be 30 characters or less"),
-  target: z.string().trim().min(1, "Target cannot be empty"),
-  currentAmount: z.string().trim().min(1, "Amount cannot be empty"),
-  colorId: z.cuid("Please select a color."),
-  colorValue: z.string().min(1, "Please select a color"),
-})
-export type PotSchema = z.infer<typeof potSchema>
-
-export const transactionCreateSchema = z.object({
-  counterparty: z.string().trim().min(1, "Counterparty name cannot be empty."),
-  amount: z.string().min(1, "Amount cannot be empty."),
-  categoryId: z.cuid("Please select a category."),
-  isRecurring: z.boolean(),
-})
-export type TransactionCreate = z.infer<typeof transactionCreateSchema>
 
 // ============================================
 // ====== Budget Create Schema and Type =======
