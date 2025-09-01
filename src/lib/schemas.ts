@@ -39,6 +39,25 @@ export const potCreateSchema = z.object({
 })
 export type PotCreate = z.infer<typeof potCreateSchema>
 
+// ============================================
+// ======== Pot Update Schema and Type ========
+// ============================================
+
+export const potUpdateSchema = potCreateSchema.extend({
+  id: z.cuid(),
+})
+export type PotUpdate = z.infer<typeof potUpdateSchema>
+
+// ============================================
+// ======== Pot Update Schema and Type ========
+// ============================================
+
+export const potAmountUpdateSchema = z.object({
+  id: z.cuid(),
+  amountToUpdate: z.string().trim().min(1, "Amount cannot be empty."),
+})
+export type PotAmountUpdate = z.infer<typeof potAmountUpdateSchema>
+
 export const potSchema = z.object({
   potId: z.cuid(),
   name: z
@@ -52,12 +71,6 @@ export const potSchema = z.object({
   colorValue: z.string().min(1, "Please select a color"),
 })
 export type PotSchema = z.infer<typeof potSchema>
-
-export const potUpdateSchema = z.object({
-  potId: z.cuid(),
-  amountToUpdate: z.string().trim().min(1, "Amount cannot be empty."),
-})
-export type PotUpdateSchema = z.infer<typeof potUpdateSchema>
 
 export const transactionCreateSchema = z.object({
   counterparty: z.string().trim().min(1, "Counterparty name cannot be empty."),

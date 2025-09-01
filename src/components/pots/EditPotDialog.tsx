@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
-import { editPot } from "@/actions/pots"
+import { updatePot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
-import { potSchema, type PotSchema } from "@/lib/schemas"
+import { type PotSchema, potUpdateSchema } from "@/lib/schemas"
 
 import type { PotCreateErrors } from "@/lib/types"
 
@@ -33,14 +33,12 @@ export default function EditPotDialog({
     reset,
     formState: { isSubmitting },
   } = useForm({
-    resolver: zodResolver(
-      potSchema.pick({ potId: true, name: true, target: true, colorId: true })
-    ),
-    defaultValues: { potId, name, target, colorId: colorId },
+    resolver: zodResolver(potUpdateSchema),
+    defaultValues: { id: potId, name, target, colorId: colorId },
   })
 
   useEffect(() => {
-    reset({ potId, name, target, colorId: colorId })
+    reset({ id: potId, name, target, colorId: colorId })
   }, [potId, name, target, colorId, reset])
 
   return (
@@ -49,7 +47,7 @@ export default function EditPotDialog({
         <form
           className="grid gap-5"
           onSubmit={handleSubmit(async (data) => {
-            const response = await editPot(data)
+            const response = await updatePot(data)
             if (response) {
               const errorKeys = Object.keys(
                 response
@@ -71,7 +69,7 @@ export default function EditPotDialog({
             aligned with your goals.
           </p>
           <div className="grid gap-4">
-            <input {...register("potId")} type="hidden" />
+            <input {...register("id")} type="hidden" />
             <Controller
               name="name"
               control={control}

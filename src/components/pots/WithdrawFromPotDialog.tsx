@@ -12,8 +12,9 @@ import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
 import TextField from "@/components/ui/TextField"
-import { potUpdateSchema, type PotSchema } from "@/lib/schemas"
-import { PotUpdateErrors } from "@/lib/types"
+import { potAmountUpdateSchema, type PotSchema } from "@/lib/schemas"
+
+import type { PotAmountUpdateErrors } from "@/lib/types"
 
 export default function WithdrawFromPotDialog({
   potData: { potId, name, target, currentAmount },
@@ -29,12 +30,12 @@ export default function WithdrawFromPotDialog({
     watch,
     formState: { isSubmitting },
   } = useForm({
-    resolver: zodResolver(potUpdateSchema),
-    defaultValues: { potId, amountToUpdate: "" },
+    resolver: zodResolver(potAmountUpdateSchema),
+    defaultValues: { id: potId, amountToUpdate: "" },
   })
 
   useEffect(() => {
-    reset({ potId, amountToUpdate: "" })
+    reset({ id: potId, amountToUpdate: "" })
   }, [potId, currentAmount, reset])
 
   const amountInInput = watch("amountToUpdate")
@@ -113,7 +114,7 @@ export default function WithdrawFromPotDialog({
                 if (response) {
                   const errorKeys = Object.keys(
                     response
-                  ) as (keyof PotUpdateErrors)[]
+                  ) as (keyof PotAmountUpdateErrors)[]
                   errorKeys.forEach((key) =>
                     setError(
                       key,
@@ -126,7 +127,7 @@ export default function WithdrawFromPotDialog({
                 close()
               })}
             >
-              <input {...register("potId")} type="hidden" />
+              <input {...register("id")} type="hidden" />
               <Controller
                 name="amountToUpdate"
                 control={control}

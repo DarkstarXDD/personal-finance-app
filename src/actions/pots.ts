@@ -6,15 +6,15 @@ import * as z from "zod"
 import * as pots from "@/data-access/pots"
 import {
   idSchema,
-  potSchema,
   potCreateSchema,
   potUpdateSchema,
-  PotUpdateSchema,
-  type PotSchema,
+  potAmountUpdateSchema,
+  type PotUpdate,
   type PotCreate,
+  type PotAmountUpdate,
 } from "@/lib/schemas"
 
-import type { PotCreateErrors, PotUpdateErrors } from "@/lib/types"
+import type { PotCreateErrors, PotAmountUpdateErrors } from "@/lib/types"
 
 // ============================================
 // ================ Create Pot ================
@@ -39,14 +39,12 @@ export async function createPot(
 // ================ Update Pot ================
 // ============================================
 
-export async function editPot(
-  formData: Omit<PotSchema, "currentAmount" | "colorValue">
+export async function updatePot(
+  formData: PotUpdate
 ): Promise<PotCreateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  const parsed = potSchema
-    .omit({ currentAmount: true, colorValue: true })
-    .safeParse(formData)
+  const parsed = potUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   const response = await pots.UpdatePot(parsed.data)
@@ -55,6 +53,10 @@ export async function editPot(
   revalidatePath("/pots")
   return null
 }
+
+// ============================================
+// ================ Delete Pot ================
+// ============================================
 
 export async function deletePot(
   prev: unknown,
@@ -75,12 +77,16 @@ export async function deletePot(
   return null
 }
 
-export async function AddToPot(
-  formData: PotUpdateSchema
-): Promise<PotUpdateErrors | null> {
+// ============================================
+// ============= Add Money to Pot =============
+// ============================================
+
+export async function addToPot(
+  formData: PotAmountUpdate
+): Promise<PotAmountUpdateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 600))
 
-  const parsed = potUpdateSchema.safeParse(formData)
+  const parsed = potAmountUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   const response = await pots.updatePotAmount(parsed.data, "increment")
@@ -90,12 +96,16 @@ export async function AddToPot(
   return null
 }
 
+// ============================================
+// ========== Withdraw Money from Pot =========
+// ============================================
+
 export async function withdrawFromPot(
-  formData: PotUpdateSchema
-): Promise<PotUpdateErrors | null> {
+  formData: PotAmountUpdate
+): Promise<PotAmountUpdateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  const parsed = potUpdateSchema.safeParse(formData)
+  const parsed = potAmountUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   const response = await pots.updatePotAmount(parsed.data, "decrement")

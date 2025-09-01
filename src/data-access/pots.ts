@@ -5,8 +5,12 @@ import { redirect } from "next/navigation"
 import { verifySession } from "@/data-access/auth"
 import { prisma, Prisma } from "@/lib/prisma"
 
-import type { PotSchema, PotCreate, PotUpdateSchema } from "@/lib/schemas"
-import type { PotCreateErrors, DALReturn, PotUpdateErrors } from "@/lib/types"
+import type { PotAmountUpdate, PotCreate, PotUpdate } from "@/lib/schemas"
+import type {
+  PotCreateErrors,
+  DALReturn,
+  PotAmountUpdateErrors,
+} from "@/lib/types"
 
 // ============================================
 // ================ Create Pot ================
@@ -51,19 +55,22 @@ export async function createPot({
 // ================ Update Pot ================
 // ============================================
 
-export async function UpdatePot(
-  formData: Omit<PotSchema, "currentAmount" | "colorValue">
-): Promise<DALReturn<PotCreateErrors>> {
+export async function UpdatePot({
+  id,
+  name,
+  target,
+  colorId,
+}: PotUpdate): Promise<DALReturn<PotCreateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
   try {
     await prisma.pot.update({
-      where: { userId: userId, id: formData.potId },
+      where: { userId, id },
       data: {
-        name: formData.name,
-        target: formData.target,
-        colorId: formData.colorId,
+        name: name,
+        target: target,
+        colorId: colorId,
       },
     })
     return { success: true }
@@ -79,10 +86,14 @@ export async function UpdatePot(
     }
     return {
       success: false,
-      fieldErrors: { name: ["Error updating pot. Please try again"] },
+      fieldErrors: { name: ["Error updating pot. Please try again."] },
     }
   }
 }
+
+// ============================================
+// ================ Delete Pot ================
+// ============================================
 
 export async function deletePot(potId: string): Promise<{ success: boolean }> {
   const userId = await verifySession()
@@ -96,20 +107,24 @@ export async function deletePot(potId: string): Promise<{ success: boolean }> {
   }
 }
 
+// ============================================
+// ============= Update Pot Amount ============
+// ============================================
+
 export async function updatePotAmount(
-  formData: PotUpdateSchema,
+  formData: PotAmountUpdate,
   operation: "increment" | "decrement"
-): Promise<DALReturn<PotUpdateErrors>> {
+): Promise<DALReturn<PotAmountUpdateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
-  const { potId, amountToUpdate } = formData
+  const { id, amountToUpdate } = formData
 
   try {
     const amountToUpdateAsDecimal = new Prisma.Decimal(amountToUpdate)
 
     await prisma.pot.update({
-      where: { userId, id: potId },
+      where: { userId, id },
       data: { currentAmount: { [operation]: amountToUpdateAsDecimal } },
     })
     return { success: true }
