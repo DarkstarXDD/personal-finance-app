@@ -5,16 +5,22 @@ import { redirect } from "next/navigation"
 import { verifySession } from "@/data-access/auth"
 import { prisma, Prisma } from "@/lib/prisma"
 
-import type { PotSchema, PotUpdateSchema } from "@/lib/schemas"
+import type { PotSchema, PotCreate, PotUpdateSchema } from "@/lib/schemas"
 import type {
   CreateNewPotErrors,
   DALReturn,
   PotUpdateErrors,
 } from "@/lib/types"
 
-export async function createNewPot(
-  formData: Pick<PotSchema, "name" | "target" | "colorId">
-): Promise<DALReturn<CreateNewPotErrors>> {
+// ============================================
+// ================ Create Pot ================
+// ============================================
+
+export async function createNewPot({
+  name,
+  target,
+  colorId,
+}: PotCreate): Promise<DALReturn<CreateNewPotErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -22,9 +28,9 @@ export async function createNewPot(
     await prisma.pot.create({
       data: {
         userId,
-        name: formData.name,
-        target: formData.target,
-        colorId: formData.colorId,
+        name: name,
+        target: target,
+        colorId: colorId,
       },
     })
     return { success: true }

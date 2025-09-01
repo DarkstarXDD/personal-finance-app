@@ -1,11 +1,19 @@
 import * as z from "zod"
 
+// ============================================
+// ========= Sign Up Schema and Type ==========
+// ============================================
+
 export const signupSchema = z.object({
   name: z.string().trim().min(1, "Name cannot be empty"),
   email: z.email("Invalid email format").toLowerCase(),
   password: z.string().min(8, "Password must be at least 8 characters").trim(),
 })
 export type SignupSchema = z.infer<typeof signupSchema>
+
+// ============================================
+// ========== Log In Schema and Type ==========
+// ============================================
 
 export const loginSchema = z.object({
   email: z.email("Invalid email format").toLowerCase(),
@@ -15,6 +23,21 @@ export type LoginSchema = z.infer<typeof loginSchema>
 
 export const idSchema = z.object({ id: z.cuid() })
 export type IdSchema = z.infer<typeof idSchema>
+
+// ============================================
+// ======== Pot Create Schema and Type ========
+// ============================================
+
+export const potCreateSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, "Name cannot be empty.")
+    .max(30, "Name must be 30 characters or less."),
+  target: z.string().trim().min(1, "Target cannot be empty."),
+  colorId: z.cuid("Please select a color."),
+})
+export type PotCreate = z.infer<typeof potCreateSchema>
 
 export const potSchema = z.object({
   potId: z.cuid(),
@@ -45,7 +68,7 @@ export const transactionCreateSchema = z.object({
 export type TransactionCreate = z.infer<typeof transactionCreateSchema>
 
 // ============================================
-// ========= Budget Schemas and Types =========
+// ====== Budget Create Schema and Type =======
 // ============================================
 
 export const budgetCreateSchema = z.object({
@@ -54,6 +77,10 @@ export const budgetCreateSchema = z.object({
   colorId: z.cuid("Please select a color."),
 })
 export type BudgetCreate = z.infer<typeof budgetCreateSchema>
+
+// ============================================
+// ====== Budget Update Schema and Type =======
+// ============================================
 
 export const budgetUpdateSchema = budgetCreateSchema.extend({
   id: z.cuid(),

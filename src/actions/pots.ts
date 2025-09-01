@@ -7,21 +7,25 @@ import * as pots from "@/data-access/pots"
 import {
   idSchema,
   potSchema,
+  potCreateSchema,
   potUpdateSchema,
   PotUpdateSchema,
   type PotSchema,
+  type PotCreate,
 } from "@/lib/schemas"
 
 import type { CreateNewPotErrors, PotUpdateErrors } from "@/lib/types"
 
+// ============================================
+// ================ Create Pot ================
+// ============================================
+
 export async function createNewPot(
-  formData: Pick<PotSchema, "name" | "target" | "colorId">
+  formData: PotCreate
 ): Promise<CreateNewPotErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  const parsed = potSchema
-    .pick({ name: true, target: true, colorId: true })
-    .safeParse(formData)
+  const parsed = potCreateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   const response = await pots.createNewPot(parsed.data)

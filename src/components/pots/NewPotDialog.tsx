@@ -8,7 +8,7 @@ import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
-import { potSchema } from "@/lib/schemas"
+import { potCreateSchema } from "@/lib/schemas"
 
 import type { Color } from "@/data-access/lookups"
 import type { CreateNewPotErrors } from "@/lib/types"
@@ -21,9 +21,7 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
     reset,
     formState: { isSubmitting },
   } = useForm({
-    resolver: zodResolver(
-      potSchema.pick({ name: true, target: true, colorId: true })
-    ),
+    resolver: zodResolver(potCreateSchema),
     defaultValues: { name: "", target: "", colorId: "" },
   })
 
