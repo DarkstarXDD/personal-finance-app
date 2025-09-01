@@ -35,6 +35,10 @@ export async function createPot(
   return null
 }
 
+// ============================================
+// ================ Update Pot ================
+// ============================================
+
 export async function editPot(
   formData: Omit<PotSchema, "currentAmount" | "colorValue">
 ): Promise<PotCreateErrors | null> {
@@ -45,7 +49,7 @@ export async function editPot(
     .safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.editPot(parsed.data)
+  const response = await pots.UpdatePot(parsed.data)
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")

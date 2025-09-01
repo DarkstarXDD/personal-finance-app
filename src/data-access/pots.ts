@@ -47,19 +47,11 @@ export async function createPot({
   }
 }
 
-export async function getPots() {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+// ============================================
+// ================ Update Pot ================
+// ============================================
 
-  const pots = await prisma.pot.findMany({
-    where: { userId },
-    omit: { updatedAt: true, colorId: true, userId: true, createdAt: true },
-    include: { color: { select: { id: true, value: true } } },
-  })
-  return pots
-}
-
-export async function editPot(
+export async function UpdatePot(
   formData: Omit<PotSchema, "currentAmount" | "colorValue">
 ): Promise<DALReturn<PotCreateErrors>> {
   const userId = await verifySession()
@@ -129,4 +121,16 @@ export async function updatePotAmount(
       },
     }
   }
+}
+
+export async function getPots() {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  const pots = await prisma.pot.findMany({
+    where: { userId },
+    omit: { updatedAt: true, colorId: true, userId: true, createdAt: true },
+    include: { color: { select: { id: true, value: true } } },
+  })
+  return pots
 }
