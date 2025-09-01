@@ -12,14 +12,12 @@ import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
 import TextField from "@/components/ui/TextField"
-import { potUpdateSchema, type PotSchema } from "@/lib/schemas"
-import { PotUpdateErrors } from "@/lib/types"
+import { potAmountUpdateSchema } from "@/lib/schemas"
 
-export default function WithdrawFromPotDialog({
-  potData: { potId, name, target, currentAmount },
-}: {
-  potData: Omit<PotSchema, "colorId" | "colorValue">
-}) {
+import type { Pot } from "@/data-access/pots"
+import type { PotAmountUpdateErrors } from "@/lib/types"
+
+export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
   const {
     handleSubmit,
     register,
@@ -29,23 +27,23 @@ export default function WithdrawFromPotDialog({
     watch,
     formState: { isSubmitting },
   } = useForm({
-    resolver: zodResolver(potUpdateSchema),
-    defaultValues: { potId, amountToUpdate: "" },
+    resolver: zodResolver(potAmountUpdateSchema),
+    defaultValues: { id: pot.id, amountToUpdate: "" },
   })
 
   useEffect(() => {
-    reset({ potId, amountToUpdate: "" })
-  }, [potId, currentAmount, reset])
+    reset({ id: pot.id, amountToUpdate: "" })
+  }, [pot, reset])
 
   const amountInInput = watch("amountToUpdate")
-  const draftAmountInPot = Number(currentAmount) - Number(amountInInput)
+  const draftAmountInPot = Number(pot.currentAmount) - Number(amountInInput)
 
   return (
     <DialogTrigger>
       <Button variant="secondary" className="w-full">
         Withdraw
       </Button>
-      <Dialog title={`Withdraw from ‘${name}’`}>
+      <Dialog title={`Withdraw from ‘${pot.name}’`}>
         {({ close }) => (
           <div className="grid gap-5">
             <p className="text-grey-500 text-sm leading-normal font-normal">
@@ -54,16 +52,16 @@ export default function WithdrawFromPotDialog({
             <ProgressBar
               value={draftAmountInPot}
               minValue={0}
-              maxValue={Number(target)}
+              maxValue={Number(pot.target)}
               formatOptions={{ style: "currency", currency: "USD" }}
             >
               {({ percentage, valueText }) => {
                 const currentAmountAsPercentage = Math.round(
-                  (Number(currentAmount) / Number(target)) * 100
+                  (Number(pot.currentAmount) / Number(pot.target)) * 100
                 )
 
                 const amountInInputAsPercentage = Math.round(
-                  (Number(amountInInput) / Number(target)) * 100
+                  (Number(amountInInput) / Number(pot.target)) * 100
                 )
 
                 const draftAmountAsPercentage = Math.round(
@@ -100,7 +98,9 @@ export default function WithdrawFromPotDialog({
                       <span className="font-bold">
                         {Math.round(percentage ?? 0)}%
                       </span>
-                      <span className="font-normal">Target of ${target}</span>
+                      <span className="font-normal">
+                        Target of ${pot.target}
+                      </span>
                     </div>
                   </div>
                 )
@@ -113,7 +113,7 @@ export default function WithdrawFromPotDialog({
                 if (response) {
                   const errorKeys = Object.keys(
                     response
-                  ) as (keyof PotUpdateErrors)[]
+                  ) as (keyof PotAmountUpdateErrors)[]
                   errorKeys.forEach((key) =>
                     setError(
                       key,
@@ -126,7 +126,7 @@ export default function WithdrawFromPotDialog({
                 close()
               })}
             >
-              <input {...register("potId")} type="hidden" />
+              <input {...register("id")} type="hidden" />
               <Controller
                 name="amountToUpdate"
                 control={control}

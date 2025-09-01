@@ -3,7 +3,7 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
-import { prisma, type Prisma } from "@/lib/prisma"
+import { prisma, Prisma } from "@/lib/prisma"
 
 import type { BudgetCreate, BudgetUpdate } from "@/lib/schemas"
 import type { BudgetCreateErrors, DALReturn } from "@/lib/types"
