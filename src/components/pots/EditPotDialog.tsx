@@ -10,7 +10,7 @@ import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
 import { potSchema, type PotSchema } from "@/lib/schemas"
 
-import type { CreateNewPotErrors } from "@/lib/types"
+import type { PotCreateErrors } from "@/lib/types"
 
 export default function EditPotDialog({
   potData: { potId, name, target, colorId },
@@ -51,7 +51,7 @@ export default function EditPotDialog({
             if (response) {
               const errorKeys = Object.keys(
                 response
-              ) as (keyof CreateNewPotErrors)[]
+              ) as (keyof PotCreateErrors)[]
               errorKeys.forEach((key) =>
                 setError(
                   key,

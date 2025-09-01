@@ -6,21 +6,17 @@ import { verifySession } from "@/data-access/auth"
 import { prisma, Prisma } from "@/lib/prisma"
 
 import type { PotSchema, PotCreate, PotUpdateSchema } from "@/lib/schemas"
-import type {
-  CreateNewPotErrors,
-  DALReturn,
-  PotUpdateErrors,
-} from "@/lib/types"
+import type { PotCreateErrors, DALReturn, PotUpdateErrors } from "@/lib/types"
 
 // ============================================
 // ================ Create Pot ================
 // ============================================
 
-export async function createNewPot({
+export async function createPot({
   name,
   target,
   colorId,
-}: PotCreate): Promise<DALReturn<CreateNewPotErrors>> {
+}: PotCreate): Promise<DALReturn<PotCreateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -65,7 +61,7 @@ export async function getPots() {
 
 export async function editPot(
   formData: Omit<PotSchema, "currentAmount" | "colorValue">
-): Promise<DALReturn<CreateNewPotErrors>> {
+): Promise<DALReturn<PotCreateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 

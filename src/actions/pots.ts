@@ -14,21 +14,21 @@ import {
   type PotCreate,
 } from "@/lib/schemas"
 
-import type { CreateNewPotErrors, PotUpdateErrors } from "@/lib/types"
+import type { PotCreateErrors, PotUpdateErrors } from "@/lib/types"
 
 // ============================================
 // ================ Create Pot ================
 // ============================================
 
-export async function createNewPot(
+export async function createPot(
   formData: PotCreate
-): Promise<CreateNewPotErrors | null> {
+): Promise<PotCreateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const parsed = potCreateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.createNewPot(parsed.data)
+  const response = await pots.createPot(parsed.data)
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")
@@ -37,7 +37,7 @@ export async function createNewPot(
 
 export async function editPot(
   formData: Omit<PotSchema, "currentAmount" | "colorValue">
-): Promise<CreateNewPotErrors | null> {
+): Promise<PotCreateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const parsed = potSchema

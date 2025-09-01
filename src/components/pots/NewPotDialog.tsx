@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { createNewPot } from "@/actions/pots"
+import { createPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import { Select, SelectItem } from "@/components/ui/Select"
@@ -11,7 +11,7 @@ import TextField from "@/components/ui/TextField"
 import { potCreateSchema } from "@/lib/schemas"
 
 import type { Color } from "@/data-access/lookups"
-import type { CreateNewPotErrors } from "@/lib/types"
+import type { PotCreateErrors } from "@/lib/types"
 
 export default function NewPotDialog({ colors }: { colors: Color[] }) {
   const {
@@ -33,11 +33,11 @@ export default function NewPotDialog({ colors }: { colors: Color[] }) {
           <form
             className="grid gap-5"
             onSubmit={handleSubmit(async (data) => {
-              const response = await createNewPot(data)
+              const response = await createPot(data)
               if (response) {
                 const errorKeys = Object.keys(
                   response
-                ) as (keyof CreateNewPotErrors)[]
+                ) as (keyof PotCreateErrors)[]
                 errorKeys.forEach((key) =>
                   setError(
                     key,
