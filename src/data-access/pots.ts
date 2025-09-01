@@ -112,13 +112,11 @@ export async function deletePot(potId: string): Promise<{ success: boolean }> {
 // ============================================
 
 export async function updatePotAmount(
-  formData: PotAmountUpdate,
+  { id, amountToUpdate }: PotAmountUpdate,
   operation: "increment" | "decrement"
 ): Promise<DALReturn<PotAmountUpdateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
-
-  const { id, amountToUpdate } = formData
 
   try {
     const amountToUpdateAsDecimal = new Prisma.Decimal(amountToUpdate)
