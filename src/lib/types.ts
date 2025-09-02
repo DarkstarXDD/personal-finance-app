@@ -19,18 +19,18 @@ export type LoginUserErrors = {
   [Key in keyof LoginSchema]?: string[]
 }
 
-export type PotCreateErrors = {
-  [Key in keyof PotCreate]?: string[]
-}
-
-export type PotAmountUpdateErrors = {
-  [Key in keyof PotAmountUpdate]?: string[]
-}
-
 export type CreateTransactionErrors = {
   [Key in keyof TransactionCreate]?: string[]
 }
 
 export type BudgetCreateErrors = {
   [key in keyof BudgetCreate]?: string[]
+}
+
+export type PotCreateErrors = {
+  [Key in keyof PotCreate]?: string[]
+}
+
+export type PotAmountUpdateErrors = {
+  [Key in keyof PotAmountUpdate]?: string[]
 }
