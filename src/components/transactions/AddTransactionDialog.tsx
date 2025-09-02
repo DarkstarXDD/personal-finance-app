@@ -12,7 +12,7 @@ import TextField from "@/components/ui/TextField"
 import { transactionCreateSchema } from "@/lib/schemas"
 
 import type { Category } from "@/data-access/lookups"
-import type { CreateTransactionErrors } from "@/lib/types"
+import type { TransactionCreateErrors } from "@/lib/types"
 
 export default function AddTransactionDialog({
   categories,
@@ -48,7 +48,7 @@ export default function AddTransactionDialog({
                 console.log(response)
                 const errorKeys = Object.keys(
                   response
-                ) as (keyof CreateTransactionErrors)[]
+                ) as (keyof TransactionCreateErrors)[]
                 errorKeys.forEach((key) =>
                   setError(
                     key,

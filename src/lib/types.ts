@@ -19,7 +19,7 @@ export type LoginUserErrors = {
   [Key in keyof LoginSchema]?: string[]
 }
 
-export type CreateTransactionErrors = {
+export type TransactionCreateErrors = {
   [Key in keyof TransactionCreate]?: string[]
 }
 

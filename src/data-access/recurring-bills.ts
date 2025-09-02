@@ -5,13 +5,13 @@ import { redirect } from "next/navigation"
 import { verifySession } from "@/data-access/auth"
 import { prisma, type Prisma } from "@/lib/prisma"
 import { TransactionCreate } from "@/lib/schemas"
-import { CreateTransactionErrors, DALReturn } from "@/lib/types"
+import { TransactionCreateErrors, DALReturn } from "@/lib/types"
 
 export async function createRecurringBill({
   amount,
   counterparty,
 }: TransactionCreate): Promise<
-  DALReturn<CreateTransactionErrors> & { recurringBillId?: string }
+  DALReturn<TransactionCreateErrors> & { recurringBillId?: string }
 > {
   const userId = await verifySession()
   if (!userId) redirect("/login")
