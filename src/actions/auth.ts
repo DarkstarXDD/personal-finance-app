@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
 import * as z from "zod"
 
-import { prisma, Prisma } from "@/lib/prisma"
+import { prisma } from "@/lib/prisma"
 import {
   signupSchema,
   loginSchema,
@@ -26,24 +26,30 @@ export async function registerUser(
     const errors = z.flattenError(parsed.error).fieldErrors
     return errors
   }
-  const passwordHash = await bcrypt.hash(parsed.data.password, 12)
+  // const passwordHash = await bcrypt.hash(parsed.data.password, 12)
 
-  try {
-    const user = await prisma.user.create({
-      data: { ...parsed.data, password: passwordHash },
-      select: { id: true },
-    })
-    await createSession({ userId: user.id })
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002")
-      return {
-        email: [
-          "An account with this email already exists. Please sign in instead or use a different email address.",
-        ],
-      }
-    return { email: ["Something went wrong. Please try again."] }
+  return {
+    email: [
+      "New account creation is temporarily unavailable due to maintenance.",
+    ],
   }
-  redirect("/")
+
+  // try {
+  //   const user = await prisma.user.create({
+  //     data: { ...parsed.data, password: passwordHash },
+  //     select: { id: true },
+  //   })
+  //   await createSession({ userId: user.id })
+  // } catch (e) {
+  //   if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002")
+  //     return {
+  //       email: [
+  //         "An account with this email already exists. Please sign in instead or use a different email address.",
+  //       ],
+  //     }
+  //   return { email: ["Something went wrong. Please try again."] }
+  // }
+  // redirect("/")
 }
 
 export type LoginUserErrors = {
