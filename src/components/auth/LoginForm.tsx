@@ -3,13 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { loginUser, type LoginUserErrors } from "@/actions/auth"
+import { loginUser } from "@/actions/auth"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import TextField from "@/components/ui/TextField"
 import { loginSchema } from "@/lib/schemas"
+
+import type { LoginUserErrors } from "@/lib/types"
 
 export default function LoginForm() {
   const {

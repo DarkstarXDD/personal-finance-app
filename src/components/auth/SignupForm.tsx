@@ -25,7 +25,7 @@ export default function SignupForm() {
   })
 
   return (
-    <Card padding="lg" className="mx-auto max-w-[35rem]">
+    <Card className="mx-auto max-w-[35rem]">
       <div className="grid justify-items-center gap-8">
         <form
           className="grid w-full gap-8"

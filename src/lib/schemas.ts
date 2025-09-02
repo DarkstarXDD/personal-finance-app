@@ -1,7 +1,7 @@
 import * as z from "zod"
 
 // ============================================
-// ========= Sign Up Schema and Type ==========
+// ========== Signup Schema and Type ==========
 // ============================================
 
 export const signupSchema = z.object({
@@ -12,12 +12,12 @@ export const signupSchema = z.object({
 export type SignupSchema = z.infer<typeof signupSchema>
 
 // ============================================
-// ========== Log In Schema and Type ==========
+// =========== Login Schema and Type ==========
 // ============================================
 
 export const loginSchema = z.object({
-  email: z.email("Invalid email format").toLowerCase(),
-  password: z.string().trim().min(1, "Password cannot be empty"),
+  email: z.email("Invalid email format.").toLowerCase(),
+  password: z.string().trim().min(1, "Password cannot be empty."),
 })
 export type LoginSchema = z.infer<typeof loginSchema>
 

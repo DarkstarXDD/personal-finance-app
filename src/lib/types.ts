@@ -1,5 +1,6 @@
 import type {
   SignupSchema,
+  LoginSchema,
   PotAmountUpdate,
   PotCreate,
   TransactionCreate,
@@ -12,6 +13,10 @@ export type DALReturn<T extends Record<string, string[]>> =
 
 export type RegisterUserErrors = {
   [Key in keyof SignupSchema]?: string[]
+}
+
+export type LoginUserErrors = {
+  [Key in keyof LoginSchema]?: string[]
 }
 
 export type PotCreateErrors = {
