@@ -1,4 +1,5 @@
 import type {
+  SignupSchema,
   PotAmountUpdate,
   PotCreate,
   TransactionCreate,
@@ -8,6 +9,10 @@ import type {
 export type DALReturn<T extends Record<string, string[]>> =
   | { success: true }
   | { success: false; fieldErrors: T }
+
+export type RegisterUserErrors = {
+  [Key in keyof SignupSchema]?: string[]
+}
 
 export type PotCreateErrors = {
   [Key in keyof PotCreate]?: string[]

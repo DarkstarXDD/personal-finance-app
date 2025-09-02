@@ -3,13 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { registerUser, type RegisterUserErrors } from "@/actions/auth"
+import { registerUser } from "@/actions/auth"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import TextField from "@/components/ui/TextField"
 import { signupSchema } from "@/lib/schemas"
+
+import type { RegisterUserErrors } from "@/lib/types"
 
 export default function SignupForm() {
   const {
