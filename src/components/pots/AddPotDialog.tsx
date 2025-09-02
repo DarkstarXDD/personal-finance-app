@@ -13,7 +13,7 @@ import { potCreateSchema } from "@/lib/schemas"
 import type { Color } from "@/data-access/lookups"
 import type { PotCreateErrors } from "@/lib/types"
 
-export default function NewPotDialog({ colors }: { colors: Color[] }) {
+export default function AddPotDialog({ colors }: { colors: Color[] }) {
   const {
     handleSubmit,
     control,

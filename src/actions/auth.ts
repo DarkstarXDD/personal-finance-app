@@ -13,19 +13,20 @@ import {
 } from "@/lib/schemas"
 import { createSession } from "@/lib/session"
 
-export type RegisterUserErrors = {
-  [Key in keyof SignupSchema]?: string[]
-}
+import type { RegisterUserErrors, LoginUserErrors } from "@/lib/types"
+
+// ============================================
+// =============== Register User ==============
+// ============================================
 
 export async function registerUser(
   formData: SignupSchema
 ): Promise<RegisterUserErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000)) // For development
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
   const parsed = signupSchema.safeParse(formData)
-  if (!parsed.success) {
-    const errors = z.flattenError(parsed.error).fieldErrors
-    return errors
-  }
+  if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
+
   // const passwordHash = await bcrypt.hash(parsed.data.password, 12)
 
   return {
@@ -52,20 +53,18 @@ export async function registerUser(
   // redirect("/")
 }
 
-export type LoginUserErrors = {
-  [Key in keyof LoginSchema]?: string[]
-}
+// ============================================
+// ================= Login User ===============
+// ============================================
 
 export async function loginUser(
   formData: LoginSchema
 ): Promise<LoginUserErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000)) // For development
+  await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const parsed = loginSchema.safeParse(formData)
-  if (!parsed.success) {
-    const errors = z.flattenError(parsed.error).fieldErrors
-    return errors
-  }
+  if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
+
   try {
     const user = await prisma.user.findUnique({
       where: { email: parsed.data.email },

@@ -7,11 +7,15 @@ import * as recurringBills from "@/data-access/recurring-bills"
 import * as transactions from "@/data-access/transactions"
 import { transactionCreateSchema, type TransactionCreate } from "@/lib/schemas"
 
-import type { CreateTransactionErrors } from "@/lib/types"
+import type { TransactionCreateErrors } from "@/lib/types"
+
+// ============================================
+// ============= Create Transaction ===========
+// ============================================
 
 export async function createTransaction(
   formData: TransactionCreate
-): Promise<CreateTransactionErrors | null> {
+): Promise<TransactionCreateErrors | null> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const parsed = transactionCreateSchema.safeParse(formData)

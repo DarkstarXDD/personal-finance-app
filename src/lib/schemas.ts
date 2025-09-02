@@ -1,23 +1,23 @@
 import * as z from "zod"
 
 // ============================================
-// ========= Sign Up Schema and Type ==========
+// ========== Signup Schema and Type ==========
 // ============================================
 
 export const signupSchema = z.object({
-  name: z.string().trim().min(1, "Name cannot be empty"),
-  email: z.email("Invalid email format").toLowerCase(),
-  password: z.string().min(8, "Password must be at least 8 characters").trim(),
+  name: z.string().trim().min(1, "Name cannot be empty."),
+  email: z.email("Invalid email format.").toLowerCase(),
+  password: z.string().min(8, "Password must be at least 8 characters.").trim(),
 })
 export type SignupSchema = z.infer<typeof signupSchema>
 
 // ============================================
-// ========== Log In Schema and Type ==========
+// =========== Login Schema and Type ==========
 // ============================================
 
 export const loginSchema = z.object({
-  email: z.email("Invalid email format").toLowerCase(),
-  password: z.string().trim().min(1, "Password cannot be empty"),
+  email: z.email("Invalid email format.").toLowerCase(),
+  password: z.string().trim().min(1, "Password cannot be empty."),
 })
 export type LoginSchema = z.infer<typeof loginSchema>
 
@@ -39,6 +39,26 @@ export const transactionCreateSchema = z.object({
   isRecurring: z.boolean(),
 })
 export type TransactionCreate = z.infer<typeof transactionCreateSchema>
+
+// ============================================
+// ====== Budget Create Schema and Type =======
+// ============================================
+
+export const budgetCreateSchema = z.object({
+  categoryId: z.cuid("Please select a category."),
+  maximumSpend: z.string().min(1, "Maximum spend cannot be empty."),
+  colorId: z.cuid("Please select a color."),
+})
+export type BudgetCreate = z.infer<typeof budgetCreateSchema>
+
+// ============================================
+// ====== Budget Update Schema and Type =======
+// ============================================
+
+export const budgetUpdateSchema = budgetCreateSchema.extend({
+  id: z.cuid(),
+})
+export type BudgetUpdate = z.infer<typeof budgetUpdateSchema>
 
 // ============================================
 // ======== Pot Create Schema and Type ========
@@ -73,23 +93,3 @@ export const potAmountUpdateSchema = z.object({
   amountToUpdate: z.string().trim().min(1, "Amount cannot be empty."),
 })
 export type PotAmountUpdate = z.infer<typeof potAmountUpdateSchema>
-
-// ============================================
-// ====== Budget Create Schema and Type =======
-// ============================================
-
-export const budgetCreateSchema = z.object({
-  categoryId: z.cuid("Please select a category."),
-  maximumSpend: z.string().min(1, "Maximum spend cannot be empty."),
-  colorId: z.cuid("Please select a color."),
-})
-export type BudgetCreate = z.infer<typeof budgetCreateSchema>
-
-// ============================================
-// ====== Budget Update Schema and Type =======
-// ============================================
-
-export const budgetUpdateSchema = budgetCreateSchema.extend({
-  id: z.cuid(),
-})
-export type BudgetUpdate = z.infer<typeof budgetUpdateSchema>

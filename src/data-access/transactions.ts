@@ -8,7 +8,7 @@ import { ITEMS_PER_PAGE } from "@/lib/constants"
 import { Prisma, prisma } from "@/lib/prisma"
 
 import type { TransactionCreate } from "@/lib/schemas"
-import type { CreateTransactionErrors, DALReturn } from "@/lib/types"
+import type { TransactionCreateErrors, DALReturn } from "@/lib/types"
 
 // ============================================
 // ============ Create Transaction ============
@@ -16,7 +16,7 @@ import type { CreateTransactionErrors, DALReturn } from "@/lib/types"
 
 export async function createTransaction(
   formData: TransactionCreate & { recurringBillId?: string }
-): Promise<DALReturn<CreateTransactionErrors>> {
+): Promise<DALReturn<TransactionCreateErrors>> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 

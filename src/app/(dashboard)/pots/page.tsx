@@ -1,4 +1,4 @@
-import NewPotDialog from "@/components/pots/NewPotDialog"
+import AddPotDialog from "@/components/pots/AddPotDialog"
 import PotCard from "@/components/pots/PotCard"
 import Heading from "@/components/ui/Heading"
 import { getColors } from "@/data-access/lookups"
@@ -14,7 +14,7 @@ export default async function PotsPage() {
         <Heading as="h1" variant="primary">
           Pots
         </Heading>
-        <NewPotDialog colors={colors} />
+        <AddPotDialog colors={colors} />
       </div>
       <div className="grid gap-6 lg:grid-cols-2">
         {pots.map((pot) => (
