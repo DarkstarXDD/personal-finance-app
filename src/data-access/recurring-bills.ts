@@ -7,6 +7,10 @@ import { prisma, type Prisma } from "@/lib/prisma"
 import { TransactionCreate } from "@/lib/schemas"
 import { TransactionCreateErrors, DALReturn } from "@/lib/types"
 
+// ============================================
+// =========== Create Recurring Bill ==========
+// ============================================
+
 export async function createRecurringBill({
   amount,
   counterparty,
@@ -37,6 +41,10 @@ export async function createRecurringBill({
     }
   }
 }
+
+// ============================================
+// =========== Fetch Recurring Bills ==========
+// ============================================
 
 const recurringBillsSelect = {
   id: true,
