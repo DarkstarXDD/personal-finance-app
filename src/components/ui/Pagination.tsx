@@ -1,50 +1,92 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
 import { ComponentProps } from "react"
 import { PiCaretLeftFill, PiCaretRightFill } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
-import { cn } from "@/lib/utils"
+import { generatePagination } from "@/lib/utils"
 
 const paginationStyles = tv({
   slots: {
-    linkStyles:
-      "ring-beige-500 active:bg-beige-100 text-grey-900 hover:bg-beige-100 border-beige-500 flex items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
     iconStyles: "text-grey-500 size-4 shrink-0",
-    textStyles: "text-sm leading-normal font-normal",
-    ellipsisStyles:
-      "text-grey-900 border-beige-500 flex items-center justify-center rounded-lg border text-sm leading-normal font-normal",
+    textStyles: "text-grey-900 text-sm leading-normal font-normal",
+    linkStyles:
+      "ring-beige-500 active:bg-beige-100 hover:bg-beige-100 border-beige-500 flex shrink-0 items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
+    ulStyles: "w-full items-center justify-center gap-2",
   },
   variants: {
+    isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },
     size: {
-      sm: { linkStyles: "size-10", ellipsisStyles: "size-10" },
-      lg: { linkStyles: "h-10 w-12 md:w-24.5" },
+      sm: { linkStyles: "size-8 sm:size-10" },
+      lg: { linkStyles: "size-8 sm:h-10 sm:w-12 md:w-24.5" },
     },
     isActive: {
       true: {
+        textStyles: "text-white",
         linkStyles:
-          "bg-grey-900 border-grey-900 hover:bg-grey-900/85 active:bg-grey-900/85 text-white",
+          "bg-grey-900 border-grey-900 hover:bg-grey-900/85 active:bg-grey-900/85",
       },
     },
-    isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },
+    isHighPageCount: {
+      true: { ulStyles: "grid sm:flex sm:flex-wrap" },
+      false: { ulStyles: "flex flex-wrap" },
+    },
   },
   compoundSlots: [
     { slots: ["textStyles"], size: "lg", className: "hidden md:block" },
   ],
 })
 
-function Pagination({ className, ...props }: ComponentProps<"ul">) {
+export default function Pagination({ totalPages }: { totalPages: number }) {
+  const readOnlySearchParams = useSearchParams()
+  const path = usePathname()
+
+  function createPageURL(pageNumber: number | string) {
+    const newSeachParams = new URLSearchParams(readOnlySearchParams)
+    newSeachParams.set("page", pageNumber.toString())
+    return `${path}?${newSeachParams.toString()}`
+  }
+
+  const currentPage = Math.abs(Number(readOnlySearchParams.get("page")) || 1)
+  const pageList = generatePagination(currentPage, totalPages)
+
+  const { ulStyles } = paginationStyles({ isHighPageCount: totalPages > 3 })
+
   return (
-    <ul
-      {...props}
-      className={cn("flex w-full justify-center gap-2", className)}
-    />
+    <nav aria-label="Pagination">
+      <ul className={ulStyles()}>
+        <PaginationPrevious
+          href={createPageURL(currentPage - 1)}
+          isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
+        />
+        {pageList.map((page, id) =>
+          page === "ellipsis" ? (
+            <PaginationEllipsis key={`ellipsis-${id}`} />
+          ) : (
+            <PaginationNumber
+              key={`page-${page}`}
+              href={createPageURL(page)}
+              pageNumber={page}
+              isActive={page === currentPage}
+            />
+          )
+        )}
+        <PaginationNext
+          href={createPageURL(currentPage + 1)}
+          isDisabled={currentPage >= totalPages}
+        />
+      </ul>
+    </nav>
   )
 }
 
+// ============================================
+// ============= Pagination Previous ==========
+// ============================================
+
 function PaginationPrevious({
-  className,
   isDisabled,
   ...props
 }: ComponentProps<typeof Link> & { isDisabled?: boolean }) {
@@ -55,7 +97,7 @@ function PaginationPrevious({
 
   if (isDisabled) {
     return (
-      <li className={className}>
+      <li className="col-start-1 row-start-1 mr-auto">
         <div className={linkStyles()}>
           <PiCaretLeftFill className={iconStyles()} />
           <span className={textStyles()}>Prev</span>
@@ -64,7 +106,7 @@ function PaginationPrevious({
     )
   }
   return (
-    <li className={className}>
+    <li className="col-start-1 row-start-1 mr-auto">
       <Link {...props} className={linkStyles()}>
         <PiCaretLeftFill className={iconStyles()} />
         <span className={textStyles()}>Prev</span>
@@ -73,8 +115,11 @@ function PaginationPrevious({
   )
 }
 
+// ============================================
+// =============== Pagination Next ============
+// ============================================
+
 function PaginationNext({
-  className,
   isDisabled,
   ...props
 }: ComponentProps<typeof Link> & { isDisabled?: boolean }) {
@@ -85,7 +130,7 @@ function PaginationNext({
 
   if (isDisabled) {
     return (
-      <li className={className}>
+      <li className="col-start-2 row-start-1 ml-auto">
         <div className={linkStyles()}>
           <span className={textStyles()}>Next</span>
           <PiCaretRightFill className={iconStyles()} />
@@ -94,7 +139,7 @@ function PaginationNext({
     )
   }
   return (
-    <li className={className}>
+    <li className="col-start-2 row-start-1 ml-auto">
       <Link {...props} className={linkStyles()}>
         <span className={textStyles()}>Next</span>
         <PiCaretRightFill className={iconStyles()} />
@@ -103,10 +148,13 @@ function PaginationNext({
   )
 }
 
+// ============================================
+// ============== Pagination Number ===========
+// ============================================
+
 function PaginationNumber({
   pageNumber,
   isActive = false,
-  className,
   ...props
 }: ComponentProps<typeof Link> & {
   pageNumber: string | number
@@ -117,7 +165,7 @@ function PaginationNumber({
     isActive,
   })
   return (
-    <li className={className}>
+    <li className="row-start-2">
       <Link {...props} className={linkStyles()}>
         <span className={textStyles()}>{pageNumber}</span>
       </Link>
@@ -125,19 +173,15 @@ function PaginationNumber({
   )
 }
 
-function PaginationEllipsis({ className, ...props }: ComponentProps<"li">) {
-  const { ellipsisStyles } = paginationStyles({ size: "sm" })
+// ============================================
+// ============= Pagination Ellipsis ==========
+// ============================================
+
+function PaginationEllipsis() {
+  const { textStyles } = paginationStyles({ size: "sm" })
   return (
-    <li className={ellipsisStyles({ className })} {...props}>
-      ...
+    <li className="row-start-2">
+      <span className={textStyles()}>...</span>
     </li>
   )
-}
-
-export {
-  Pagination,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationNumber,
-  PaginationEllipsis,
 }
