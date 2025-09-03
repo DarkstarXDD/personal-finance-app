@@ -1,6 +1,10 @@
 import AddTransactionDialog from "@/components/transactions/AddTransactionDialog"
-import TableWrapper from "@/components/transactions/TableWrapper"
+import TableDesktop from "@/components/transactions/TableDesktop"
+import TableFilters from "@/components/transactions/TableFilters"
+import TableMobile from "@/components/transactions/TableMobile"
+import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
+import Pagination from "@/components/ui/Pagination"
 import { getCategories } from "@/data-access/lookups"
 import { getTransactions } from "@/data-access/transactions"
 
@@ -36,11 +40,12 @@ export default async function TransactionsPage({
         </Heading>
         <AddTransactionDialog categories={categories} />
       </div>
-      <TableWrapper
-        categories={categories}
-        transactions={transactions}
-        totalPages={totalPages}
-      />
+      <Card className="grid gap-6">
+        <TableFilters categories={categories} />
+        <TableMobile transactions={transactions} />
+        <TableDesktop transactions={transactions} />
+        <Pagination totalPages={totalPages} />
+      </Card>
     </main>
   )
 }
