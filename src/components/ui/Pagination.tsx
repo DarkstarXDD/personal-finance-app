@@ -72,6 +72,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
               href={createPageURL(page)}
               pageNumber={page}
               isActive={page === currentPage}
+              aria-current={page === currentPage ? "page" : false}
             />
           )
         )}
@@ -96,6 +97,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
               href={createPageURL(page)}
               pageNumber={page}
               isActive={page === currentPage}
+              aria-current={page === currentPage ? "page" : false}
             />
           )
         )}
