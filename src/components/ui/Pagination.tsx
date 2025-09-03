@@ -14,8 +14,10 @@ const paginationStyles = tv({
     textStyles: "text-grey-900 text-sm leading-normal font-normal",
     linkStyles:
       "ring-beige-500 active:bg-beige-100 hover:bg-beige-100 border-beige-500 flex shrink-0 items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
+    ulStyles: "w-full items-center justify-center gap-2",
   },
   variants: {
+    isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },
     size: {
       sm: { linkStyles: "size-8 sm:size-10" },
       lg: { linkStyles: "size-8 sm:h-10 sm:w-12 md:w-24.5" },
@@ -27,7 +29,10 @@ const paginationStyles = tv({
           "bg-grey-900 border-grey-900 hover:bg-grey-900/85 active:bg-grey-900/85",
       },
     },
-    isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },
+    isHighPageCount: {
+      true: { ulStyles: "grid sm:flex sm:flex-wrap" },
+      false: { ulStyles: "flex flex-wrap" },
+    },
   },
   compoundSlots: [
     { slots: ["textStyles"], size: "lg", className: "hidden md:block" },
@@ -47,9 +52,11 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const currentPage = Math.abs(Number(readOnlySearchParams.get("page")) || 1)
   const pageList = generatePagination(currentPage, totalPages)
 
+  const { ulStyles } = paginationStyles({ isHighPageCount: totalPages > 3 })
+
   return (
     <nav aria-label="Pagination">
-      <ul className="grid w-full items-center justify-center gap-2 sm:flex sm:flex-wrap">
+      <ul className={ulStyles()}>
         <PaginationPrevious
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
