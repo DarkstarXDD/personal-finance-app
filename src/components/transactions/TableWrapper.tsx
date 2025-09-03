@@ -126,7 +126,6 @@ export default function TableWrapper({
       <Pagination>
         <PaginationPrevious
           href={createPageURL(currentPage - 1)}
-          className="mr-auto"
           isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
         />
         {pageList.map((page, id) =>
@@ -143,7 +142,6 @@ export default function TableWrapper({
         )}
         <PaginationNext
           href={createPageURL(currentPage + 1)}
-          className="ml-auto"
           isDisabled={currentPage >= totalPages}
         />
       </Pagination>
