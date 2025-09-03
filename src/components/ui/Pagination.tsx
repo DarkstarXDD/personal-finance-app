@@ -18,8 +18,11 @@ const paginationStyles = tv({
   },
   variants: {
     size: {
-      sm: { linkStyles: "size-10", ellipsisStyles: "size-10" },
-      lg: { linkStyles: "h-10 w-12 md:w-24.5" },
+      sm: {
+        linkStyles: "size-8 sm:size-10",
+        ellipsisStyles: "size-8 shrink-0 sm:size-10",
+      },
+      lg: { linkStyles: "size-8 sm:h-10 sm:w-12 md:w-24.5" },
     },
     isActive: {
       true: {
@@ -38,7 +41,10 @@ function Pagination({ className, ...props }: ComponentProps<"ul">) {
   return (
     <ul
       {...props}
-      className={cn("flex w-full justify-center gap-2", className)}
+      className={cn(
+        "flex w-full flex-wrap items-center justify-center gap-2",
+        className
+      )}
     />
   )
 }
