@@ -6,7 +6,10 @@ import { ComponentProps } from "react"
 import { PiCaretLeftFill, PiCaretRightFill } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
-import { generatePagination } from "@/lib/utils"
+import {
+  generatePaginationMobile,
+  generatePaginationDesktop,
+} from "@/lib/utils"
 
 const paginationStyles = tv({
   slots: {
@@ -15,6 +18,7 @@ const paginationStyles = tv({
     linkStyles:
       "ring-beige-500 active:bg-beige-100 hover:bg-beige-100 border-beige-500 flex shrink-0 items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
     ulStyles: "w-full items-center justify-center gap-2",
+    liStyles: "",
   },
   variants: {
     isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },
@@ -30,8 +34,12 @@ const paginationStyles = tv({
       },
     },
     isHighPageCount: {
-      true: { ulStyles: "grid sm:flex sm:flex-wrap" },
+      true: { ulStyles: "flex flex-wrap" },
       false: { ulStyles: "flex flex-wrap" },
+    },
+    isAdjacentPage: {
+      true: { liStyles: "hidden sm:block" },
+      false: { liStyles: "block" },
     },
   },
   compoundSlots: [
@@ -50,18 +58,44 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   }
 
   const currentPage = Math.abs(Number(readOnlySearchParams.get("page")) || 1)
-  const pageList = generatePagination(currentPage, totalPages)
+
+  const desktopPages = generatePaginationDesktop(currentPage, totalPages)
+  const mobilePages = generatePaginationMobile(currentPage, totalPages)
 
   const { ulStyles } = paginationStyles({ isHighPageCount: totalPages > 3 })
 
   return (
     <nav aria-label="Pagination">
-      <ul className={ulStyles()}>
+      {/* Mobile Pagination */}
+      <ul className={ulStyles({ className: "sm:hidden" })}>
         <PaginationPrevious
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
         />
-        {pageList.map((page, id) =>
+        {mobilePages.map((page, id) =>
+          page === "ellipsis" ? (
+            <PaginationEllipsis key={`ellipsis-mobile-${id}`} />
+          ) : (
+            <PaginationNumber
+              key={`page-mobile-${page}`}
+              href={createPageURL(page)}
+              pageNumber={page}
+              isActive={page === currentPage}
+            />
+          )
+        )}
+        <PaginationNext
+          href={createPageURL(currentPage + 1)}
+          isDisabled={currentPage >= totalPages}
+        />
+      </ul>
+
+      <ul className={ulStyles({ className: "hidden sm:flex" })}>
+        <PaginationPrevious
+          href={createPageURL(currentPage - 1)}
+          isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
+        />
+        {desktopPages.map((page, id) =>
           page === "ellipsis" ? (
             <PaginationEllipsis key={`ellipsis-${id}`} />
           ) : (
@@ -97,7 +131,7 @@ function PaginationPrevious({
 
   if (isDisabled) {
     return (
-      <li className="col-start-1 row-start-1 mr-auto">
+      <li className="mr-auto">
         <div className={linkStyles()}>
           <PiCaretLeftFill className={iconStyles()} />
           <span className={textStyles()}>Prev</span>
@@ -106,7 +140,7 @@ function PaginationPrevious({
     )
   }
   return (
-    <li className="col-start-1 row-start-1 mr-auto">
+    <li className="mr-auto">
       <Link {...props} className={linkStyles()}>
         <PiCaretLeftFill className={iconStyles()} />
         <span className={textStyles()}>Prev</span>
@@ -130,7 +164,7 @@ function PaginationNext({
 
   if (isDisabled) {
     return (
-      <li className="col-start-2 row-start-1 ml-auto">
+      <li className="ml-auto">
         <div className={linkStyles()}>
           <span className={textStyles()}>Next</span>
           <PiCaretRightFill className={iconStyles()} />
@@ -139,7 +173,7 @@ function PaginationNext({
     )
   }
   return (
-    <li className="col-start-2 row-start-1 ml-auto">
+    <li className="ml-auto">
       <Link {...props} className={linkStyles()}>
         <span className={textStyles()}>Next</span>
         <PiCaretRightFill className={iconStyles()} />
@@ -160,12 +194,12 @@ function PaginationNumber({
   pageNumber: string | number
   isActive?: boolean
 }) {
-  const { linkStyles, textStyles } = paginationStyles({
+  const { liStyles, linkStyles, textStyles } = paginationStyles({
     size: "sm",
     isActive,
   })
   return (
-    <li className="row-start-2">
+    <li className={liStyles()}>
       <Link {...props} className={linkStyles()}>
         <span className={textStyles()}>{pageNumber}</span>
       </Link>
@@ -180,7 +214,7 @@ function PaginationNumber({
 function PaginationEllipsis() {
   const { textStyles } = paginationStyles({ size: "sm" })
   return (
-    <li className="row-start-2">
+    <li>
       <span className={textStyles()}>...</span>
     </li>
   )

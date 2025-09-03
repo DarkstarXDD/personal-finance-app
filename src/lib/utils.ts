@@ -18,7 +18,21 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
 // ============= Pagination Helper ============
 // ============================================
 
-export function generatePagination(
+export function generatePaginationMobile(
+  currentPage: number,
+  totalPages: number
+) {
+  if (totalPages <= 4)
+    return Array.from({ length: totalPages }, (_, i) => i + 1)
+
+  if (currentPage <= 2) return [1, 2, "ellipsis", totalPages]
+  if (currentPage >= totalPages - 1)
+    return [1, "ellipsis", totalPages - 1, totalPages]
+
+  return [1, "ellipsis", currentPage, "ellipsis", totalPages]
+}
+
+export function generatePaginationDesktop(
   currentPage: number,
   totalPages: number
 ): (number | "ellipsis")[] {
