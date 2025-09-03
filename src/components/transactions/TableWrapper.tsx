@@ -6,16 +6,9 @@ import { useDebouncedCallback } from "use-debounce"
 import TableDesktop from "@/components/transactions/TableDesktop"
 import TableMobile from "@/components/transactions/TableMobile"
 import Card from "@/components/ui/Card"
-import {
-  Pagination,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationNumber,
-  PaginationEllipsis,
-} from "@/components/ui/Pagination"
+import Pagination from "@/components/ui/Pagination"
 import SearchField from "@/components/ui/SearchField"
 import { Select, SelectItem } from "@/components/ui/Select"
-import { generatePagination } from "@/lib/utils"
 
 import type { Category } from "@/data-access/lookups"
 import type { Transaction } from "@/data-access/transactions"
@@ -68,15 +61,6 @@ export default function TableWrapper({
     updateSearchParams("category", categoryOption)
   }
 
-  function createPageURL(pageNumber: number | string) {
-    const newSeachParams = new URLSearchParams(readOnlySearchParams)
-    newSeachParams.set("page", pageNumber.toString())
-    return `${path}?${newSeachParams.toString()}`
-  }
-
-  const currentPage = Math.abs(Number(readOnlySearchParams.get("page")) || 1)
-  const pageList = generatePagination(currentPage, totalPages)
-
   return (
     <Card className="grid gap-6">
       <div className="flex items-center justify-between gap-6 sm:items-start">
@@ -123,28 +107,7 @@ export default function TableWrapper({
       <TableMobile transactions={transactions} />
       <TableDesktop transactions={transactions} />
 
-      <Pagination>
-        <PaginationPrevious
-          href={createPageURL(currentPage - 1)}
-          isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
-        />
-        {pageList.map((page, id) =>
-          page === "ellipsis" ? (
-            <PaginationEllipsis key={`ellipsis-${id}`} />
-          ) : (
-            <PaginationNumber
-              key={`page-${page}`}
-              href={createPageURL(page)}
-              pageNumber={page}
-              isActive={page === currentPage}
-            />
-          )
-        )}
-        <PaginationNext
-          href={createPageURL(currentPage + 1)}
-          isDisabled={currentPage >= totalPages}
-        />
-      </Pagination>
+      <Pagination totalPages={totalPages} />
     </Card>
   )
 }

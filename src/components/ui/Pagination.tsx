@@ -1,9 +1,12 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
 import { ComponentProps } from "react"
 import { PiCaretLeftFill, PiCaretRightFill } from "react-icons/pi"
 import { tv } from "tailwind-variants"
+
+import { generatePagination } from "@/lib/utils"
 
 const paginationStyles = tv({
   slots: {
@@ -31,16 +34,50 @@ const paginationStyles = tv({
   ],
 })
 
-function Pagination({ ...props }: ComponentProps<"ul">) {
+export default function Pagination({ totalPages }: { totalPages: number }) {
+  const readOnlySearchParams = useSearchParams()
+  const path = usePathname()
+
+  function createPageURL(pageNumber: number | string) {
+    const newSeachParams = new URLSearchParams(readOnlySearchParams)
+    newSeachParams.set("page", pageNumber.toString())
+    return `${path}?${newSeachParams.toString()}`
+  }
+
+  const currentPage = Math.abs(Number(readOnlySearchParams.get("page")) || 1)
+  const pageList = generatePagination(currentPage, totalPages)
+
   return (
     <nav aria-label="Pagination">
-      <ul
-        {...props}
-        className="grid w-full items-center justify-center gap-2 sm:flex sm:flex-wrap"
-      />
+      <ul className="grid w-full items-center justify-center gap-2 sm:flex sm:flex-wrap">
+        <PaginationPrevious
+          href={createPageURL(currentPage - 1)}
+          isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
+        />
+        {pageList.map((page, id) =>
+          page === "ellipsis" ? (
+            <PaginationEllipsis key={`ellipsis-${id}`} />
+          ) : (
+            <PaginationNumber
+              key={`page-${page}`}
+              href={createPageURL(page)}
+              pageNumber={page}
+              isActive={page === currentPage}
+            />
+          )
+        )}
+        <PaginationNext
+          href={createPageURL(currentPage + 1)}
+          isDisabled={currentPage >= totalPages}
+        />
+      </ul>
     </nav>
   )
 }
+
+// ============================================
+// ============= Pagination Previous ==========
+// ============================================
 
 function PaginationPrevious({
   isDisabled,
@@ -71,6 +108,10 @@ function PaginationPrevious({
   )
 }
 
+// ============================================
+// =============== Pagination Next ============
+// ============================================
+
 function PaginationNext({
   isDisabled,
   ...props
@@ -100,6 +141,10 @@ function PaginationNext({
   )
 }
 
+// ============================================
+// ============== Pagination Number ===========
+// ============================================
+
 function PaginationNumber({
   pageNumber,
   isActive = false,
@@ -121,6 +166,10 @@ function PaginationNumber({
   )
 }
 
+// ============================================
+// ============= Pagination Ellipsis ==========
+// ============================================
+
 function PaginationEllipsis() {
   const { textStyles } = paginationStyles({ size: "sm" })
   return (
@@ -128,12 +177,4 @@ function PaginationEllipsis() {
       <span className={textStyles()}>...</span>
     </li>
   )
-}
-
-export {
-  Pagination,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationNumber,
-  PaginationEllipsis,
 }
