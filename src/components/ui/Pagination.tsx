@@ -17,8 +17,7 @@ const paginationStyles = tv({
     textStyles: "text-grey-900 text-sm leading-normal font-normal",
     linkStyles:
       "ring-beige-500 active:bg-beige-100 hover:bg-beige-100 border-beige-500 flex shrink-0 items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
-    ulStyles: "w-full items-center justify-center gap-2",
-    liStyles: "",
+    ulStyles: "flex w-full flex-wrap items-center justify-center gap-2",
   },
   variants: {
     isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },
@@ -32,14 +31,6 @@ const paginationStyles = tv({
         linkStyles:
           "bg-grey-900 border-grey-900 hover:bg-grey-900/85 active:bg-grey-900/85",
       },
-    },
-    isHighPageCount: {
-      true: { ulStyles: "flex flex-wrap" },
-      false: { ulStyles: "flex flex-wrap" },
-    },
-    isAdjacentPage: {
-      true: { liStyles: "hidden sm:block" },
-      false: { liStyles: "block" },
     },
   },
   compoundSlots: [
@@ -62,7 +53,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const desktopPages = generatePaginationDesktop(currentPage, totalPages)
   const mobilePages = generatePaginationMobile(currentPage, totalPages)
 
-  const { ulStyles } = paginationStyles({ isHighPageCount: totalPages > 3 })
+  const { ulStyles } = paginationStyles()
 
   return (
     <nav aria-label="Pagination">
@@ -90,6 +81,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
         />
       </ul>
 
+      {/* Desktop Pagination */}
       <ul className={ulStyles({ className: "hidden sm:flex" })}>
         <PaginationPrevious
           href={createPageURL(currentPage - 1)}
@@ -194,12 +186,12 @@ function PaginationNumber({
   pageNumber: string | number
   isActive?: boolean
 }) {
-  const { liStyles, linkStyles, textStyles } = paginationStyles({
+  const { linkStyles, textStyles } = paginationStyles({
     size: "sm",
     isActive,
   })
   return (
-    <li className={liStyles()}>
+    <li>
       <Link {...props} className={linkStyles()}>
         <span className={textStyles()}>{pageNumber}</span>
       </Link>
