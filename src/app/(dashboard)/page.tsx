@@ -1,3 +1,4 @@
+import BudgetsOverview from "@/components/overview/BudgetsOverview"
 import PotsOverview from "@/components/overview/PotsOverview"
 import RecurringBillsOverview from "@/components/overview/RecurringBillsOverview"
 import SummaryCards from "@/components/overview/SummaryCards"
@@ -14,6 +15,7 @@ export default function OverviewPage() {
       <SummaryCards />
       <PotsOverview />
       <TransactionsOverview />
+      <BudgetsOverview />
       <RecurringBillsOverview />
     </main>
   )
