@@ -1,5 +1,6 @@
 import AddBudgetDialog from "@/components/budgets/AddBudgetDialog"
 import BudgetCard from "@/components/budgets/BudgetCard"
+import BudgetsSummary from "@/components/budgets/BudgetsSummary"
 import Heading from "@/components/ui/Heading"
 import { getBudgets } from "@/data-access/budgets"
 import { getCategories, getColors } from "@/data-access/lookups"
@@ -27,14 +28,19 @@ export default async function BudgetsPage() {
         <AddBudgetDialog categories={categories} colors={colors} />
       </div>
 
-      {budgetsWithTransactions.map(async (budget) => (
-        <BudgetCard
-          key={budget.id}
-          budget={budget}
-          categories={categories}
-          colors={colors}
-        />
-      ))}
+      <div className="grid gap-6 2xl:grid-cols-[2fr_3fr] 2xl:items-start">
+        <BudgetsSummary budgets={budgetsWithTransactions} />
+        <div className="grid gap-6">
+          {budgetsWithTransactions.map(async (budget) => (
+            <BudgetCard
+              key={budget.id}
+              budget={budget}
+              categories={categories}
+              colors={colors}
+            />
+          ))}
+        </div>
+      </div>
     </main>
   )
 }
