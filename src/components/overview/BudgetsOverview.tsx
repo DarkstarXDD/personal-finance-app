@@ -8,7 +8,7 @@ export default async function BudgetsOverview() {
   const budgets = await getBudgets()
 
   return (
-    <Card padding="lg" className="grid gap-8 shadow-none">
+    <Card className="grid gap-8 shadow-none 2xl:row-span-2">
       <div className="flex items-center justify-between">
         <Heading as="h2" variant="secondary">
           Budgets

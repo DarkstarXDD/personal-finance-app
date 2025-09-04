@@ -11,12 +11,14 @@ export default function OverviewPage() {
       <Heading as="h1" variant="primary">
         Overview
       </Heading>
-
       <SummaryCards />
-      <PotsOverview />
-      <TransactionsOverview />
-      <BudgetsOverview />
-      <RecurringBillsOverview />
+
+      <div className="grid gap-6 2xl:grid-cols-[3fr_2fr] 2xl:items-start">
+        <PotsOverview />
+        <BudgetsOverview />
+        <TransactionsOverview />
+        <RecurringBillsOverview />
+      </div>
     </main>
   )
 }
