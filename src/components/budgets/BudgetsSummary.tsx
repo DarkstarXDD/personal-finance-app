@@ -11,14 +11,13 @@ export default function BudgetsSummary({
   budgets: (Budget & { transactions: Transaction[]; totalSpent: string })[]
 }) {
   return (
-    <Card>
-      <div className="grid gap-6">
-        <Heading as="h2" variant="secondary">
-          Spending Summary
-        </Heading>
+    <Card className="grid gap-6">
+      <Heading as="h2" variant="secondary">
+        Spending Summary
+      </Heading>
 
+      <div className="grid gap-6 md:grid-cols-2 md:items-center 2xl:grid-cols-1">
         <div className="bg-cyan size-60 justify-self-center rounded-full" />
-
         <dl>
           {budgets.map((budget) => (
             <SummaryItem
