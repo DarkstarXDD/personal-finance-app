@@ -3,9 +3,10 @@ import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import { Metrics, MetricItem } from "@/components/ui/Metrics"
 import { getBudgets } from "@/data-access/budgets"
+import { currencyFormatter } from "@/lib/utils"
 
 export default async function BudgetsOverview() {
-  const budgets = await getBudgets()
+  const budgets = await getBudgets(4)
 
   return (
     <Card className="grid gap-8 shadow-none 2xl:row-span-2">
@@ -30,7 +31,7 @@ export default async function BudgetsOverview() {
             <MetricItem
               key={budget.id}
               label={budget.category.label}
-              value={budget.maximumSpend}
+              value={currencyFormatter.format(Number(budget.maximumSpend))}
               color={budget.color.value}
             />
           ))}
