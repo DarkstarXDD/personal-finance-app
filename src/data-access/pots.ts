@@ -155,12 +155,14 @@ export type Pot = Omit<PotRaw, "target" | "currentAmount"> & {
   currentAmount: string
 }
 
-export async function getPots() {
+export async function getPots(take?: number) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
   const pots = await prisma.pot.findMany({
     where: { userId },
+    orderBy: { createdAt: "desc" },
+    take: take,
     select: potSelect,
   })
   return pots.map((pot) => ({
