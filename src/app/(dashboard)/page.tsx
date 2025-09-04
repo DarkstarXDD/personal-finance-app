@@ -1,5 +1,6 @@
 import PotsOverview from "@/components/overview/PotsOverview"
 import SummaryCards from "@/components/overview/SummaryCards"
+import TransactionsOverview from "@/components/overview/TransactionsOverview"
 import Heading from "@/components/ui/Heading"
 
 export default function OverviewPage() {
@@ -12,6 +13,8 @@ export default function OverviewPage() {
       <SummaryCards />
 
       <PotsOverview />
+
+      <TransactionsOverview />
     </main>
   )
 }
