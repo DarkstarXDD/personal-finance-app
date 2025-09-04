@@ -96,12 +96,14 @@ type BudgetRaw = Prisma.BudgetGetPayload<{ select: typeof budgetSelect }>
 
 export type Budget = Omit<BudgetRaw, "maximumSpend"> & { maximumSpend: string }
 
-export async function getBudgets() {
+export async function getBudgets(take?: number) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
   const budgets = await prisma.budget.findMany({
     where: { userId },
+    orderBy: { createdAt: "desc" },
+    take: take,
     select: budgetSelect,
   })
 
