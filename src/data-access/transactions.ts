@@ -59,6 +59,7 @@ type GetTransactionsParams = {
   sortby?: string
   category?: string
   currentPage?: number
+  take?: number
 }
 
 export async function getTransactions({
@@ -66,6 +67,7 @@ export async function getTransactions({
   sortby = "latest",
   category = "all",
   currentPage = 1,
+  take,
 }: GetTransactionsParams) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -106,7 +108,7 @@ export async function getTransactions({
       where,
       select: transactionSelect,
       orderBy,
-      take: ITEMS_PER_PAGE,
+      take: take ?? ITEMS_PER_PAGE,
       skip: (currentPage - 1) * ITEMS_PER_PAGE,
     }),
     prisma.transaction.count({ where }),
