@@ -23,6 +23,7 @@ import FieldError from "@/components/ui/FieldError"
 import Label, { type LabelVariants } from "@/components/ui/Label"
 
 import type { ReactNode, Ref } from "react"
+import type { IconType } from "react-icons"
 
 const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
@@ -37,7 +38,7 @@ const selectStyles = tv({
       "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none md:w-full",
     buttonSpan:
       "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
-    mobileIcon: "size-8",
+    mobileIconStyles: "size-8",
     popoverDiv:
       "border-grey-200 custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
   },
@@ -50,7 +51,7 @@ const selectStyles = tv({
         fieldErrorMessage: "sr-only md:not-sr-only",
         button: "rounded md:rounded-lg",
         buttonSpan: "hidden md:flex",
-        mobileIcon: "block md:hidden",
+        mobileIconStyles: "block md:hidden",
         popoverDiv: "min-w-50 md:max-w-full",
       },
       false: {
@@ -70,7 +71,7 @@ const {
   fieldLabel,
   button,
   buttonSpan,
-  mobileIcon,
+  mobileIconStyles,
   popoverDiv,
   fieldDescription,
   fieldErrorMessage,
@@ -90,6 +91,7 @@ type SelectProps<T extends object> = Omit<
   children?: ReactNode | ((item: T) => ReactNode)
   ref?: Ref<HTMLDivElement>
   className?: string
+  mobileIcon?: IconType
 } & SelectStyles
 
 function Select<T extends object>({
@@ -103,6 +105,7 @@ function Select<T extends object>({
   children,
   ref,
   className,
+  mobileIcon: MobileIcon = PiSortAscendingFill,
   ...props
 }: SelectProps<T>) {
   return (
@@ -139,8 +142,8 @@ function Select<T extends object>({
                   }}
                 />
               </span>
-              <PiSortAscendingFill
-                className={mobileIcon({ shouldHideOnMobile })}
+              <MobileIcon
+                className={mobileIconStyles({ shouldHideOnMobile })}
               />
             </RacButton>
 

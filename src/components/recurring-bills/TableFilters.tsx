@@ -1,6 +1,7 @@
 "use client"
 
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
+import { PiSortAscendingFill } from "react-icons/pi"
 import { useDebouncedCallback } from "use-debounce"
 
 import SearchField from "@/components/ui/SearchField"
@@ -51,6 +52,7 @@ export default function TableFilters() {
         onSelectionChange={onSortByChange}
         shouldHideOnMobile
         className="max-w-62 md:h-full md:w-full md:min-w-50"
+        mobileIcon={PiSortAscendingFill}
       >
         <SelectItem id="latest">Latest</SelectItem>
         <SelectItem id="oldest">Oldest</SelectItem>
