@@ -37,7 +37,7 @@ const selectStyles = tv({
       "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none md:w-full",
     buttonSpan:
       "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
-    mobileIcon: "size-5",
+    mobileIcon: "size-8",
     popoverDiv:
       "border-grey-200 custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
   },

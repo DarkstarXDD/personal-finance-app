@@ -68,7 +68,7 @@ export default function TableFilters({
           selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
           onSelectionChange={onSortByChange}
           shouldHideOnMobile
-          className="size-5 max-w-62 md:h-full md:w-full md:min-w-50"
+          className="max-w-62 md:h-full md:w-full md:min-w-50"
         >
           <SelectItem id="latest">Latest</SelectItem>
           <SelectItem id="oldest">Oldest</SelectItem>
@@ -84,7 +84,7 @@ export default function TableFilters({
           selectedKey={readOnlySearchParams.get("category") ?? "all"}
           onSelectionChange={onCategoryChange}
           shouldHideOnMobile
-          className="size-5 max-w-70 md:h-full md:w-full md:min-w-55"
+          className="max-w-70 md:h-full md:w-full md:min-w-55"
           items={categoriesWithAll}
         >
           {(category) => (
