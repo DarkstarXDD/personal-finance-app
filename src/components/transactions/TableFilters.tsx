@@ -53,7 +53,7 @@ export default function TableFilters({
   }
 
   return (
-    <div className="flex items-center justify-between gap-6 sm:items-start">
+    <div className="flex items-center justify-between gap-6 md:items-start">
       <SearchField
         placeholder="Search Transactions"
         label="Search Transactions"
@@ -61,14 +61,14 @@ export default function TableFilters({
         defaultValue={readOnlySearchParams.get("query") ?? ""}
         onChange={onSearchChange}
       />
-      <div className="flex items-start justify-end gap-6 sm:w-full">
+      <div className="flex items-start justify-end gap-6 md:w-full">
         <Select
           label="Sort by"
           aria-label="Sort by"
           selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
           onSelectionChange={onSortByChange}
           shouldHideOnMobile
-          className="size-5 max-w-62 sm:h-full sm:w-full sm:min-w-50"
+          className="size-5 max-w-62 md:h-full md:w-full md:min-w-50"
         >
           <SelectItem id="latest">Latest</SelectItem>
           <SelectItem id="oldest">Oldest</SelectItem>
@@ -84,7 +84,7 @@ export default function TableFilters({
           selectedKey={readOnlySearchParams.get("category") ?? "all"}
           onSelectionChange={onCategoryChange}
           shouldHideOnMobile
-          className="size-5 max-w-70 sm:h-full sm:w-full sm:min-w-55"
+          className="size-5 max-w-70 md:h-full md:w-full md:min-w-55"
           items={categoriesWithAll}
         >
           {(category) => (

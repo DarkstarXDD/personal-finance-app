@@ -35,7 +35,7 @@ export default function TableFilters() {
   }
 
   return (
-    <div className="flex items-center justify-between gap-6 sm:items-start">
+    <div className="flex items-center justify-between gap-6 md:items-start">
       <SearchField
         placeholder="Search Bills"
         label="Search Recurring Bills"
@@ -50,7 +50,7 @@ export default function TableFilters() {
         selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
         onSelectionChange={onSortByChange}
         shouldHideOnMobile
-        className="size-5 max-w-62 sm:w-full sm:min-w-50 md:h-full"
+        className="size-5 max-w-62 md:h-full md:w-full md:min-w-50"
       >
         <SelectItem id="latest">Latest</SelectItem>
         <SelectItem id="oldest">Oldest</SelectItem>
