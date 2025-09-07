@@ -28,11 +28,11 @@ const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
 const selectStyles = tv({
   slots: {
-    select: "group",
-    layoutWrapper: "grid gap-x-2 gap-y-1",
-    fieldLabel: "self-center",
-    fieldDescription: "[grid-area:c]",
-    fieldErrorMessage: "[grid-area:c]",
+    outerWrapper: "group",
+    innerWrapper: "grid justify-items-start gap-1",
+    fieldLabel: "",
+    fieldDescription: "",
+    fieldErrorMessage: "",
     button:
       "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none sm:w-full",
     buttonSpan:
@@ -43,20 +43,9 @@ const selectStyles = tv({
   },
 
   variants: {
-    layout: {
-      vertical: {
-        layoutWrapper:
-          "justify-items-start [grid-template-areas:'a''b''c'] sm:[grid-template-areas:'a''b''c']",
-      },
-      horizontal: {
-        layoutWrapper:
-          "grid-cols-[auto_1fr] [grid-template-areas:'a_b''a_c'] sm:grid-cols-[auto_1fr] sm:[grid-template-areas:'a_b''a_c']",
-      },
-    },
-
     shouldHideOnMobile: {
       true: {
-        layoutWrapper: "grid-cols-1 [grid-template-areas:none]",
+        innerWrapper: "grid-cols-1 [grid-template-areas:none]",
         fieldLabel: "sr-only sm:not-sr-only",
         fieldDescription: "sr-only sm:not-sr-only",
         fieldErrorMessage: "sr-only sm:not-sr-only",
@@ -73,15 +62,12 @@ const selectStyles = tv({
     },
   },
 
-  defaultVariants: {
-    layout: "vertical",
-    shouldHideOnMobile: false,
-  },
+  defaultVariants: { shouldHideOnMobile: false },
 })
 
 const {
-  select,
-  layoutWrapper,
+  outerWrapper,
+  innerWrapper,
   fieldLabel,
   button,
   buttonSpan,
@@ -114,7 +100,6 @@ function Select<T extends object>({
   errorMessage,
   isInvalid,
   items,
-  layout,
   shouldHideOnMobile,
   children,
   ref,
@@ -125,12 +110,12 @@ function Select<T extends object>({
     <RacSelect
       isInvalid={isInvalid}
       {...props}
-      className={select({ className })}
+      className={outerWrapper({ className })}
       ref={ref}
     >
       {({ isOpen }) => (
         <>
-          <div className={layoutWrapper({ layout, shouldHideOnMobile })}>
+          <div className={innerWrapper({ shouldHideOnMobile })}>
             <Label
               variant={labelVariant}
               className={fieldLabel({ shouldHideOnMobile })}
