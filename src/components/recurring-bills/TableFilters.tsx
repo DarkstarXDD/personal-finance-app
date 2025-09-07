@@ -50,7 +50,7 @@ export default function TableFilters() {
         selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
         onSelectionChange={onSortByChange}
         shouldHideOnMobile
-        className="size-5 max-w-62 sm:w-full sm:min-w-50"
+        className="size-5 max-w-62 sm:w-full sm:min-w-50 md:h-full"
       >
         <SelectItem id="latest">Latest</SelectItem>
         <SelectItem id="oldest">Oldest</SelectItem>
