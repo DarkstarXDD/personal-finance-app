@@ -11,8 +11,11 @@ import {
   type SelectProps as RacSelectProps,
   type ListBoxItemProps as RacListBoxItemProps,
 } from "react-aria-components"
-import { FaCheck } from "react-icons/fa6"
-import { PiCaretDownFill, PiSortAscendingFill } from "react-icons/pi"
+import {
+  PiCheckBold,
+  PiCaretDownFill,
+  PiSortAscendingFill,
+} from "react-icons/pi"
 import { tv, type VariantProps } from "tailwind-variants"
 
 import FieldDescription from "@/components/ui/FieldDescription"
@@ -209,7 +212,7 @@ function SelectItem({
         <div className="flex w-full items-center justify-between gap-6">
           {children}
           {isSelected && (
-            <FaCheck className="text-grey-500 size-3.5 shrink-0" />
+            <PiCheckBold className="text-grey-500 size-4 shrink-0" />
           )}
         </div>
       )}
