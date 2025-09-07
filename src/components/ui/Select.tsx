@@ -11,8 +11,11 @@ import {
   type SelectProps as RacSelectProps,
   type ListBoxItemProps as RacListBoxItemProps,
 } from "react-aria-components"
-import { FaCheck } from "react-icons/fa6"
-import { PiCaretDownFill, PiSortAscendingFill } from "react-icons/pi"
+import {
+  PiCheckBold,
+  PiCaretDownFill,
+  PiSortAscendingFill,
+} from "react-icons/pi"
 import { tv, type VariantProps } from "tailwind-variants"
 
 import FieldDescription from "@/components/ui/FieldDescription"
@@ -20,47 +23,36 @@ import FieldError from "@/components/ui/FieldError"
 import Label, { type LabelVariants } from "@/components/ui/Label"
 
 import type { ReactNode, Ref } from "react"
+import type { IconType } from "react-icons"
 
 const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
 
 const selectStyles = tv({
   slots: {
-    select: "group",
-    layoutWrapper: "grid gap-x-2 gap-y-1",
-    fieldLabel: "self-center",
-    fieldDescription: "[grid-area:c]",
-    fieldErrorMessage: "[grid-area:c]",
+    outerWrapper: "group",
+    innerWrapper: "grid justify-items-start gap-1",
+    fieldLabel: "",
+    fieldDescription: "",
+    fieldErrorMessage: "",
     button:
-      "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none sm:w-full",
+      "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none md:w-full",
     buttonSpan:
       "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
-    mobileIcon: "size-5",
+    mobileIconStyles: "size-8",
     popoverDiv:
-      "border-grey-200 max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
+      "border-grey-200 custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
   },
 
   variants: {
-    layout: {
-      vertical: {
-        layoutWrapper:
-          "justify-items-start [grid-template-areas:'a''b''c'] sm:[grid-template-areas:'a''b''c']",
-      },
-      horizontal: {
-        layoutWrapper:
-          "grid-cols-[auto_1fr] [grid-template-areas:'a_b''a_c'] sm:grid-cols-[auto_1fr] sm:[grid-template-areas:'a_b''a_c']",
-      },
-    },
-
     shouldHideOnMobile: {
       true: {
-        layoutWrapper: "grid-cols-1 [grid-template-areas:none]",
-        fieldLabel: "sr-only sm:not-sr-only",
-        fieldDescription: "sr-only sm:not-sr-only",
-        fieldErrorMessage: "sr-only sm:not-sr-only",
-        button: "rounded sm:rounded-lg",
-        buttonSpan: "hidden sm:flex",
-        mobileIcon: "block sm:hidden",
-        popoverDiv: "min-w-50 sm:max-w-full",
+        fieldLabel: "sr-only md:not-sr-only",
+        fieldDescription: "sr-only md:not-sr-only",
+        fieldErrorMessage: "sr-only md:not-sr-only",
+        button: "rounded md:rounded-lg",
+        buttonSpan: "hidden md:flex",
+        mobileIconStyles: "block md:hidden",
+        popoverDiv: "min-w-50 md:max-w-full",
       },
       false: {
         mobileIcon: "hidden",
@@ -70,19 +62,16 @@ const selectStyles = tv({
     },
   },
 
-  defaultVariants: {
-    layout: "vertical",
-    shouldHideOnMobile: false,
-  },
+  defaultVariants: { shouldHideOnMobile: false },
 })
 
 const {
-  select,
-  layoutWrapper,
+  outerWrapper,
+  innerWrapper,
   fieldLabel,
   button,
   buttonSpan,
-  mobileIcon,
+  mobileIconStyles,
   popoverDiv,
   fieldDescription,
   fieldErrorMessage,
@@ -102,6 +91,7 @@ type SelectProps<T extends object> = Omit<
   children?: ReactNode | ((item: T) => ReactNode)
   ref?: Ref<HTMLDivElement>
   className?: string
+  mobileIcon?: IconType
 } & SelectStyles
 
 function Select<T extends object>({
@@ -111,23 +101,23 @@ function Select<T extends object>({
   errorMessage,
   isInvalid,
   items,
-  layout,
   shouldHideOnMobile,
   children,
   ref,
   className,
+  mobileIcon: MobileIcon = PiSortAscendingFill,
   ...props
 }: SelectProps<T>) {
   return (
     <RacSelect
       isInvalid={isInvalid}
       {...props}
-      className={select({ className })}
+      className={outerWrapper({ className })}
       ref={ref}
     >
       {({ isOpen }) => (
         <>
-          <div className={layoutWrapper({ layout, shouldHideOnMobile })}>
+          <div className={innerWrapper({ shouldHideOnMobile })}>
             <Label
               variant={labelVariant}
               className={fieldLabel({ shouldHideOnMobile })}
@@ -152,8 +142,8 @@ function Select<T extends object>({
                   }}
                 />
               </span>
-              <PiSortAscendingFill
-                className={mobileIcon({ shouldHideOnMobile })}
+              <MobileIcon
+                className={mobileIconStyles({ shouldHideOnMobile })}
               />
             </RacButton>
 
@@ -209,7 +199,7 @@ function SelectItem({
         <div className="flex w-full items-center justify-between gap-6">
           {children}
           {isSelected && (
-            <FaCheck className="text-grey-500 size-3.5 shrink-0" />
+            <PiCheckBold className="text-grey-500 size-4 shrink-0" />
           )}
         </div>
       )}

@@ -17,7 +17,6 @@ const meta = {
     isDisabled: false,
   },
   argTypes: {
-    layout: { control: "select", options: ["horizontal", "vertical"] },
     labelVariant: { control: "select", options: ["primary", "secondary"] },
     items: { table: { disable: true } },
     children: { table: { disable: true } },
@@ -42,9 +41,6 @@ export const Default: Story = {
 }
 
 export const HorizontalLayout: Story = {
-  args: {
-    layout: "horizontal",
-  },
   render: (args) => (
     <Select {...args}>
       <SelectItem>Apple</SelectItem>
