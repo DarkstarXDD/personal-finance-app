@@ -1,6 +1,8 @@
 import AddBudgetDialog from "@/components/budgets/AddBudgetDialog"
 import BudgetCard from "@/components/budgets/BudgetCard"
+import BudgetsEmptyState from "@/components/budgets/BudgetsEmptyState"
 import BudgetsSummary from "@/components/budgets/BudgetsSummary"
+import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { getBudgets } from "@/data-access/budgets"
 import { getCategories, getColors } from "@/data-access/lookups"
@@ -28,19 +30,25 @@ export default async function BudgetsPage() {
         <AddBudgetDialog categories={categories} colors={colors} />
       </div>
 
-      <div className="grid gap-6 2xl:grid-cols-[2fr_3fr] 2xl:items-start">
-        <BudgetsSummary budgets={budgetsWithTransactions} />
-        <div className="grid gap-6">
-          {budgetsWithTransactions.map(async (budget) => (
-            <BudgetCard
-              key={budget.id}
-              budget={budget}
-              categories={categories}
-              colors={colors}
-            />
-          ))}
+      {budgets.length > 0 ? (
+        <div className="grid gap-6 2xl:grid-cols-[2fr_3fr] 2xl:items-start">
+          <BudgetsSummary budgets={budgetsWithTransactions} />
+          <div className="grid gap-6">
+            {budgetsWithTransactions.map(async (budget) => (
+              <BudgetCard
+                key={budget.id}
+                budget={budget}
+                categories={categories}
+                colors={colors}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <Card>
+          <BudgetsEmptyState />
+        </Card>
+      )}
     </main>
   )
 }

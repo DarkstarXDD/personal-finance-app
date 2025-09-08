@@ -1,3 +1,4 @@
+import BudgetsEmptyState from "@/components/budgets/BudgetsEmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
@@ -9,7 +10,7 @@ export default async function BudgetsOverview() {
   const budgets = await getBudgets(4)
 
   return (
-    <Card className="grid gap-8 shadow-none 2xl:row-span-2">
+    <Card className="grid content-start gap-8 shadow-none">
       <div className="flex items-center justify-between">
         <Heading as="h2" variant="secondary">
           Budgets
@@ -23,20 +24,24 @@ export default async function BudgetsOverview() {
         </Link>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
-        <div className="bg-cyan size-60 justify-self-center rounded-full" />
+      {budgets.length > 0 ? (
+        <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
+          <div className="bg-cyan size-60 justify-self-center rounded-full" />
 
-        <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
-          {budgets.map((budget) => (
-            <MetricItem
-              key={budget.id}
-              label={budget.category.label}
-              value={currencyFormatter.format(Number(budget.maximumSpend))}
-              color={budget.color.value}
-            />
-          ))}
-        </Metrics>
-      </div>
+          <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
+            {budgets.map((budget) => (
+              <MetricItem
+                key={budget.id}
+                label={budget.category.label}
+                value={currencyFormatter.format(Number(budget.maximumSpend))}
+                color={budget.color.value}
+              />
+            ))}
+          </Metrics>
+        </div>
+      ) : (
+        <BudgetsEmptyState />
+      )}
     </Card>
   )
 }

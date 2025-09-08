@@ -1,5 +1,7 @@
 import AddPotDialog from "@/components/pots/AddPotDialog"
 import PotCard from "@/components/pots/PotCard"
+import PotsEmptyState from "@/components/pots/PotsEmptyState"
+import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { getColors } from "@/data-access/lookups"
 import { getPots } from "@/data-access/pots"
@@ -16,11 +18,18 @@ export default async function PotsPage() {
         </Heading>
         <AddPotDialog colors={colors} />
       </div>
-      <div className="grid gap-6 lg:grid-cols-2">
-        {pots.map((pot) => (
-          <PotCard key={pot.id} pot={pot} colors={colors} />
-        ))}
-      </div>
+
+      {pots.length > 0 ? (
+        <div className="grid gap-6 lg:grid-cols-2">
+          {pots.map((pot) => (
+            <PotCard key={pot.id} pot={pot} colors={colors} />
+          ))}
+        </div>
+      ) : (
+        <Card>
+          <PotsEmptyState />
+        </Card>
+      )}
     </main>
   )
 }
