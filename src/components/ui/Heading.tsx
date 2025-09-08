@@ -5,7 +5,7 @@ import type { ReactNode } from "react"
 const headingStyles = tv({
   variants: {
     variant: {
-      primary: "text-grey-900 text-2xl leading-tight font-bold md:text-3xl",
+      primary: "text-grey-900 text-2xl leading-tight font-bold md:text-4xl",
       secondary: "text-grey-900 text-xl leading-tight font-bold",
       tertiary: "text-grey-500 text-sm leading-normal font-normal",
     },
