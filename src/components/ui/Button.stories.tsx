@@ -19,11 +19,10 @@ const meta = {
       control: "select",
       description:
         "Overall appearance of the button. Defines the background color and the corresponding foreground color.",
-      options: ["primary", "secondary", "tertiary", "destructive", "close"],
+      options: ["primary", "secondary", "destructive", "close"],
       table: {
         type: {
-          summary:
-            '"primary" | "secondary" | "tertiary" | "destructive" | "close"',
+          summary: '"primary" | "secondary" | "destructive" | "close"',
         },
       },
     },
@@ -47,12 +46,6 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     variant: "secondary",
-  },
-}
-
-export const Tertiary: Story = {
-  args: {
-    variant: "tertiary",
   },
 }
 
@@ -84,9 +77,6 @@ export const All: Story = {
       </Button>
       <Button {...args} variant="secondary">
         Secondary
-      </Button>
-      <Button {...args} variant="tertiary">
-        Tertiary
       </Button>
       <Button {...args} variant="destructive">
         Destructive

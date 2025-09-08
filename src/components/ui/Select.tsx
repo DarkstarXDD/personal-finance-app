@@ -25,8 +25,6 @@ import Label, { type LabelVariants } from "@/components/ui/Label"
 import type { ReactNode, Ref } from "react"
 import type { IconType } from "react-icons"
 
-const MotionPiCaretDownFill = motion.create(PiCaretDownFill)
-
 const selectStyles = tv({
   slots: {
     outerWrapper: "group",
@@ -38,6 +36,7 @@ const selectStyles = tv({
       "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none md:w-full",
     buttonSpan:
       "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
+    caretDownIcon: "text-grey-500 shrink-0 transition-all duration-300",
     mobileIconStyles: "size-8",
     popoverDiv:
       "border-grey-200 custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
@@ -55,10 +54,15 @@ const selectStyles = tv({
         popoverDiv: "min-w-50 md:max-w-full",
       },
       false: {
-        mobileIcon: "hidden",
+        mobileIconStyles: "hidden",
         button: "w-full rounded-lg",
         buttonSpan: "flex",
       },
+    },
+
+    isSelectOpen: {
+      true: { caretDownIcon: "rotate-180" },
+      false: { caretDownIcon: "rotate-0" },
     },
   },
 
@@ -72,6 +76,7 @@ const {
   button,
   buttonSpan,
   mobileIconStyles,
+  caretDownIcon,
   popoverDiv,
   fieldDescription,
   fieldErrorMessage,
@@ -128,18 +133,8 @@ function Select<T extends object>({
             <RacButton className={button({ shouldHideOnMobile })}>
               <span className={buttonSpan({ shouldHideOnMobile })}>
                 <RacSelectValue />
-                <MotionPiCaretDownFill
-                  className="text-grey-500 shrink-0"
-                  animate={isOpen ? "open" : "closed"}
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30,
-                  }}
-                  variants={{
-                    open: { rotate: 180 },
-                    closed: { rotate: 0 },
-                  }}
+                <PiCaretDownFill
+                  className={caretDownIcon({ isSelectOpen: isOpen })}
                 />
               </span>
               <MobileIcon

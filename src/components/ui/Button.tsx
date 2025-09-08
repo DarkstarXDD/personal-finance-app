@@ -7,17 +7,16 @@ import {
 } from "react-aria-components"
 import { tv, type VariantProps } from "tailwind-variants"
 
-export const buttonStyles = tv({
-  base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed cursor-pointer rounded-lg p-4 text-sm leading-normal font-bold transition-colors outline-none",
+const buttonStyles = tv({
+  base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed cursor-pointer rounded-lg p-4 text-sm leading-normal font-bold ring-offset-2 transition-all outline-none",
   variants: {
     variant: {
       primary:
-        "bg-grey-900 rac-hover:bg-grey-900/85 rac-pressed:bg-grey-900/85 text-white",
+        "bg-grey-900 ring-navy rac-hover:bg-grey-900/95 rac-pressed:bg-grey-900/95 text-white",
       secondary:
-        "text-grey-900 bg-beige-100 rac-hover:border-beige-500 rac-pressed:border-beige-500 ring-beige-500 border-beige-100 rac-hover:bg-transparent rac-pressed:bg-transparent border",
-      tertiary: "text-grey-500 rac-hover:bg-beige-100 rac-pressed:bg-beige-100",
+        "text-grey-500 bg-beige-100 ring-beige-500 rac-hover:bg-beige-300 rac-pressed:bg-beige-300",
       destructive:
-        "bg-red rac-hover:bg-red/85 rac-pressed:bg-red/85 text-white",
+        "bg-red rac-hover:bg-red/90 rac-pressed:bg-red/90 ring-red text-white",
     },
   },
 })

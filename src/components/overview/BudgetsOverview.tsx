@@ -23,7 +23,7 @@ export default async function BudgetsOverview() {
         </Link>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-[1fr_auto]">
+      <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
         <div className="bg-cyan size-60 justify-self-center rounded-full" />
 
         <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">

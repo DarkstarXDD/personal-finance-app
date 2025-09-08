@@ -22,7 +22,10 @@ export default async function PotsOverview() {
       </div>
 
       <div className="grid gap-5 md:grid-cols-[2fr_3fr]">
-        <Card className="bg-beige-100 flex items-center justify-start gap-4 p-4 md:p-4">
+        <Card
+          padding="sm"
+          className="bg-beige-100 flex items-center justify-start gap-4"
+        >
           <PiTipJar className="text-green size-10" />
           <dl className="grid gap-3">
             <dt className="text-grey-500 text-sm leading-normal font-normal">
@@ -34,7 +37,7 @@ export default async function PotsOverview() {
           </dl>
         </Card>
 
-        <Metrics className="grid grid-cols-2 gap-4">
+        <Metrics className="grid grid-cols-2 gap-4 md:grid-rows-2">
           {pots.map((pot) => (
             <MetricItem
               key={pot.id}

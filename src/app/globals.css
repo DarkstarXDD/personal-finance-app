@@ -11,7 +11,9 @@
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-xl: 1.25rem;
-  --text-3xl: 2rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.75rem;
+  --text-4xl: 2rem;
 
   --leading-*: initial;
   --leading-tight: 1.2;
@@ -54,10 +56,6 @@
 }
 
 @layer base {
-  * {
-    @apply ring-navy;
-  }
-
   input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
   }

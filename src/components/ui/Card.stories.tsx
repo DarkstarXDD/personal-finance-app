@@ -25,12 +25,11 @@ const meta = {
     },
     padding: {
       control: "select",
-      description:
-        "The padding around the content of the card.('sm' - p-5, md:p-6 | 'lg' - px-5 py-6, md:p-8)",
-      options: ["sm", "lg"],
+      description: "The padding around the content of the card.",
+      options: ["sm", "md", "lg"],
       table: {
         defaultValue: { summary: "lg" },
-        type: { summary: '"sm" | "lg"' },
+        type: { summary: '"sm" | "md" | "lg"' },
       },
     },
   },
@@ -52,6 +51,9 @@ export const DarkTheme: Story = {
 }
 export const PaddingSmall: Story = {
   args: { padding: "sm" },
+}
+export const PaddingMedium: Story = {
+  args: { padding: "md" },
 }
 export const PaddingLarge: Story = {
   args: { padding: "lg" },

@@ -44,7 +44,7 @@ export default function DeletePotDialog({
         <Button type="submit" variant="destructive" isPending={isPending}>
           Yes, Confirm Deletion
         </Button>
-        <Button variant="tertiary" slot="close" isDisabled={isPending}>
+        <Button variant="secondary" slot="close" isDisabled={isPending}>
           No, Go Back
         </Button>
       </form>

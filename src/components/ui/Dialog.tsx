@@ -45,7 +45,7 @@ function Dialog({
       >
         <RacDialog className="outline-none" role={role}>
           {(dialogRenderProps) => (
-            <Card theme="light" padding="lg">
+            <Card theme="light">
               <div className="mb-6 flex items-center justify-between gap-2 md:mb-5">
                 <RacHeading
                   slot="title"

@@ -28,7 +28,7 @@ export default function PotCard({
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   return (
-    <Card padding="sm">
+    <Card padding="md">
       <div className="grid gap-8">
         <div className="flex items-center justify-start gap-4">
           <span
