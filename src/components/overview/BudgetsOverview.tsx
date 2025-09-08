@@ -1,3 +1,5 @@
+import { PiChartDonutFill } from "react-icons/pi"
+
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
@@ -24,19 +26,41 @@ export default async function BudgetsOverview() {
       </div>
 
       <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
-        <div className="bg-cyan size-60 justify-self-center rounded-full" />
+        {budgets.length > 0 ? (
+          <>
+            <div className="bg-cyan size-60 justify-self-center rounded-full" />
 
-        <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
-          {budgets.map((budget) => (
-            <MetricItem
-              key={budget.id}
-              label={budget.category.label}
-              value={currencyFormatter.format(Number(budget.maximumSpend))}
-              color={budget.color.value}
-            />
-          ))}
-        </Metrics>
+            <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
+              {budgets.map((budget) => (
+                <MetricItem
+                  key={budget.id}
+                  label={budget.category.label}
+                  value={currencyFormatter.format(Number(budget.maximumSpend))}
+                  color={budget.color.value}
+                />
+              ))}
+            </Metrics>
+          </>
+        ) : (
+          <BudgetsEmptyState />
+        )}
       </div>
     </Card>
+  )
+}
+
+function BudgetsEmptyState() {
+  return (
+    <div className="grid justify-items-center gap-3 py-12 text-center">
+      <div className="bg-beige-100 flex h-16 w-16 items-center justify-center rounded-full">
+        <PiChartDonutFill className="text-grey-500 size-8" />
+      </div>
+      <Heading as="h3" variant="secondary">
+        No budgets created yet
+      </Heading>
+      <p className="text-grey-500 text-sm leading-normal font-normal">
+        Set spending limits for different categories.
+      </p>
+    </div>
   )
 }
