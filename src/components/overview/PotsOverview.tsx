@@ -1,4 +1,4 @@
-import { PiTipJar } from "react-icons/pi"
+import { PiTipJar, PiTipJarFill } from "react-icons/pi"
 
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -37,17 +37,39 @@ export default async function PotsOverview() {
           </dl>
         </Card>
 
-        <Metrics className="grid grid-cols-2 gap-4 md:grid-rows-2">
-          {pots.map((pot) => (
-            <MetricItem
-              key={pot.id}
-              label={pot.name}
-              value={currencyFormatter.format(Number(pot.currentAmount))}
-              color={pot.color.value}
-            />
-          ))}
-        </Metrics>
+        <div>
+          {pots.length > 0 ? (
+            <Metrics className="grid grid-cols-2 gap-4 md:grid-rows-2">
+              {pots.map((pot) => (
+                <MetricItem
+                  key={pot.id}
+                  label={pot.name}
+                  value={currencyFormatter.format(Number(pot.currentAmount))}
+                  color={pot.color.value}
+                />
+              ))}
+            </Metrics>
+          ) : (
+            <PotsEmptyState />
+          )}
+        </div>
       </div>
     </Card>
+  )
+}
+
+function PotsEmptyState() {
+  return (
+    <div className="grid justify-items-center gap-3 py-12 text-center">
+      <div className="bg-beige-100 flex h-16 w-16 items-center justify-center rounded-full">
+        <PiTipJarFill className="text-grey-500 size-8" />
+      </div>
+      <Heading as="h3" variant="secondary">
+        No pots created yet
+      </Heading>
+      <p className="text-grey-500 text-sm leading-normal font-normal">
+        Start saving for your goals by creating your first pot.
+      </p>
+    </div>
   )
 }
