@@ -13,7 +13,7 @@ export default function OverviewPage() {
       </Heading>
       <SummaryCards />
 
-      <div className="grid gap-6 2xl:grid-cols-[3fr_2fr] 2xl:items-start">
+      <div className="grid gap-6 2xl:grid-cols-2">
         <PotsOverview />
         <BudgetsOverview />
         <TransactionsOverview />

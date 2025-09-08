@@ -11,7 +11,7 @@ export default async function PotsOverview() {
   const pots = await getPots(4)
 
   return (
-    <Card className="grid gap-5 shadow-none">
+    <Card className="grid content-start gap-5 shadow-none">
       <div className="flex items-center justify-between">
         <Heading as="h2" variant="secondary">
           Pots

@@ -11,7 +11,7 @@ export default async function TransactionsOverview() {
   const { transactions } = await getTransactions({ take: 5 })
 
   return (
-    <Card className="grid gap-8 shadow-none 2xl:row-span-2 2xl:row-start-2">
+    <Card className="grid content-start gap-8 shadow-none">
       <div className="flex justify-between">
         <Heading as="h2" variant="secondary">
           Transactions

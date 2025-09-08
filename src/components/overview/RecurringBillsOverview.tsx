@@ -5,7 +5,7 @@ import { currencyFormatter } from "@/lib/utils"
 
 export default async function RecurringBillsOverview() {
   return (
-    <Card className="grid gap-8 shadow-none">
+    <Card className="grid content-start gap-8 shadow-none">
       <div className="flex items-center justify-between">
         <Heading as="h2" variant="secondary">
           Recurring Bills
