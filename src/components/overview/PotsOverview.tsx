@@ -34,7 +34,7 @@ export default async function PotsOverview() {
           </dl>
         </Card>
 
-        <Metrics className="grid grid-cols-2 gap-4">
+        <Metrics className="grid grid-cols-2 gap-4 md:grid-rows-2">
           {pots.map((pot) => (
             <MetricItem
               key={pot.id}
