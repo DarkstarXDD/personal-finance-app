@@ -55,7 +55,7 @@ const selectStyles = tv({
         popoverDiv: "min-w-50 md:max-w-full",
       },
       false: {
-        mobileIcon: "hidden",
+        mobileIconStyles: "hidden",
         button: "w-full rounded-lg",
         buttonSpan: "flex",
       },
