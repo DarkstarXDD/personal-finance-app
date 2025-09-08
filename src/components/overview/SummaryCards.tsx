@@ -3,7 +3,7 @@ import Card from "@/components/ui/Card"
 export default function SummaryCards() {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-      <Card padding="sm" theme="dark" className="w-full shadow-none">
+      <Card padding="md" theme="dark" className="w-full shadow-none">
         <dl className="grid gap-3">
           <dt className="text-sm leading-normal font-normal">
             Current Balance
@@ -14,7 +14,7 @@ export default function SummaryCards() {
         </dl>
       </Card>
 
-      <Card padding="sm" className="w-full shadow-none">
+      <Card padding="md" className="w-full shadow-none">
         <dl className="grid gap-3">
           <dt className="text-grey-500 text-sm leading-normal font-normal">
             Income
@@ -25,7 +25,7 @@ export default function SummaryCards() {
         </dl>
       </Card>
 
-      <Card padding="sm" className="w-full shadow-none">
+      <Card padding="md" className="w-full shadow-none">
         <dl className="grid gap-3">
           <dt className="text-grey-500 text-sm leading-normal font-normal">
             Expenses

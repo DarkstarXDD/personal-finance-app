@@ -34,7 +34,7 @@ export default function BudgetCard({
   const remaningAmount = Number(budget.maximumSpend) - Number(budget.totalSpent)
 
   return (
-    <Card padding="lg" className="grid gap-5">
+    <Card className="grid gap-5">
       <div className="flex items-center justify-start gap-4">
         <span
           className="size-4 rounded-full"
