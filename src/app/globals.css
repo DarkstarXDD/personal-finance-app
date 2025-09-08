@@ -54,10 +54,6 @@
 }
 
 @layer base {
-  * {
-    @apply ring-navy;
-  }
-
   input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
   }
