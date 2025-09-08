@@ -25,26 +25,24 @@ export default async function BudgetsOverview() {
         </Link>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
-        {budgets.length > 0 ? (
-          <>
-            <div className="bg-cyan size-60 justify-self-center rounded-full" />
+      {budgets.length > 0 ? (
+        <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
+          <div className="bg-cyan size-60 justify-self-center rounded-full" />
 
-            <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
-              {budgets.map((budget) => (
-                <MetricItem
-                  key={budget.id}
-                  label={budget.category.label}
-                  value={currencyFormatter.format(Number(budget.maximumSpend))}
-                  color={budget.color.value}
-                />
-              ))}
-            </Metrics>
-          </>
-        ) : (
-          <BudgetsEmptyState />
-        )}
-      </div>
+          <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
+            {budgets.map((budget) => (
+              <MetricItem
+                key={budget.id}
+                label={budget.category.label}
+                value={currencyFormatter.format(Number(budget.maximumSpend))}
+                color={budget.color.value}
+              />
+            ))}
+          </Metrics>
+        </div>
+      ) : (
+        <BudgetsEmptyState />
+      )}
     </Card>
   )
 }

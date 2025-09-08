@@ -11,7 +11,7 @@ export default async function PotsOverview() {
   const pots = await getPots(4)
 
   return (
-    <Card className="grid content-start gap-5 shadow-none">
+    <Card className="grid content-start gap-8 shadow-none">
       <div className="flex items-center justify-between">
         <Heading as="h2" variant="secondary">
           Pots
@@ -21,39 +21,37 @@ export default async function PotsOverview() {
         </Link>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-[2fr_3fr]">
-        <Card
-          padding="sm"
-          className="bg-beige-100 flex items-center justify-start gap-4"
-        >
-          <PiTipJar className="text-green size-10" />
-          <dl className="grid gap-3">
-            <dt className="text-grey-500 text-sm leading-normal font-normal">
-              Total Saved
-            </dt>
-            <dd className="text-grey-900 text-3xl leading-tight font-bold">
-              $850
-            </dd>
-          </dl>
-        </Card>
+      {pots.length > 0 ? (
+        <div className="grid gap-5 md:grid-cols-[2fr_3fr]">
+          <Card
+            padding="sm"
+            className="bg-beige-100 flex items-center justify-start gap-4"
+          >
+            <PiTipJar className="text-green size-10" />
+            <dl className="grid gap-3">
+              <dt className="text-grey-500 text-sm leading-normal font-normal">
+                Total Saved
+              </dt>
+              <dd className="text-grey-900 text-3xl leading-tight font-bold">
+                $850
+              </dd>
+            </dl>
+          </Card>
 
-        <div>
-          {pots.length > 0 ? (
-            <Metrics className="grid grid-cols-2 gap-4 md:grid-rows-2">
-              {pots.map((pot) => (
-                <MetricItem
-                  key={pot.id}
-                  label={pot.name}
-                  value={currencyFormatter.format(Number(pot.currentAmount))}
-                  color={pot.color.value}
-                />
-              ))}
-            </Metrics>
-          ) : (
-            <PotsEmptyState />
-          )}
+          <Metrics className="grid grid-cols-2 gap-4 md:grid-rows-2">
+            {pots.map((pot) => (
+              <MetricItem
+                key={pot.id}
+                label={pot.name}
+                value={currencyFormatter.format(Number(pot.currentAmount))}
+                color={pot.color.value}
+              />
+            ))}
+          </Metrics>
         </div>
-      </div>
+      ) : (
+        <PotsEmptyState />
+      )}
     </Card>
   )
 }
