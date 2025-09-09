@@ -103,18 +103,24 @@ export async function getTransactions({
     counterparty: { contains: query, mode: "insensitive" },
   }
 
-  const [transactions, totalItems] = await prisma.$transaction([
-    prisma.transaction.findMany({
-      where,
-      select: transactionSelect,
-      orderBy,
-      take: take ?? ITEMS_PER_PAGE,
-      skip: (currentPage - 1) * ITEMS_PER_PAGE,
-    }),
-    prisma.transaction.count({ where }),
-  ])
+  const [transactions, filteredItemCount, unfilteredItemCount] =
+    await prisma.$transaction([
+      prisma.transaction.findMany({
+        where,
+        select: transactionSelect,
+        orderBy,
+        take: take ?? ITEMS_PER_PAGE,
+        skip: (currentPage - 1) * ITEMS_PER_PAGE,
+      }),
 
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
+      // Transactions count with filters applied
+      prisma.transaction.count({ where }),
+
+      // Transactions count without filters applied for the global empty state
+      prisma.transaction.count({ where: { userId } }),
+    ])
+
+  const totalPages = Math.ceil(filteredItemCount / ITEMS_PER_PAGE)
 
   return {
     transactions: transactions.map((t) => ({
@@ -122,6 +128,7 @@ export async function getTransactions({
       amount: t.amount.toString(),
     })),
     pagination: { totalPages },
+    totalItemsWithoutFiltering: unfilteredItemCount,
   }
 }
 
