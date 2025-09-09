@@ -1,7 +1,7 @@
-import { PiWarningCircleFill, PiReceiptFill } from "react-icons/pi"
+import { PiReceiptFill } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
-// import RecurringBillsEmptyState from "@/components/recurring-bills/RecurringBillsEmptyState"
+import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import TableDesktop from "@/components/recurring-bills/TableDesktop"
 import TableFilters from "@/components/recurring-bills/TableFilters"
 import TableMobile from "@/components/recurring-bills/TableMobile"
@@ -56,12 +56,7 @@ export default async function RecurringBillsPage({
               <TableDesktop recurringBills={recurringBills} />
             </>
           ) : (
-            <div className="flex items-center justify-center gap-2 py-8">
-              <PiWarningCircleFill className="text-grey-500 size-5" />
-              <p className="text-grey-500 text-center text-sm leading-normal font-normal">
-                No results match your filters.
-              </p>
-            </div>
+            <FilteredEmptyState />
           )}
         </Card>
       </div>
