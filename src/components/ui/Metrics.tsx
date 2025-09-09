@@ -21,8 +21,9 @@ export function MetricItem({
 }) {
   return (
     <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
-      <span
+      <div
         className="row-span-2 h-full w-1 rounded-lg"
+        aria-hidden
         style={{ backgroundColor: color }}
       />
       <dt className="text-grey-500 text-xs leading-normal font-normal">
