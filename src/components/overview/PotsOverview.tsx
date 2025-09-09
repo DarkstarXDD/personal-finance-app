@@ -1,6 +1,6 @@
-import { PiTipJar } from "react-icons/pi"
+import { PiTipJar, PiTipJarFill } from "react-icons/pi"
 
-import PotsEmptyState from "@/components/pots/PotsEmptyState"
+import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
@@ -51,7 +51,11 @@ export default async function PotsOverview() {
           </Metrics>
         </div>
       ) : (
-        <PotsEmptyState />
+        <EmptyState
+          icon={PiTipJarFill}
+          title="No pots created yet"
+          description="Start saving for your goals by creating your first pot."
+        />
       )}
     </Card>
   )

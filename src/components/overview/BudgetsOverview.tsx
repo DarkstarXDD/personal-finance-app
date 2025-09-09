@@ -1,4 +1,6 @@
-import BudgetsEmptyState from "@/components/budgets/BudgetsEmptyState"
+import { PiChartDonutFill } from "react-icons/pi"
+
+import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
@@ -40,7 +42,11 @@ export default async function BudgetsOverview() {
           </Metrics>
         </div>
       ) : (
-        <BudgetsEmptyState />
+        <EmptyState
+          icon={PiChartDonutFill}
+          title="No budgets created yet"
+          description="Set spending limits for different categories."
+        />
       )}
     </Card>
   )

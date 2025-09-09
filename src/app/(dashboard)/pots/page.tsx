@@ -1,6 +1,8 @@
+import { PiTipJarFill } from "react-icons/pi"
+
+import EmptyState from "@/components/empty-states/EmptyState"
 import AddPotDialog from "@/components/pots/AddPotDialog"
 import PotCard from "@/components/pots/PotCard"
-import PotsEmptyState from "@/components/pots/PotsEmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { getColors } from "@/data-access/lookups"
@@ -27,7 +29,11 @@ export default async function PotsPage() {
         </div>
       ) : (
         <Card>
-          <PotsEmptyState />
+          <EmptyState
+            icon={PiTipJarFill}
+            title="No pots created yet"
+            description="Start saving for your goals by creating your first pot."
+          />
         </Card>
       )}
     </main>

@@ -1,6 +1,7 @@
 import { format } from "date-fns"
+import { PiArrowsDownUpFill } from "react-icons/pi"
 
-import TransactionsEmptyState from "@/components/transactions/TransactionsEmptyState"
+import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
@@ -41,7 +42,12 @@ export default async function TransactionsOverview() {
             ))}
           </div>
         ) : (
-          <TransactionsEmptyState />
+          <EmptyState
+            icon={PiArrowsDownUpFill}
+            title="No transactions yet"
+            description="Your transaction history will appear here once you start making
+                  purchases."
+          />
         )}
       </div>
     </Card>

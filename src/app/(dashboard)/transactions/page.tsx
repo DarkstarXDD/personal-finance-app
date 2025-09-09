@@ -1,10 +1,11 @@
-import { PiWarningCircleFill } from "react-icons/pi"
+import { PiArrowsDownUpFill } from "react-icons/pi"
 
+import EmptyState from "@/components/empty-states/EmptyState"
+import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import AddTransactionDialog from "@/components/transactions/AddTransactionDialog"
 import TableDesktop from "@/components/transactions/TableDesktop"
 import TableFilters from "@/components/transactions/TableFilters"
 import TableMobile from "@/components/transactions/TableMobile"
-import TransactionsEmptyState from "@/components/transactions/TransactionsEmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Pagination from "@/components/ui/Pagination"
@@ -46,7 +47,12 @@ export default async function TransactionsPage({
           <AddTransactionDialog categories={categories} />
         </div>
         <Card>
-          <TransactionsEmptyState />
+          <EmptyState
+            icon={PiArrowsDownUpFill}
+            title="No transactions yet"
+            description="Your transaction history will appear here once you start making
+        purchases."
+          />
         </Card>
       </main>
     )
@@ -69,12 +75,7 @@ export default async function TransactionsPage({
             <TableDesktop transactions={transactions} />
           </>
         ) : (
-          <div className="flex items-center justify-center gap-2 py-8">
-            <PiWarningCircleFill className="text-grey-500 size-5" />
-            <p className="text-grey-500 text-center text-sm leading-normal font-normal">
-              No results match your filters.
-            </p>
-          </div>
+          <FilteredEmptyState />
         )}
 
         <Pagination totalPages={totalPages} />
