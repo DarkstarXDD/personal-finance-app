@@ -98,13 +98,22 @@ export async function getRecurringBills({
       orderBy = { dueDayOfMonth: "asc" }
   }
 
-  const recurringBills = await prisma.recurringBill.findMany({
-    where: { userId, counterparty: { contains: query, mode: "insensitive" } },
-    orderBy: orderBy,
-    select: recurringBillsSelect,
-  })
-  return recurringBills.map((recurringBill) => ({
-    ...recurringBill,
-    amount: recurringBill.amount.toString(),
-  }))
+  const [recurringBills, unfilteredItemCount] = await prisma.$transaction([
+    prisma.recurringBill.findMany({
+      where: { userId, counterparty: { contains: query, mode: "insensitive" } },
+      orderBy: orderBy,
+      select: recurringBillsSelect,
+    }),
+
+    // Recurring bill count without filters applied, for the global empty state
+    prisma.recurringBill.count({ where: { userId } }),
+  ])
+
+  return {
+    recurringBills: recurringBills.map((recurringBill) => ({
+      ...recurringBill,
+      amount: recurringBill.amount.toString(),
+    })),
+    totalItemsWithoutFiltering: unfilteredItemCount,
+  }
 }
