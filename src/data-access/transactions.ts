@@ -116,7 +116,7 @@ export async function getTransactions({
       // Transactions count with filters applied
       prisma.transaction.count({ where }),
 
-      // Transactions count without filters applied for the global empty state
+      // Transactions count without filters applied, for the global empty state
       prisma.transaction.count({ where: { userId } }),
     ])
 
