@@ -1,3 +1,6 @@
+import { PiWarningCircleFill } from "react-icons/pi"
+
+import RecurringBillsEmptyState from "@/components/recurring-bills/RecurringBillsEmptyState"
 import TableDesktop from "@/components/recurring-bills/TableDesktop"
 import TableFilters from "@/components/recurring-bills/TableFilters"
 import TableMobile from "@/components/recurring-bills/TableMobile"
@@ -16,18 +19,45 @@ export default async function RecurringBillsPage({
 }) {
   const { query, sortby } = await searchParams
 
-  const recurringBills = await getRecurringBills({ query, sortby })
+  const { recurringBills, totalItemsWithoutFiltering } =
+    await getRecurringBills({ query, sortby })
   console.log(recurringBills)
+
+  if (totalItemsWithoutFiltering === 0) {
+    return (
+      <main className="grid gap-8">
+        <Heading as="h1">Recurring Bills</Heading>
+        <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
+          <Total />
+          <Card>
+            <RecurringBillsEmptyState />
+          </Card>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="grid gap-8">
       <Heading as="h1">Recurring Bills</Heading>
       <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
         <Total />
+
         <Card className="grid gap-6 md:pb-4">
           <TableFilters />
-          <TableMobile recurringBills={recurringBills} />
-          <TableDesktop recurringBills={recurringBills} />
+          {recurringBills.length > 0 ? (
+            <>
+              <TableMobile recurringBills={recurringBills} />
+              <TableDesktop recurringBills={recurringBills} />
+            </>
+          ) : (
+            <div className="flex items-center justify-center gap-2 py-8">
+              <PiWarningCircleFill className="text-grey-500 size-5" />
+              <p className="text-grey-500 text-center text-sm leading-normal font-normal">
+                No results match your filters.
+              </p>
+            </div>
+          )}
         </Card>
       </div>
     </main>
