@@ -1,7 +1,9 @@
+import { PiChartDonutFill } from "react-icons/pi"
+
 import AddBudgetDialog from "@/components/budgets/AddBudgetDialog"
 import BudgetCard from "@/components/budgets/BudgetCard"
-import BudgetsEmptyState from "@/components/budgets/BudgetsEmptyState"
 import BudgetsSummary from "@/components/budgets/BudgetsSummary"
+import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { getBudgets } from "@/data-access/budgets"
@@ -46,7 +48,11 @@ export default async function BudgetsPage() {
         </div>
       ) : (
         <Card>
-          <BudgetsEmptyState />
+          <EmptyState
+            icon={PiChartDonutFill}
+            title="No budgets created yet"
+            description="Set spending limits for different categories."
+          />
         </Card>
       )}
     </main>

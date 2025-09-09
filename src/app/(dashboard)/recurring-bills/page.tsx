@@ -1,6 +1,7 @@
-import { PiWarningCircleFill } from "react-icons/pi"
+import { PiWarningCircleFill, PiReceiptFill } from "react-icons/pi"
 
-import RecurringBillsEmptyState from "@/components/recurring-bills/RecurringBillsEmptyState"
+import EmptyState from "@/components/empty-states/EmptyState"
+// import RecurringBillsEmptyState from "@/components/recurring-bills/RecurringBillsEmptyState"
 import TableDesktop from "@/components/recurring-bills/TableDesktop"
 import TableFilters from "@/components/recurring-bills/TableFilters"
 import TableMobile from "@/components/recurring-bills/TableMobile"
@@ -30,7 +31,11 @@ export default async function RecurringBillsPage({
         <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
           <Total />
           <Card>
-            <RecurringBillsEmptyState />
+            <EmptyState
+              icon={PiReceiptFill}
+              title="You don’t have any recurring bills yet"
+              description="They’ll appear here once you have some."
+            />
           </Card>
         </div>
       </main>
