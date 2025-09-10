@@ -34,7 +34,9 @@ export type IdSchema = z.infer<typeof idSchema>
 
 export const transactionCreateSchema = z.object({
   counterparty: z.string().trim().min(1, "Counterparty name cannot be empty."),
-  amount: z.string().min(1, "Amount cannot be empty."),
+  amount: z
+    .number("Amount cannot be empty.")
+    .nonnegative("Amount cannot be negative."),
   categoryId: z.cuid("Please select a category."),
   isRecurring: z.boolean(),
 })
