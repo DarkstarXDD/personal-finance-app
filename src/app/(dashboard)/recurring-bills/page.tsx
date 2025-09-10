@@ -22,7 +22,6 @@ export default async function RecurringBillsPage({
 
   const { recurringBills, totalItemsWithoutFiltering } =
     await getRecurringBills({ query, sortby })
-  console.log(recurringBills)
 
   if (totalItemsWithoutFiltering === 0) {
     return (
