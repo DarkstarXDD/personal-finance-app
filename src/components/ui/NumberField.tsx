@@ -2,9 +2,10 @@ import {
   NumberField as RacNumberField,
   Group as RacGroup,
   Input as RacInput,
-  // Button as RacButton,
+  Button as RacButton,
   type NumberFieldProps as RacNumberFieldProps,
 } from "react-aria-components"
+import { PiCaretUpFill, PiCaretDownFill } from "react-icons/pi"
 
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
@@ -31,9 +32,26 @@ export default function NumberField({
       {...props}
     >
       <Label>{label}</Label>
-      <RacGroup>
-        <RacInput className="border-beige-500 rac-disabled:opacity-40 placeholder:text-beige-500 rac-invalid:border-red rac-invalid:ring-red rac-focus:ring-2 ring-beige-500 text-grey-900 w-full min-w-0 rounded-lg border px-5 py-3 text-sm leading-normal font-normal transition-colors outline-none" />
+
+      <RacGroup className="border-beige-500 rac-focus-within:ring-2 ring-beige-500 rac-disabled:opacity-40 rac-invalid:border-red rac-invalid:ring-red flex w-full min-w-0 justify-between rounded-lg border transition-colors">
+        <RacInput className="text-grey-900 flex-1 rounded-l-lg px-5 py-3 text-sm leading-normal font-normal outline-none" />
+
+        <div className="border-beige-500 grid border-l">
+          <RacButton
+            slot="increment"
+            className="rac-hover:bg-beige-300 group border-beige-500 cursor-pointer rounded-tr-lg border-b px-3 transition-colors"
+          >
+            <PiCaretUpFill className="text-grey-500 group-rac-pressed:scale-95 size-5" />
+          </RacButton>
+          <RacButton
+            slot="decrement"
+            className="rac-hover:bg-beige-300 group cursor-pointer rounded-br-lg px-3 transition-colors"
+          >
+            <PiCaretDownFill className="text-grey-500 group-rac-pressed:scale-95 size-5" />
+          </RacButton>
+        </div>
       </RacGroup>
+
       <FieldError>{errorMessage}</FieldError>
       {description && !isInvalid && (
         <FieldDescription>{description}</FieldDescription>
