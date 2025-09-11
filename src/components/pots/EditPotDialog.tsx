@@ -7,6 +7,7 @@ import { useForm, Controller } from "react-hook-form"
 import { updatePot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
+import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
@@ -100,13 +101,13 @@ export default function EditPotDialog({
               name="target"
               control={control}
               render={({ field, fieldState: { invalid, error } }) => (
-                <TextField
+                <NumberField
                   label="Target"
-                  placeholder="e.g. 2000"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
+                  formatOptions={{ style: "currency", currency: "USD" }}
                 />
               )}
             />

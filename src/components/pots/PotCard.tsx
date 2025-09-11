@@ -54,9 +54,9 @@ export default function PotCard({
           </MenuTrigger>
         </div>
         <ProgressBar
-          value={Number(pot.currentAmount)}
+          value={pot.currentAmount}
           minValue={0}
-          maxValue={Number(pot.target)}
+          maxValue={pot.target}
           formatOptions={{ style: "currency", currency: "USD" }}
         >
           {({ percentage, valueText }) => (

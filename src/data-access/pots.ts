@@ -151,8 +151,8 @@ const potSelect = {
 type PotRaw = Prisma.PotGetPayload<{ select: typeof potSelect }>
 
 export type Pot = Omit<PotRaw, "target" | "currentAmount"> & {
-  target: string
-  currentAmount: string
+  target: number
+  currentAmount: number
 }
 
 export async function getPots(take?: number) {
@@ -167,7 +167,7 @@ export async function getPots(take?: number) {
   })
   return pots.map((pot) => ({
     ...pot,
-    target: pot.target.toString(),
-    currentAmount: pot.currentAmount.toString(),
+    target: pot.target.toNumber(),
+    currentAmount: pot.currentAmount.toNumber(),
   }))
 }
