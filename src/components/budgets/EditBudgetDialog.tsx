@@ -7,8 +7,8 @@ import { useForm, Controller } from "react-hook-form"
 import { updateBudget } from "@/actions/budgets"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
+import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
-import TextField from "@/components/ui/TextField"
 import { budgetUpdateSchema } from "@/lib/schemas"
 
 import type { Budget } from "@/data-access/budgets"
@@ -115,13 +115,13 @@ export default function EditBudgetDialog({
               name="maximumSpend"
               control={control}
               render={({ field, fieldState: { invalid, error } }) => (
-                <TextField
+                <NumberField
                   label="Maximum Spend"
-                  placeholder="e.g. 2000"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
+                  formatOptions={{ style: "currency", currency: "USD" }}
                 />
               )}
             />
