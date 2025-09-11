@@ -5,13 +5,12 @@ import { motion } from "motion/react"
 import { useEffect } from "react"
 import { ProgressBar } from "react-aria-components"
 import { useForm, Controller } from "react-hook-form"
-import { PiCurrencyDollarSimple } from "react-icons/pi"
 
 import { addToPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
-import TextField from "@/components/ui/TextField"
+import NumberField from "@/components/ui/NumberField"
 import { potAmountUpdateSchema } from "@/lib/schemas"
 
 import type { Pot } from "@/data-access/pots"
@@ -28,15 +27,15 @@ export default function AddToPotDialog({ pot }: { pot: Pot }) {
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potAmountUpdateSchema),
-    defaultValues: { id: pot.id, amountToUpdate: "" },
+    defaultValues: { id: pot.id, amountToUpdate: 0 },
   })
 
   useEffect(() => {
-    reset({ id: pot.id, amountToUpdate: "" })
+    reset({ id: pot.id, amountToUpdate: 0 })
   }, [pot, reset])
 
   const amountInInput = watch("amountToUpdate")
-  const draftAmountInPot = Number(pot.currentAmount) + Number(amountInInput)
+  const draftAmountInPot = pot.currentAmount + amountInInput
 
   return (
     <DialogTrigger>
@@ -53,16 +52,16 @@ export default function AddToPotDialog({ pot }: { pot: Pot }) {
             <ProgressBar
               value={draftAmountInPot}
               minValue={0}
-              maxValue={Number(pot.target)}
+              maxValue={pot.target}
               formatOptions={{ style: "currency", currency: "USD" }}
             >
               {({ percentage, valueText }) => {
                 const currentAmountAsPercentage = Math.round(
-                  (Number(pot.currentAmount) / Number(pot.target)) * 100
+                  (pot.currentAmount / pot.target) * 100
                 )
 
                 const amountInInputAsPercentage = Math.round(
-                  (Number(amountInInput) / Number(pot.target)) * 100
+                  (amountInInput / pot.target) * 100
                 )
 
                 return (
@@ -125,14 +124,13 @@ export default function AddToPotDialog({ pot }: { pot: Pot }) {
                 name="amountToUpdate"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
-                  <TextField
+                  <NumberField
                     label="Amount to Add"
-                    icon={PiCurrencyDollarSimple}
-                    placeholder="0"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
                     isDisabled={isSubmitting}
+                    formatOptions={{ style: "currency", currency: "USD" }}
                   />
                 )}
               />

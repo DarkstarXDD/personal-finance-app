@@ -6,8 +6,8 @@ import { useForm, Controller } from "react-hook-form"
 import { createBudget } from "@/actions/budgets"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
+import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
-import TextField from "@/components/ui/TextField"
 import { budgetCreateSchema } from "@/lib/schemas"
 
 import type { Category, Color } from "@/data-access/lookups"
@@ -30,7 +30,7 @@ export default function AddBudgetDialog({
     resolver: zodResolver(budgetCreateSchema),
     defaultValues: {
       categoryId: "",
-      maximumSpend: "",
+      maximumSpend: 0,
       colorId: "",
     },
   })
@@ -99,13 +99,13 @@ export default function AddBudgetDialog({
                 name="maximumSpend"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
-                  <TextField
+                  <NumberField
                     label="Maximum Spend"
-                    placeholder="e.g. 2000"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
                     isDisabled={isSubmitting}
+                    formatOptions={{ style: "currency", currency: "USD" }}
                   />
                 )}
               />

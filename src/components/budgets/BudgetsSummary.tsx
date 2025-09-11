@@ -42,7 +42,7 @@ function SummaryItem({
 }: {
   budgetCategory: string
   currentSpend: string
-  maximumSpend: string
+  maximumSpend: number
   color: string
 }) {
   return (
@@ -54,7 +54,7 @@ function SummaryItem({
       <dd className="text-grey-900 ml-auto text-base leading-normal font-bold">
         {currencyFormatter.format(Number(currentSpend))}{" "}
         <span className="text-grey-500 text-xs leading-normal font-normal">
-          of {currencyFormatter.format(Number(maximumSpend))}
+          of {currencyFormatter.format(maximumSpend)}
         </span>
       </dd>
     </div>

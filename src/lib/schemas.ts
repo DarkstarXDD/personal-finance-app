@@ -34,7 +34,9 @@ export type IdSchema = z.infer<typeof idSchema>
 
 export const transactionCreateSchema = z.object({
   counterparty: z.string().trim().min(1, "Counterparty name cannot be empty."),
-  amount: z.string().min(1, "Amount cannot be empty."),
+  amount: z
+    .number("Amount cannot be empty.")
+    .nonnegative("Amount cannot be negative."),
   categoryId: z.cuid("Please select a category."),
   isRecurring: z.boolean(),
 })
@@ -46,7 +48,9 @@ export type TransactionCreate = z.infer<typeof transactionCreateSchema>
 
 export const budgetCreateSchema = z.object({
   categoryId: z.cuid("Please select a category."),
-  maximumSpend: z.string().min(1, "Maximum spend cannot be empty."),
+  maximumSpend: z
+    .number("Maximum spend cannot be empty.")
+    .nonnegative("Maximum spend cannot be negative."),
   colorId: z.cuid("Please select a color."),
 })
 export type BudgetCreate = z.infer<typeof budgetCreateSchema>
@@ -70,7 +74,9 @@ export const potCreateSchema = z.object({
     .trim()
     .min(1, "Name cannot be empty.")
     .max(30, "Name must be 30 characters or less."),
-  target: z.string().trim().min(1, "Target cannot be empty."),
+  target: z
+    .number("Target cannot be empty.")
+    .nonnegative("Target cannot be negative."),
   colorId: z.cuid("Please select a color."),
 })
 export type PotCreate = z.infer<typeof potCreateSchema>
@@ -90,6 +96,8 @@ export type PotUpdate = z.infer<typeof potUpdateSchema>
 
 export const potAmountUpdateSchema = z.object({
   id: z.cuid(),
-  amountToUpdate: z.string().trim().min(1, "Amount cannot be empty."),
+  amountToUpdate: z
+    .number("Amount cannot be empty.")
+    .nonnegative("Amount cannot be negative."),
 })
 export type PotAmountUpdate = z.infer<typeof potAmountUpdateSchema>

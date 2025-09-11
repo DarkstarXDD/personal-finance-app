@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form"
 import { createPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
+import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { potCreateSchema } from "@/lib/schemas"
@@ -22,7 +23,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(potCreateSchema),
-    defaultValues: { name: "", target: "", colorId: "" },
+    defaultValues: { name: "", target: 0, colorId: "" },
   })
 
   return (
@@ -75,13 +76,13 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                 name="target"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
-                  <TextField
+                  <NumberField
                     label="Target"
-                    placeholder="e.g. 2000"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
                     isDisabled={isSubmitting}
+                    formatOptions={{ style: "currency", currency: "USD" }}
                   />
                 )}
               />

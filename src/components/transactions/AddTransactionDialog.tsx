@@ -7,6 +7,7 @@ import { createTransaction } from "@/actions/transactions"
 import Button from "@/components/ui/Button"
 import Checkbox from "@/components/ui/Checkbox"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
+import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { transactionCreateSchema } from "@/lib/schemas"
@@ -29,7 +30,7 @@ export default function AddTransactionDialog({
     resolver: zodResolver(transactionCreateSchema),
     defaultValues: {
       counterparty: "",
-      amount: "",
+      amount: 0,
       categoryId: "",
       isRecurring: false,
     },
@@ -86,13 +87,13 @@ export default function AddTransactionDialog({
                 name="amount"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
-                  <TextField
+                  <NumberField
                     label="Transaction Amount"
-                    placeholder="e.g. 2000"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
                     isDisabled={isSubmitting}
+                    formatOptions={{ style: "currency", currency: "USD" }}
                   />
                 )}
               />
