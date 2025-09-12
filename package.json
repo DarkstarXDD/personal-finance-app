@@ -12,7 +12,8 @@
     "build-storybook": "storybook build",
     "test-storybook": "vitest run --project=storybook",
     "chromatic": "chromatic",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "5.2.1",
