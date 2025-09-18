@@ -11,9 +11,10 @@ env:
 
 jobs:
   e2e-tests:
+    name: E2E Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
