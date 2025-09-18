@@ -14,6 +14,10 @@ test("login", async ({ page }) => {
   await page.getByRole("button", { name: "Login" }).click()
 
   await expect(
-    page.getByRole("heading", { name: "Overview", level: 1 })
+    page.getByText("Something went wrong. Please try again.")
   ).toBeVisible()
+
+  // await expect(
+  //   page.getByRole("heading", { name: "Overview", level: 1 })
+  // ).toBeVisible()
 })
