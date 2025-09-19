@@ -8,6 +8,10 @@ export function getLoginHeading(page: Page) {
   return page.getByRole("heading", { name: "Login", level: 1 })
 }
 
+export function getSignupHeading(page: Page) {
+  return page.getByRole("heading", { name: "Sign Up", level: 1 })
+}
+
 export async function login(page: Page) {
   await page.goto("/login")
 
