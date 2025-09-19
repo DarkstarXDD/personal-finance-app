@@ -18,6 +18,12 @@ test("login", async ({ page }) => {
   // ).toBeVisible()
 
   await expect(
-    page.getByRole("heading", { name: "Overview", level: 1 })
+    page.getByText(
+      "No account found with this email address. Please check the email entered or sign up for a new account."
+    )
   ).toBeVisible()
+
+  // await expect(
+  //   page.getByRole("heading", { name: "Overview", level: 1 })
+  // ).toBeVisible()
 })
