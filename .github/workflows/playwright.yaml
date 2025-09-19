@@ -30,7 +30,7 @@ jobs:
       run: npm ci
 
     - name: Start Supabase
-      run: supabase start -x studio,edge-runtime
+      run: npx supabase start -x studio,edge-runtime
 
     - name: Set DATABASE_URL
       run: echo "DATABASE_URL=postgresql://postgres:postgres@localhost:54322/postgres" >> $GITHUB_ENV
