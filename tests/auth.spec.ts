@@ -142,3 +142,47 @@ test.describe("Login Page", () => {
     ).toBeVisible()
   })
 })
+
+// ============================================
+// ================= Redirects ================
+// ============================================
+
+test.describe("Redirects", () => {
+  test("visiting auth pages while logged in redirects to home", async ({
+    page,
+  }) => {
+    const overviewHeading = page.getByRole("heading", {
+      name: "Overview",
+      level: 1,
+    })
+
+    await page.goto("/login")
+
+    await page.getByRole("textbox", { name: "Email" }).fill("test@email.com")
+    await page.getByRole("textbox", { name: "Password" }).fill("Test1234")
+
+    await page.getByRole("button", { name: "Login" }).click()
+    await expect(overviewHeading).toBeVisible()
+
+    // after logged in, try to visit /login, but should be redirected back to home
+    await page.goto("/login")
+    await expect(overviewHeading).toBeVisible()
+
+    // same for /signup as well
+    await page.goto("/signup")
+    await expect(overviewHeading).toBeVisible()
+  })
+
+  test("redirects unauthorized users to login", async ({ page }) => {
+    const loginHeading = page.getByRole("heading", {
+      name: "Login",
+      level: 1,
+    })
+
+    await page.goto("/")
+    await expect(loginHeading).toBeVisible()
+
+    await page.goto("/transactions")
+    await expect(loginHeading).toBeVisible()
+  })
+})
