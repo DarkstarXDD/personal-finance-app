@@ -1,0 +1,36 @@
+name: Database
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  HUSKY: 0
+
+jobs:
+  migrate-db:
+    name: Prisma Migrations
+    runs-on: ubuntu-latest
+    # if: github.ref == 'refs/heads/main' # run only on main, and not on feature branches on PR
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply Prisma migrations
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
