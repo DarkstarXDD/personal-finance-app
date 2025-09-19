@@ -14,9 +14,6 @@ jobs:
     name: E2E Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DIRECT_URL: ${{ secrets.DIRECT_URL }}
 
     steps:
     - name: Checkout code
@@ -32,6 +29,18 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Start Supabase
+      run: supabase start -x studio,edge-runtime
+
+    - name: Set DATABASE_URL
+      run: echo "DATABASE_URL=postgresql://postgres:postgres@localhost:54322/postgres" >> $GITHUB_ENV
+
+    - name: Run Prisma migrations
+      run: npx prisma migrate deploy
+
+    - name: Generate Prisma client
+      run: npx prisma generate
+    
     - name: Build app
       run: npm run build
 
