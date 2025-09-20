@@ -18,7 +18,6 @@ test.describe("Signup Page", () => {
 
   test("renders all required elements", async ({ page }) => {
     await expect(getSignupHeading(page)).toBeVisible()
-
     await expect(page.getByLabel("Name")).toBeVisible()
     await expect(page.getByLabel("Email")).toBeVisible()
     await expect(page.getByLabel("Create Password")).toBeVisible()
@@ -65,7 +64,7 @@ test.describe("Signup Page", () => {
     ).toBeVisible()
   })
 
-  test("accepts valid inputs and create account", async ({ page }) => {
+  test("accepts valid inputs and creates account", async ({ page }) => {
     await page.getByRole("textbox", { name: "Name" }).fill("Test User")
     await page.getByRole("textbox", { name: "Email" }).fill("test@example.com")
     await page
