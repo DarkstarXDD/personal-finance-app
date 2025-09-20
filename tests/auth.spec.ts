@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test"
 
 import {
-  getOverviewHeading,
+  // getOverviewHeading,
   // getLoginHeading,
   getSignupHeading,
   // login,
@@ -89,7 +89,9 @@ test.describe("Signup Page", () => {
 
     await page.getByRole("button", { name: "Create Account" }).click()
 
-    await expect(getOverviewHeading(page)).toBeVisible()
+    await expect(
+      page.getByRole("heading", { name: "Overview", level: 1 })
+    ).toBeVisible()
   })
 })
 
