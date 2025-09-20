@@ -8,6 +8,7 @@ on:
 
 env:
   HUSKY: 0
+  SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
 
 jobs:
   e2e-tests:
