@@ -64,6 +64,22 @@ test.describe("Signup Page", () => {
     ).toBeVisible()
   })
 
+  test("cannot signup with an existing email", async ({ page }) => {
+    await page.getByRole("textbox", { name: "Name" }).fill("Test User")
+    await page.getByRole("textbox", { name: "Email" }).fill("test@email.com")
+    await page
+      .getByRole("textbox", { name: "Create Password" })
+      .fill("Test1234")
+
+    await page.getByRole("button", { name: "Create Account" }).click()
+
+    await expect(
+      page.getByText(
+        "An account with this email already exists. Please sign in instead or use a different email address."
+      )
+    ).toBeVisible()
+  })
+
   test("accepts valid inputs and creates account", async ({ page }) => {
     await page.getByRole("textbox", { name: "Name" }).fill("Test User")
     await page.getByRole("textbox", { name: "Email" }).fill("test@example.com")
