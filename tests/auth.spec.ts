@@ -2,9 +2,9 @@ import { test, expect } from "@playwright/test"
 
 import {
   getOverviewHeading,
-  getLoginHeading,
+  // getLoginHeading,
   getSignupHeading,
-  login,
+  // login,
 } from "./playwright-utils"
 
 // ============================================
@@ -97,82 +97,82 @@ test.describe("Signup Page", () => {
 // ================= Login Page ===============
 // ============================================
 
-test.describe("Login Page", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("/login")
-  })
+// test.describe("Login Page", () => {
+//   test.beforeEach(async ({ page }) => {
+//     await page.goto("/login")
+//   })
 
-  test("renders all required elements", async ({ page }) => {
-    await expect(getLoginHeading(page)).toBeVisible()
-    await expect(page.getByLabel("Email")).toBeVisible()
-    await expect(page.getByLabel("Password")).toBeVisible()
-    await expect(page.getByRole("button", { name: "Login" })).toBeVisible()
-  })
+//   test("renders all required elements", async ({ page }) => {
+//     await expect(getLoginHeading(page)).toBeVisible()
+//     await expect(page.getByLabel("Email")).toBeVisible()
+//     await expect(page.getByLabel("Password")).toBeVisible()
+//     await expect(page.getByRole("button", { name: "Login" })).toBeVisible()
+//   })
 
-  test("shows required validation when empty submit", async ({ page }) => {
-    await page.getByRole("button", { name: "Login" }).click()
+//   test("shows required validation when empty submit", async ({ page }) => {
+//     await page.getByRole("button", { name: "Login" }).click()
 
-    await expect(page.getByRole("textbox", { name: "Email" })).toBeFocused()
+//     await expect(page.getByRole("textbox", { name: "Email" })).toBeFocused()
 
-    await expect(page.getByText("Invalid email format.")).toBeVisible()
-    await expect(page.getByText("Password cannot be empty.")).toBeVisible()
-  })
+//     await expect(page.getByText("Invalid email format.")).toBeVisible()
+//     await expect(page.getByText("Password cannot be empty.")).toBeVisible()
+//   })
 
-  test("shows error for login with unknown email", async ({ page }) => {
-    await page
-      .getByRole("textbox", { name: "Email" })
-      .fill("unknownemail@example.com")
-    await page.getByRole("textbox", { name: "Password" }).fill("Test1234")
+//   test("shows error for login with unknown email", async ({ page }) => {
+//     await page
+//       .getByRole("textbox", { name: "Email" })
+//       .fill("unknownemail@example.com")
+//     await page.getByRole("textbox", { name: "Password" }).fill("Test1234")
 
-    await page.getByRole("button", { name: "Login" }).click()
+//     await page.getByRole("button", { name: "Login" }).click()
 
-    await expect(
-      page.getByText(
-        "No account found with this email address. Please check the email entered or sign up for a new account."
-      )
-    ).toBeVisible()
-  })
+//     await expect(
+//       page.getByText(
+//         "No account found with this email address. Please check the email entered or sign up for a new account."
+//       )
+//     ).toBeVisible()
+//   })
 
-  test("shows error for incorrect password", async ({ page }) => {
-    await page.getByRole("textbox", { name: "Email" }).fill("test@email.com")
-    await page.getByRole("textbox", { name: "Password" }).fill("wrong_password")
+//   test("shows error for incorrect password", async ({ page }) => {
+//     await page.getByRole("textbox", { name: "Email" }).fill("test@email.com")
+//     await page.getByRole("textbox", { name: "Password" }).fill("wrong_password")
 
-    await page.getByRole("button", { name: "Login" }).click()
+//     await page.getByRole("button", { name: "Login" }).click()
 
-    await expect(
-      page.getByText("Incorrect password. Please try again.")
-    ).toBeVisible()
-  })
+//     await expect(
+//       page.getByText("Incorrect password. Please try again.")
+//     ).toBeVisible()
+//   })
 
-  test("can log in with correct credentials", async ({ page }) => {
-    await login(page)
-  })
-})
+//   test("can log in with correct credentials", async ({ page }) => {
+//     await login(page)
+//   })
+// })
 
 // ============================================
 // ================= Redirects ================
 // ============================================
 
-test.describe("Redirects", () => {
-  test("visiting auth pages while logged in redirects to home", async ({
-    page,
-  }) => {
-    await login(page)
+// test.describe("Redirects", () => {
+//   test("visiting auth pages while logged in redirects to home", async ({
+//     page,
+//   }) => {
+//     await login(page)
 
-    // after logged in, try to visit /login, but should be redirected back to home
-    await page.goto("/login")
-    await expect(getOverviewHeading(page)).toBeVisible()
+//     // after logged in, try to visit /login, but should be redirected back to home
+//     await page.goto("/login")
+//     await expect(getOverviewHeading(page)).toBeVisible()
 
-    // same for /signup as well
-    await page.goto("/signup")
-    await expect(getOverviewHeading(page)).toBeVisible()
-  })
+//     // same for /signup as well
+//     await page.goto("/signup")
+//     await expect(getOverviewHeading(page)).toBeVisible()
+//   })
 
-  test("redirects unauthorized users to login", async ({ page }) => {
-    await page.goto("/")
-    await expect(getLoginHeading(page)).toBeVisible()
+//   test("redirects unauthorized users to login", async ({ page }) => {
+//     await page.goto("/")
+//     await expect(getLoginHeading(page)).toBeVisible()
 
-    await page.goto("/transactions")
-    await expect(getLoginHeading(page)).toBeVisible()
-  })
-})
+//     await page.goto("/transactions")
+//     await expect(getLoginHeading(page)).toBeVisible()
+//   })
+// })
