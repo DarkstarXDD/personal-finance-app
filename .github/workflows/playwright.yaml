@@ -30,7 +30,7 @@ jobs:
       run: npm ci
 
     - name: Start Supabase
-      run: npx supabase start -x studio,edge-runtime
+      run: npx supabase start
 
     - name: Set DATABASE_URL and DIRECT_URL
       run: |
