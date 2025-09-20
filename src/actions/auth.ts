@@ -42,6 +42,7 @@ export async function registerUser(
     })
     await createSession({ userId: user.id })
   } catch (e) {
+    console.error("Server Error:", e)
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002")
       return {
         email: [
@@ -83,7 +84,8 @@ export async function loginUser(
     if (!isPasswordValid)
       return { password: ["Incorrect password. Please try again."] }
     await createSession({ userId: user.id })
-  } catch {
+  } catch (e) {
+    console.error("Server Error:", e)
     return { email: ["Something went wrong. Please try again."] }
   }
   redirect("/")

@@ -8,6 +8,7 @@ on:
 
 env:
   HUSKY: 0
+  SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
 
 jobs:
   e2e-tests:
@@ -30,13 +31,12 @@ jobs:
       run: npm ci
 
     - name: Start Supabase
-      run: npx supabase start -x studio,edge-runtime
+      run: npx supabase start
 
     - name: Set DATABASE_URL and DIRECT_URL
       run: |
         echo "DATABASE_URL=postgresql://postgres:postgres@localhost:54322/postgres" >> $GITHUB_ENV
         echo "DIRECT_URL=postgresql://postgres:postgres@localhost:54322/postgres" >> $GITHUB_ENV
-
 
     - name: Run Prisma migrations
       run: npx prisma migrate deploy
