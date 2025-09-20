@@ -42,6 +42,7 @@ export async function registerUser(
     })
     await createSession({ userId: user.id })
   } catch (e) {
+    console.error("Server Error:", e)
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002")
       return {
         email: [
