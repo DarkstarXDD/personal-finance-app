@@ -37,7 +37,6 @@ jobs:
         echo "DATABASE_URL=postgresql://postgres:postgres@localhost:54322/postgres" >> $GITHUB_ENV
         echo "DIRECT_URL=postgresql://postgres:postgres@localhost:54322/postgres" >> $GITHUB_ENV
 
-
     - name: Run Prisma migrations
       run: npx prisma migrate deploy
 

@@ -1,23 +1,70 @@
 import { test, expect } from "@playwright/test"
 
-test("login", async ({ page }) => {
-  await page.goto("/login")
+// ============================================
+// ================= Login Page ===============
+// ============================================
 
-  await page.getByRole("textbox", { name: "Email" }).fill("test@email.com")
-  await page.getByRole("textbox", { name: "Password" }).fill("Test1234")
+test.describe("Login Page", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/login")
+  })
 
-  await page.getByRole("button", { name: "Login" }).click()
-  await expect(
-    page.getByRole("heading", { name: "Overview", level: 1 })
-  ).toBeVisible({ timeout: 20000 })
+  test("renders all required elements", async ({ page }) => {
+    await expect(
+      page.getByRole("heading", { name: "Login", level: 1 })
+    ).toBeVisible()
+    await expect(page.getByLabel("Email")).toBeVisible()
+    await expect(page.getByLabel("Password")).toBeVisible()
+    await expect(page.getByRole("button", { name: "Login" })).toBeVisible()
+  })
+
+  test("shows required validation when empty submit", async ({ page }) => {
+    await page.getByRole("button", { name: "Login" }).click()
+
+    await expect(page.getByRole("textbox", { name: "Email" })).toBeFocused()
+
+    await expect(page.getByText("Invalid email format.")).toBeVisible()
+    await expect(page.getByText("Password cannot be empty.")).toBeVisible()
+  })
+
+  test("shows error for login with unknown email", async ({ page }) => {
+    await page
+      .getByRole("textbox", { name: "Email" })
+      .fill("unknownemail@example.com")
+    await page.getByRole("textbox", { name: "Password" }).fill("Test1234")
+
+    await page.getByRole("button", { name: "Login" }).click()
+
+    await expect(
+      page.getByText(
+        "No account found with this email address. Please check the email entered or sign up for a new account."
+      )
+    ).toBeVisible()
+  })
+
+  test("shows error for incorrect password", async ({ page }) => {
+    await page.getByRole("textbox", { name: "Email" }).fill("test@email.com")
+    await page.getByRole("textbox", { name: "Password" }).fill("wrong_password")
+
+    await page.getByRole("button", { name: "Login" }).click()
+
+    await expect(
+      page.getByText("Incorrect password. Please try again.")
+    ).toBeVisible()
+  })
+
+  test("can log in with correct credentials", async ({ page }) => {
+    await page.goto("/login")
+
+    await page.getByRole("textbox", { name: "Email" }).fill("test@email.com")
+    await page.getByRole("textbox", { name: "Password" }).fill("Test1234")
+
+    await page.getByRole("button", { name: "Login" }).click()
+    await expect(
+      page.getByRole("heading", { name: "Overview", level: 1 })
+    ).toBeVisible()
+  })
 })
-
-// import {
-//   getOverviewHeading,
-//   // getLoginHeading,
-//   getSignupHeading,
-//   // login,
-// } from "./playwright-utils"
 
 // ============================================
 // ================ Signup Page ===============
