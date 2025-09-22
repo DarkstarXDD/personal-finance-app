@@ -59,6 +59,7 @@ const transactionSelect = {
   counterparty: true,
   amount: true,
   category: true,
+  transactionType: true,
 } satisfies Prisma.TransactionSelect
 
 type GetTransactionsParams = {
