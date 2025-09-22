@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-table"
 import { format } from "date-fns"
 
-import { currencyFormatter } from "@/lib/utils"
+import TransactionAmount from "@/components/transactions/TransactionAmount"
 
 import type { Transaction } from "@/data-access/transactions"
 
@@ -41,11 +41,17 @@ const columns = [
   }),
   columnHelper.accessor("amount", {
     header: () => <span className="block w-full text-end">Amount</span>,
-    cell: (data) => (
-      <span className="text-grey-900 block w-full text-end text-sm leading-normal font-bold">
-        {currencyFormatter.format(Number(data.getValue()))}
-      </span>
-    ),
+    cell: (data) => {
+      const { amount, transactionType } = data.row.original
+      return (
+        <span className="block w-full text-end">
+          <TransactionAmount
+            transactionAmount={amount}
+            transactionType={transactionType}
+          />
+        </span>
+      )
+    },
   }),
 ]
 

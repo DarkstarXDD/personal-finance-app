@@ -7,6 +7,7 @@ import { ProgressBar } from "react-aria-components"
 
 import DeleteBudgetDialog from "@/components/budgets/DeleteBudgetDialog"
 import EditBudgetDialog from "@/components/budgets/EditBudgetDialog"
+import TransactionAmount from "@/components/transactions/TransactionAmount"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import IconButton from "@/components/ui/IconButton"
@@ -129,9 +130,11 @@ export default function BudgetCard({
                 <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
                   {transaction.counterparty}
                 </h4>
-                <p className="text-grey-900 justify-self-end text-xs leading-normal font-bold">
-                  {currencyFormatter.format(Number(transaction.amount))}
-                </p>
+                <TransactionAmount
+                  transactionAmount={transaction.amount}
+                  transactionType={transaction.transactionType}
+                  className="justify-self-end text-xs"
+                />
                 <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
                   {format(transaction.createdAt, "dd MMM yyyy")}
                 </p>
