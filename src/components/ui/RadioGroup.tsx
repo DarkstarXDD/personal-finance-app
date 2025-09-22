@@ -70,11 +70,11 @@ function RadioGroupItem({
   ...props
 }: RadioGroupItemProps) {
   return (
-    <RacRadio {...props} className="group">
+    <RacRadio {...props} className="group w-full">
       {({ isSelected }) => (
         <div
           className={cn(
-            "border-beige-500 group-rac-disabled:opacity-40 group-rac-disabled:cursor-not-allowed text-grey-500 group-rac-hover:bg-beige-100 group-rac-selected:ring-1 group-rac-focus-visible:ring-1 group-rac-focus-visible:border-grey-500 group-rac-selected:border-grey-500 ring-grey-500 group-rac-selected:bg-beige-100 relative flex cursor-pointer items-center gap-2 rounded-lg border bg-white px-5 py-3 text-sm leading-normal font-normal transition-[background-color]",
+            "border-beige-500 group-rac-disabled:opacity-40 group-rac-disabled:cursor-not-allowed text-grey-500 group-rac-hover:bg-beige-100 group-rac-focus-visible:ring-2 ring-beige-500 group-rac-selected:bg-beige-300 relative flex cursor-pointer items-center gap-2 rounded-lg border bg-white px-5 py-3 text-sm leading-normal font-normal transition-[background-color]",
             className
           )}
         >

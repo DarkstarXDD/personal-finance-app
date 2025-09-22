@@ -14,9 +14,15 @@ import type { TransactionCreateErrors, DALReturn } from "@/lib/types"
 // ============ Create Transaction ============
 // ============================================
 
-export async function createTransaction(
-  formData: TransactionCreate & { recurringBillId?: string }
-): Promise<DALReturn<TransactionCreateErrors>> {
+export async function createTransaction({
+  counterparty,
+  amount,
+  categoryId,
+  transactionType,
+  recurringBillId,
+}: TransactionCreate & { recurringBillId?: string }): Promise<
+  DALReturn<TransactionCreateErrors>
+> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
@@ -24,10 +30,11 @@ export async function createTransaction(
     await prisma.transaction.create({
       data: {
         userId,
-        counterparty: formData.counterparty,
-        amount: formData.amount,
-        categoryId: formData.categoryId,
-        recurringBillId: formData.recurringBillId,
+        counterparty,
+        amount,
+        categoryId,
+        transactionType,
+        recurringBillId: recurringBillId,
       },
     })
     return { success: true }

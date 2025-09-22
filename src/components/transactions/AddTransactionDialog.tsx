@@ -8,9 +8,10 @@ import Button from "@/components/ui/Button"
 import Checkbox from "@/components/ui/Checkbox"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
-import { transactionCreateSchema } from "@/lib/schemas"
+import { TransactionCreate, transactionCreateSchema } from "@/lib/schemas"
 
 import type { Category } from "@/data-access/lookups"
 import type { TransactionCreateErrors } from "@/lib/types"
@@ -26,12 +27,13 @@ export default function AddTransactionDialog({
     setError,
     reset,
     formState: { isSubmitting },
-  } = useForm({
+  } = useForm<TransactionCreate>({
     resolver: zodResolver(transactionCreateSchema),
     defaultValues: {
       counterparty: "",
       amount: 0,
       categoryId: "",
+      transactionType: "INCOME",
       isRecurring: false,
     },
   })
@@ -67,6 +69,24 @@ export default function AddTransactionDialog({
               Create a transaction to record your money flow.
             </p>
             <div className="grid gap-4">
+              <Controller
+                name="transactionType"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <RadioGroup
+                    label="Transaction Type"
+                    layout="horizontal"
+                    {...field}
+                    isInvalid={invalid}
+                    errorMessage={error?.message}
+                    isDisabled={isSubmitting}
+                  >
+                    <RadioGroupItem value="INCOME">Income</RadioGroupItem>
+                    <RadioGroupItem value="EXPENSE">Expense</RadioGroupItem>
+                  </RadioGroup>
+                )}
+              />
+
               <Controller
                 name="counterparty"
                 control={control}
