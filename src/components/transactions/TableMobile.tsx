@@ -2,7 +2,7 @@
 
 import { format } from "date-fns"
 
-import { currencyFormatter } from "@/lib/utils"
+import TransactionAmount from "@/components/transactions/TransactionAmount"
 
 import type { Transaction } from "@/data-access/transactions"
 
@@ -18,9 +18,14 @@ export default function TableMobile({
           key={transaction.id}
           className="border-b-grey-100 grid gap-1 border-b py-4 first:pt-0 last:border-none last:pb-0"
         >
-          <div className="text-grey-900 flex items-center justify-between gap-2 text-sm leading-normal font-bold">
-            <p>{transaction.counterparty}</p>
-            <p>{currencyFormatter.format(Number(transaction.amount))}</p>
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-grey-900 text-sm leading-normal font-bold">
+              {transaction.counterparty}
+            </p>
+            <TransactionAmount
+              transactionAmount={transaction.amount}
+              transactionType={transaction.transactionType}
+            />
           </div>
           <div className="text-grey-500 flex items-center justify-between gap-2 text-xs leading-normal font-normal">
             <p>{transaction.category.label}</p>

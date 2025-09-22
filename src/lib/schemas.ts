@@ -38,6 +38,10 @@ export const transactionCreateSchema = z.object({
     .number("Amount cannot be empty.")
     .nonnegative("Amount cannot be negative."),
   categoryId: z.cuid("Please select a category."),
+  transactionType: z.enum(
+    ["INCOME", "EXPENSE"],
+    "Please pick a transaction type."
+  ),
   isRecurring: z.boolean(),
 })
 export type TransactionCreate = z.infer<typeof transactionCreateSchema>

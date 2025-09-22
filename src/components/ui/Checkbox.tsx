@@ -15,7 +15,7 @@ export default function Checkbox({
   return (
     <RacCheckbox
       {...props}
-      className="group flex cursor-pointer items-center gap-2"
+      className="group rac-disabled:opacity-40 rac-disabled:cursor-not-allowed flex cursor-pointer items-center gap-2"
     >
       {({ isSelected }) => (
         <>

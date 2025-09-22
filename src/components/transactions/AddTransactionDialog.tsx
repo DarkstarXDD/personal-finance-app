@@ -1,16 +1,17 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, Controller } from "react-hook-form"
+import { useForm, Controller, useWatch } from "react-hook-form"
 
 import { createTransaction } from "@/actions/transactions"
 import Button from "@/components/ui/Button"
 import Checkbox from "@/components/ui/Checkbox"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
-import { transactionCreateSchema } from "@/lib/schemas"
+import { TransactionCreate, transactionCreateSchema } from "@/lib/schemas"
 
 import type { Category } from "@/data-access/lookups"
 import type { TransactionCreateErrors } from "@/lib/types"
@@ -26,14 +27,20 @@ export default function AddTransactionDialog({
     setError,
     reset,
     formState: { isSubmitting },
-  } = useForm({
+  } = useForm<TransactionCreate>({
     resolver: zodResolver(transactionCreateSchema),
     defaultValues: {
       counterparty: "",
       amount: 0,
       categoryId: "",
+      transactionType: "INCOME",
       isRecurring: false,
     },
+  })
+
+  const transactionTypeValue = useWatch({
+    control: control,
+    name: "transactionType",
   })
 
   return (
@@ -67,6 +74,24 @@ export default function AddTransactionDialog({
               Create a transaction to record your money flow.
             </p>
             <div className="grid gap-4">
+              <Controller
+                name="transactionType"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <RadioGroup
+                    label="Transaction Type"
+                    layout="horizontal"
+                    {...field}
+                    isInvalid={invalid}
+                    errorMessage={error?.message}
+                    isDisabled={isSubmitting}
+                  >
+                    <RadioGroupItem value="INCOME">Income</RadioGroupItem>
+                    <RadioGroupItem value="EXPENSE">Expense</RadioGroupItem>
+                  </RadioGroup>
+                )}
+              />
+
               <Controller
                 name="counterparty"
                 control={control}
@@ -130,7 +155,14 @@ export default function AddTransactionDialog({
                 name="isRecurring"
                 control={control}
                 render={({ field: { name, value, onChange } }) => (
-                  <Checkbox name={name} isSelected={value} onChange={onChange}>
+                  <Checkbox
+                    name={name}
+                    isSelected={value}
+                    onChange={onChange}
+                    isDisabled={
+                      transactionTypeValue === "INCOME" || isSubmitting
+                    }
+                  >
                     Is this a recurring bill?
                   </Checkbox>
                 )}

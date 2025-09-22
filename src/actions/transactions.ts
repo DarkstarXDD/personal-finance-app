@@ -22,6 +22,12 @@ export async function createTransaction(
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
   if (parsed.data.isRecurring) {
+    if (parsed.data.transactionType === "INCOME")
+      return {
+        transactionType: [
+          "When type is INCOME, you cannot set a recurring bill.",
+        ],
+      }
     const recurringBillResponse = await recurringBills.createRecurringBill(
       parsed.data
     )
