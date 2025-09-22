@@ -82,7 +82,7 @@ const {
   fieldErrorMessage,
 } = selectStyles()
 
-type SelectStyles = VariantProps<typeof selectStyles>
+type SelectVariants = VariantProps<typeof selectStyles>
 
 type SelectProps<T extends object> = Omit<
   RacSelectProps<T>,
@@ -97,7 +97,7 @@ type SelectProps<T extends object> = Omit<
   ref?: Ref<HTMLDivElement>
   className?: string
   mobileIcon?: IconType
-} & SelectStyles
+} & SelectVariants
 
 function Select<T extends object>({
   label,
