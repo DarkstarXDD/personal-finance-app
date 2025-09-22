@@ -1,4 +1,6 @@
-import { currencyFormatter, cn } from "@/lib/utils"
+import { tv } from "tailwind-variants"
+
+import { currencyFormatter } from "@/lib/utils"
 
 export default function TransactionAmount({
   transactionAmount,
@@ -9,13 +11,21 @@ export default function TransactionAmount({
   transactionType?: "INCOME" | "EXPENSE"
   className?: string
 }) {
+  const transactionAmountStyles = tv({
+    base: "text-grey-900 text-sm leading-normal font-bold",
+    variants: {
+      transactionType: {
+        INCOME: "text-green",
+        EXPENSE: "text-red",
+      },
+    },
+  })
+
   const amount = currencyFormatter.format(Number(transactionAmount))
 
   if (transactionType === "INCOME") {
     return (
-      <p
-        className={cn("text-green text-sm leading-normal font-bold", className)}
-      >
+      <p className={transactionAmountStyles({ transactionType, className })}>
         {`+${amount}`}
       </p>
     )
@@ -23,20 +33,13 @@ export default function TransactionAmount({
 
   if (transactionType === "EXPENSE") {
     return (
-      <p className={cn("text-red text-sm leading-normal font-bold", className)}>
+      <p className={transactionAmountStyles({ transactionType, className })}>
         {`-${amount}`}
       </p>
     )
   } else {
     return (
-      <p
-        className={cn(
-          "text-grey-900 text-sm leading-normal font-bold",
-          className
-        )}
-      >
-        {`${amount}`}
-      </p>
+      <p className={transactionAmountStyles({ className })}>{`${amount}`}</p>
     )
   }
 }
