@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, Controller } from "react-hook-form"
+import { useForm, Controller, useWatch } from "react-hook-form"
 
 import { createTransaction } from "@/actions/transactions"
 import Button from "@/components/ui/Button"
@@ -36,6 +36,11 @@ export default function AddTransactionDialog({
       transactionType: "INCOME",
       isRecurring: false,
     },
+  })
+
+  const transactionTypeValue = useWatch({
+    control: control,
+    name: "transactionType",
   })
 
   return (
@@ -150,7 +155,14 @@ export default function AddTransactionDialog({
                 name="isRecurring"
                 control={control}
                 render={({ field: { name, value, onChange } }) => (
-                  <Checkbox name={name} isSelected={value} onChange={onChange}>
+                  <Checkbox
+                    name={name}
+                    isSelected={value}
+                    onChange={onChange}
+                    isDisabled={
+                      transactionTypeValue === "INCOME" || isSubmitting
+                    }
+                  >
                     Is this a recurring bill?
                   </Checkbox>
                 )}
