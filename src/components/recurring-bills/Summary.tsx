@@ -3,7 +3,7 @@ import { PiReceiptFill } from "react-icons/pi"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 
-export default function Total() {
+export default function Summary() {
   return (
     <div className="grid gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-1">
       <Card
