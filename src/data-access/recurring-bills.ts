@@ -117,3 +117,18 @@ export async function getRecurringBills({
     totalItemsWithoutFiltering: unfilteredItemCount,
   }
 }
+
+export async function getRecurringBillsSummary() {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  const summary = await prisma.recurringBill.aggregate({
+    _sum: { amount: true },
+    _count: { _all: true },
+  })
+
+  return {
+    totalValue: summary._sum.amount?.toString(),
+    totalCount: summary._count._all,
+  }
+}
