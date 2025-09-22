@@ -3,6 +3,7 @@ import {
   Radio as RacRadio,
   RadioGroup as RacRadioGroup,
 } from "react-aria-components"
+import { tv, VariantProps } from "tailwind-variants"
 
 import FieldError from "@/components/ui/FieldError"
 import Label from "@/components/ui/Label"
@@ -14,23 +15,46 @@ import type {
   RadioProps as RacRadioProps,
 } from "react-aria-components"
 
-type RadioGroupProps = Omit<RacRadioGroupProps, "children"> & {
+const radioStyles = tv({
+  slots: {
+    radioItemsWrapper: "flex gap-3",
+  },
+  variants: {
+    layout: {
+      vertical: { radioItemsWrapper: "flex-col" },
+      horizontal: { radioItemsWrapper: "flex-row" },
+    },
+  },
+  defaultVariants: { layout: "vertical" },
+})
+
+const { radioItemsWrapper } = radioStyles()
+
+type RadioVariants = VariantProps<typeof radioStyles>
+
+type RadioGroupProps = Omit<RacRadioGroupProps, "children" | "className"> & {
   label?: string
   children?: ReactNode
   errorMessage?: string
-}
+  className?: string
+} & RadioVariants
 
 function RadioGroup({
   label,
   children,
   className,
-  errorMessage = "Test",
+  errorMessage,
+  layout,
   ...props
 }: RadioGroupProps) {
   return (
-    <RacRadioGroup {...props} className={cn("grid gap-1", className)}>
+    <RacRadioGroup
+      {...props}
+      className={cn("grid gap-1", className)}
+      orientation={layout}
+    >
       <Label>{label}</Label>
-      <div className="grid gap-3">{children}</div>
+      <div className={radioItemsWrapper({ layout })}>{children}</div>
       <FieldError>{errorMessage}</FieldError>
     </RacRadioGroup>
   )
@@ -50,7 +74,7 @@ function RadioGroupItem({
       {({ isSelected }) => (
         <div
           className={cn(
-            "border-beige-500 group-rac-disabled:opacity-40 text-grey-500 group-rac-hover:bg-beige-100 group-rac-selected:ring-1 group-rac-focus-visible:ring-1 group-rac-focus-visible:border-grey-500 group-rac-selected:border-grey-500 ring-grey-500 relative flex cursor-pointer items-center gap-2 rounded-lg border-2 bg-white px-5 py-3 text-sm leading-normal font-normal transition-[background-color]",
+            "border-beige-500 group-rac-disabled:opacity-40 group-rac-disabled:cursor-not-allowed text-grey-500 group-rac-hover:bg-beige-100 group-rac-selected:ring-1 group-rac-focus-visible:ring-1 group-rac-focus-visible:border-grey-500 group-rac-selected:border-grey-500 ring-grey-500 group-rac-selected:bg-beige-100 relative flex cursor-pointer items-center gap-2 rounded-lg border bg-white px-5 py-3 text-sm leading-normal font-normal transition-[background-color]",
             className
           )}
         >
