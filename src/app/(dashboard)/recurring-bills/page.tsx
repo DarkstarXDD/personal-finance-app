@@ -8,10 +8,7 @@ import TableFilters from "@/components/recurring-bills/TableFilters"
 import TableMobile from "@/components/recurring-bills/TableMobile"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
-import {
-  getRecurringBills,
-  getRecurringBillsSummary,
-} from "@/data-access/recurring-bills"
+import { getRecurringBills } from "@/data-access/recurring-bills"
 
 export default async function RecurringBillsPage({
   searchParams,
@@ -23,17 +20,14 @@ export default async function RecurringBillsPage({
 }) {
   const { query, sortby } = await searchParams
 
-  const { recurringBills, totalItemsWithoutFiltering } =
-    await getRecurringBills({ query, sortby })
+  const { recurringBills, summary } = await getRecurringBills({ query, sortby })
 
-  const { totalValue } = await getRecurringBillsSummary()
-
-  if (totalItemsWithoutFiltering === 0) {
+  if (summary.count === 0) {
     return (
       <main className="grid gap-8">
         <Heading as="h1">Recurring Bills</Heading>
         <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
-          <Summary totalValue={totalValue} />
+          <Summary totalValue={summary.sum} />
           <Card>
             <EmptyState
               icon={PiReceiptFill}
@@ -50,7 +44,7 @@ export default async function RecurringBillsPage({
     <main className="grid gap-8">
       <Heading as="h1">Recurring Bills</Heading>
       <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
-        <Summary totalValue={Number(totalValue)} />
+        <Summary totalValue={summary.sum} />
 
         <Card className="grid gap-6 md:pb-4">
           <TableFilters />

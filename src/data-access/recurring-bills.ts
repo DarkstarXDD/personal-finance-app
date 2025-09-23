@@ -102,15 +102,18 @@ export async function getRecurringBills({
       orderBy = { dueDayOfMonth: "asc" }
   }
 
-  const [recurringBills, unfilteredItemCount] = await prisma.$transaction([
+  const [recurringBills, recurringBillsSummary] = await prisma.$transaction([
     prisma.recurringBill.findMany({
       where: { userId, counterparty: { contains: query, mode: "insensitive" } },
       orderBy: orderBy,
       select: recurringBillSelect,
     }),
 
-    // Recurring bill count without filters applied, for the global empty state
-    prisma.recurringBill.count({ where: { userId } }),
+    prisma.recurringBill.aggregate({
+      _sum: { amount: true },
+      _count: { _all: true },
+      where: { userId },
+    }),
   ])
 
   // Include dueDate and daysUntilDue after fetching
@@ -133,21 +136,9 @@ export async function getRecurringBills({
 
   return {
     recurringBills: recurringBillsEnriched,
-    totalItemsWithoutFiltering: unfilteredItemCount,
-  }
-}
-
-export async function getRecurringBillsSummary() {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
-
-  const summary = await prisma.recurringBill.aggregate({
-    _sum: { amount: true },
-    _count: { _all: true },
-  })
-
-  return {
-    totalValue: summary._sum.amount?.toString(),
-    totalCount: summary._count._all,
+    summary: {
+      sum: recurringBillsSummary._sum.amount?.toString(),
+      count: recurringBillsSummary._count._all,
+    },
   }
 }
