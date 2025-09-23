@@ -50,7 +50,6 @@ export async function createRecurringBill({
 const recurringBillSelect = {
   id: true,
   counterparty: true,
-  dueDayOfMonth: true,
   amount: true,
   createdAt: true,
 } satisfies Prisma.RecurringBillSelect
@@ -81,10 +80,10 @@ export async function getRecurringBills({
 
   switch (sortby) {
     case "latest":
-      orderBy = { dueDayOfMonth: "asc" }
+      orderBy = { createdAt: "desc" }
       break
     case "oldest":
-      orderBy = { dueDayOfMonth: "desc" }
+      orderBy = { createdAt: "asc" }
       break
     case "asc":
       orderBy = { counterparty: "asc" }
@@ -99,7 +98,7 @@ export async function getRecurringBills({
       orderBy = { amount: "asc" }
       break
     default:
-      orderBy = { dueDayOfMonth: "asc" }
+      orderBy = { createdAt: "desc" }
   }
 
   const [recurringBills, recurringBillsSummary] = await prisma.$transaction([
