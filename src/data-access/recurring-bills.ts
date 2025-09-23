@@ -3,6 +3,7 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
+import { getDaysUntilDue, getDueDate } from "@/lib/helpers/recurring-bills"
 import { prisma, type Prisma } from "@/lib/prisma"
 import { TransactionCreate } from "@/lib/schemas"
 import { TransactionCreateErrors, DALReturn } from "@/lib/types"
@@ -46,19 +47,22 @@ export async function createRecurringBill({
 // =========== Fetch Recurring Bills ==========
 // ============================================
 
-const recurringBillsSelect = {
+const recurringBillSelect = {
   id: true,
   counterparty: true,
   dueDayOfMonth: true,
   amount: true,
+  createdAt: true,
 } satisfies Prisma.RecurringBillSelect
 
 type RecurringBillRaw = Prisma.RecurringBillGetPayload<{
-  select: typeof recurringBillsSelect
+  select: typeof recurringBillSelect
 }>
 
 export type RecurringBill = Omit<RecurringBillRaw, "amount"> & {
   amount: string
+  dueDate: Date
+  daysUntilDue: number
 }
 
 type GetRecurringBillsParams = {
@@ -102,7 +106,7 @@ export async function getRecurringBills({
     prisma.recurringBill.findMany({
       where: { userId, counterparty: { contains: query, mode: "insensitive" } },
       orderBy: orderBy,
-      select: recurringBillsSelect,
+      select: recurringBillSelect,
     }),
 
     // Recurring bill count without filters applied, for the global empty state
@@ -110,10 +114,15 @@ export async function getRecurringBills({
   ])
 
   return {
-    recurringBills: recurringBills.map((recurringBill) => ({
-      ...recurringBill,
-      amount: recurringBill.amount.toString(),
-    })),
+    recurringBills: recurringBills.map((recurringBill) => {
+      const amount = recurringBill.amount.toString()
+      return {
+        ...recurringBill,
+        amount,
+        dueDate: getDueDate(recurringBill.createdAt),
+        daysUntilDue: getDaysUntilDue(getDueDate(recurringBill.createdAt)),
+      }
+    }),
     totalItemsWithoutFiltering: unfilteredItemCount,
   }
 }

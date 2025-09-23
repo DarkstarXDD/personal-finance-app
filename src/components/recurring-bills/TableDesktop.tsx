@@ -6,7 +6,9 @@ import {
   createColumnHelper,
   flexRender,
 } from "@tanstack/react-table"
+import { format } from "date-fns"
 
+import DaysUntilDue from "@/components/recurring-bills/DaysUntilDue"
 import { RecurringBill } from "@/data-access/recurring-bills"
 import { currencyFormatter } from "@/lib/utils"
 
@@ -22,13 +24,18 @@ const columns = [
     ),
   }),
 
-  columnHelper.accessor("dueDayOfMonth", {
+  columnHelper.accessor("dueDate", {
     header: "Due Date",
     cell: (data) => (
-      <span className="text-green text-xs leading-normal font-normal">
-        {data.getValue()}
+      <span className="text-grey-500 text-xs leading-normal font-normal">
+        {format(data.getValue(), "dd MMM yyyy")}
       </span>
     ),
+  }),
+
+  columnHelper.accessor("daysUntilDue", {
+    header: "Days Until Due",
+    cell: (data) => <DaysUntilDue daysUntilDue={data.getValue()} />,
   }),
 
   columnHelper.accessor("amount", {
@@ -38,6 +45,7 @@ const columns = [
         {currencyFormatter.format(Number(data.getValue()))}
       </span>
     ),
+    size: 50,
   }),
 ]
 

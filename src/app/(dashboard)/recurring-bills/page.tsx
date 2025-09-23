@@ -12,6 +12,7 @@ import {
   getRecurringBills,
   getRecurringBillsSummary,
 } from "@/data-access/recurring-bills"
+// import { getRecurringBillDueDate } from "@/lib/helpers/recurring-bills"
 
 export default async function RecurringBillsPage({
   searchParams,
@@ -22,6 +23,8 @@ export default async function RecurringBillsPage({
   }>
 }) {
   const { query, sortby } = await searchParams
+
+  // console.log(getRecurringBillDueDate())
 
   const { recurringBills, totalItemsWithoutFiltering } =
     await getRecurringBills({ query, sortby })
