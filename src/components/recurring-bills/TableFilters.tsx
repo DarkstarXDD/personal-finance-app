@@ -48,12 +48,14 @@ export default function TableFilters() {
       <Select
         label="Sort by"
         aria-label="Sort by"
-        selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
+        selectedKey={readOnlySearchParams.get("sortby") ?? "daysAsc"}
         onSelectionChange={onSortByChange}
         shouldHideOnMobile
         className="max-w-62 md:h-full md:w-full md:min-w-50"
         mobileIcon={PiSortAscendingFill}
       >
+        <SelectItem id="daysAsc">Soonest Due</SelectItem>
+        <SelectItem id="daysDesc">Latest Due</SelectItem>
         <SelectItem id="latest">Latest</SelectItem>
         <SelectItem id="oldest">Oldest</SelectItem>
         <SelectItem id="asc">A to Z</SelectItem>

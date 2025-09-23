@@ -3,6 +3,7 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
+import { getDaysUntilDue, getDueDate } from "@/lib/helpers/recurring-bills"
 import { prisma, type Prisma } from "@/lib/prisma"
 import { TransactionCreate } from "@/lib/schemas"
 import { TransactionCreateErrors, DALReturn } from "@/lib/types"
@@ -46,19 +47,21 @@ export async function createRecurringBill({
 // =========== Fetch Recurring Bills ==========
 // ============================================
 
-const recurringBillsSelect = {
+const recurringBillSelect = {
   id: true,
   counterparty: true,
-  dueDayOfMonth: true,
   amount: true,
+  createdAt: true,
 } satisfies Prisma.RecurringBillSelect
 
 type RecurringBillRaw = Prisma.RecurringBillGetPayload<{
-  select: typeof recurringBillsSelect
+  select: typeof recurringBillSelect
 }>
 
 export type RecurringBill = Omit<RecurringBillRaw, "amount"> & {
   amount: string
+  dueDate: Date
+  daysUntilDue: number
 }
 
 type GetRecurringBillsParams = {
@@ -68,7 +71,7 @@ type GetRecurringBillsParams = {
 
 export async function getRecurringBills({
   query,
-  sortby = "latest",
+  sortby = "daysAsc",
 }: GetRecurringBillsParams) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -77,10 +80,10 @@ export async function getRecurringBills({
 
   switch (sortby) {
     case "latest":
-      orderBy = { dueDayOfMonth: "asc" }
+      orderBy = { createdAt: "desc" }
       break
     case "oldest":
-      orderBy = { dueDayOfMonth: "desc" }
+      orderBy = { createdAt: "asc" }
       break
     case "asc":
       orderBy = { counterparty: "asc" }
@@ -95,25 +98,46 @@ export async function getRecurringBills({
       orderBy = { amount: "asc" }
       break
     default:
-      orderBy = { dueDayOfMonth: "asc" }
+      orderBy = { createdAt: "desc" }
   }
 
-  const [recurringBills, unfilteredItemCount] = await prisma.$transaction([
+  const [recurringBills, recurringBillsSummary] = await prisma.$transaction([
     prisma.recurringBill.findMany({
       where: { userId, counterparty: { contains: query, mode: "insensitive" } },
       orderBy: orderBy,
-      select: recurringBillsSelect,
+      select: recurringBillSelect,
     }),
 
-    // Recurring bill count without filters applied, for the global empty state
-    prisma.recurringBill.count({ where: { userId } }),
+    prisma.recurringBill.aggregate({
+      _sum: { amount: true },
+      _count: { _all: true },
+      where: { userId },
+    }),
   ])
 
-  return {
-    recurringBills: recurringBills.map((recurringBill) => ({
+  // Include dueDate and daysUntilDue after fetching
+  const recurringBillsEnriched = recurringBills.map((recurringBill) => {
+    const amount = recurringBill.amount.toString()
+    return {
       ...recurringBill,
-      amount: recurringBill.amount.toString(),
-    })),
-    totalItemsWithoutFiltering: unfilteredItemCount,
+      amount,
+      dueDate: getDueDate(recurringBill.createdAt),
+      daysUntilDue: getDaysUntilDue(getDueDate(recurringBill.createdAt)),
+    }
+  })
+
+  // Sort the list based on the daysUntilDue
+  if (sortby === "daysAsc") {
+    recurringBillsEnriched.sort((a, b) => a.daysUntilDue - b.daysUntilDue)
+  } else if (sortby === "daysDesc") {
+    recurringBillsEnriched.sort((a, b) => b.daysUntilDue - a.daysUntilDue)
+  }
+
+  return {
+    recurringBills: recurringBillsEnriched,
+    summary: {
+      sum: recurringBillsSummary._sum.amount?.toString(),
+      count: recurringBillsSummary._count._all,
+    },
   }
 }
