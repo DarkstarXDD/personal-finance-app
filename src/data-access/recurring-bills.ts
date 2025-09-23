@@ -72,7 +72,7 @@ type GetRecurringBillsParams = {
 
 export async function getRecurringBills({
   query,
-  sortby = "latest",
+  sortby = "daysAsc",
 }: GetRecurringBillsParams) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
@@ -113,16 +113,26 @@ export async function getRecurringBills({
     prisma.recurringBill.count({ where: { userId } }),
   ])
 
+  // Include dueDate and daysUntilDue after fetching
+  const recurringBillsEnriched = recurringBills.map((recurringBill) => {
+    const amount = recurringBill.amount.toString()
+    return {
+      ...recurringBill,
+      amount,
+      dueDate: getDueDate(recurringBill.createdAt),
+      daysUntilDue: getDaysUntilDue(getDueDate(recurringBill.createdAt)),
+    }
+  })
+
+  // Sort the list based on the daysUntilDue
+  if (sortby === "daysAsc") {
+    recurringBillsEnriched.sort((a, b) => a.daysUntilDue - b.daysUntilDue)
+  } else if (sortby === "daysDesc") {
+    recurringBillsEnriched.sort((a, b) => b.daysUntilDue - a.daysUntilDue)
+  }
+
   return {
-    recurringBills: recurringBills.map((recurringBill) => {
-      const amount = recurringBill.amount.toString()
-      return {
-        ...recurringBill,
-        amount,
-        dueDate: getDueDate(recurringBill.createdAt),
-        daysUntilDue: getDaysUntilDue(getDueDate(recurringBill.createdAt)),
-      }
-    }),
+    recurringBills: recurringBillsEnriched,
     totalItemsWithoutFiltering: unfilteredItemCount,
   }
 }
