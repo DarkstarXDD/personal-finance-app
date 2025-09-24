@@ -5,6 +5,8 @@ import {
   isSameMonth,
 } from "date-fns"
 
+import type { RecurringBill } from "@/data-access/recurring-bills"
+
 // ============================================
 // ============ Get Bill Due Date =============
 // ============================================
@@ -50,7 +52,7 @@ export function getDaysUntilDue(dueDate: Date) {
 // ========= Get Bill Monthly Status ==========
 // ============================================
 
-type BillMonthlyStatus = "paid" | "upcoming" | "dueSoon"
+export type BillMonthlyStatus = "paid" | "upcoming" | "dueSoon"
 
 export function getBillMonthlyStatus(dueDate: Date): BillMonthlyStatus {
   const today = new Date()
@@ -73,4 +75,45 @@ export function getBillMonthlyStatus(dueDate: Date): BillMonthlyStatus {
 
   // 4. If already passed this month => consider it paid
   return "paid"
+}
+
+// ============================================
+// =========== Get Monthly Summary ============
+// ============================================
+
+export type MonthlySummary = {
+  paid: { count: number; total: number }
+  upcoming: { count: number; total: number }
+  dueSoon: { count: number; total: number }
+}
+
+export function getMonthlySummary(recurringBills: RecurringBill[]) {
+  return recurringBills.reduce(
+    (acc, bill) => {
+      const amount = Number(bill.amount)
+
+      switch (bill.monthlyStatus) {
+        case "paid":
+          acc.paid.total += amount
+          acc.paid.count += 1
+          break
+
+        case "upcoming":
+          acc.upcoming.total += amount
+          acc.upcoming.count += 1
+          break
+
+        case "dueSoon":
+          acc.dueSoon.total += amount
+          acc.dueSoon.count += 1
+          break
+      }
+      return acc
+    },
+    {
+      paid: { total: 0, count: 0 },
+      upcoming: { total: 0, count: 0 },
+      dueSoon: { total: 0, count: 0 },
+    }
+  )
 }

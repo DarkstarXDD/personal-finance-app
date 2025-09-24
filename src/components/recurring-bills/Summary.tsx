@@ -4,10 +4,14 @@ import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { currencyFormatter } from "@/lib/utils"
 
+import type { MonthlySummary } from "@/lib/helpers/recurring-bills"
+
 export default function Summary({
   totalValue,
+  monthlySummary,
 }: {
   totalValue?: string | number
+  monthlySummary: MonthlySummary
 }) {
   return (
     <div className="grid gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-1">
@@ -36,7 +40,10 @@ export default function Summary({
               Paid Bills
             </dt>
             <dd className="text-grey-900 text-sm leading-normal font-bold">
-              2 ($320.00)
+              <span>{monthlySummary.paid.count} </span>
+              <span>
+                ({currencyFormatter.format(monthlySummary.paid.total)})
+              </span>
             </dd>
           </div>
           <div className="border-grey-100 flex justify-between gap-2 border-b py-4">
@@ -44,7 +51,10 @@ export default function Summary({
               Total Upcoming
             </dt>
             <dd className="text-grey-900 text-sm leading-normal font-bold">
-              6 ($1,230.00)
+              <span>{monthlySummary.upcoming.count} </span>
+              <span>
+                ({currencyFormatter.format(monthlySummary.upcoming.total)})
+              </span>
             </dd>
           </div>
           <div className="flex justify-between gap-2 pt-4">
@@ -52,7 +62,10 @@ export default function Summary({
               Due Soon
             </dt>
             <dd className="text-red text-sm leading-normal font-bold">
-              2 ($40.00)
+              <span>{monthlySummary.dueSoon.count} </span>
+              <span>
+                ({currencyFormatter.format(monthlySummary.dueSoon.total)})
+              </span>
             </dd>
           </div>
         </dl>

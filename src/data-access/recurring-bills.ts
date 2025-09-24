@@ -3,7 +3,13 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
-import { getDaysUntilDue, getDueDate } from "@/lib/helpers/recurring-bills"
+import {
+  getBillMonthlyStatus,
+  getDaysUntilDue,
+  getDueDate,
+  getMonthlySummary,
+  type BillMonthlyStatus,
+} from "@/lib/helpers/recurring-bills"
 import { prisma, type Prisma } from "@/lib/prisma"
 import { TransactionCreate } from "@/lib/schemas"
 import { TransactionCreateErrors, DALReturn } from "@/lib/types"
@@ -62,6 +68,7 @@ export type RecurringBill = Omit<RecurringBillRaw, "amount"> & {
   amount: string
   dueDate: Date
   daysUntilDue: number
+  monthlyStatus: BillMonthlyStatus
 }
 
 type GetRecurringBillsParams = {
@@ -118,11 +125,13 @@ export async function getRecurringBills({
   // Include dueDate and daysUntilDue after fetching
   const recurringBillsEnriched = recurringBills.map((recurringBill) => {
     const amount = recurringBill.amount.toString()
+    const dueDate = getDueDate(recurringBill.createdAt)
     return {
       ...recurringBill,
       amount,
-      dueDate: getDueDate(recurringBill.createdAt),
-      daysUntilDue: getDaysUntilDue(getDueDate(recurringBill.createdAt)),
+      dueDate,
+      daysUntilDue: getDaysUntilDue(dueDate),
+      monthlyStatus: getBillMonthlyStatus(dueDate),
     }
   })
 
@@ -138,6 +147,7 @@ export async function getRecurringBills({
     summary: {
       sum: recurringBillsSummary._sum.amount?.toString(),
       count: recurringBillsSummary._count._all,
+      monthlySummary: getMonthlySummary(recurringBillsEnriched),
     },
   }
 }
