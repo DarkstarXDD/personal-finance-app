@@ -4,6 +4,7 @@ import { format } from "date-fns"
 import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
+import { PiWarningCircleFill } from "react-icons/pi"
 
 import DeleteBudgetDialog from "@/components/budgets/DeleteBudgetDialog"
 import EditBudgetDialog from "@/components/budgets/EditBudgetDialog"
@@ -87,6 +88,13 @@ export default function BudgetCard({
             </div>
           )}
         </ProgressBar>
+
+        {Number(budget.maximumSpend) < Number(budget.totalSpent) && (
+          <p className="text-red flex gap-2 text-sm leading-normal font-normal">
+            <PiWarningCircleFill className="size-5" />
+            You’ve exceeded this month’s budget for this category.
+          </p>
+        )}
 
         <dl className="grid grid-cols-2">
           <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
