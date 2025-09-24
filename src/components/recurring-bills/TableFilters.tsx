@@ -56,12 +56,12 @@ export default function TableFilters() {
       >
         <SelectItem id="daysAsc">Soonest Due</SelectItem>
         <SelectItem id="daysDesc">Latest Due</SelectItem>
-        <SelectItem id="latest">Latest</SelectItem>
-        <SelectItem id="oldest">Oldest</SelectItem>
-        <SelectItem id="asc">A to Z</SelectItem>
-        <SelectItem id="desc">Z to A</SelectItem>
         <SelectItem id="highest">Highest</SelectItem>
         <SelectItem id="lowest">Lowest</SelectItem>
+        <SelectItem id="asc">A to Z</SelectItem>
+        <SelectItem id="desc">Z to A</SelectItem>
+        <SelectItem id="latest">Latest</SelectItem>
+        <SelectItem id="oldest">Oldest</SelectItem>
       </Select>
     </div>
   )
