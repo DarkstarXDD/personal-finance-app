@@ -1,4 +1,13 @@
-import { lastDayOfMonth, differenceInCalendarDays, addMonths } from "date-fns"
+import {
+  lastDayOfMonth,
+  differenceInCalendarDays,
+  addMonths,
+  isSameMonth,
+} from "date-fns"
+
+// ============================================
+// ============ Get Bill Due Date =============
+// ============================================
 
 export function getDueDate(subscriptionStartDate: Date) {
   // If the bill was first created on a 31st, in months 31st
@@ -28,8 +37,40 @@ export function getDueDate(subscriptionStartDate: Date) {
   return dueDate
 }
 
+// ============================================
+// =========== Get Days Until Due =============
+// ============================================
+
 export function getDaysUntilDue(dueDate: Date) {
   const today = new Date()
-
   return differenceInCalendarDays(dueDate, today)
+}
+
+// ============================================
+// ========= Get Bill Monthly Status ==========
+// ============================================
+
+type BillMonthlyStatus = "paid" | "upcoming" | "dueSoon"
+
+export function getBillMonthlyStatus(dueDate: Date): BillMonthlyStatus {
+  const today = new Date()
+  const daysUntilDue = getDaysUntilDue(dueDate)
+
+  // 1. If due date is next month => already paid
+  if (!isSameMonth(today, dueDate)) {
+    return "paid"
+  }
+
+  // 2. If due date is this month but not within 7 days => upcoming
+  if (daysUntilDue > 7) {
+    return "upcoming"
+  }
+
+  // 3. If due date is within 7 days and same month => dueSoon
+  if (daysUntilDue <= 7 && daysUntilDue >= 0) {
+    return "dueSoon"
+  }
+
+  // 4. If already passed this month => consider it paid
+  return "paid"
 }
