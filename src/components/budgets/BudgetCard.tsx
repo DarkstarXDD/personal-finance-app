@@ -7,6 +7,7 @@ import { ProgressBar } from "react-aria-components"
 
 import DeleteBudgetDialog from "@/components/budgets/DeleteBudgetDialog"
 import EditBudgetDialog from "@/components/budgets/EditBudgetDialog"
+import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import TransactionAmount from "@/components/transactions/TransactionAmount"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
@@ -124,26 +125,30 @@ export default function BudgetCard({
               See All
             </Link>
           </div>
-          <ul>
-            {budget.transactions.map((transaction) => (
-              <li
-                key={transaction.id}
-                className="border-grey-200 grid grid-cols-2 gap-1 border-b py-3 first:pt-0 last:border-none last:pb-0"
-              >
-                <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
-                  {transaction.counterparty}
-                </h4>
-                <TransactionAmount
-                  transactionAmount={transaction.amount}
-                  transactionType={transaction.transactionType}
-                  className="justify-self-end text-xs"
-                />
-                <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
-                  {format(transaction.createdAt, "dd MMM yyyy")}
-                </p>
-              </li>
-            ))}
-          </ul>
+          {budget.transactions.length === 0 ? (
+            <FilteredEmptyState message="No transactions under this category for this month." />
+          ) : (
+            <ul>
+              {budget.transactions.map((transaction) => (
+                <li
+                  key={transaction.id}
+                  className="border-grey-200 grid grid-cols-2 gap-1 border-b py-3 first:pt-0 last:border-none last:pb-0"
+                >
+                  <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
+                    {transaction.counterparty}
+                  </h4>
+                  <TransactionAmount
+                    transactionAmount={transaction.amount}
+                    transactionType={transaction.transactionType}
+                    className="justify-self-end text-xs"
+                  />
+                  <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
+                    {format(transaction.createdAt, "dd MMM yyyy")}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
