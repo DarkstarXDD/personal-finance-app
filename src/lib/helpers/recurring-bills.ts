@@ -5,6 +5,8 @@ import {
   isSameMonth,
 } from "date-fns"
 
+import { DUE_SOON_THRESHOLD_DAYS } from "@/lib/constants"
+
 import type { RecurringBill } from "@/data-access/recurring-bills"
 
 // ============================================
@@ -64,12 +66,12 @@ export function getBillMonthlyStatus(dueDate: Date): BillMonthlyStatus {
   }
 
   // 2. If due date is this month but not within 7 days => upcoming
-  if (daysUntilDue > 7) {
+  if (daysUntilDue > DUE_SOON_THRESHOLD_DAYS) {
     return "upcoming"
   }
 
   // 3. If due date is within 7 days and same month => dueSoon
-  if (daysUntilDue <= 7 && daysUntilDue >= 0) {
+  if (daysUntilDue <= DUE_SOON_THRESHOLD_DAYS && daysUntilDue >= 0) {
     return "dueSoon"
   }
 

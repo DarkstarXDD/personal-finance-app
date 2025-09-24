@@ -1,5 +1,7 @@
 import { tv } from "tailwind-variants"
 
+import { DUE_SOON_THRESHOLD_DAYS } from "@/lib/constants"
+
 export default function DaysUntilDue({
   daysUntilDue,
 }: {
@@ -14,7 +16,7 @@ export default function DaysUntilDue({
     },
   })
 
-  const dueSoon = daysUntilDue < 8
+  const dueSoon = daysUntilDue <= DUE_SOON_THRESHOLD_DAYS
 
   if (daysUntilDue === 1) {
     return <p className={componentStyles({ dueSoon })}>{`Due in 1 day`}</p>
