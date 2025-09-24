@@ -135,7 +135,7 @@ export default function BudgetCard({
             </Link>
           </div>
           {budget.transactions.length === 0 ? (
-            <FilteredEmptyState message="No transactions under this category for this month." />
+            <FilteredEmptyState message="No expenses under this category for this month." />
           ) : (
             <ul>
               {budget.transactions.map((transaction) => (
