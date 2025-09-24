@@ -106,6 +106,8 @@ export function getMonthlySummary(recurringBills: RecurringBill[]) {
         case "dueSoon":
           acc.dueSoon.total += amount
           acc.dueSoon.count += 1
+          acc.upcoming.total += amount
+          acc.upcoming.count += 1
           break
       }
       return acc
