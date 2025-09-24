@@ -33,7 +33,8 @@ export default function BudgetCard({
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
-  const remaningAmount = Number(budget.maximumSpend) - Number(budget.totalSpent)
+  const remainingAmount =
+    Number(budget.maximumSpend) - Number(budget.totalSpent)
 
   return (
     <Card className="grid gap-5">
@@ -107,7 +108,7 @@ export default function BudgetCard({
             </dt>
             <dd className="text-grey-900 text-sm leading-normal font-bold">
               {currencyFormatter.format(
-                remaningAmount < 0 ? 0 : remaningAmount
+                remainingAmount < 0 ? 0 : remainingAmount
               )}
             </dd>
           </div>
