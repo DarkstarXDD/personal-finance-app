@@ -117,7 +117,10 @@ export default function BudgetCard({
             <h3 className="text-grey-900 text-base leading-normal font-bold">
               Latest Spending
             </h3>
-            <Link href="/" withIcon>
+            <Link
+              href={`/transactions?category=${budget.category.name}`}
+              withIcon
+            >
               See All
             </Link>
           </div>
