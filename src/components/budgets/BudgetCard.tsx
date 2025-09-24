@@ -61,7 +61,7 @@ export default function BudgetCard({
         </MenuTrigger>
       </div>
 
-      <div className="grid gap-4">
+      <div className="grid gap-8">
         <ProgressBar
           value={Number(budget.totalSpent)}
           minValue={0}
