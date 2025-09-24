@@ -3,7 +3,13 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
-import { getDaysUntilDue, getDueDate } from "@/lib/helpers/recurring-bills"
+import {
+  getBillMonthlyStatus,
+  getDaysUntilDue,
+  getDueDate,
+  getMonthlySummary,
+  type BillMonthlyStatus,
+} from "@/lib/helpers/recurring-bills"
 import { prisma, type Prisma } from "@/lib/prisma"
 import { TransactionCreate } from "@/lib/schemas"
 import { TransactionCreateErrors, DALReturn } from "@/lib/types"
@@ -62,6 +68,7 @@ export type RecurringBill = Omit<RecurringBillRaw, "amount"> & {
   amount: string
   dueDate: Date
   daysUntilDue: number
+  monthlyStatus: BillMonthlyStatus
 }
 
 type GetRecurringBillsParams = {
@@ -101,43 +108,75 @@ export async function getRecurringBills({
       orderBy = { createdAt: "desc" }
   }
 
-  const [recurringBills, recurringBillsSummary] = await prisma.$transaction([
-    prisma.recurringBill.findMany({
-      where: { userId, counterparty: { contains: query, mode: "insensitive" } },
-      orderBy: orderBy,
-      select: recurringBillSelect,
-    }),
+  // Prisma queries
+  const [allRecurringBills, filteredRecurringBills, recurringBillsSummary] =
+    await prisma.$transaction([
+      prisma.recurringBill.findMany({
+        where: { userId },
+        select: recurringBillSelect,
+      }),
 
-    prisma.recurringBill.aggregate({
-      _sum: { amount: true },
-      _count: { _all: true },
-      where: { userId },
-    }),
-  ])
+      prisma.recurringBill.findMany({
+        where: {
+          userId,
+          counterparty: { contains: query, mode: "insensitive" },
+        },
+        orderBy: orderBy,
+        select: recurringBillSelect,
+      }),
+
+      prisma.recurringBill.aggregate({
+        where: { userId },
+        _sum: { amount: true },
+        _count: { _all: true },
+      }),
+    ])
 
   // Include dueDate and daysUntilDue after fetching
-  const recurringBillsEnriched = recurringBills.map((recurringBill) => {
+  const allRecurringBillsEnriched = allRecurringBills.map((recurringBill) => {
     const amount = recurringBill.amount.toString()
+    const dueDate = getDueDate(recurringBill.createdAt)
     return {
       ...recurringBill,
       amount,
-      dueDate: getDueDate(recurringBill.createdAt),
-      daysUntilDue: getDaysUntilDue(getDueDate(recurringBill.createdAt)),
+      dueDate,
+      daysUntilDue: getDaysUntilDue(dueDate),
+      monthlyStatus: getBillMonthlyStatus(dueDate),
     }
   })
 
+  // Include dueDate and daysUntilDue after fetching
+  const filteredRecurringBillsEnriched = filteredRecurringBills.map(
+    (recurringBill) => {
+      const amount = recurringBill.amount.toString()
+      const dueDate = getDueDate(recurringBill.createdAt)
+      return {
+        ...recurringBill,
+        amount,
+        dueDate,
+        daysUntilDue: getDaysUntilDue(dueDate),
+        monthlyStatus: getBillMonthlyStatus(dueDate),
+      }
+    }
+  )
+
   // Sort the list based on the daysUntilDue
   if (sortby === "daysAsc") {
-    recurringBillsEnriched.sort((a, b) => a.daysUntilDue - b.daysUntilDue)
+    filteredRecurringBillsEnriched.sort(
+      (a, b) => a.daysUntilDue - b.daysUntilDue
+    )
   } else if (sortby === "daysDesc") {
-    recurringBillsEnriched.sort((a, b) => b.daysUntilDue - a.daysUntilDue)
+    filteredRecurringBillsEnriched.sort(
+      (a, b) => b.daysUntilDue - a.daysUntilDue
+    )
   }
 
   return {
-    recurringBills: recurringBillsEnriched,
+    recurringBills: filteredRecurringBillsEnriched,
     summary: {
       sum: recurringBillsSummary._sum.amount?.toString(),
       count: recurringBillsSummary._count._all,
+      monthlySummary: getMonthlySummary(allRecurringBillsEnriched),
     },
   }
 }

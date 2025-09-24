@@ -27,7 +27,10 @@ export default async function RecurringBillsPage({
       <main className="grid gap-8">
         <Heading as="h1">Recurring Bills</Heading>
         <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
-          <Summary totalValue={summary.sum} />
+          <Summary
+            totalValue={summary.sum}
+            monthlySummary={summary.monthlySummary}
+          />
           <Card>
             <EmptyState
               icon={PiReceiptFill}
@@ -44,7 +47,10 @@ export default async function RecurringBillsPage({
     <main className="grid gap-8">
       <Heading as="h1">Recurring Bills</Heading>
       <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
-        <Summary totalValue={summary.sum} />
+        <Summary
+          totalValue={summary.sum}
+          monthlySummary={summary.monthlySummary}
+        />
 
         <Card className="grid gap-6 md:pb-4">
           <TableFilters />
