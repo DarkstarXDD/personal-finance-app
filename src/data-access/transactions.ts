@@ -162,7 +162,11 @@ export async function getTransactionsForBudget(categoryId: string) {
 
   const [transactions, spent] = await prisma.$transaction([
     prisma.transaction.findMany({
-      where: { userId, categoryId },
+      where: {
+        userId,
+        categoryId,
+        createdAt: { gte: startOfMonth(new Date()) },
+      },
       select: transactionSelect,
       orderBy: { createdAt: "desc" },
       take: 3,
