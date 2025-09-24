@@ -13,6 +13,9 @@ export default function Summary({
   totalValue?: string | number
   monthlySummary: MonthlySummary
 }) {
+  const today = new Date()
+  const currentMonth = today.toLocaleDateString(undefined, { month: "long" })
+
   return (
     <div className="grid gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-1">
       <Card
@@ -32,7 +35,8 @@ export default function Summary({
 
       <Card theme="light" className="grid gap-5">
         <Heading as="h2" variant="secondary" className="text-base">
-          Summary
+          <span>Summary for</span>
+          <span className="text-turquoise"> {currentMonth}</span>
         </Heading>
         <dl>
           <div className="border-grey-100 flex justify-between gap-2 border-b pb-4">
