@@ -77,7 +77,7 @@ type GetRecurringBillsParams = {
 }
 
 export async function getRecurringBills({
-  query,
+  query = "",
   sortby = "daysAsc",
 }: GetRecurringBillsParams) {
   const userId = await verifySession()
