@@ -1,6 +1,10 @@
 import Card from "@/components/ui/Card"
+import { getTransactionTotals } from "@/data-access/transactions"
+import { currencyFormatter } from "@/lib/utils"
 
-export default function SummaryCards() {
+export default async function SummaryCards() {
+  const { currentBalance, income, expense } = await getTransactionTotals()
+
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
       <Card padding="md" theme="dark" className="w-full shadow-none">
@@ -9,7 +13,7 @@ export default function SummaryCards() {
             Current Balance
           </dt>
           <dd className="text-3xl leading-tight font-bold text-white">
-            $4,836.00
+            {currencyFormatter.format(currentBalance)}
           </dd>
         </dl>
       </Card>
@@ -20,7 +24,7 @@ export default function SummaryCards() {
             Income
           </dt>
           <dd className="text-grey-900 text-3xl leading-tight font-bold">
-            $3,814.25
+            {currencyFormatter.format(income)}
           </dd>
         </dl>
       </Card>
@@ -31,7 +35,7 @@ export default function SummaryCards() {
             Expenses
           </dt>
           <dd className="text-grey-900 text-3xl leading-tight font-bold">
-            $1,700.50
+            {currencyFormatter.format(expense)}
           </dd>
         </dl>
       </Card>
