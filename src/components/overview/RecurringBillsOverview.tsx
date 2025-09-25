@@ -1,9 +1,12 @@
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
+import { getRecurringBills } from "@/data-access/recurring-bills"
 import { currencyFormatter } from "@/lib/utils"
 
 export default async function RecurringBillsOverview() {
+  const { summary } = await getRecurringBills({})
+
   return (
     <Card className="grid content-start gap-8 shadow-none">
       <div className="flex items-center justify-between">
@@ -18,17 +21,17 @@ export default async function RecurringBillsOverview() {
       <div className="grid gap-3">
         <RecurringBillsOverviewItem
           label="Paid Bills"
-          value="190"
+          value={summary.monthlySummary.paid.total}
           color="#277c78"
         />
         <RecurringBillsOverviewItem
           label="Total Upcoming"
-          value="194.98"
+          value={summary.monthlySummary.upcoming.total}
           color="#f2cdac"
         />
         <RecurringBillsOverviewItem
           label="Due Soon"
-          value="59.98"
+          value={summary.monthlySummary.dueSoon.total}
           color="#82c9d7"
         />
       </div>
@@ -42,7 +45,7 @@ function RecurringBillsOverviewItem({
   color,
 }: {
   label: string
-  value: string
+  value: string | number
   color: string
 }) {
   return (

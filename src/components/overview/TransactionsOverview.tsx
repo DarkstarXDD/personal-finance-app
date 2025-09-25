@@ -50,8 +50,7 @@ export default async function TransactionsOverview() {
           <EmptyState
             icon={PiArrowsDownUpFill}
             title="No transactions yet"
-            description="Your transaction history will appear here once you start making
-                  purchases."
+            description="Your transaction history will appear here once you start making purchases."
           />
         )}
       </div>
