@@ -1,3 +1,6 @@
+import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
+import TableDesktop from "@/components/recurring-bills/TableDesktop"
+import TableMobile from "@/components/recurring-bills/TableMobile"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
@@ -5,7 +8,7 @@ import { getRecurringBills } from "@/data-access/recurring-bills"
 import { currencyFormatter } from "@/lib/utils"
 
 export default async function RecurringBillsOverview() {
-  const { summary } = await getRecurringBills({})
+  const { recurringBills, summary } = await getRecurringBills({})
 
   return (
     <Card className="grid content-start gap-8 shadow-none">
@@ -34,6 +37,17 @@ export default async function RecurringBillsOverview() {
           value={summary.monthlySummary.dueSoon.total}
           color="#82c9d7"
         />
+      </div>
+
+      <div>
+        {recurringBills.length > 0 ? (
+          <>
+            <TableMobile recurringBills={recurringBills.slice(0, 3)} />
+            <TableDesktop recurringBills={recurringBills.slice(0, 3)} />
+          </>
+        ) : (
+          <FilteredEmptyState />
+        )}
       </div>
     </Card>
   )

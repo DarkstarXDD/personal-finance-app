@@ -9,8 +9,9 @@ import {
 import { format } from "date-fns"
 
 import DaysUntilDue from "@/components/recurring-bills/DaysUntilDue"
-import { RecurringBill } from "@/data-access/recurring-bills"
 import { currencyFormatter } from "@/lib/utils"
+
+import type { RecurringBill } from "@/data-access/recurring-bills"
 
 const columnHelper = createColumnHelper<RecurringBill>()
 
