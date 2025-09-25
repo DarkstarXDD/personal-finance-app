@@ -192,3 +192,30 @@ export async function getTransactionsForBudget(categoryId: string) {
     totalSpent: spent._sum.amount?.toString() ?? "0",
   }
 }
+
+// ============================================
+// ========== Fetch Transaction Totals ========
+// ============================================
+
+export async function getTransactionTotals() {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  const groupedTotals = await prisma.transaction.groupBy({
+    by: "transactionType",
+    where: { userId },
+    _sum: { amount: true },
+  })
+
+  let income = 0
+  let expense = 0
+
+  for (const g of groupedTotals) {
+    if (g.transactionType === "INCOME") income = Number(g._sum.amount)
+    if (g.transactionType === "EXPENSE") expense = Number(g._sum.amount)
+  }
+
+  const currentBalance = income - expense
+
+  return { currentBalance, income, expense }
+}
