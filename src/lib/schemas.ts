@@ -105,3 +105,11 @@ export const potAmountUpdateSchema = z.object({
     .nonnegative("Amount cannot be negative."),
 })
 export type PotAmountUpdate = z.infer<typeof potAmountUpdateSchema>
+
+// ============================================
+// ======== Navbar State in LocalStorage ======
+// ============================================
+
+export const localStorageSchema = z.object({
+  isExpanded: z.boolean(),
+})
