@@ -3,7 +3,7 @@
 import Image from "next/image"
 import NextLink from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
-import { useState, createContext, useContext } from "react"
+import { useState, createContext, useContext, useEffect } from "react"
 import { Button as RacButton } from "react-aria-components"
 import {
   PiArrowFatLinesLeft,
@@ -15,18 +15,14 @@ import {
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
+import { localStorageSchema } from "@/lib/schemas"
+
 // Most probably wll change how the logo SVG is imported and added
 import logoLarge from "../../../public/logo-large.svg"
 import logoSmall from "../../../public/logo-small.svg"
 
 import type { ComponentProps } from "react"
 import type { IconType } from "react-icons"
-
-type NavbarContextType = { isExpanded: boolean | undefined }
-
-const NavbarContext = createContext<NavbarContextType>({
-  isExpanded: undefined,
-})
 
 const navbarStyles = tv({
   slots: {
@@ -69,8 +65,24 @@ const {
   buttonSpan,
 } = navbarStyles()
 
+type NavbarContextType = { isExpanded: boolean | undefined }
+
+const NavbarContext = createContext<NavbarContextType>({
+  isExpanded: undefined,
+})
+
 function Navbar({ className }: { className?: string }) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
+
+  useEffect(() => {
+    const value = JSON.parse(localStorage.getItem("isExpanded") ?? "true")
+    const parsedData = localStorageSchema.safeParse({ isExpanded: value })
+    if (parsedData.success) {
+      setIsExpanded(parsedData.data.isExpanded)
+    } else {
+      setIsExpanded(true)
+    }
+  }, [])
 
   return (
     <NavbarContext.Provider value={{ isExpanded }}>
@@ -98,7 +110,13 @@ function Navbar({ className }: { className?: string }) {
         </ul>
         <RacButton
           className={button()}
-          onPress={() => setIsExpanded((prev) => !prev)}
+          onPress={() =>
+            setIsExpanded((prev) => {
+              const newValue = !prev
+              localStorage.setItem("isExpanded", JSON.stringify(newValue))
+              return newValue
+            })
+          }
         >
           <PiArrowFatLinesLeft className={buttonIcon({ isExpanded })} />
           <span className={buttonSpan({ isExpanded })}>Minimize Menu</span>
