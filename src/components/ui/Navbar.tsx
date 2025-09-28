@@ -1,5 +1,6 @@
 "use client"
 
+import Cookies from "js-cookie"
 import Image from "next/image"
 import NextLink from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
@@ -21,12 +22,6 @@ import logoSmall from "../../../public/logo-small.svg"
 
 import type { ComponentProps } from "react"
 import type { IconType } from "react-icons"
-
-type NavbarContextType = { isExpanded: boolean | undefined }
-
-const NavbarContext = createContext<NavbarContextType>({
-  isExpanded: undefined,
-})
 
 const navbarStyles = tv({
   slots: {
@@ -69,8 +64,20 @@ const {
   buttonSpan,
 } = navbarStyles()
 
-function Navbar({ className }: { className?: string }) {
-  const [isExpanded, setIsExpanded] = useState(false)
+type NavbarContextType = { isExpanded: boolean | undefined }
+
+const NavbarContext = createContext<NavbarContextType>({
+  isExpanded: undefined,
+})
+
+function Navbar({
+  initialExpanded,
+  className,
+}: {
+  initialExpanded: boolean
+  className?: string
+}) {
+  const [isExpanded, setIsExpanded] = useState(initialExpanded)
 
   return (
     <NavbarContext.Provider value={{ isExpanded }}>
@@ -98,7 +105,15 @@ function Navbar({ className }: { className?: string }) {
         </ul>
         <RacButton
           className={button()}
-          onPress={() => setIsExpanded((prev) => !prev)}
+          onPress={() =>
+            setIsExpanded((prev) => {
+              const newValue = !prev
+              Cookies.set("isExpanded", newValue ? "1" : "0", {
+                expires: 30,
+              })
+              return newValue
+            })
+          }
         >
           <PiArrowFatLinesLeft className={buttonIcon({ isExpanded })} />
           <span className={buttonSpan({ isExpanded })}>Minimize Menu</span>
