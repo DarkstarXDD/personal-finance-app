@@ -1,9 +1,10 @@
 "use client"
 
+import Cookies from "js-cookie"
 import Image from "next/image"
 import NextLink from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
-import { useState, createContext, useContext, useEffect } from "react"
+import { useState, createContext, useContext } from "react"
 import { Button as RacButton } from "react-aria-components"
 import {
   PiArrowFatLinesLeft,
@@ -14,8 +15,6 @@ import {
   PiReceiptFill as BillsIcon,
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
-
-import { localStorageSchema } from "@/lib/schemas"
 
 // Most probably wll change how the logo SVG is imported and added
 import logoLarge from "../../../public/logo-large.svg"
@@ -71,18 +70,14 @@ const NavbarContext = createContext<NavbarContextType>({
   isExpanded: undefined,
 })
 
-function Navbar({ className }: { className?: string }) {
-  const [isExpanded, setIsExpanded] = useState(true)
-
-  useEffect(() => {
-    const value = JSON.parse(localStorage.getItem("isExpanded") ?? "true")
-    const parsedData = localStorageSchema.safeParse({ isExpanded: value })
-    if (parsedData.success) {
-      setIsExpanded(parsedData.data.isExpanded)
-    } else {
-      setIsExpanded(true)
-    }
-  }, [])
+function Navbar({
+  initialExpanded,
+  className,
+}: {
+  initialExpanded: boolean
+  className?: string
+}) {
+  const [isExpanded, setIsExpanded] = useState(initialExpanded)
 
   return (
     <NavbarContext.Provider value={{ isExpanded }}>
@@ -113,7 +108,9 @@ function Navbar({ className }: { className?: string }) {
           onPress={() =>
             setIsExpanded((prev) => {
               const newValue = !prev
-              localStorage.setItem("isExpanded", JSON.stringify(newValue))
+              Cookies.set("isExpanded", newValue ? "1" : "0", {
+                expires: 30,
+              })
               return newValue
             })
           }
