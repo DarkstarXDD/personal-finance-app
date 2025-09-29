@@ -27,10 +27,10 @@ type Story = StoryObj<typeof meta>
 export const MultipleSlices: Story = {
   args: {
     chartData: [
-      { label: "Budget 1", value: 25, color: "#606c38" },
-      { label: "Budget 2", value: 35, color: "#283618" },
-      { label: "Budget 3", value: 15, color: "#dda15e" },
-      { label: "Budget 4", value: 25, color: "#bc6c25" },
+      { label: "Slice 1", value: 25, color: "#606c38" },
+      { label: "Slice 2", value: 35, color: "#283618" },
+      { label: "Slice 3", value: 15, color: "#dda15e" },
+      { label: "Slice 4", value: 25, color: "#bc6c25" },
     ],
   },
 }
