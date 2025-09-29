@@ -27,7 +27,7 @@ export default function BudgetCard({
   categories,
   colors,
 }: {
-  budget: Budget & { transactions: Transaction[]; totalSpent: string }
+  budget: Budget & { transactions: Transaction[]; totalSpent: number }
   categories: Category[]
   colors: Color[]
 }) {

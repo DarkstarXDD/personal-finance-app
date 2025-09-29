@@ -9,7 +9,7 @@ import type { Transaction } from "@/data-access/transactions"
 export default function BudgetsSummary({
   budgets,
 }: {
-  budgets: (Budget & { transactions: Transaction[]; totalSpent: string })[]
+  budgets: (Budget & { transactions: Transaction[]; totalSpent: number })[]
 }) {
   return (
     <Card className="grid gap-6">
@@ -21,7 +21,8 @@ export default function BudgetsSummary({
         <DonutChart
           chartData={budgets.map((budget) => ({
             label: budget.category.label,
-            value: budget.maximumSpend,
+            current: budget.totalSpent,
+            target: budget.maximumSpend,
             color: budget.color.value,
           }))}
         />
@@ -48,7 +49,7 @@ function SummaryItem({
   color,
 }: {
   budgetCategory: string
-  currentSpend: string
+  currentSpend: number
   maximumSpend: number
   color: string
 }) {

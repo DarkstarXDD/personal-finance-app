@@ -189,7 +189,7 @@ export async function getTransactionsForBudget(categoryId: string) {
       ...t,
       amount: t.amount.toString(),
     })),
-    totalSpent: spent._sum.amount?.toString() ?? "0",
+    totalSpent: spent._sum.amount?.toNumber() ?? 0,
   }
 }
 
