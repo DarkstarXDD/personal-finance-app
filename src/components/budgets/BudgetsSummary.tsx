@@ -1,4 +1,5 @@
 import Card from "@/components/ui/Card"
+import DonutChart from "@/components/ui/DonutChart"
 import Heading from "@/components/ui/Heading"
 import { currencyFormatter } from "@/lib/utils"
 
@@ -17,7 +18,14 @@ export default function BudgetsSummary({
       </Heading>
 
       <div className="grid gap-6 md:grid-cols-2 md:items-center 2xl:grid-cols-1">
-        <div className="bg-cyan size-60 justify-self-center rounded-full" />
+        {/* <div className="bg-cyan size-60 justify-self-center rounded-full" /> */}
+        <DonutChart
+          chartData={budgets.map((budget) => ({
+            label: budget.category.label,
+            value: budget.maximumSpend,
+            color: budget.color.value,
+          }))}
+        />
         <dl>
           {budgets.map((budget) => (
             <SummaryItem
