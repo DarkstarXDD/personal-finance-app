@@ -9,11 +9,12 @@ const meta = {
   argTypes: {
     chartData: {
       description:
-        "Array of data slices for the donut chart. Each slice should have a label, value, and color.",
+        "Array of data slices for the donut chart. Each slice should have a label, current value, target value and color.",
       table: {
         type: {
           summary: "Array<Slice>",
-          detail: "{\n  label: string;\n  value: number;\n  color: string;\n}",
+          detail:
+            "{\n  label: string;\n  current: number;\n  target: number;\n  color: string;\n}",
         },
       },
     },
