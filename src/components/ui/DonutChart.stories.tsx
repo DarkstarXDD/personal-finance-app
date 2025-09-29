@@ -27,16 +27,16 @@ type Story = StoryObj<typeof meta>
 export const MultipleSlices: Story = {
   args: {
     chartData: [
-      { label: "Slice 1", value: 25, color: "#606c38" },
-      { label: "Slice 2", value: 35, color: "#283618" },
-      { label: "Slice 3", value: 15, color: "#dda15e" },
-      { label: "Slice 4", value: 25, color: "#bc6c25" },
+      { label: "Slice 1", current: 0, target: 25, color: "#606c38" },
+      { label: "Slice 2", current: 10, target: 35, color: "#283618" },
+      { label: "Slice 3", current: 2, target: 15, color: "#dda15e" },
+      { label: "Slice 4", current: 6, target: 25, color: "#bc6c25" },
     ],
   },
 }
 
 export const SingleSlice: Story = {
   args: {
-    chartData: [{ label: "Single", value: 100, color: "#dda15e" }],
+    chartData: [{ label: "Single", current: 3, target: 100, color: "#dda15e" }],
   },
 }

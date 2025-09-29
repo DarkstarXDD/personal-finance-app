@@ -2,7 +2,7 @@ import { PiChartDonutFill } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
-import DonutChart from "@/components/ui/DonutChart"
+// import DonutChart from "@/components/ui/DonutChart"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import { Metrics, MetricItem } from "@/components/ui/Metrics"
@@ -29,13 +29,13 @@ export default async function BudgetsOverview() {
 
       {budgets.length > 0 ? (
         <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
-          <DonutChart
+          {/* <DonutChart
             chartData={budgets.map((budget) => ({
               label: budget.category.label,
-              value: budget.maximumSpend,
+              target: budget.maximumSpend,
               color: budget.color.value,
             }))}
-          />
+          /> */}
 
           <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
             {budgets.map((budget) => (
