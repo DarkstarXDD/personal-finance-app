@@ -34,7 +34,13 @@ export default async function BudgetsPage() {
 
       {budgets.length > 0 ? (
         <div className="grid gap-6 2xl:grid-cols-[2fr_3fr] 2xl:items-start">
-          <BudgetsSummary budgets={budgetsWithTransactions} />
+          <Card className="grid gap-6">
+            <Heading as="h2" variant="secondary">
+              Spending Summary
+            </Heading>
+            <BudgetsSummary budgets={budgetsWithTransactions} />
+          </Card>
+
           <div className="grid gap-6">
             {budgetsWithTransactions.map(async (budget) => (
               <BudgetCard
