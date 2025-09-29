@@ -1,5 +1,4 @@
-import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
+import DonutChart from "@/components/ui/DonutChart"
 import { currencyFormatter } from "@/lib/utils"
 
 import type { Budget } from "@/data-access/budgets"
@@ -8,29 +7,30 @@ import type { Transaction } from "@/data-access/transactions"
 export default function BudgetsSummary({
   budgets,
 }: {
-  budgets: (Budget & { transactions: Transaction[]; totalSpent: string })[]
+  budgets: (Budget & { transactions: Transaction[]; totalSpent: number })[]
 }) {
   return (
-    <Card className="grid gap-6">
-      <Heading as="h2" variant="secondary">
-        Spending Summary
-      </Heading>
-
-      <div className="grid gap-6 md:grid-cols-2 md:items-center 2xl:grid-cols-1">
-        <div className="bg-cyan size-60 justify-self-center rounded-full" />
-        <dl>
-          {budgets.map((budget) => (
-            <SummaryItem
-              key={budget.id}
-              budgetCategory={budget.category.label}
-              currentSpend={budget.totalSpent}
-              maximumSpend={budget.maximumSpend}
-              color={budget.color.value}
-            />
-          ))}
-        </dl>
-      </div>
-    </Card>
+    <div className="grid gap-6 md:grid-cols-2 md:items-center 2xl:grid-cols-1">
+      <DonutChart
+        chartData={budgets.map((budget) => ({
+          label: budget.category.label,
+          current: budget.totalSpent,
+          target: budget.maximumSpend,
+          color: budget.color.value,
+        }))}
+      />
+      <dl>
+        {budgets.map((budget) => (
+          <SummaryItem
+            key={budget.id}
+            budgetCategory={budget.category.label}
+            currentSpend={budget.totalSpent}
+            maximumSpend={budget.maximumSpend}
+            color={budget.color.value}
+          />
+        ))}
+      </dl>
+    </div>
   )
 }
 
@@ -41,7 +41,7 @@ function SummaryItem({
   color,
 }: {
   budgetCategory: string
-  currentSpend: string
+  currentSpend: number
   maximumSpend: number
   color: string
 }) {

@@ -1,15 +1,23 @@
 import { PiChartDonutFill } from "react-icons/pi"
 
+import BudgetsSummary from "@/components/budgets/BudgetsSummary"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
-import { Metrics, MetricItem } from "@/components/ui/Metrics"
 import { getBudgets } from "@/data-access/budgets"
-import { currencyFormatter } from "@/lib/utils"
+import { getTransactionsForBudget } from "@/data-access/transactions"
 
 export default async function BudgetsOverview() {
-  const budgets = await getBudgets(4)
+  const budgets = await getBudgets()
+  const budgetsWithTransactions = await Promise.all(
+    budgets.map(async (budget) => {
+      const { transactions, totalSpent } = await getTransactionsForBudget(
+        budget.category.id
+      )
+      return { ...budget, transactions, totalSpent }
+    })
+  )
 
   return (
     <Card className="grid content-start gap-8 shadow-none">
@@ -27,20 +35,7 @@ export default async function BudgetsOverview() {
       </div>
 
       {budgets.length > 0 ? (
-        <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-start">
-          <div className="bg-cyan size-60 justify-self-center rounded-full" />
-
-          <Metrics className="grid grid-cols-2 gap-4 md:grid-cols-1">
-            {budgets.map((budget) => (
-              <MetricItem
-                key={budget.id}
-                label={budget.category.label}
-                value={currencyFormatter.format(Number(budget.maximumSpend))}
-                color={budget.color.value}
-              />
-            ))}
-          </Metrics>
-        </div>
+        <BudgetsSummary budgets={budgetsWithTransactions} />
       ) : (
         <EmptyState
           icon={PiChartDonutFill}
