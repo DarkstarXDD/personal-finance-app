@@ -33,7 +33,8 @@ export default function AddTransactionDialog({
       counterparty: "",
       amount: 0,
       categoryId: "",
-      transactionType: "INCOME",
+      // I usually avoid "as" but it was the only way in this situation.
+      transactionType: "" as "INCOME" | "EXPENSE",
       isRecurring: false,
     },
   })
