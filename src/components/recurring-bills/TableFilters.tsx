@@ -38,7 +38,7 @@ export default function TableFilters() {
   return (
     <div className="flex items-center justify-between gap-6 md:items-start">
       <SearchField
-        placeholder="Search Bills"
+        placeholder="Spotify..."
         label="Search Recurring Bills"
         className="max-w-80"
         defaultValue={readOnlySearchParams.get("query") ?? ""}

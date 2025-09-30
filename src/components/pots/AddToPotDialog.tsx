@@ -67,7 +67,7 @@ export default function AddToPotDialog({ pot }: { pot: Pot }) {
                 return (
                   <div className="grid gap-4">
                     <div className="flex items-center justify-between">
-                      <Label variant="secondary">New Amount</Label>
+                      <Label>New Amount</Label>
                       <span className="text-grey-900 text-3xl leading-tight font-bold">
                         {valueText}
                       </span>

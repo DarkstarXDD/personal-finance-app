@@ -20,7 +20,7 @@ import { tv, type VariantProps } from "tailwind-variants"
 
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
-import Label, { type LabelVariants } from "@/components/ui/Label"
+import Label from "@/components/ui/Label"
 
 import type { ReactNode, Ref } from "react"
 import type { IconType } from "react-icons"
@@ -37,7 +37,8 @@ const selectStyles = tv({
     buttonSpan:
       "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
     caretDownIcon: "text-grey-500 shrink-0 transition-all duration-300",
-    mobileIconStyles: "size-8",
+    mobileIconStyles:
+      "group-rac-pressed:text-grey-900/90 group-rac-hover:text-grey-900/90 group-rac-pressed:scale-97 size-8",
     popoverDiv:
       "border-grey-200 custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
   },
@@ -89,7 +90,6 @@ type SelectProps<T extends object> = Omit<
   "children" | "className"
 > & {
   label?: string
-  labelVariant?: LabelVariants["variant"]
   description?: string
   errorMessage?: string
   items?: Iterable<T>
@@ -101,7 +101,6 @@ type SelectProps<T extends object> = Omit<
 
 function Select<T extends object>({
   label,
-  labelVariant,
   description,
   errorMessage,
   isInvalid,
@@ -123,10 +122,7 @@ function Select<T extends object>({
       {({ isOpen }) => (
         <>
           <div className={innerWrapper({ shouldHideOnMobile })}>
-            <Label
-              variant={labelVariant}
-              className={fieldLabel({ shouldHideOnMobile })}
-            >
+            <Label className={fieldLabel({ shouldHideOnMobile })}>
               {label}
             </Label>
 

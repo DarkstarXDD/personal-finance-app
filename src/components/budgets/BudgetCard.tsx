@@ -72,7 +72,7 @@ export default function BudgetCard({
         >
           {({ percentage }) => (
             <div className="grid gap-4">
-              <Label variant="secondary">
+              <Label>
                 Maximum of{" "}
                 {currencyFormatter.format(Number(budget.maximumSpend))}
               </Label>

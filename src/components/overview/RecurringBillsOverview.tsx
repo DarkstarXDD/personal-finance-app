@@ -1,4 +1,3 @@
-import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import TableDesktop from "@/components/recurring-bills/TableDesktop"
 import TableMobile from "@/components/recurring-bills/TableMobile"
 import Card from "@/components/ui/Card"
@@ -40,13 +39,11 @@ export default async function RecurringBillsOverview() {
       </div>
 
       <div>
-        {recurringBills.length > 0 ? (
+        {recurringBills.length > 0 && (
           <>
             <TableMobile recurringBills={recurringBills.slice(0, 3)} />
             <TableDesktop recurringBills={recurringBills.slice(0, 3)} />
           </>
-        ) : (
-          <FilteredEmptyState />
         )}
       </div>
     </Card>
