@@ -35,13 +35,13 @@ function Dialog({
   return (
     <RacModalOverlay
       {...props}
-      className="bg-grey-900/50 fixed inset-0 flex flex-col items-center justify-center p-5"
+      className="bg-grey-900/50 fixed inset-0 flex flex-col items-center justify-center overflow-y-auto p-5"
     >
       <MotionRacModal
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        className="w-full max-w-[35rem] overflow-y-auto"
+        className="w-full max-w-[35rem]"
       >
         <RacDialog className="outline-none" role={role}>
           {(dialogRenderProps) => (
