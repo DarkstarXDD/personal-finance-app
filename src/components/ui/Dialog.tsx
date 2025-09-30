@@ -35,7 +35,7 @@ function Dialog({
   return (
     <RacModalOverlay
       {...props}
-      className="bg-grey-900/50 fixed inset-0 flex flex-col items-center justify-center p-5"
+      className="bg-grey-900/50 fixed inset-0 flex flex-col items-center justify-center overflow-y-auto p-5"
     >
       <MotionRacModal
         initial={{ scale: 0.8 }}

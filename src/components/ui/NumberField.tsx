@@ -39,7 +39,7 @@ export default function NumberField({
       <RacGroup className="border-beige-500 rac-focus-within:ring-2 ring-beige-500 rac-disabled:opacity-40 rac-invalid:border-red rac-invalid:ring-red flex w-full min-w-0 justify-between rounded-lg border transition-colors">
         <RacInput
           ref={ref}
-          className="text-grey-900 min-w-0 flex-1 rounded-l-lg px-5 py-3 text-sm leading-normal font-normal outline-none"
+          className="text-grey-900 min-w-0 flex-1 rounded-l-lg px-5 py-3 text-base leading-normal font-normal outline-none"
         />
 
         <div className="border-beige-500 grid border-l">

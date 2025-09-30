@@ -15,7 +15,7 @@ import Label from "@/components/ui/Label"
 import type { IconType } from "react-icons"
 
 export const inputStyles = tv({
-  base: "border-beige-500 rac-disabled:opacity-40 placeholder:text-beige-500 rac-invalid:border-red rac-invalid:ring-red rac-focus:ring-2 ring-beige-500 text-grey-900 w-full min-w-0 rounded-lg border px-5 py-3 text-sm leading-normal font-normal transition-colors outline-none",
+  base: "border-beige-500 rac-disabled:opacity-40 placeholder:text-beige-500 rac-invalid:border-red rac-invalid:ring-red rac-focus:ring-2 ring-beige-500 text-grey-900 w-full min-w-0 rounded-lg border px-5 py-3 text-base leading-normal font-normal transition-colors outline-none",
   variants: {
     isIcon: {
       true: "pl-12",
