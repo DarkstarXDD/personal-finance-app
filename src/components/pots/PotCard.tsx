@@ -62,7 +62,7 @@ export default function PotCard({
           {({ percentage, valueText }) => (
             <div className="grid gap-4">
               <div className="flex items-center justify-between">
-                <Label variant="secondary">Total Saved</Label>
+                <Label>Total Saved</Label>
                 <span className="text-grey-900 text-3xl leading-tight font-bold">
                   {valueText}
                 </span>

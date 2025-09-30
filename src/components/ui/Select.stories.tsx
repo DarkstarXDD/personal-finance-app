@@ -10,14 +10,12 @@ const meta = {
   },
   args: {
     label: "Label",
-    labelVariant: "primary",
     shouldHideOnMobile: false,
     errorMessage: "Field error message",
     isInvalid: false,
     isDisabled: false,
   },
   argTypes: {
-    labelVariant: { control: "select", options: ["primary", "secondary"] },
     items: { table: { disable: true } },
     children: { table: { disable: true } },
     ref: { table: { disable: true } },
@@ -82,29 +80,5 @@ export const WithErrorMessage: Story = {
       <SelectItem>Mango</SelectItem>
       <SelectItem>Orange</SelectItem>
     </Select>
-  ),
-}
-
-export const LabelVariants: Story = {
-  args: {
-    labelVariant: "primary",
-  },
-  parameters: { controls: { disable: true } },
-  render: (args) => (
-    <div className="grid gap-10">
-      <Select {...args}>
-        <SelectItem>Apple</SelectItem>
-        <SelectItem>Banana</SelectItem>
-        <SelectItem>Mango</SelectItem>
-        <SelectItem>Orange</SelectItem>
-      </Select>
-
-      <Select {...args} labelVariant="secondary">
-        <SelectItem>Apple</SelectItem>
-        <SelectItem>Banana</SelectItem>
-        <SelectItem>Mango</SelectItem>
-        <SelectItem>Orange</SelectItem>
-      </Select>
-    </div>
   ),
 }

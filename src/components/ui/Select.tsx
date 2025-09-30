@@ -20,7 +20,7 @@ import { tv, type VariantProps } from "tailwind-variants"
 
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
-import Label, { type LabelVariants } from "@/components/ui/Label"
+import Label from "@/components/ui/Label"
 
 import type { ReactNode, Ref } from "react"
 import type { IconType } from "react-icons"
@@ -90,7 +90,6 @@ type SelectProps<T extends object> = Omit<
   "children" | "className"
 > & {
   label?: string
-  labelVariant?: LabelVariants["variant"]
   description?: string
   errorMessage?: string
   items?: Iterable<T>
@@ -102,7 +101,6 @@ type SelectProps<T extends object> = Omit<
 
 function Select<T extends object>({
   label,
-  labelVariant,
   description,
   errorMessage,
   isInvalid,
@@ -124,10 +122,7 @@ function Select<T extends object>({
       {({ isOpen }) => (
         <>
           <div className={innerWrapper({ shouldHideOnMobile })}>
-            <Label
-              variant={labelVariant}
-              className={fieldLabel({ shouldHideOnMobile })}
-            >
+            <Label className={fieldLabel({ shouldHideOnMobile })}>
               {label}
             </Label>
 
