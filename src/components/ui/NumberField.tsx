@@ -46,13 +46,13 @@ export default function NumberField({
         <div className="border-beige-500 flex border-l">
           <RacButton
             slot="decrement"
-            className="rac-hover:bg-beige-300 group rac-pressed:bg-beige-300 border-beige-500 cursor-pointer px-4 transition-colors"
+            className="rac-hover:bg-beige-300 group rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pressed:bg-beige-300 border-beige-500 cursor-pointer px-4 transition-colors"
           >
             <PiMinusBold className="text-grey-500 group-rac-pressed:scale-95 size-5" />
           </RacButton>
           <RacButton
             slot="increment"
-            className="rac-hover:bg-beige-300 group rac-pressed:bg-beige-300 border-beige-500 cursor-pointer rounded-r-lg border-l px-4 transition-colors"
+            className="rac-hover:bg-beige-300 group rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pressed:bg-beige-300 border-beige-500 cursor-pointer rounded-r-lg border-l px-4 transition-colors"
           >
             <PiPlusBold className="text-grey-500 group-rac-pressed:scale-95 size-5" />
           </RacButton>
