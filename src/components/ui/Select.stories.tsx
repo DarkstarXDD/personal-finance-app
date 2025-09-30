@@ -40,17 +40,6 @@ export const Default: Story = {
   ),
 }
 
-export const HorizontalLayout: Story = {
-  render: (args) => (
-    <Select {...args}>
-      <SelectItem>Apple</SelectItem>
-      <SelectItem>Banana</SelectItem>
-      <SelectItem>Mango</SelectItem>
-      <SelectItem>Orange</SelectItem>
-    </Select>
-  ),
-}
-
 export const HiddenInMobile: Story = {
   args: {
     shouldHideOnMobile: true,
