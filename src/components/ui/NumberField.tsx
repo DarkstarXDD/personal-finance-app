@@ -32,6 +32,7 @@ export default function NumberField({
     <RacNumberField
       isInvalid={isInvalid}
       className="grid justify-items-start gap-1"
+      minValue={0}
       {...props}
     >
       <Label>{label}</Label>
