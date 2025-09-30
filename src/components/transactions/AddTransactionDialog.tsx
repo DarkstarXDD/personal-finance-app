@@ -109,6 +109,21 @@ export default function AddTransactionDialog({
               />
 
               <Controller
+                name="amount"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <NumberField
+                    label="Transaction Amount"
+                    {...field}
+                    isInvalid={invalid}
+                    errorMessage={error?.message}
+                    isDisabled={isSubmitting}
+                    formatOptions={{ style: "currency", currency: "USD" }}
+                  />
+                )}
+              />
+
+              <Controller
                 name="categoryId"
                 control={control}
                 render={({
@@ -133,21 +148,6 @@ export default function AddTransactionDialog({
                       </SelectItem>
                     )}
                   </Select>
-                )}
-              />
-
-              <Controller
-                name="amount"
-                control={control}
-                render={({ field, fieldState: { invalid, error } }) => (
-                  <NumberField
-                    label="Transaction Amount"
-                    {...field}
-                    isInvalid={invalid}
-                    errorMessage={error?.message}
-                    isDisabled={isSubmitting}
-                    formatOptions={{ style: "currency", currency: "USD" }}
-                  />
                 )}
               />
 
