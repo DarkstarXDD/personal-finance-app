@@ -6,7 +6,7 @@ import {
   Button as RacButton,
   type NumberFieldProps as RacNumberFieldProps,
 } from "react-aria-components"
-import { PiCaretUpFill, PiCaretDownFill } from "react-icons/pi"
+import { PiPlusBold, PiMinusBold } from "react-icons/pi"
 
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
@@ -42,18 +42,18 @@ export default function NumberField({
           className="text-grey-900 min-w-0 flex-1 rounded-l-lg px-5 py-3 text-base leading-normal font-normal outline-none"
         />
 
-        <div className="border-beige-500 grid border-l">
-          <RacButton
-            slot="increment"
-            className="rac-hover:bg-beige-300 group rac-pressed:bg-beige-300 border-beige-500 cursor-pointer rounded-tr-lg border-b px-3 transition-colors"
-          >
-            <PiCaretUpFill className="text-grey-500 group-rac-pressed:scale-95 size-5" />
-          </RacButton>
+        <div className="border-beige-500 flex border-l">
           <RacButton
             slot="decrement"
-            className="rac-hover:bg-beige-300 group rac-pressed:bg-beige-300 cursor-pointer rounded-br-lg px-3 transition-colors"
+            className="rac-hover:bg-beige-300 group rac-pressed:bg-beige-300 border-beige-500 cursor-pointer px-4 transition-colors"
           >
-            <PiCaretDownFill className="text-grey-500 group-rac-pressed:scale-95 size-5" />
+            <PiMinusBold className="text-grey-500 group-rac-pressed:scale-95 size-5" />
+          </RacButton>
+          <RacButton
+            slot="increment"
+            className="rac-hover:bg-beige-300 group rac-pressed:bg-beige-300 border-beige-500 cursor-pointer rounded-r-lg border-l px-4 transition-colors"
+          >
+            <PiPlusBold className="text-grey-500 group-rac-pressed:scale-95 size-5" />
           </RacButton>
         </div>
       </RacGroup>
