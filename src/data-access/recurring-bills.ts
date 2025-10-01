@@ -33,7 +33,6 @@ export async function createRecurringBill({
         userId,
         counterparty,
         amount,
-        dueDayOfMonth: 20,
       },
       select: { id: true },
     })
