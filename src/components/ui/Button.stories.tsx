@@ -82,7 +82,7 @@ export const All: Story = {
         Destructive
       </Button>
       <Button {...args} variant="primary" isPending>
-        Disabled
+        Loading
       </Button>
       <Button {...args} variant="primary" isDisabled>
         Disabled
