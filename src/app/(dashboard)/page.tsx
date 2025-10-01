@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 
 import BudgetsOverview from "@/components/overview/BudgetsOverview"
+import BudgetsOverviewLoading from "@/components/overview/loading-states/BudgetsOverviewLoading"
 import SummaryCardsLoading from "@/components/overview/loading-states/SummaryCardsLoading"
 import PotsOverview from "@/components/overview/PotsOverview"
 import RecurringBillsOverview from "@/components/overview/RecurringBillsOverview"
@@ -20,7 +21,11 @@ export default function OverviewPage() {
 
       <div className="grid gap-6 2xl:grid-cols-2">
         <PotsOverview />
-        <BudgetsOverview />
+
+        <Suspense fallback={<BudgetsOverviewLoading />}>
+          <BudgetsOverview />
+        </Suspense>
+
         <TransactionsOverview />
         <RecurringBillsOverview />
       </div>
