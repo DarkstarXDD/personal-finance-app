@@ -69,10 +69,14 @@ export default async function TransactionsPage({
 
       <Card className="grid gap-6">
         <TableFilters categories={categories} />
+
         {transactions.length > 0 ? (
           <>
-            <TableMobile transactions={transactions} />
-            <TableDesktop transactions={transactions} />
+            <TableMobile transactions={transactions} className="md:hidden" />
+            <TableDesktop
+              transactions={transactions}
+              className="hidden md:block"
+            />
           </>
         ) : (
           <FilteredEmptyState />

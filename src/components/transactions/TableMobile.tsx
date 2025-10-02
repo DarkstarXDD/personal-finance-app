@@ -3,16 +3,19 @@
 import { format } from "date-fns"
 
 import TransactionAmount from "@/components/transactions/TransactionAmount"
+import { cn } from "@/lib/utils"
 
 import type { Transaction } from "@/data-access/transactions"
 
 export default function TableMobile({
   transactions,
+  className,
 }: {
   transactions: Transaction[]
+  className?: string
 }) {
   return (
-    <ul className="md:hidden">
+    <ul className={cn(className)}>
       {transactions.map((transaction) => (
         <li
           key={transaction.id}
