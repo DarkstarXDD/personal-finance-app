@@ -16,8 +16,6 @@ import type { TransactionCreateErrors } from "@/lib/types"
 export async function createTransaction(
   formData: TransactionCreate
 ): Promise<TransactionCreateErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = transactionCreateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 

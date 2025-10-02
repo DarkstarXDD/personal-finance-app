@@ -23,8 +23,6 @@ import type { PotCreateErrors, PotAmountUpdateErrors } from "@/lib/types"
 export async function createPot(
   formData: PotCreate
 ): Promise<PotCreateErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = potCreateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
@@ -42,8 +40,6 @@ export async function createPot(
 export async function updatePot(
   formData: PotUpdate
 ): Promise<PotCreateErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = potUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
@@ -62,8 +58,6 @@ export async function deletePot(
   prev: unknown,
   formData: FormData
 ): Promise<string | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const potId = formData.get("potId")
   const parsed = idSchema.safeParse({ id: potId })
   if (!parsed.success) {
@@ -84,8 +78,6 @@ export async function deletePot(
 export async function addToPot(
   formData: PotAmountUpdate
 ): Promise<PotAmountUpdateErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 600))
-
   const parsed = potAmountUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
@@ -103,8 +95,6 @@ export async function addToPot(
 export async function withdrawFromPot(
   formData: PotAmountUpdate
 ): Promise<PotAmountUpdateErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = potAmountUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
