@@ -2,6 +2,7 @@ import { Suspense } from "react"
 
 import BudgetsOverview from "@/components/overview/BudgetsOverview"
 import BudgetsOverviewLoading from "@/components/overview/loading-states/BudgetsOverviewLoading"
+import PotsOverviewLoading from "@/components/overview/loading-states/PotsOverviewLoading"
 import RecurringBillsOverviewLoading from "@/components/overview/loading-states/RecurringBillsOverviewLoading"
 import SummaryCardsLoading from "@/components/overview/loading-states/SummaryCardsLoading"
 import TransactionsOverviewLoading from "@/components/overview/loading-states/TransactionsOverviewLoading"
@@ -17,12 +18,15 @@ export default function OverviewPage() {
       <Heading as="h1" variant="primary">
         Overview
       </Heading>
+
       <Suspense fallback={<SummaryCardsLoading />}>
         <SummaryCards />
       </Suspense>
 
       <div className="grid gap-6 2xl:grid-cols-2">
-        <PotsOverview />
+        <Suspense fallback={<PotsOverviewLoading />}>
+          <PotsOverview />
+        </Suspense>
 
         <Suspense fallback={<BudgetsOverviewLoading />}>
           <BudgetsOverview />
