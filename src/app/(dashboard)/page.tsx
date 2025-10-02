@@ -2,6 +2,7 @@ import { Suspense } from "react"
 
 import BudgetsOverview from "@/components/overview/BudgetsOverview"
 import BudgetsOverviewLoading from "@/components/overview/loading-states/BudgetsOverviewLoading"
+import RecurringBillsOverviewLoading from "@/components/overview/loading-states/RecurringBillsOverviewLoading"
 import SummaryCardsLoading from "@/components/overview/loading-states/SummaryCardsLoading"
 import TransactionsOverviewLoading from "@/components/overview/loading-states/TransactionsOverviewLoading"
 import PotsOverview from "@/components/overview/PotsOverview"
@@ -31,7 +32,9 @@ export default function OverviewPage() {
           <TransactionsOverview />
         </Suspense>
 
-        <RecurringBillsOverview />
+        <Suspense fallback={<RecurringBillsOverviewLoading />}>
+          <RecurringBillsOverview />
+        </Suspense>
       </div>
     </main>
   )
