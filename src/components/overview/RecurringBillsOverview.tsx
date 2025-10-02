@@ -1,3 +1,6 @@
+import { PiReceiptFill } from "react-icons/pi"
+
+import EmptyState from "@/components/empty-states/EmptyState"
 import TableDesktop from "@/components/recurring-bills/TableDesktop"
 import TableMobile from "@/components/recurring-bills/TableMobile"
 import Card from "@/components/ui/Card"
@@ -20,32 +23,36 @@ export default async function RecurringBillsOverview() {
         </Link>
       </div>
 
-      <div className="grid gap-3">
-        <RecurringBillsOverviewItem
-          label="Paid Bills"
-          value={summary.monthlySummary.paid.total}
-          color="#277c78"
-        />
-        <RecurringBillsOverviewItem
-          label="Total Upcoming"
-          value={summary.monthlySummary.upcoming.total}
-          color="#f2cdac"
-        />
-        <RecurringBillsOverviewItem
-          label="Due Soon"
-          value={summary.monthlySummary.dueSoon.total}
-          color="#82c9d7"
-        />
-      </div>
+      {recurringBills.length > 0 ? (
+        <>
+          <div className="grid gap-3">
+            <RecurringBillsOverviewItem
+              label="Paid Bills"
+              value={summary.monthlySummary.paid.total}
+              color="#277c78"
+            />
+            <RecurringBillsOverviewItem
+              label="Total Upcoming"
+              value={summary.monthlySummary.upcoming.total}
+              color="#f2cdac"
+            />
+            <RecurringBillsOverviewItem
+              label="Due Soon"
+              value={summary.monthlySummary.dueSoon.total}
+              color="#82c9d7"
+            />
+          </div>
 
-      <div>
-        {recurringBills.length > 0 && (
-          <>
-            <TableMobile recurringBills={recurringBills.slice(0, 3)} />
-            <TableDesktop recurringBills={recurringBills.slice(0, 3)} />
-          </>
-        )}
-      </div>
+          <TableMobile recurringBills={recurringBills.slice(0, 3)} />
+          <TableDesktop recurringBills={recurringBills.slice(0, 3)} />
+        </>
+      ) : (
+        <EmptyState
+          icon={PiReceiptFill}
+          title="You don’t have any recurring bills yet"
+          description="They’ll appear here once you have some."
+        />
+      )}
     </Card>
   )
 }

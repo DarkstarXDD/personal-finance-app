@@ -21,8 +21,6 @@ import type { BudgetCreateErrors } from "@/lib/types"
 export async function createBudget(
   formData: BudgetCreate
 ): Promise<BudgetCreateErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = budgetCreateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
@@ -40,8 +38,6 @@ export async function createBudget(
 export async function updateBudget(
   formData: BudgetUpdate
 ): Promise<BudgetCreateErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = budgetUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
@@ -60,8 +56,6 @@ export async function deleteBudget(
   prev: unknown,
   formData: FormData
 ): Promise<string | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const budgetId = formData.get("budgetId")
 
   const parsed = idSchema.safeParse({ id: budgetId })

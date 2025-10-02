@@ -9,6 +9,7 @@ import {
 import { format } from "date-fns"
 
 import TransactionAmount from "@/components/transactions/TransactionAmount"
+import { cn } from "@/lib/utils"
 
 import type { Transaction } from "@/data-access/transactions"
 
@@ -57,8 +58,10 @@ const columns = [
 
 export default function TableDesktop({
   transactions,
+  className,
 }: {
   transactions: Transaction[]
+  className?: string
 }) {
   const table = useReactTable({
     data: transactions,
@@ -67,7 +70,7 @@ export default function TableDesktop({
   })
 
   return (
-    <div className="hidden w-full md:block">
+    <div className={cn("w-full", className)}>
       <table className="w-full" style={{ minWidth: table.getTotalSize() }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

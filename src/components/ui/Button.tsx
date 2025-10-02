@@ -7,8 +7,10 @@ import {
 } from "react-aria-components"
 import { tv, type VariantProps } from "tailwind-variants"
 
+import Spinner from "@/components/loading-states/Spinner"
+
 const buttonStyles = tv({
-  base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed cursor-pointer rounded-lg p-4 text-sm leading-normal font-bold ring-offset-2 transition-all outline-none",
+  base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed flex cursor-pointer items-center justify-center gap-2 rounded-lg p-4 text-sm leading-normal font-bold ring-offset-2 transition-all outline-none",
   variants: {
     variant: {
       primary:
@@ -37,7 +39,10 @@ export default function Button({
       isPending={isPending}
       className={buttonStyles({ variant, className })}
     >
-      {isPending ? "Loading..." : children}
+      {isPending && (
+        <Spinner theme={variant === "secondary" ? "dark" : "light"} />
+      )}
+      {children}
     </RacButton>
   )
 }

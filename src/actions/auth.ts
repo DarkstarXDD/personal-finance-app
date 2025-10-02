@@ -22,8 +22,6 @@ import type { RegisterUserErrors, LoginUserErrors } from "@/lib/types"
 export async function registerUser(
   formData: SignupSchema
 ): Promise<RegisterUserErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = signupSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
@@ -61,8 +59,6 @@ export async function registerUser(
 export async function loginUser(
   formData: LoginSchema
 ): Promise<LoginUserErrors | null> {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const parsed = loginSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
