@@ -53,12 +53,12 @@ export default function Loading() {
         />
 
         <div className="flex justify-between">
-          <Skeleton className="h-10 w-24" />
+          <Skeleton className="h-8 w-8 sm:h-10 sm:w-16 md:h-10 md:w-24" />
           <div className="flex gap-2">
-            <Skeleton className="h-10 w-10" />
-            <Skeleton className="h-10 w-10" />
+            <Skeleton className="h-8 w-8 sm:h-10 sm:w-10" />
+            <Skeleton className="h-8 w-8 sm:h-10 sm:w-10" />
           </div>
-          <Skeleton className="h-10 w-24" />
+          <Skeleton className="h-8 w-8 sm:h-10 sm:w-16 md:h-10 md:w-24" />
         </div>
       </Card>
     </main>
