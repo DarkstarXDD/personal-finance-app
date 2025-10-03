@@ -26,7 +26,7 @@ export default function TransactionsOverviewLoading() {
   )
 }
 
-function TransactionItemLoading() {
+export function TransactionItemLoading() {
   return (
     <li className="border-b-grey-100 grid gap-1 border-b py-4 first:pt-0 last:border-none last:pb-0">
       <div className="flex items-center justify-between gap-2">

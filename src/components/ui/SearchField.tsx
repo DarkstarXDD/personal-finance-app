@@ -29,7 +29,7 @@ export default function SearchField({
       {...props}
     >
       {({ isEmpty }) => (
-        <div className="grid gap-1">
+        <div className="grid justify-items-start gap-1">
           {label && <Label>{label}</Label>}
           <div className="relative w-full">
             <PiMagnifyingGlassBold className="text-beige-500 absolute top-1/2 left-5 h-4 w-4 -translate-y-1/2" />
