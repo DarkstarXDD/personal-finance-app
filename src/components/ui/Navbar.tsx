@@ -23,26 +23,28 @@ import type { IconType } from "react-icons"
 
 const navbarStyles = tv({
   slots: {
-    nav: "bg-grey-900 w-full rounded-t-lg px-4 pt-2 lg:flex lg:max-h-dvh lg:flex-col lg:justify-start lg:gap-6 lg:rounded-none lg:rounded-r-2xl lg:p-0 lg:pr-6 lg:pb-6",
+    navbar:
+      "bg-grey-900 w-full rounded-t-lg px-4 pt-2 lg:flex lg:max-h-dvh lg:flex-col lg:justify-start lg:gap-6 lg:rounded-none lg:rounded-r-2xl lg:p-0 lg:pb-6",
     logoDivSmall: "hidden p-10 lg:block",
     logoDivLarge: "hidden p-10 lg:block",
-    navItemsWrapper:
+    navItems:
       "flex items-center justify-between lg:grow lg:flex-col lg:items-start lg:justify-start lg:gap-1",
     button:
       "text-grey-300 rac-hover:text-grey-100 rac-pressed:text-grey-100 rac-focus-visible:ring-2 ring-grey-300 hidden cursor-pointer items-center justify-start gap-4 rounded-lg px-9 py-4 transition-colors outline-none lg:flex",
     buttonIcon: "size-6 shrink-0",
     buttonText: "text-base leading-normal font-bold",
   },
+
   variants: {
     isExpanded: {
       true: {
-        nav: "lg:w-70",
+        navbar: "lg:w-70 lg:pr-6",
         logoDivSmall: "lg:hidden",
         logoDivLarge: "lg:block",
         buttonText: "lg:block",
       },
       false: {
-        nav: "lg:w-min lg:pr-0",
+        navbar: "lg:w-min lg:pr-0",
         logoDivSmall: "lg:block",
         logoDivLarge: "lg:hidden",
         buttonText: "lg:hidden",
@@ -53,8 +55,8 @@ const navbarStyles = tv({
 })
 
 const {
-  nav,
-  navItemsWrapper,
+  navbar,
+  navItems,
   logoDivSmall,
   logoDivLarge,
   button,
@@ -79,14 +81,15 @@ export default function Navbar({
 
   return (
     <NavbarContext.Provider value={{ isExpanded }}>
-      <nav className={nav({ isExpanded, className })}>
+      <nav className={navbar({ isExpanded, className })}>
         <div className={logoDivSmall({ isExpanded })}>
           <LogoSmall />
         </div>
         <div className={logoDivLarge({ isExpanded })}>
           <LogoLarge />
         </div>
-        <ul className={navItemsWrapper()}>
+
+        <ul className={navItems()}>
           <NavbarItem
             href="/"
             label="Overview"
@@ -113,6 +116,7 @@ export default function Navbar({
             title="Recurring Bills"
           />
         </ul>
+
         <RacButton
           className={button()}
           onPress={() =>
