@@ -1,6 +1,7 @@
 import { cookies } from "next/headers"
 
 import Navbar from "@/components/ui/Navbar"
+import NavbarMobile from "@/components/ui/NavbarMobile"
 import { publicSans } from "@/lib/fonts"
 
 import "../globals.css"
@@ -49,9 +50,10 @@ export default async function RootLayout({
       >
         <Navbar
           initialExpanded={isExpanded === "0" ? false : true}
-          className="sticky bottom-0 [grid-area:navbar] lg:top-0"
+          className="sticky bottom-0 hidden [grid-area:navbar] lg:top-0 lg:flex"
         />
         <div className="px-4 py-6 md:px-10 md:py-8">{children}</div>
+        <NavbarMobile className="sticky bottom-0 [grid-area:navbar] lg:hidden" />
       </body>
     </html>
   )
