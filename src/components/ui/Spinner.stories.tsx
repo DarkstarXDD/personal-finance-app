@@ -1,4 +1,4 @@
-import Spinner from "@/components/loading-states/Spinner"
+import Spinner from "@/components/ui/Spinner"
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 

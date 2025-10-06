@@ -7,7 +7,7 @@ import {
 } from "react-aria-components"
 import { tv, type VariantProps } from "tailwind-variants"
 
-import Spinner from "@/components/loading-states/Spinner"
+import Spinner from "@/components/ui/Spinner"
 
 const buttonStyles = tv({
   base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed flex cursor-pointer items-center justify-center gap-2 rounded-lg p-4 text-sm leading-normal font-bold ring-offset-2 transition-all outline-none",
