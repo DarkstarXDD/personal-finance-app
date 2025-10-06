@@ -134,30 +134,30 @@ export default function Navbar({
   )
 }
 
-const navbarItemStyles = tv({
+const navItemStyles = tv({
   slots: {
-    navLink:
-      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex w-full flex-col items-center gap-1 rounded-t-lg border-b-4 px-4 pt-2 pb-2 transition-colors outline-none focus-visible:ring-3 md:px-5 lg:w-full lg:flex-row lg:justify-start lg:gap-4 lg:rounded-none lg:rounded-r-lg lg:border-b-0 lg:border-l-4 lg:px-8 lg:py-4",
-    navLinkText:
+    navItem:
+      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex w-full flex-col items-center gap-1 rounded-t-lg border-b-4 px-4 py-2 transition-colors outline-none focus-visible:ring-3 md:px-5 lg:w-full lg:flex-row lg:justify-start lg:gap-4 lg:rounded-none lg:rounded-r-lg lg:border-b-0 lg:border-l-4 lg:px-8 lg:py-4",
+    navItemText:
       "hidden text-center text-xs leading-normal font-bold md:block lg:text-base",
   },
 
   variants: {
     isActive: {
       true: {
-        navLink:
+        navItem:
           "bg-beige-100 text-green border-green hover:text-green active:text-green",
-        navLinkText: "text-grey-900",
+        navItemText: "text-grey-900",
       },
     },
     isExpanded: {
-      true: { navLinkText: "lg:block" },
-      false: { navLinkText: "lg:hidden", navLink: "lg:rounded-r-none" },
+      true: { navItemText: "lg:block" },
+      false: { navItemText: "lg:hidden", navItem: "lg:rounded-r-none" },
     },
   },
 })
 
-const { navLink, navLinkText } = navbarItemStyles()
+const { navItem, navItemText } = navItemStyles()
 
 function NavbarItem({
   label,
@@ -184,11 +184,11 @@ function NavbarItem({
       <NextLink
         {...props}
         href={href}
-        className={navLink({ isActive, isExpanded })}
+        className={navItem({ isActive, isExpanded })}
         aria-label={label}
       >
         <Icon className="size-6 shrink-0" />
-        <span className={navLinkText({ isActive, isExpanded })}>{label}</span>
+        <span className={navItemText({ isActive, isExpanded })}>{label}</span>
       </NextLink>
     </li>
   )
