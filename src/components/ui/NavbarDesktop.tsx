@@ -16,8 +16,7 @@ import {
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
-import LogoLarge from "@/components/icons/LogoLarge"
-import LogoSmall from "@/components/icons/LogoSmall"
+import BrandLogo from "@/components/icons/BrandLogo"
 
 import type { ComponentProps } from "react"
 import type { IconType } from "react-icons"
@@ -26,8 +25,7 @@ const navbarStyles = tv({
   slots: {
     navbar:
       "bg-grey-900 w-full rounded-t-lg px-4 pt-2 lg:flex lg:max-h-dvh lg:flex-col lg:justify-start lg:gap-6 lg:rounded-none lg:rounded-r-2xl lg:p-0 lg:pb-6",
-    logoDivSmall: "hidden p-10 lg:block",
-    logoDivLarge: "hidden p-10 lg:block",
+    logo: "hidden p-10 lg:block",
     navItems:
       "flex items-center justify-between lg:grow lg:flex-col lg:items-start lg:justify-start lg:gap-1",
     button:
@@ -55,15 +53,8 @@ const navbarStyles = tv({
   },
 })
 
-const {
-  navbar,
-  navItems,
-  logoDivSmall,
-  logoDivLarge,
-  button,
-  buttonIcon,
-  buttonText,
-} = navbarStyles()
+const { navbar, navItems, logo, button, buttonIcon, buttonText } =
+  navbarStyles()
 
 type NavbarContextType = { isExpanded: boolean | undefined }
 
@@ -120,11 +111,8 @@ export default function NavbarDesktop({
         initial={false}
         animate={isExpanded ? "expanded" : "collapsed"}
       >
-        <div className={logoDivSmall({ isExpanded })}>
-          <LogoSmall />
-        </div>
-        <div className={logoDivLarge({ isExpanded })}>
-          <LogoLarge />
+        <div className={logo()}>
+          <BrandLogo isExpanded={isExpanded} />
         </div>
 
         <motion.ul
