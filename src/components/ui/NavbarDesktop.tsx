@@ -24,10 +24,10 @@ import type { IconType } from "react-icons"
 const navbarStyles = tv({
   slots: {
     navbar:
-      "bg-grey-900 w-full rounded-t-lg px-4 pt-2 lg:flex lg:max-h-dvh lg:flex-col lg:justify-start lg:gap-6 lg:rounded-none lg:rounded-r-2xl lg:p-0 lg:pb-6",
+      "bg-grey-900 w-full lg:flex lg:max-h-dvh lg:flex-col lg:justify-start lg:gap-6 lg:rounded-r-2xl lg:pb-6",
     logo: "hidden p-10 lg:block",
     navItems:
-      "flex items-center justify-between lg:grow lg:flex-col lg:items-start lg:justify-start lg:gap-1",
+      "flex lg:grow lg:flex-col lg:items-start lg:justify-start lg:gap-1",
     button:
       "text-grey-300 rac-hover:text-grey-100 rac-pressed:text-grey-100 rac-focus-visible:ring-2 ring-grey-300 hidden cursor-pointer items-center justify-start gap-4 rounded-lg px-9 py-4 transition-colors outline-none lg:flex",
     buttonIcon: "size-6 shrink-0",
@@ -38,14 +38,10 @@ const navbarStyles = tv({
     isExpanded: {
       true: {
         navbar: "lg:w-70 lg:pr-6",
-        logoDivSmall: "lg:hidden",
-        logoDivLarge: "lg:block",
         buttonText: "lg:block",
       },
       false: {
         navbar: "lg:w-min lg:pr-0",
-        logoDivSmall: "lg:block",
-        logoDivLarge: "lg:hidden",
         buttonText: "lg:hidden",
         buttonIcon: "rotate-180",
       },
@@ -183,9 +179,8 @@ export default function NavbarDesktop({
 const navItemStyles = tv({
   slots: {
     navItem:
-      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex w-full flex-col items-center gap-1 rounded-t-lg border-b-4 px-4 py-2 transition-colors outline-none focus-visible:ring-3 md:px-5 lg:w-full lg:flex-row lg:justify-start lg:gap-4 lg:rounded-none lg:rounded-r-lg lg:border-b-0 lg:border-l-4 lg:px-8 lg:py-4",
-    navItemText:
-      "hidden text-center text-xs leading-normal font-bold md:block lg:text-base",
+      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex items-center transition-colors outline-none focus-visible:ring-3 md:px-5 lg:w-full lg:flex-row lg:justify-start lg:gap-4 lg:rounded-r-lg lg:border-l-4 lg:px-8 lg:py-4",
+    navItemText: "text-center leading-normal font-bold lg:text-base",
   },
 
   variants: {
