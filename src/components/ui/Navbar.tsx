@@ -87,18 +87,30 @@ export default function Navbar({
           <LogoLarge />
         </div>
         <ul className={navItemsWrapper()}>
-          <NavbarItem href="/" label="Overview" icon={OverviewIcon} />
+          <NavbarItem
+            href="/"
+            label="Overview"
+            icon={OverviewIcon}
+            title="Overview"
+          />
           <NavbarItem
             href="/transactions"
             label="Transactions"
             icon={TransactionsIcon}
+            title="Transactions"
           />
-          <NavbarItem href="/budgets" label="Budgets" icon={BudgetsIcon} />
-          <NavbarItem href="/pots" label="Pots" icon={PotsIcon} />
+          <NavbarItem
+            href="/budgets"
+            label="Budgets"
+            icon={BudgetsIcon}
+            title="Budgets"
+          />
+          <NavbarItem href="/pots" label="Pots" icon={PotsIcon} title="Pots" />
           <NavbarItem
             href="/recurring-bills"
             label="Recurring Bills"
             icon={BillsIcon}
+            title="Recurring Bills"
           />
         </ul>
         <RacButton
