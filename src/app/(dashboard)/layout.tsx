@@ -1,6 +1,6 @@
 import { cookies } from "next/headers"
 
-import { Navbar } from "@/components/ui/Navbar"
+import Navbar from "@/components/ui/Navbar"
 import { publicSans } from "@/lib/fonts"
 
 import "../globals.css"

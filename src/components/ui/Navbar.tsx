@@ -70,7 +70,7 @@ const NavbarContext = createContext<NavbarContextType>({
   isExpanded: undefined,
 })
 
-function Navbar({
+export default function Navbar({
   initialExpanded,
   className,
 }: {
@@ -181,5 +181,3 @@ function NavbarItem({
     </li>
   )
 }
-
-export { Navbar, NavbarItem }
