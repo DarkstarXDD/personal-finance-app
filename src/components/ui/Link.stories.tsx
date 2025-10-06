@@ -6,7 +6,7 @@ const meta = {
   title: "Components/UI/Link",
   component: Link,
   args: {
-    href: "/",
+    href: "#",
     children: "This is a Link",
     withIcon: false,
   },
