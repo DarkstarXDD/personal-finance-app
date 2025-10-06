@@ -31,7 +31,7 @@ const navbarStyles = tv({
     button:
       "text-grey-300 rac-hover:text-grey-100 rac-pressed:text-grey-100 rac-focus-visible:ring-2 ring-grey-300 hidden cursor-pointer items-center justify-start gap-4 rounded-lg px-9 py-4 transition-colors outline-none lg:flex",
     buttonIcon: "size-6 shrink-0",
-    buttonSpan: "text-base leading-normal font-bold",
+    buttonText: "text-base leading-normal font-bold",
   },
   variants: {
     isExpanded: {
@@ -39,13 +39,13 @@ const navbarStyles = tv({
         nav: "lg:w-70",
         logoDivSmall: "lg:hidden",
         logoDivLarge: "lg:block",
-        buttonSpan: "lg:block",
+        buttonText: "lg:block",
       },
       false: {
         nav: "lg:w-min lg:pr-0",
         logoDivSmall: "lg:block",
         logoDivLarge: "lg:hidden",
-        buttonSpan: "lg:hidden",
+        buttonText: "lg:hidden",
         buttonIcon: "rotate-180",
       },
     },
@@ -59,7 +59,7 @@ const {
   logoDivLarge,
   button,
   buttonIcon,
-  buttonSpan,
+  buttonText,
 } = navbarStyles()
 
 type NavbarContextType = { isExpanded: boolean | undefined }
@@ -124,9 +124,10 @@ export default function Navbar({
               return newValue
             })
           }
+          aria-label={isExpanded ? undefined : "Expand Menu"}
         >
           <PiArrowFatLinesLeft className={buttonIcon({ isExpanded })} />
-          <span className={buttonSpan({ isExpanded })}>Minimize Menu</span>
+          <span className={buttonText({ isExpanded })}>Minimize Menu</span>
         </RacButton>
       </nav>
     </NavbarContext.Provider>
@@ -184,6 +185,7 @@ function NavbarItem({
         {...props}
         href={href}
         className={navLink({ isActive, isExpanded })}
+        aria-label={label}
       >
         <Icon className="size-6 shrink-0" />
         <span className={navLinkText({ isActive, isExpanded })}>{label}</span>
