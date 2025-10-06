@@ -1,6 +1,6 @@
 import { cookies } from "next/headers"
 
-import Navbar from "@/components/ui/Navbar"
+import NavbarDesktop from "@/components/ui/NavbarDesktop"
 import NavbarMobile from "@/components/ui/NavbarMobile"
 import { publicSans } from "@/lib/fonts"
 
@@ -48,7 +48,7 @@ export default async function RootLayout({
       <body
         className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 grid min-h-dvh grid-rows-[1fr_auto] tracking-normal [grid-template-areas:'main'_'navbar'] lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:[grid-template-areas:'navbar_main']`}
       >
-        <Navbar
+        <NavbarDesktop
           initialExpanded={isExpanded === "0" ? false : true}
           className="sticky bottom-0 hidden [grid-area:navbar] lg:top-0 lg:flex"
         />

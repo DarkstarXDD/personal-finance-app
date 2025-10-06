@@ -1,6 +1,7 @@
 "use client"
 
 import Cookies from "js-cookie"
+import { motion, type Variants } from "motion/react"
 import NextLink from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
 import { useState, createContext, useContext } from "react"
@@ -70,7 +71,39 @@ const NavbarContext = createContext<NavbarContextType>({
   isExpanded: undefined,
 })
 
-export default function Navbar({
+const navbarVariants: Variants = {
+  expanded: {
+    width: "17.5rem",
+    paddingRight: "1.5rem",
+  },
+  collapsed: {
+    width: "6rem",
+    paddingRight: 0,
+    transition: { delay: 0.2 },
+  },
+}
+
+const navItemsVariants: Variants = {
+  expanded: { transition: { staggerChildren: 0.025, delayChildren: 0.15 } },
+  collapsed: { transition: { staggerChildren: 0.025 } },
+}
+
+const buttonTextVariants: Variants = {
+  expanded: {
+    display: "block",
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.15, delay: 0.2 },
+  },
+  collapsed: {
+    display: "none",
+    opacity: 0,
+    y: "-0.8rem",
+    transition: { duration: 0.15 },
+  },
+}
+
+export default function NavbarDesktop({
   initialExpanded,
   className,
 }: {
@@ -81,7 +114,12 @@ export default function Navbar({
 
   return (
     <NavbarContext.Provider value={{ isExpanded }}>
-      <nav className={navbar({ isExpanded, className })}>
+      <motion.nav
+        className={navbar({ className })}
+        variants={navbarVariants}
+        initial={false}
+        animate={isExpanded ? "expanded" : "collapsed"}
+      >
         <div className={logoDivSmall({ isExpanded })}>
           <LogoSmall />
         </div>
@@ -89,33 +127,43 @@ export default function Navbar({
           <LogoLarge />
         </div>
 
-        <ul className={navItems()}>
-          <NavbarItem
+        <motion.ul
+          className={navItems()}
+          variants={navItemsVariants}
+          initial={false}
+          animate={isExpanded ? "expanded" : "collapsed"}
+        >
+          <NavItemDesktop
             href="/"
             label="Overview"
             icon={OverviewIcon}
             title="Overview"
           />
-          <NavbarItem
+          <NavItemDesktop
             href="/transactions"
             label="Transactions"
             icon={TransactionsIcon}
             title="Transactions"
           />
-          <NavbarItem
+          <NavItemDesktop
             href="/budgets"
             label="Budgets"
             icon={BudgetsIcon}
             title="Budgets"
           />
-          <NavbarItem href="/pots" label="Pots" icon={PotsIcon} title="Pots" />
-          <NavbarItem
+          <NavItemDesktop
+            href="/pots"
+            label="Pots"
+            icon={PotsIcon}
+            title="Pots"
+          />
+          <NavItemDesktop
             href="/recurring-bills"
             label="Recurring Bills"
             icon={BillsIcon}
             title="Recurring Bills"
           />
-        </ul>
+        </motion.ul>
 
         <RacButton
           className={button()}
@@ -131,9 +179,15 @@ export default function Navbar({
           aria-label={isExpanded ? undefined : "Expand Menu"}
         >
           <PiArrowFatLinesLeft className={buttonIcon({ isExpanded })} />
-          <span className={buttonText({ isExpanded })}>Minimize Menu</span>
+          <motion.span
+            className={buttonText({ isExpanded })}
+            variants={buttonTextVariants}
+            initial={false}
+          >
+            Minimize Menu
+          </motion.span>
         </RacButton>
-      </nav>
+      </motion.nav>
     </NavbarContext.Provider>
   )
 }
@@ -163,7 +217,22 @@ const navItemStyles = tv({
 
 const { navItem, navItemText } = navItemStyles()
 
-function NavbarItem({
+const navItemTextVariants: Variants = {
+  expanded: {
+    display: "block",
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.15 },
+  },
+  collapsed: {
+    display: "none",
+    opacity: 0,
+    y: "-0.8rem",
+    transition: { duration: 0.15 },
+  },
+}
+
+function NavItemDesktop({
   label,
   href,
   icon: Icon,
@@ -192,7 +261,13 @@ function NavbarItem({
         aria-label={label}
       >
         <Icon className="size-6 shrink-0" />
-        <span className={navItemText({ isActive, isExpanded })}>{label}</span>
+        <motion.span
+          className={navItemText({ isActive, isExpanded })}
+          initial={false}
+          variants={navItemTextVariants}
+        >
+          {label}
+        </motion.span>
       </NextLink>
     </li>
   )
