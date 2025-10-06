@@ -12,6 +12,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  parameters: { nextjs: { navigation: { query: { page: 1 } } } },
+  parameters: { nextjs: { navigation: { query: { page: 5 } } } },
   args: { totalPages: 10 },
 }
