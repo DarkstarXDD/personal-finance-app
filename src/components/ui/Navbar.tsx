@@ -1,7 +1,6 @@
 "use client"
 
 import Cookies from "js-cookie"
-import Image from "next/image"
 import NextLink from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
 import { useState, createContext, useContext } from "react"
@@ -16,9 +15,8 @@ import {
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
-// Most probably wll change how the logo SVG is imported and added
-import logoLarge from "../../../public/logo-large.svg"
-import logoSmall from "../../../public/logo-small.svg"
+import LogoLarge from "@/components/icons/LogoLarge"
+import LogoSmall from "@/components/icons/LogoSmall"
 
 import type { ComponentProps } from "react"
 import type { IconType } from "react-icons"
@@ -83,10 +81,10 @@ export default function Navbar({
     <NavbarContext.Provider value={{ isExpanded }}>
       <nav className={nav({ isExpanded, className })}>
         <div className={logoDivSmall({ isExpanded })}>
-          <Image src={logoSmall} alt="Finance" />
+          <LogoSmall />
         </div>
         <div className={logoDivLarge({ isExpanded })}>
-          <Image src={logoLarge} alt="Finance" />
+          <LogoLarge />
         </div>
         <ul className={navItemsWrapper()}>
           <NavbarItem href="/" label="Overview" icon={OverviewIcon} />

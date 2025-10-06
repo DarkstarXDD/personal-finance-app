@@ -1,4 +1,3 @@
-import React from "react"
 import { tv } from "tailwind-variants"
 
 const svgStyles = tv({ base: "h-5.5 w-30.5" })
@@ -7,9 +6,9 @@ export default function LogoLarge({ className }: { className?: string }) {
   return (
     <svg
       fill="none"
+      width="122"
       height="22"
       viewBox="0 0 122 22"
-      width="122"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Finance"
       className={svgStyles({ className })}
