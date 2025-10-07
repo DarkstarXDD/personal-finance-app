@@ -19,7 +19,7 @@ export default function BudgetsSummary({
           color: budget.color.value,
         }))}
       />
-      <dl>
+      <ul>
         {budgets.map((budget) => (
           <SummaryItem
             key={budget.id}
@@ -29,7 +29,7 @@ export default function BudgetsSummary({
             color={budget.color.value}
           />
         ))}
-      </dl>
+      </ul>
     </div>
   )
 }
@@ -46,17 +46,17 @@ function SummaryItem({
   color: string
 }) {
   return (
-    <div className="border-grey-100 flex items-center gap-4 border-b pt-4 pb-4 first:pt-0 last:border-none last:pb-0">
+    <li className="border-grey-100 flex items-center gap-4 border-b pt-4 pb-4 first:pt-0 last:border-none last:pb-0">
       <span className="h-5 w-1 rounded-lg" style={{ backgroundColor: color }} />
-      <dt className="text-grey-500 text-sm leading-normal font-normal">
+      <span className="text-grey-500 text-sm leading-normal font-normal">
         {budgetCategory}
-      </dt>
-      <dd className="text-grey-900 ml-auto text-base leading-normal font-bold">
+      </span>
+      <span className="text-grey-900 ml-auto text-base leading-normal font-bold">
         {currencyFormatter.format(Number(currentSpend))}{" "}
         <span className="text-grey-500 text-xs leading-normal font-normal">
           of {currencyFormatter.format(maximumSpend)}
         </span>
-      </dd>
-    </div>
+      </span>
+    </li>
   )
 }

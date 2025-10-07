@@ -16,6 +16,7 @@ import IconButton from "@/components/ui/IconButton"
 import Label from "@/components/ui/Label"
 import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
+import MetricItem from "@/components/ui/MetricItem"
 import { Category, Color } from "@/data-access/lookups"
 import { currencyFormatter } from "@/lib/utils"
 
@@ -96,31 +97,20 @@ export default function BudgetCard({
           </p>
         )}
 
-        <dl className="grid grid-cols-2">
-          <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
-            <span
-              className="row-span-2 h-full w-1 rounded-lg"
-              style={{ backgroundColor: budget.color.value }}
-            />
-            <dt className="text-grey-500 text-xs leading-normal font-normal">
-              Spent
-            </dt>
-            <dd className="text-grey-900 text-sm leading-normal font-bold">
-              {currencyFormatter.format(Number(budget.totalSpent))}
-            </dd>
-          </div>
-          <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
-            <span className="bg-beige-100 row-span-2 h-full w-1 rounded-lg" />
-            <dt className="text-grey-500 text-xs leading-normal font-normal">
-              Free
-            </dt>
-            <dd className="text-grey-900 text-sm leading-normal font-bold">
-              {currencyFormatter.format(
-                remainingAmount < 0 ? 0 : remainingAmount
-              )}
-            </dd>
-          </div>
-        </dl>
+        <div className="grid grid-cols-2">
+          <MetricItem
+            label="Spent"
+            color={budget.color.value}
+            value={currencyFormatter.format(Number(budget.totalSpent))}
+          />
+          <MetricItem
+            label="Free"
+            color="#f8f4f0"
+            value={currencyFormatter.format(
+              remainingAmount < 0 ? 0 : remainingAmount
+            )}
+          />
+        </div>
 
         <div className="bg-beige-100 grid gap-5 rounded-xl p-4 md:p-5">
           <div className="flex justify-between">

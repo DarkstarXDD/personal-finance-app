@@ -25,7 +25,7 @@ export default async function RecurringBillsOverview() {
 
       {recurringBills.length > 0 ? (
         <>
-          <div className="grid gap-3">
+          <dl className="grid gap-3">
             <RecurringBillsOverviewItem
               label="Paid Bills"
               value={summary.monthlySummary.paid.total}
@@ -41,7 +41,7 @@ export default async function RecurringBillsOverview() {
               value={summary.monthlySummary.dueSoon.total}
               color="#82c9d7"
             />
-          </div>
+          </dl>
 
           <TableMobile recurringBills={recurringBills.slice(0, 3)} />
           <TableDesktop recurringBills={recurringBills.slice(0, 3)} />

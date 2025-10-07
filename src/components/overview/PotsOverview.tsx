@@ -4,7 +4,7 @@ import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
-import { Metrics, MetricItem } from "@/components/ui/Metrics"
+import MetricItem from "@/components/ui/MetricItem"
 import { getPots } from "@/data-access/pots"
 import { currencyFormatter } from "@/lib/utils"
 
@@ -39,7 +39,7 @@ export default async function PotsOverview() {
             </dl>
           </Card>
 
-          <Metrics className="grid grid-cols-2 gap-4 md:grid-rows-2">
+          <div className="grid grid-cols-2 gap-4 md:grid-rows-2">
             {pots.map((pot) => (
               <MetricItem
                 key={pot.id}
@@ -48,7 +48,7 @@ export default async function PotsOverview() {
                 color={pot.color.value}
               />
             ))}
-          </Metrics>
+          </div>
         </div>
       ) : (
         <EmptyState

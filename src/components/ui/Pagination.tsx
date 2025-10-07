@@ -135,7 +135,7 @@ function PaginationPrevious({
   }
   return (
     <li className="mr-auto">
-      <Link {...props} className={linkStyles()}>
+      <Link {...props} className={linkStyles()} aria-label="Previous Page">
         <PiCaretLeftFill className={iconStyles()} />
         <span className={textStyles()}>Prev</span>
       </Link>
@@ -168,7 +168,7 @@ function PaginationNext({
   }
   return (
     <li className="ml-auto">
-      <Link {...props} className={linkStyles()}>
+      <Link {...props} className={linkStyles()} aria-label="Next Page">
         <span className={textStyles()}>Next</span>
         <PiCaretRightFill className={iconStyles()} />
       </Link>
