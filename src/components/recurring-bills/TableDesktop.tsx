@@ -7,8 +7,12 @@ import {
   flexRender,
 } from "@tanstack/react-table"
 import { format } from "date-fns"
+import { useState } from "react"
 
 import DaysUntilDue from "@/components/recurring-bills/DaysUntilDue"
+import DeleteRecurringBillDialog from "@/components/recurring-bills/DeleteRecurringBillDialog"
+import IconButton from "@/components/ui/IconButton"
+import { Menu, MenuItem, MenuTrigger } from "@/components/ui/Menu"
 import { currencyFormatter } from "@/lib/utils"
 
 import type { RecurringBill } from "@/data-access/recurring-bills"
@@ -47,6 +51,19 @@ const columns = [
       </span>
     ),
     size: 50,
+  }),
+
+  columnHelper.display({
+    id: "delete",
+    header: "",
+    cell: ({ row }) => {
+      return (
+        <span className="flex justify-end">
+          <DeleteTrigger recurringBill={row.original} key={row.original.id} />
+        </span>
+      )
+    },
+    size: 40,
   }),
 ]
 
@@ -101,5 +118,31 @@ export default function TableDesktop({
         </tbody>
       </table>
     </div>
+  )
+}
+
+function DeleteTrigger({ recurringBill }: { recurringBill: RecurringBill }) {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
+  return (
+    <>
+      <MenuTrigger>
+        <IconButton variant="options" className="rotate-90" />
+        <Menu>
+          <MenuItem
+            className="text-red"
+            onAction={() => setIsDeleteDialogOpen(true)}
+          >
+            Delete Recurring Bill
+          </MenuItem>
+        </Menu>
+      </MenuTrigger>
+
+      <DeleteRecurringBillDialog
+        isOpen={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        recurringBill={recurringBill}
+      />
+    </>
   )
 }
