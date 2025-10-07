@@ -96,31 +96,31 @@ export default function BudgetCard({
           </p>
         )}
 
-        <dl className="grid grid-cols-2">
+        <div className="grid grid-cols-2">
           <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
             <span
               className="row-span-2 h-full w-1 rounded-lg"
               style={{ backgroundColor: budget.color.value }}
             />
-            <dt className="text-grey-500 text-xs leading-normal font-normal">
+            <p className="text-grey-500 text-xs leading-normal font-normal">
               Spent
-            </dt>
-            <dd className="text-grey-900 text-sm leading-normal font-bold">
+            </p>
+            <p className="text-grey-900 text-sm leading-normal font-bold">
               {currencyFormatter.format(Number(budget.totalSpent))}
-            </dd>
+            </p>
           </div>
           <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
             <span className="bg-beige-100 row-span-2 h-full w-1 rounded-lg" />
-            <dt className="text-grey-500 text-xs leading-normal font-normal">
+            <p className="text-grey-500 text-xs leading-normal font-normal">
               Free
-            </dt>
-            <dd className="text-grey-900 text-sm leading-normal font-bold">
+            </p>
+            <p className="text-grey-900 text-sm leading-normal font-bold">
               {currencyFormatter.format(
                 remainingAmount < 0 ? 0 : remainingAmount
               )}
-            </dd>
+            </p>
           </div>
-        </dl>
+        </div>
 
         <div className="bg-beige-100 grid gap-5 rounded-xl p-4 md:p-5">
           <div className="flex justify-between">
