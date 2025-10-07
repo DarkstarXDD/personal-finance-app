@@ -48,6 +48,7 @@ export default function TableFilters() {
       <Select
         label="Sort by"
         aria-label="Sort by"
+        name="sort"
         selectedKey={readOnlySearchParams.get("sortby") ?? "daysAsc"}
         onSelectionChange={onSortByChange}
         shouldHideOnMobile
