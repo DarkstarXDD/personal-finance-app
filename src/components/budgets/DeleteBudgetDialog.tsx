@@ -1,5 +1,3 @@
-"use client"
-
 import { useActionState } from "react"
 
 import { deleteBudget } from "@/actions/budgets"
