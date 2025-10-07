@@ -12,6 +12,12 @@ import SummaryCards from "@/components/overview/SummaryCards"
 import TransactionsOverview from "@/components/overview/TransactionsOverview"
 import Heading from "@/components/ui/Heading"
 
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Overview - Personal Finance",
+}
+
 export default function OverviewPage() {
   return (
     <main className="grid gap-8">

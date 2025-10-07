@@ -8,6 +8,12 @@ import Heading from "@/components/ui/Heading"
 import { getColors } from "@/data-access/lookups"
 import { getPots } from "@/data-access/pots"
 
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Pots - Personal Finance",
+}
+
 export default async function PotsPage() {
   const colors = await getColors()
   const pots = await getPots()
