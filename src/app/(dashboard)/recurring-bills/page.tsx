@@ -10,6 +10,12 @@ import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { getRecurringBills } from "@/data-access/recurring-bills"
 
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Recurring Bills - Personal Finance",
+}
+
 export default async function RecurringBillsPage({
   searchParams,
 }: {

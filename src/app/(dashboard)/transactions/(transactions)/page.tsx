@@ -12,6 +12,12 @@ import Pagination from "@/components/ui/Pagination"
 import { getCategories } from "@/data-access/lookups"
 import { getTransactions } from "@/data-access/transactions"
 
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Transactions - Personal Finance",
+}
+
 export default async function TransactionsPage({
   searchParams,
 }: {
