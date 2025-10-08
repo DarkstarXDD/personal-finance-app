@@ -9,6 +9,7 @@ import {
 import { format } from "date-fns"
 
 import DaysUntilDue from "@/components/recurring-bills/DaysUntilDue"
+import OptionsMenu from "@/components/recurring-bills/OptionsMenu"
 import { currencyFormatter } from "@/lib/utils"
 
 import type { RecurringBill } from "@/data-access/recurring-bills"
@@ -47,6 +48,19 @@ const columns = [
       </span>
     ),
     size: 50,
+  }),
+
+  columnHelper.display({
+    id: "delete",
+    header: "",
+    cell: ({ row }) => {
+      return (
+        <span className="flex justify-end">
+          <OptionsMenu recurringBill={row.original} key={row.original.id} />
+        </span>
+      )
+    },
+    size: 40,
   }),
 ]
 

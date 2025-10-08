@@ -3,7 +3,7 @@ import Spinner from "@/components/ui/Spinner"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
-  title: "Components/LoadingStates/Spinner",
+  title: "Components/UI/Spinner",
   component: Spinner,
 } satisfies Meta<typeof Spinner>
 

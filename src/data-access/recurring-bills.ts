@@ -179,3 +179,22 @@ export async function getRecurringBills({
     },
   }
 }
+
+// ============================================
+// =========== Delete Recurring Bill ==========
+// ============================================
+
+export async function deleteRecurringBill(
+  id: string
+): Promise<{ success: boolean }> {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  try {
+    await prisma.recurringBill.delete({ where: { id, userId } })
+    return { success: true }
+  } catch (e) {
+    console.error(e)
+    return { success: false }
+  }
+}
