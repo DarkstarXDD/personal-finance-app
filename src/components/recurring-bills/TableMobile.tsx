@@ -1,6 +1,7 @@
 import { format } from "date-fns"
 
 import DaysUntilDue from "@/components/recurring-bills/DaysUntilDue"
+import OptionsMenu from "@/components/recurring-bills/OptionsMenu"
 import { currencyFormatter } from "@/lib/utils"
 
 import type { RecurringBill } from "@/data-access/recurring-bills"
@@ -12,25 +13,26 @@ export default function TableMobile({
 }) {
   return (
     <ul className="md:hidden">
-      {recurringBills.map(
-        ({ id, counterparty, amount, dueDate, daysUntilDue }) => (
-          <li
-            key={id}
-            className="border-b-grey-100 grid grid-cols-[1fr_auto] gap-2 border-b py-4 first:pt-0 last:border-none last:pb-0"
-          >
-            <h3 className="text-grey-900 text-sm leading-normal font-bold">
-              {counterparty}
-            </h3>
-            <p className="text-grey-900 text-end text-sm leading-normal font-bold">
-              {currencyFormatter.format(Number(amount))}
-            </p>
-            <p className="text-grey-500 text-xs leading-normal font-normal">
-              {format(dueDate, "dd MMM yyyy")}
-            </p>
-            <DaysUntilDue daysUntilDue={daysUntilDue} />
-          </li>
-        )
-      )}
+      {recurringBills.map((recurringBill) => (
+        <li
+          key={recurringBill.id}
+          className="border-b-grey-100 grid grid-cols-[1fr_auto_auto] gap-x-4 gap-y-2 border-b py-4 first:pt-0 last:border-none last:pb-0"
+        >
+          <h3 className="text-grey-900 text-sm leading-normal font-bold">
+            {recurringBill.counterparty}
+          </h3>
+          <p className="text-grey-900 text-end text-sm leading-normal font-bold">
+            {currencyFormatter.format(Number(recurringBill.amount))}
+          </p>
+          <p className="text-grey-500 text-xs leading-normal font-normal">
+            {format(recurringBill.dueDate, "dd MMM yyyy")}
+          </p>
+          <DaysUntilDue daysUntilDue={recurringBill.daysUntilDue} />
+          <div className="col-start-3 row-span-2 row-start-1 flex flex-col justify-center">
+            <OptionsMenu recurringBill={recurringBill} />
+          </div>
+        </li>
+      ))}
     </ul>
   )
 }
