@@ -59,7 +59,7 @@ export default function TextField({
 
   return (
     <RacTextField
-      className="grid justify-items-start gap-1"
+      className="grid w-full justify-items-start gap-1"
       isInvalid={isInvalid}
       {...props}
     >
