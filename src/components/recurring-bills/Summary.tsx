@@ -28,7 +28,7 @@ export default function Summary({
             Total biils
           </Heading>
           <p className="text-3xl leading-tight font-bold text-white">
-            {currencyFormatter.format(Number(totalValue))}
+            {currencyFormatter.format(Number(totalValue ?? 0))}
           </p>
         </div>
       </Card>
