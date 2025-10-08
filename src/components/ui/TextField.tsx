@@ -80,6 +80,7 @@ export default function TextField({
         {type === "password" && (
           <RacButton
             onPress={() => setShowEye((prev) => !prev)}
+            aria-label={showEye ? "Hide content" : "Show content"}
             className="text-beige-500 rac-focus-visible:ring-2 ring-beige-500 rac-hover:text-grey-500 rac-pressed:text-grey-500 absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer rounded-full p-1 outline-none"
           >
             {showEye ? (
