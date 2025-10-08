@@ -6,7 +6,7 @@ import {
   TextField as RacTextField,
   Input as RacInput,
   type TextFieldProps as RacTextFieldProps,
-  InputProps,
+  type InputProps as RacInputProps,
 } from "react-aria-components"
 import { PiEyeFill, PiEyeSlashFill } from "react-icons/pi"
 import { tv } from "tailwind-variants"
@@ -29,7 +29,7 @@ export const inputStyles = tv({
   },
 })
 
-type InputType = Pick<InputProps, "type">["type"]
+type InputType = Pick<RacInputProps, "type">["type"]
 
 function getInputType(type: InputType, showEye: boolean | undefined) {
   if (showEye === true) return "text"
