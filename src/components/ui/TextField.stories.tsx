@@ -25,10 +25,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 
-export const WithIcon: Story = {
-  args: { icon: PiCurrencyDollarSimple },
-}
-
 export const WithDescription: Story = {
   args: { description: "Helper text" },
 }
@@ -41,15 +37,10 @@ export const Disabled: Story = {
   args: { isDisabled: true },
 }
 
-export const All: Story = {
-  render: (args) => (
-    <div className="flex flex-col gap-4">
-      <TextField {...args} />
-      <TextField {...args} icon={PiCurrencyDollarSimple} />
-      <TextField {...args} description="Helper text" />
-      <TextField {...args} errorMessage="Field error message" isInvalid />
-      <TextField {...args} isDisabled />
-    </div>
-  ),
-  parameters: { controls: { disable: true } },
+export const WithIcon: Story = {
+  args: { icon: PiCurrencyDollarSimple },
+}
+
+export const WithPasswordVisibilityToggle: Story = {
+  args: { type: "password" },
 }
