@@ -8,6 +8,7 @@ import {
   PiChartDonutFill as BudgetsIcon,
   PiTipJarFill as PotsIcon,
   PiReceiptFill as BillsIcon,
+  PiUserFill as AccountIcon,
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
@@ -52,6 +53,12 @@ export default function NavbarMobile({ className }: { className?: string }) {
           icon={BillsIcon}
           title="Recurring Bills"
         />
+        <NavItemMobile
+          href="/account"
+          label="Account"
+          icon={AccountIcon}
+          title="Account"
+        />
       </ul>
     </nav>
   )
@@ -60,7 +67,7 @@ export default function NavbarMobile({ className }: { className?: string }) {
 const navItemMobileStyles = tv({
   slots: {
     navItemMobile:
-      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex w-full flex-col items-center gap-1 rounded-t-lg border-b-4 px-4 py-2 transition-colors outline-none focus-visible:ring-3 md:px-5",
+      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex w-full flex-col items-center gap-1 rounded-t-lg border-b-4 px-3 py-2 transition-colors outline-none focus-visible:ring-3 md:px-4",
     navItemTextMobile:
       "hidden text-center text-xs leading-normal font-bold md:block",
   },
@@ -105,7 +112,7 @@ function NavItemMobile({
         className={navItemMobile({ isActive })}
         aria-label={label}
       >
-        <Icon className="size-6 shrink-0" />
+        <Icon className="size-6" />
         <span className={navItemTextMobile({ isActive })}>{label}</span>
       </NextLink>
     </li>
