@@ -51,7 +51,7 @@ export default function Username({ name }: { name: string }) {
             control={form.control}
             render={({ field, fieldState: { invalid, error } }) => (
               <TextField
-                label="Name"
+                label="Username"
                 autoComplete="name"
                 {...field}
                 isInvalid={invalid}
@@ -61,8 +61,8 @@ export default function Username({ name }: { name: string }) {
             )}
           />
           <Button
-            variant="primary"
             type="submit"
+            variant="primary"
             className="justify-self-start"
             isPending={form.formState.isSubmitting}
           >

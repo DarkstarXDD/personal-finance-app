@@ -24,7 +24,7 @@ export default async function AccountPage() {
         <div className="grid gap-6 @5xl:grid-cols-2">
           <h2 className="sr-only">User details</h2>
           <Username name={user.name} />
-          <Email />
+          <Email email={user.email} />
           <Password />
         </div>
 
