@@ -13,6 +13,7 @@ import {
   PiChartDonutFill as BudgetsIcon,
   PiTipJarFill as PotsIcon,
   PiReceiptFill as BillsIcon,
+  PiUserFill as AccountIcon,
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
@@ -147,6 +148,12 @@ export default function NavbarDesktop({
             icon={BillsIcon}
             title="Recurring Bills"
           />
+          <NavItemDesktop
+            href="/account"
+            label="Account"
+            icon={AccountIcon}
+            title="Account"
+          />
         </motion.ul>
 
         <RacButton
@@ -243,7 +250,7 @@ function NavItemDesktop({
         className={navItem({ isActive, isExpanded })}
         aria-label={label}
       >
-        <Icon className="size-6 shrink-0" />
+        <Icon className="size-6" />
         <motion.span
           className={navItemText({ isActive, isExpanded })}
           initial={false}

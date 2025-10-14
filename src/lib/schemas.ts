@@ -29,6 +29,20 @@ export const idSchema = z.object({ id: z.cuid() })
 export type IdSchema = z.infer<typeof idSchema>
 
 // ============================================
+// =========== Name Schema and Type ===========
+// ============================================
+
+export const nameSchema = signupSchema.pick({ name: true })
+export type NameSchema = z.infer<typeof nameSchema>
+
+// ============================================
+// ========== Email Schema and Type ===========
+// ============================================
+
+export const emailSchema = signupSchema.pick({ email: true })
+export type EmailSchema = z.infer<typeof emailSchema>
+
+// ============================================
 // ==== Transaction Create Schema and Type ====
 // ============================================
 
