@@ -10,7 +10,7 @@ import { tv, type VariantProps } from "tailwind-variants"
 import Spinner from "@/components/ui/Spinner"
 
 const buttonStyles = tv({
-  base: "rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed flex cursor-pointer items-center justify-center gap-2 rounded-lg p-4 text-sm leading-normal font-bold ring-offset-2 transition-all outline-none",
+  base: "rac-focus-visible:ring-3 rac-pending:opacity-75 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed flex cursor-pointer items-center justify-center gap-2 rounded-lg p-4 text-sm leading-normal font-bold ring-offset-2 transition-all outline-none",
   variants: {
     variant: {
       primary:
