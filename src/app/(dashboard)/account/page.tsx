@@ -4,8 +4,11 @@ import Password from "@/components/account/Password"
 import SignOut from "@/components/account/SignOut"
 import Username from "@/components/account/Username"
 import Heading from "@/components/ui/Heading"
+import { getUser } from "@/data-access/account"
 
-export default function AccountPage() {
+export default async function AccountPage() {
+  const user = await getUser()
+
   return (
     <main className="@container grid gap-8">
       <div className="grid gap-8">
@@ -20,7 +23,7 @@ export default function AccountPage() {
 
         <div className="grid gap-6 @5xl:grid-cols-2">
           <h2 className="sr-only">User details</h2>
-          <Username />
+          <Username name={user.name} />
           <Email />
           <Password />
         </div>

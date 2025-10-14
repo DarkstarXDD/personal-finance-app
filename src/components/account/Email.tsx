@@ -3,8 +3,11 @@ import { PiEnvelopeFill } from "react-icons/pi"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
+// import { getUser } from "@/data-access/account"
 
-export default function Email() {
+export default async function Email() {
+  // const user = await getUser()
+
   return (
     <Card>
       <form className="grid gap-6">
