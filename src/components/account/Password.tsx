@@ -9,10 +9,10 @@ export default function Password() {
     <Card className="@5xl:col-span-2">
       <form className="grid gap-6">
         <div className="grid gap-2">
-          <h2 className="text-grey-900 flex items-center gap-2 text-base leading-none font-semibold">
+          <h3 className="text-grey-900 flex items-center gap-2 text-base leading-none font-semibold">
             <PiLockFill className="text-grey-500 size-5" />
             Password
-          </h2>
+          </h3>
           <p className="text-grey-500 text-sm">
             Change your password to keep your account secure.
           </p>

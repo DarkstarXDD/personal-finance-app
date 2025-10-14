@@ -9,10 +9,10 @@ export default function Email() {
     <Card>
       <form className="grid gap-6">
         <div className="grid gap-2">
-          <h2 className="text-grey-900 flex items-center gap-2 text-base leading-none font-semibold">
+          <h3 className="text-grey-900 flex items-center gap-2 text-base leading-none font-semibold">
             <PiEnvelopeFill className="text-grey-500 size-5" />
             Email
-          </h2>
+          </h3>
           <p className="text-grey-500 text-sm">Update your email address.</p>
         </div>
         <div className="grid gap-4">
