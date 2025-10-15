@@ -25,18 +25,27 @@ export default function EditBudgetDialog({
   colors: Color[]
   budget: Budget
 }) {
+  const defaultValues = {
+    id: budget.id,
+    categoryId: budget.category.id,
+    maximumSpend: budget.maximumSpend,
+    colorId: budget.color.id,
+  }
+
   const form = useForm({
     resolver: zodResolver(budgetUpdateSchema),
-    defaultValues: {
-      id: budget.id,
-      categoryId: budget.category.id,
-      maximumSpend: budget.maximumSpend,
-      colorId: budget.color.id,
-    },
+    defaultValues: defaultValues,
   })
 
   return (
-    <Dialog title="Edit Budget" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Dialog
+      title="Edit Budget"
+      isOpen={isOpen}
+      onOpenChange={(isOpen) => {
+        form.reset(defaultValues)
+        onOpenChange(isOpen)
+      }}
+    >
       {({ close }) => (
         <form
           className="grid gap-5"
