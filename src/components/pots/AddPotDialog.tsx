@@ -23,7 +23,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
   return (
     <DialogTrigger>
       <Button variant="primary">+ Add New Pot</Button>
-      <Dialog title="Add New Pot">
+      <Dialog title="New Pot">
         {({ close }) => (
           <form
             className="grid gap-5"
@@ -48,7 +48,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
                     label="Pot Name"
-                    placeholder="e.g. Rainy Days"
+                    placeholder="Rainy Days..."
                     description="Max 30 characters"
                     {...field}
                     isInvalid={invalid}
@@ -80,7 +80,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                 }) => (
                   <Select
                     label="Theme"
-                    placeholder="Select a color"
+                    placeholder="Select a Color..."
                     name={name}
                     selectedKey={value}
                     onSelectionChange={(selected) => onChange(selected)}

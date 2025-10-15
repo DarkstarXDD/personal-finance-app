@@ -46,7 +46,14 @@ export default function EditBudgetDialog({
   }, [budget, form])
 
   return (
-    <Dialog title="Edit Budget" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Dialog
+      title="Edit Budget"
+      isOpen={isOpen}
+      onOpenChange={(isOpen) => {
+        form.reset()
+        onOpenChange(isOpen)
+      }}
+    >
       {({ close }) => (
         <form
           className="grid gap-5"

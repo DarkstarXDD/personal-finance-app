@@ -32,7 +32,7 @@ export default function AddBudgetDialog({
   return (
     <DialogTrigger>
       <Button variant="primary">+ Add Budget</Button>
-      <Dialog title="Add New Budget">
+      <Dialog title="New Budget">
         {({ close }) => (
           <form
             className="grid gap-5"
@@ -60,7 +60,7 @@ export default function AddBudgetDialog({
                 }) => (
                   <Select
                     label="Budget Category"
-                    placeholder="Select a Category"
+                    placeholder="Select a Category..."
                     name={name}
                     selectedKey={value}
                     onSelectionChange={(selected) => onChange(selected)}
@@ -103,7 +103,7 @@ export default function AddBudgetDialog({
                 }) => (
                   <Select
                     label="Theme"
-                    placeholder="Select a color"
+                    placeholder="Select a Color..."
                     name={name}
                     selectedKey={value}
                     onSelectionChange={(selected) => onChange(selected)}

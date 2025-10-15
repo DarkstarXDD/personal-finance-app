@@ -128,7 +128,7 @@ function Select<T extends object>({
 
             <RacButton className={button({ shouldHideOnMobile })}>
               <span className={buttonSpan({ shouldHideOnMobile })}>
-                <RacSelectValue />
+                <RacSelectValue className="rac-placeholder-shown:text-grey-500" />
                 <PiCaretDownFill
                   className={caretDownIcon({ isSelectOpen: isOpen })}
                 />

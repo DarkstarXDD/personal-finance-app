@@ -45,7 +45,14 @@ export default function EditPotDialog({
   }, [pot, form])
 
   return (
-    <Dialog title="Edit Pot" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Dialog
+      title="Edit Pot"
+      isOpen={isOpen}
+      onOpenChange={(isOpen) => {
+        form.reset()
+        onOpenChange(isOpen)
+      }}
+    >
       {({ close }) => (
         <form
           className="grid gap-5"
@@ -70,7 +77,6 @@ export default function EditPotDialog({
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Pot Name"
-                  placeholder="e.g. Rainy Days"
                   description="Max 30 characters"
                   {...field}
                   isInvalid={invalid}
