@@ -52,7 +52,7 @@ export default function Email({ email }: { email: string }) {
             render={({ field, fieldState: { invalid, error } }) => (
               <TextField
                 label="Email"
-                autoComplete="name"
+                autoComplete="email"
                 {...field}
                 isInvalid={invalid}
                 errorMessage={error?.message}

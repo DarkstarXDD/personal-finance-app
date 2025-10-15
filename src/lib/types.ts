@@ -7,6 +7,7 @@ import type {
   BudgetCreate,
   NameSchema,
   EmailSchema,
+  PasswordUpdateSchema,
 } from "@/lib/schemas"
 
 export type DALReturn<T extends Record<string, string[]>> =
@@ -43,4 +44,8 @@ export type NameUpdateErrors = {
 
 export type EmailUpdateErrors = {
   [Key in keyof EmailSchema]?: string[]
+}
+
+export type PasswordUpdateErrors = {
+  [Key in keyof PasswordUpdateSchema]?: string[]
 }
