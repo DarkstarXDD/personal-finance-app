@@ -23,7 +23,7 @@ export async function createTransaction(
     if (parsed.data.transactionType === "INCOME")
       return {
         transactionType: [
-          "When type is INCOME, you cannot set a recurring bill.",
+          "When type is Income, you cannot set a recurring bill.",
         ],
       }
     const recurringBillResponse = await recurringBills.createRecurringBill(
