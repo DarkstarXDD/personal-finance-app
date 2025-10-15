@@ -10,16 +10,10 @@ import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import TextField from "@/components/ui/TextField"
 import { signupSchema } from "@/lib/schemas"
-
-import type { RegisterUserErrors } from "@/lib/types"
+import { setErrorsFromServer } from "@/lib/utils"
 
 export default function SignupForm() {
-  const {
-    handleSubmit,
-    control,
-    setError,
-    formState: { isSubmitting },
-  } = useForm({
+  const form = useForm({
     defaultValues: { name: "", email: "", password: "" },
     resolver: zodResolver(signupSchema),
   })
@@ -29,19 +23,11 @@ export default function SignupForm() {
       <div className="grid justify-items-center gap-8">
         <form
           className="grid w-full gap-8"
-          onSubmit={handleSubmit(async (data) => {
+          onSubmit={form.handleSubmit(async (data) => {
             const response = await registerUser(data)
             if (response) {
-              const errorKeys = Object.keys(
-                response
-              ) as (keyof RegisterUserErrors)[]
-              errorKeys.forEach((key) =>
-                setError(
-                  key,
-                  { message: response[key]?.[0] },
-                  { shouldFocus: true }
-                )
-              )
+              setErrorsFromServer(response, form)
+              return
             }
           })}
         >
@@ -49,7 +35,7 @@ export default function SignupForm() {
           <div className="grid gap-4">
             <Controller
               name="name"
-              control={control}
+              control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Name"
@@ -57,13 +43,13 @@ export default function SignupForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                 />
               )}
             />
             <Controller
               name="email"
-              control={control}
+              control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Email"
@@ -71,13 +57,13 @@ export default function SignupForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                 />
               )}
             />
             <Controller
               name="password"
-              control={control}
+              control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Create Password"
@@ -87,12 +73,16 @@ export default function SignupForm() {
                   isInvalid={invalid}
                   errorMessage={error?.message}
                   description="Password must be at least 8 characters"
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                 />
               )}
             />
           </div>
-          <Button variant="primary" type="submit" isPending={isSubmitting}>
+          <Button
+            variant="primary"
+            type="submit"
+            isPending={form.formState.isSubmitting}
+          >
             Create Account
           </Button>
         </form>

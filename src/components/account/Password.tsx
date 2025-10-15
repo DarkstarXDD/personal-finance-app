@@ -61,7 +61,7 @@ export default function Password() {
                 <TextField
                   label="Current Password"
                   type="password"
-                  autoComplete="password"
+                  autoComplete="current-password"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
