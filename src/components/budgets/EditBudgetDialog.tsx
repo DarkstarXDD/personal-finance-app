@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
 import { updateBudget } from "@/actions/budgets"
@@ -35,15 +34,6 @@ export default function EditBudgetDialog({
       colorId: budget.color.id,
     },
   })
-
-  useEffect(() => {
-    form.reset({
-      id: budget.id,
-      categoryId: budget.category.id,
-      maximumSpend: budget.maximumSpend,
-      colorId: budget.color.id,
-    })
-  }, [budget, form])
 
   return (
     <Dialog title="Edit Budget" isOpen={isOpen} onOpenChange={onOpenChange}>
