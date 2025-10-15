@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants"
 import {
   generatePaginationMobile,
   generatePaginationDesktop,
-} from "@/lib/utils"
+} from "@/lib/helpers/pagination"
 
 const paginationStyles = tv({
   slots: {
