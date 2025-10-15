@@ -1,5 +1,3 @@
-"use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
@@ -12,9 +10,9 @@ import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
 import { potUpdateSchema } from "@/lib/schemas"
+import { setErrorsFromServer } from "@/lib/utils"
 
 import type { Pot } from "@/data-access/pots"
-import type { PotCreateErrors } from "@/lib/types"
 
 export default function EditPotDialog({
   pot,
@@ -27,14 +25,7 @@ export default function EditPotDialog({
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
 }) {
-  const {
-    handleSubmit,
-    register,
-    control,
-    setError,
-    reset,
-    formState: { isSubmitting },
-  } = useForm({
+  const form = useForm({
     resolver: zodResolver(potUpdateSchema),
     defaultValues: {
       id: pot.id,
@@ -45,32 +36,23 @@ export default function EditPotDialog({
   })
 
   useEffect(() => {
-    reset({
+    form.reset({
       id: pot.id,
       name: pot.name,
       target: pot.target,
       colorId: pot.color.id,
     })
-  }, [pot, reset])
+  }, [pot, form])
 
   return (
     <Dialog title="Edit Pot" isOpen={isOpen} onOpenChange={onOpenChange}>
       {({ close }) => (
         <form
           className="grid gap-5"
-          onSubmit={handleSubmit(async (data) => {
+          onSubmit={form.handleSubmit(async (data) => {
             const response = await updatePot(data)
             if (response) {
-              const errorKeys = Object.keys(
-                response
-              ) as (keyof PotCreateErrors)[]
-              errorKeys.forEach((key) =>
-                setError(
-                  key,
-                  { message: response[key]?.[0] },
-                  { shouldFocus: true }
-                )
-              )
+              setErrorsFromServer(response, form)
               return
             }
             close()
@@ -81,10 +63,10 @@ export default function EditPotDialog({
             aligned with your goals.
           </p>
           <div className="grid gap-4">
-            <input {...register("id")} type="hidden" />
+            <input {...form.register("id")} type="hidden" />
             <Controller
               name="name"
-              control={control}
+              control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Pot Name"
@@ -93,27 +75,27 @@ export default function EditPotDialog({
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                 />
               )}
             />
             <Controller
               name="target"
-              control={control}
+              control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <NumberField
                   label="Target"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                   formatOptions={{ style: "currency", currency: "USD" }}
                 />
               )}
             />
             <Controller
               name="colorId"
-              control={control}
+              control={form.control}
               render={({
                 field: { name, value, onChange, ref },
                 fieldState: { invalid, error },
@@ -126,7 +108,7 @@ export default function EditPotDialog({
                   onSelectionChange={(selected) => onChange(selected)}
                   ref={ref}
                   isInvalid={invalid}
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                   errorMessage={error?.message}
                   items={colors}
                 >
@@ -145,7 +127,11 @@ export default function EditPotDialog({
               )}
             />
           </div>
-          <Button variant="primary" type="submit" isPending={isSubmitting}>
+          <Button
+            variant="primary"
+            type="submit"
+            isPending={form.formState.isSubmitting}
+          >
             Save Changes
           </Button>
         </form>

@@ -1,5 +1,3 @@
-"use client"
-
 import { useActionState } from "react"
 
 import { deletePot } from "@/actions/pots"
