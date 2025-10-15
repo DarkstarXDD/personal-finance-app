@@ -9,8 +9,14 @@ import {
   type NameSchema,
   emailSchema,
   type EmailSchema,
+  passwordUpdateSchema,
+  type PasswordUpdateSchema,
 } from "@/lib/schemas"
-import { EmailUpdateErrors, NameUpdateErrors } from "@/lib/types"
+import {
+  EmailUpdateErrors,
+  NameUpdateErrors,
+  PasswordUpdateErrors,
+} from "@/lib/types"
 
 // ============================================
 // ================ Update Name ===============
@@ -44,6 +50,25 @@ export async function updateEmail(
   await new Promise((resolve) => setTimeout(resolve, 3000))
 
   const response = await account.updateEmail(parsed.data)
+  if (!response.success) return response.fieldErrors
+
+  revalidatePath("/account")
+  return null
+}
+
+// ============================================
+// ============== Update Password =============
+// ============================================
+
+export async function updatePassword(
+  formData: PasswordUpdateSchema
+): Promise<PasswordUpdateErrors | null> {
+  const parsed = passwordUpdateSchema.safeParse(formData)
+  if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
+
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+
+  const response = await account.updatePassword(parsed.data)
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/account")
