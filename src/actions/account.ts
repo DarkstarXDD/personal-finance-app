@@ -1,6 +1,8 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 import * as z from "zod"
 
 import * as account from "@/data-access/account"
@@ -73,4 +75,14 @@ export async function updatePassword(
 
   revalidatePath("/account")
   return null
+}
+
+// ============================================
+// ================= Sign Out =================
+// ============================================
+
+export async function signOut() {
+  const cookieStore = await cookies()
+  cookieStore.delete("session")
+  redirect("/login")
 }
