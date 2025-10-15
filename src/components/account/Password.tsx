@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
 import { passwordUpdateSchema } from "@/lib/schemas"
-import { PasswordUpdateErrors } from "@/lib/types"
+import { setErrorsFromServer } from "@/lib/utils"
 
 export default function Password() {
   const form = useForm({
@@ -28,16 +28,7 @@ export default function Password() {
         onSubmit={form.handleSubmit(async (data) => {
           const response = await updatePassword(data)
           if (response) {
-            const errorKeys = Object.keys(
-              response
-            ) as (keyof PasswordUpdateErrors)[]
-            errorKeys.forEach((key) =>
-              form.setError(
-                key,
-                { message: response[key]?.[0] },
-                { shouldFocus: true }
-              )
-            )
+            setErrorsFromServer(response, form)
             return
           }
           form.reset()
@@ -61,7 +52,7 @@ export default function Password() {
                 <TextField
                   label="Current Password"
                   type="password"
-                  autoComplete="password"
+                  autoComplete="current-password"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}

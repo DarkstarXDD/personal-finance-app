@@ -10,18 +10,12 @@ import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { potCreateSchema } from "@/lib/schemas"
+import { setErrorsFromServer } from "@/lib/utils"
 
 import type { Color } from "@/data-access/lookups"
-import type { PotCreateErrors } from "@/lib/types"
 
 export default function AddPotDialog({ colors }: { colors: Color[] }) {
-  const {
-    handleSubmit,
-    control,
-    setError,
-    reset,
-    formState: { isSubmitting },
-  } = useForm({
+  const form = useForm({
     resolver: zodResolver(potCreateSchema),
     defaultValues: { name: "", target: 0, colorId: "" },
   })
@@ -33,22 +27,13 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
         {({ close }) => (
           <form
             className="grid gap-5"
-            onSubmit={handleSubmit(async (data) => {
+            onSubmit={form.handleSubmit(async (data) => {
               const response = await createPot(data)
               if (response) {
-                const errorKeys = Object.keys(
-                  response
-                ) as (keyof PotCreateErrors)[]
-                errorKeys.forEach((key) =>
-                  setError(
-                    key,
-                    { message: response[key]?.[0] },
-                    { shouldFocus: true }
-                  )
-                )
+                setErrorsFromServer(response, form)
                 return
               }
-              reset()
+              form.reset()
               close()
             })}
           >
@@ -59,7 +44,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
             <div className="grid gap-4">
               <Controller
                 name="name"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
                     label="Pot Name"
@@ -68,27 +53,27 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                   />
                 )}
               />
               <Controller
                 name="target"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <NumberField
                     label="Target"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                     formatOptions={{ style: "currency", currency: "USD" }}
                   />
                 )}
               />
               <Controller
                 name="colorId"
-                control={control}
+                control={form.control}
                 render={({
                   field: { name, value, onChange, ref },
                   fieldState: { invalid, error },
@@ -101,7 +86,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                     onSelectionChange={(selected) => onChange(selected)}
                     ref={ref}
                     isInvalid={invalid}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                     errorMessage={error?.message}
                     items={colors}
                   >
@@ -120,7 +105,11 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                 )}
               />
             </div>
-            <Button variant="primary" type="submit" isPending={isSubmitting}>
+            <Button
+              variant="primary"
+              type="submit"
+              isPending={form.formState.isSubmitting}
+            >
               Add Pot
             </Button>
           </form>

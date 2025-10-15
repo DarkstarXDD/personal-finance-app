@@ -12,22 +12,16 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { TransactionCreate, transactionCreateSchema } from "@/lib/schemas"
+import { setErrorsFromServer } from "@/lib/utils"
 
 import type { Category } from "@/data-access/lookups"
-import type { TransactionCreateErrors } from "@/lib/types"
 
 export default function AddTransactionDialog({
   categories,
 }: {
   categories: Category[]
 }) {
-  const {
-    handleSubmit,
-    control,
-    setError,
-    reset,
-    formState: { isSubmitting },
-  } = useForm<TransactionCreate>({
+  const form = useForm<TransactionCreate>({
     resolver: zodResolver(transactionCreateSchema),
     defaultValues: {
       counterparty: "",
@@ -40,7 +34,7 @@ export default function AddTransactionDialog({
   })
 
   const transactionTypeValue = useWatch({
-    control: control,
+    control: form.control,
     name: "transactionType",
   })
 
@@ -51,23 +45,13 @@ export default function AddTransactionDialog({
         {({ close }) => (
           <form
             className="grid gap-5"
-            onSubmit={handleSubmit(async (data) => {
+            onSubmit={form.handleSubmit(async (data) => {
               const response = await createTransaction(data)
               if (response) {
-                console.log(response)
-                const errorKeys = Object.keys(
-                  response
-                ) as (keyof TransactionCreateErrors)[]
-                errorKeys.forEach((key) =>
-                  setError(
-                    key,
-                    { message: response[key]?.[0] },
-                    { shouldFocus: true }
-                  )
-                )
+                setErrorsFromServer(response, form)
                 return
               }
-              reset()
+              form.reset()
               close()
             })}
           >
@@ -77,7 +61,7 @@ export default function AddTransactionDialog({
             <div className="grid gap-4">
               <Controller
                 name="transactionType"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <RadioGroup
                     label="Transaction Type"
@@ -85,7 +69,7 @@ export default function AddTransactionDialog({
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                   >
                     <RadioGroupItem value="INCOME">Income</RadioGroupItem>
                     <RadioGroupItem value="EXPENSE">Expense</RadioGroupItem>
@@ -95,7 +79,7 @@ export default function AddTransactionDialog({
 
               <Controller
                 name="counterparty"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
                     label="Counterparty"
@@ -104,21 +88,21 @@ export default function AddTransactionDialog({
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                   />
                 )}
               />
 
               <Controller
                 name="amount"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <NumberField
                     label="Transaction Amount"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                     formatOptions={{ style: "currency", currency: "USD" }}
                   />
                 )}
@@ -126,7 +110,7 @@ export default function AddTransactionDialog({
 
               <Controller
                 name="categoryId"
-                control={control}
+                control={form.control}
                 render={({
                   field: { name, value, onChange, ref },
                   fieldState: { invalid, error },
@@ -139,7 +123,7 @@ export default function AddTransactionDialog({
                     onSelectionChange={(selected) => onChange(selected)}
                     ref={ref}
                     isInvalid={invalid}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                     errorMessage={error?.message}
                     items={categories}
                   >
@@ -154,14 +138,15 @@ export default function AddTransactionDialog({
 
               <Controller
                 name="isRecurring"
-                control={control}
+                control={form.control}
                 render={({ field: { name, value, onChange } }) => (
                   <Checkbox
                     name={name}
                     isSelected={value}
                     onChange={onChange}
                     isDisabled={
-                      transactionTypeValue === "INCOME" || isSubmitting
+                      transactionTypeValue === "INCOME" ||
+                      form.formState.isSubmitting
                     }
                   >
                     Is this a recurring bill?
@@ -169,7 +154,11 @@ export default function AddTransactionDialog({
                 )}
               />
             </div>
-            <Button variant="primary" type="submit" isPending={isSubmitting}>
+            <Button
+              variant="primary"
+              type="submit"
+              isPending={form.formState.isSubmitting}
+            >
               Add Transaction
             </Button>
           </form>

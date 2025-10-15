@@ -12,29 +12,21 @@ import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/Label"
 import NumberField from "@/components/ui/NumberField"
 import { potAmountUpdateSchema } from "@/lib/schemas"
+import { setErrorsFromServer } from "@/lib/utils"
 
 import type { Pot } from "@/data-access/pots"
-import type { PotAmountUpdateErrors } from "@/lib/types"
 
 export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
-  const {
-    handleSubmit,
-    register,
-    control,
-    setError,
-    reset,
-    watch,
-    formState: { isSubmitting },
-  } = useForm({
+  const form = useForm({
     resolver: zodResolver(potAmountUpdateSchema),
     defaultValues: { id: pot.id, amountToUpdate: 0 },
   })
 
   useEffect(() => {
-    reset({ id: pot.id, amountToUpdate: 0 })
-  }, [pot, reset])
+    form.reset({ id: pot.id, amountToUpdate: 0 })
+  }, [pot, form])
 
-  const amountInInput = watch("amountToUpdate")
+  const amountInInput = form.watch("amountToUpdate")
   const draftAmountInPot = pot.currentAmount - amountInInput
 
   return (
@@ -107,40 +99,35 @@ export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
             </ProgressBar>
             <form
               className="grid gap-5"
-              onSubmit={handleSubmit(async (data) => {
+              onSubmit={form.handleSubmit(async (data) => {
                 const response = await withdrawFromPot(data)
                 if (response) {
-                  const errorKeys = Object.keys(
-                    response
-                  ) as (keyof PotAmountUpdateErrors)[]
-                  errorKeys.forEach((key) =>
-                    setError(
-                      key,
-                      { message: response[key]?.[0] },
-                      { shouldFocus: true }
-                    )
-                  )
+                  setErrorsFromServer(response, form)
                   return
                 }
                 close()
               })}
             >
-              <input {...register("id")} type="hidden" />
+              <input {...form.register("id")} type="hidden" />
               <Controller
                 name="amountToUpdate"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <NumberField
                     label="Amount to Withdraw"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
-                    isDisabled={isSubmitting}
+                    isDisabled={form.formState.isSubmitting}
                     formatOptions={{ style: "currency", currency: "USD" }}
                   />
                 )}
               />
-              <Button type="submit" variant="primary" isPending={isSubmitting}>
+              <Button
+                type="submit"
+                variant="primary"
+                isPending={form.formState.isSubmitting}
+              >
                 Confirm Withdrawal
               </Button>
             </form>

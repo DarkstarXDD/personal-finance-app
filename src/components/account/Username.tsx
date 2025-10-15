@@ -9,8 +9,7 @@ import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
 import { nameSchema } from "@/lib/schemas"
-
-import type { NameUpdateErrors } from "@/lib/types"
+import { setErrorsFromServer } from "@/lib/utils"
 
 export default function Username({ name }: { name: string }) {
   const form = useForm({
@@ -25,16 +24,8 @@ export default function Username({ name }: { name: string }) {
         onSubmit={form.handleSubmit(async (data) => {
           const response = await updateName(data)
           if (response) {
-            const errorKeys = Object.keys(
-              response
-            ) as (keyof NameUpdateErrors)[]
-            errorKeys.forEach((key) =>
-              form.setError(
-                key,
-                { message: response[key]?.[0] },
-                { shouldFocus: true }
-              )
-            )
+            setErrorsFromServer(response, form)
+            return
           }
         })}
       >
