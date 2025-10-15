@@ -10,16 +10,10 @@ import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import TextField from "@/components/ui/TextField"
 import { loginSchema } from "@/lib/schemas"
-
-import type { LoginUserErrors } from "@/lib/types"
+import { setErrorsFromServer } from "@/lib/utils"
 
 export default function LoginForm() {
-  const {
-    handleSubmit,
-    control,
-    setError,
-    formState: { isSubmitting },
-  } = useForm({
+  const form = useForm({
     defaultValues: { email: "", password: "" },
     resolver: zodResolver(loginSchema),
   })
@@ -29,19 +23,11 @@ export default function LoginForm() {
       <div className="grid justify-items-center gap-8">
         <form
           className="grid w-full gap-8"
-          onSubmit={handleSubmit(async (data) => {
+          onSubmit={form.handleSubmit(async (data) => {
             const response = await loginUser(data)
             if (response) {
-              const errorKeys = Object.keys(
-                response
-              ) as (keyof LoginUserErrors)[]
-              errorKeys.forEach((key) =>
-                setError(
-                  key,
-                  { message: response[key]?.[0] },
-                  { shouldFocus: true }
-                )
-              )
+              setErrorsFromServer(response, form)
+              return
             }
           })}
         >
@@ -49,7 +35,7 @@ export default function LoginForm() {
           <div className="grid gap-4">
             <Controller
               name="email"
-              control={control}
+              control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Email"
@@ -57,13 +43,13 @@ export default function LoginForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                 />
               )}
             />
             <Controller
               name="password"
-              control={control}
+              control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Password"
@@ -72,12 +58,16 @@ export default function LoginForm() {
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
-                  isDisabled={isSubmitting}
+                  isDisabled={form.formState.isSubmitting}
                 />
               )}
             />
           </div>
-          <Button variant="primary" type="submit" isPending={isSubmitting}>
+          <Button
+            variant="primary"
+            type="submit"
+            isPending={form.formState.isSubmitting}
+          >
             Login
           </Button>
         </form>
