@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
 import { updatePot } from "@/actions/pots"
@@ -34,8 +35,24 @@ export default function EditPotDialog({
     },
   })
 
+  useEffect(() => {
+    form.reset({
+      id: pot.id,
+      name: pot.name,
+      target: pot.target,
+      colorId: pot.color.id,
+    })
+  }, [pot, form])
+
   return (
-    <Dialog title="Edit Pot" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Dialog
+      title="Edit Pot"
+      isOpen={isOpen}
+      onOpenChange={(isOpen) => {
+        form.reset()
+        onOpenChange(isOpen)
+      }}
+    >
       {({ close }) => (
         <form
           className="grid gap-5"
