@@ -31,7 +31,6 @@ function Submit() {
   // Most probably because RAC button updates the state based on the pending from this hook
   // The action works and the logout works, but the pending state will not be shown
   const { pending } = useFormStatus()
-  console.log(pending)
 
   return (
     <Button type="submit" variant="secondary" isPending={pending}>
