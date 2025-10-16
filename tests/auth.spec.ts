@@ -1,6 +1,5 @@
-import { test, expect } from "@playwright/test"
+import { test, expect } from "./fixtures/login-fixture"
 
-import { LoginPage } from "./page-objects/login-page"
 import {} from // getLoginHeading,
 // getOverviewHeading,
 // getSignupHeading,
@@ -98,28 +97,21 @@ import {} from // getLoginHeading,
 // ============================================
 
 test.describe("Login Page", () => {
-  let loginPage: LoginPage
-
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page)
-    await loginPage.goto()
-  })
-
-  test("renders all required elements", async () => {
+  test("renders all required elements", async ({ loginPage }) => {
     await expect(loginPage.heading).toBeVisible()
     await expect(loginPage.emailInput).toBeVisible()
     await expect(loginPage.passwordInput).toBeVisible()
     await expect(loginPage.loginButton).toBeVisible()
   })
 
-  test("shows error for empty submit", async () => {
+  test("shows error for empty submit", async ({ loginPage }) => {
     await loginPage.loginButton.click()
     await expect(loginPage.emailInput).toBeFocused()
     await loginPage.expectErrorMessage("Invalid email format.")
     await loginPage.expectErrorMessage("Password cannot be empty.")
   })
 
-  test("shows error for unknown email", async () => {
+  test("shows error for unknown email", async ({ loginPage }) => {
     await loginPage.emailInput.fill("unknownemail@example.com")
     await loginPage.passwordInput.fill("Test1234")
     await loginPage.loginButton.click()
@@ -128,14 +120,14 @@ test.describe("Login Page", () => {
     )
   })
 
-  test("shows error for incorrect password", async () => {
+  test("shows error for incorrect password", async ({ loginPage }) => {
     await loginPage.emailInput.fill("test@email.com")
     await loginPage.passwordInput.fill("wrong_password")
     await loginPage.loginButton.click()
     await loginPage.expectErrorMessage("Incorrect password. Please try again.")
   })
 
-  test("can log in with correct credentials", async () => {
+  test("can log in with correct credentials", async ({ loginPage }) => {
     await loginPage.login({ email: "test@email.com", password: "Test1234" })
   })
 })
