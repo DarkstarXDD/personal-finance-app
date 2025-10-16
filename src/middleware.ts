@@ -22,6 +22,10 @@ export async function middleware(req: NextRequest) {
   }
 
   if (isPublic) return NextResponse.redirect(new URL("/", req.url))
+
+  if (pathname === "/overview")
+    return NextResponse.redirect(new URL("/", req.url))
+
   return NextResponse.next()
 }
 
