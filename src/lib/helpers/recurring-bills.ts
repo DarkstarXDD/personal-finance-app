@@ -34,7 +34,7 @@ export function getDueDate(subscriptionStartDate: Date) {
   // If the due date is already passed for the current month
   // add 1 month to it and return the due date of the next month
   const daysUntilDue = getDaysUntilDue(dueDate)
-  if (daysUntilDue < 0) {
+  if (daysUntilDue <= 0) {
     dueDate = addMonths(dueDate, 1)
   }
 
