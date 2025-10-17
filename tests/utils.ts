@@ -4,20 +4,25 @@ import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
 
 // ============================================
-// ============ Create Login User =============
+// ============ Create Dummy User =============
 // ============================================
-
-export async function createLoginUser() {
+export function createDummyUserData() {
   const name = faker.person.fullName()
   const email = faker.internet.email().toLowerCase()
   const password = faker.internet.password()
+
+  return { name, email, password }
+}
+
+export async function createDummyUser() {
+  const { name, email, password } = createDummyUserData()
 
   const hashedPassword = await bcrypt.hash(password, 12)
 
   const user = await prisma.user.create({
     data: { name, email, password: hashedPassword },
-    select: { id: true, email: true },
+    select: { id: true, name: true, email: true },
   })
 
-  return { ...user, passwordInPlainText: password }
+  return { ...user, password: password }
 }

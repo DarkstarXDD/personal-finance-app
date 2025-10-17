@@ -45,6 +45,12 @@ const eslintConfig = [
       "import/newline-after-import": "error",
     },
   },
+  {
+    files: ["tests/fixtures/**/*.ts"],
+    rules: {
+      "react-hooks/rules-of-hooks": "off",
+    },
+  },
 ]
 
 export default eslintConfig

@@ -1,10 +1,10 @@
 import { test as base } from "@playwright/test"
 
-import { LoginPage } from "../page-objects/login-page"
+import { SignUpPage } from "../page-objects/signup-page"
 import { createDummyUser } from "../utils"
 
-type TestFixtures = {
-  loginPage: LoginPage
+type Fixtures = {
+  signUpPage: SignUpPage
   dummyUser: {
     id: string
     name: string
@@ -13,16 +13,16 @@ type TestFixtures = {
   }
 }
 
-export const test = base.extend<TestFixtures>({
+export const test = base.extend<Fixtures>({
   dummyUser: async ({}, use) => {
     const user = await createDummyUser()
     await use(user)
   },
 
-  loginPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page)
-    await loginPage.goto()
-    await use(loginPage)
+  signUpPage: async ({ page }, use) => {
+    const signUpPage = new SignUpPage(page)
+    await signUpPage.goto()
+    await use(signUpPage)
   },
 })
 
