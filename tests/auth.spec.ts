@@ -112,9 +112,7 @@ test.describe("Login Page", () => {
   })
 
   test("shows error for unknown email", async ({ loginPage }) => {
-    await loginPage.emailInput.fill("unknownemail@example.com")
-    await loginPage.passwordInput.fill("Test1234")
-    await loginPage.loginButton.click()
+    await loginPage.login({ email: "no@example.com", password: "Test1234" })
     await loginPage.expectErrorMessage(
       "No account found with this email address. Please check the email entered or sign up for a new account."
     )
@@ -124,9 +122,7 @@ test.describe("Login Page", () => {
     loginUser: { email },
     loginPage,
   }) => {
-    await loginPage.emailInput.fill(email)
-    await loginPage.passwordInput.fill("wrong_password")
-    await loginPage.loginButton.click()
+    await loginPage.login({ email, password: "wrong_password" })
     await loginPage.expectErrorMessage("Incorrect password. Please try again.")
   })
 
