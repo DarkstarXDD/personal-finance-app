@@ -120,8 +120,11 @@ test.describe("Login Page", () => {
     )
   })
 
-  test("shows error for incorrect password", async ({ loginPage }) => {
-    await loginPage.emailInput.fill("test@email.com")
+  test("shows error for incorrect password", async ({
+    loginUser: { email },
+    loginPage,
+  }) => {
+    await loginPage.emailInput.fill(email)
     await loginPage.passwordInput.fill("wrong_password")
     await loginPage.loginButton.click()
     await loginPage.expectErrorMessage("Incorrect password. Please try again.")
