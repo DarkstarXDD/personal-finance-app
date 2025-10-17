@@ -1,10 +1,10 @@
 import { test, expect } from "./fixtures/login-fixture"
 
-import {} from // getLoginHeading,
-// getOverviewHeading,
-// getSignupHeading,
-// login,
-"./playwright-utils"
+// import {} from // getLoginHeading,
+// // getOverviewHeading,
+// // getSignupHeading,
+// // login,
+// "./playwright-utils"
 
 // ============================================
 // ================= Signup Page ==============
@@ -127,8 +127,11 @@ test.describe("Login Page", () => {
     await loginPage.expectErrorMessage("Incorrect password. Please try again.")
   })
 
-  test("can log in with correct credentials", async ({ loginPage }) => {
+  test("can log in with correct credentials", async ({ loginPage, page }) => {
     await loginPage.login({ email: "test@email.com", password: "Test1234" })
+    await expect(
+      page.getByRole("heading", { name: "Overview", level: 1 })
+    ).toBeVisible()
   })
 })
 
