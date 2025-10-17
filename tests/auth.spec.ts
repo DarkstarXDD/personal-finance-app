@@ -132,7 +132,6 @@ test.describe("Login Page", () => {
     loginPage,
     page,
   }) => {
-    console.log("Login test running!")
     await loginPage.login({ email, password: passwordInPlainText })
     await expect(
       page.getByRole("heading", { name: "Overview", level: 1 })
@@ -144,26 +143,35 @@ test.describe("Login Page", () => {
 // ================= Redirects ================
 // ============================================
 
-// test.describe("Redirects", () => {
-//   test("visiting auth pages while logged in redirects to home", async ({
-//     page,
-//   }) => {
-//     await login(page)
+test.describe("Redirects", () => {
+  test("redirects unauthorized users to login", async ({ page, loginPage }) => {
+    await page.goto("/")
+    await expect(loginPage.heading).toBeVisible()
 
-//     // after logged in, try to visit /login, but should be redirected back to home
-//     await page.goto("/login")
-//     await expect(getOverviewHeading(page)).toBeVisible()
+    await page.goto("/transactions")
+    await expect(loginPage.heading).toBeVisible()
+  })
 
-//     // same for /signup as well
-//     await page.goto("/signup")
-//     await expect(getOverviewHeading(page)).toBeVisible()
-//   })
+  test("visiting auth pages while logged in redirects to home", async ({
+    page,
+    loginUser: { email, passwordInPlainText },
+    loginPage,
+  }) => {
+    await loginPage.login({ email, password: passwordInPlainText })
+    await expect(
+      page.getByRole("heading", { name: "Overview", level: 1 })
+    ).toBeVisible()
 
-//   test("redirects unauthorized users to login", async ({ page }) => {
-//     await page.goto("/")
-//     await expect(getLoginHeading(page)).toBeVisible()
+    // after logged in, try to visit /login, but should be redirected back to home
+    await page.goto("/login")
+    await expect(
+      page.getByRole("heading", { name: "Overview", level: 1 })
+    ).toBeVisible()
 
-//     await page.goto("/transactions")
-//     await expect(getLoginHeading(page)).toBeVisible()
-//   })
-// })
+    // same for /signup as well
+    await page.goto("/signup")
+    await expect(
+      page.getByRole("heading", { name: "Overview", level: 1 })
+    ).toBeVisible()
+  })
+})
