@@ -1,24 +1,27 @@
 import { test as base } from "@playwright/test"
 
 import { LoginPage } from "../page-objects/login-page"
-import { createLoginUser } from "../utils"
+import { createDummyUser } from "../utils"
 
 type TestFixtures = {
-  loginUser: { email: string; passwordInPlainText: string }
   loginPage: LoginPage
+  dummyUser: {
+    id: string
+    name: string
+    email: string
+    password: string
+  }
 }
 
 export const test = base.extend<TestFixtures>({
-  loginUser: async ({}, use) => {
-    const user = await createLoginUser()
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  dummyUser: async ({}, use) => {
+    const user = await createDummyUser()
     await use(user)
   },
 
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page)
     await loginPage.goto()
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(loginPage)
   },
 })
