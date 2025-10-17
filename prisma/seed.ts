@@ -19,15 +19,15 @@ async function main() {
     skipDuplicates: true,
   })
 
-  await prisma.user.upsert({
-    where: { email: "test@email.com" },
-    update: {},
-    create: {
-      name: "Test User",
-      email: "test@email.com",
-      password: "$2b$12$r6ALbz/DLYZ0ZDH98QUAPuuW9iL6DkksUzWbesiBH72x/u2Ytsfay",
-    },
-  })
+  // await prisma.user.upsert({
+  //   where: { email: "test@email.com" },
+  //   update: {},
+  //   create: {
+  //     name: "Test User",
+  //     email: "test@email.com",
+  //     password: "$2b$12$r6ALbz/DLYZ0ZDH98QUAPuuW9iL6DkksUzWbesiBH72x/u2Ytsfay",
+  //   },
+  // })
 }
 
 main()
