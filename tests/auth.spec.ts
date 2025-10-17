@@ -127,8 +127,13 @@ test.describe("Login Page", () => {
     await loginPage.expectErrorMessage("Incorrect password. Please try again.")
   })
 
-  test("can log in with correct credentials", async ({ loginPage, page }) => {
-    await loginPage.login({ email: "test@email.com", password: "Test1234" })
+  test("can log in with correct credentials", async ({
+    loginUser: { email, passwordInPlainText },
+    loginPage,
+    page,
+  }) => {
+    console.log("Login test running!")
+    await loginPage.login({ email, password: passwordInPlainText })
     await expect(
       page.getByRole("heading", { name: "Overview", level: 1 })
     ).toBeVisible()
