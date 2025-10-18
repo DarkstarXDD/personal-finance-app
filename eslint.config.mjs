@@ -51,6 +51,12 @@ const eslintConfig = [
       "react-hooks/rules-of-hooks": "off",
     },
   },
+  {
+    files: ["tests/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+    },
+  },
 ]
 
 export default eslintConfig
