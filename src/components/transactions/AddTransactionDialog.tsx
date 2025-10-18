@@ -41,7 +41,7 @@ export default function AddTransactionDialog({
   return (
     <DialogTrigger>
       <Button variant="primary">+ Add Transaction</Button>
-      <Dialog title="Add New Transaction">
+      <Dialog title="New Transaction">
         {({ close }) => (
           <form
             className="grid gap-5"
@@ -71,8 +71,12 @@ export default function AddTransactionDialog({
                     errorMessage={error?.message}
                     isDisabled={form.formState.isSubmitting}
                   >
-                    <RadioGroupItem value="INCOME">Income</RadioGroupItem>
-                    <RadioGroupItem value="EXPENSE">Expense</RadioGroupItem>
+                    <RadioGroupItem value="INCOME" data-testid="income-radio">
+                      Income
+                    </RadioGroupItem>
+                    <RadioGroupItem value="EXPENSE" data-testid="expense-radio">
+                      Expense
+                    </RadioGroupItem>
                   </RadioGroup>
                 )}
               />
@@ -83,7 +87,7 @@ export default function AddTransactionDialog({
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
                     label="Counterparty"
-                    placeholder="e.g. Echo Game Store"
+                    placeholder="Echo Game Store..."
                     description="Max 30 characters"
                     {...field}
                     isInvalid={invalid}
