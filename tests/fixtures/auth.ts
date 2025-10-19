@@ -7,7 +7,7 @@ import { createToken } from "@/lib/session"
 import { createDummyUser } from "../utils"
 
 type Fixtures = {
-  userSession: null
+  userSession: { userId: string }
 }
 
 export const test = base.extend<Fixtures>({
@@ -25,7 +25,7 @@ export const test = base.extend<Fixtures>({
       },
     ])
 
-    await use(null)
+    await use({ userId: user.id })
   },
 })
 

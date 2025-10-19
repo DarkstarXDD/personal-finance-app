@@ -5,6 +5,8 @@ export class TransactionsPage {
   readonly heading: Locator
   readonly emptyState: Locator
 
+  readonly searchInput: Locator
+
   readonly dialogTrigger: Locator
   readonly dialogHeading: Locator
   readonly incomeRadio: Locator
@@ -15,9 +17,6 @@ export class TransactionsPage {
   readonly categoryItem: Locator
   readonly recurringCheckbox: Locator
   readonly addTransactionButton: Locator
-  readonly nameCell: Locator
-  readonly categoryCell: Locator
-  readonly amountCell: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -25,6 +24,10 @@ export class TransactionsPage {
     this.emptyState = page.getByRole("heading", {
       name: "No transactions",
       level: 3,
+    })
+
+    this.searchInput = page.getByRole("searchbox", {
+      name: "Search Transactions",
     })
 
     this.dialogTrigger = page.getByRole("button", { name: "Add Transaction" })
@@ -37,15 +40,11 @@ export class TransactionsPage {
     this.counterpartyInput = page.getByRole("textbox", { name: "Counterparty" })
     this.amountInput = page.getByRole("textbox", { name: "Transaction Amount" })
     this.categorySelect = page.getByRole("button", { name: "Select a Categor" })
-    this.categoryItem = page.getByRole("option", { name: "Transportation" })
+    this.categoryItem = page.getByRole("option", { name: "Education" })
     this.recurringCheckbox = page.locator('[name="isRecurring"]')
     this.addTransactionButton = page.getByRole("button", {
       name: "Add Transaction",
     })
-
-    this.nameCell = page.getByRole("cell", { name: "Random name" })
-    this.categoryCell = page.getByRole("cell", { name: "Transportation" })
-    this.amountCell = page.getByRole("cell", { name: "10" })
   }
 
   async goto() {

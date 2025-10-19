@@ -1,3 +1,5 @@
+import { prisma } from "@/lib/prisma"
+
 import { test, expect } from "./fixtures/auth"
 import { TransactionsPage } from "./page-objects/transactions-page"
 
@@ -57,8 +59,27 @@ test.describe("Transactions Page", () => {
     await transactionPage.categorySelect.click()
     await transactionPage.categoryItem.click()
     await transactionPage.addTransactionButton.click()
-    await expect(transactionPage.nameCell).toBeVisible()
-    await expect(transactionPage.categoryCell).toBeVisible()
-    await expect(transactionPage.amountCell).toBeVisible()
+    await expect(page.getByRole("cell", { name: "Random name" })).toBeVisible()
+    await expect(page.getByRole("cell", { name: "10" })).toBeVisible()
+    await expect(page.getByRole("cell", { name: "Education" })).toBeVisible()
+  })
+
+  test("can search a transaction", async ({ page, userSession }) => {
+    const categories = await prisma.category.findMany()
+    const tx = await prisma.transaction.create({
+      data: {
+        userId: userSession.userId,
+        counterparty: "Game store",
+        categoryId: categories[0].id,
+        amount: 10,
+        transactionType: "EXPENSE",
+      },
+    })
+
+    const transactionPage = new TransactionsPage(page)
+    await transactionPage.goto()
+
+    await transactionPage.searchInput.fill("Game")
+    await expect(page.getByRole("cell", { name: "Game store" })).toBeVisible()
   })
 })
