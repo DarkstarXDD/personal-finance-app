@@ -32,7 +32,7 @@ export class TransactionsPage {
       name: "Search Transactions",
     })
     this.sortFilterSelect = page.getByRole("button", { name: "Sort by" })
-    this.categoryFilterSelect = page.getByRole("button", { name: "Sort by" })
+    this.categoryFilterSelect = page.getByRole("button", { name: "Category" })
 
     this.dialogTrigger = page.getByRole("button", { name: "Add Transaction" })
     this.dialogHeading = page.getByRole("heading", {

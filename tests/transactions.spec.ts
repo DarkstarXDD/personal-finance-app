@@ -81,6 +81,11 @@ test.describe("Transactions Page", () => {
 
     await transactionPage.searchInput.fill("Game")
     await expect(page.getByRole("cell", { name: "Game store" })).toBeVisible()
+
+    await transactionPage.searchInput.fill("random string")
+    await expect(page.getByRole("paragraph")).toHaveText(
+      "No results match your filters."
+    )
   })
 
   test("can sort transactions", async ({ page, userSession }) => {
@@ -116,5 +121,47 @@ test.describe("Transactions Page", () => {
     await expect(rows.nth(1)).toHaveText(/Bravo/)
     await expect(rows.nth(2)).toHaveText(/Charlie/)
     await expect(rows.nth(3)).toHaveText(/Alpha/)
+  })
+
+  test("can filter by category", async ({ page, userSession }) => {
+    const categories = await prisma.category.findMany()
+    const baseData = {
+      userId: userSession.userId,
+      transactionType: "EXPENSE" as "EXPENSE" | "INCOME",
+      amount: 30,
+    }
+
+    await prisma.transaction.create({
+      data: {
+        ...baseData,
+        counterparty: "Alpha",
+        categoryId: categories[0].id,
+      },
+    })
+    await prisma.transaction.create({
+      data: {
+        ...baseData,
+        counterparty: "Bravo",
+        categoryId: categories[1].id,
+      },
+    })
+
+    const transactionPage = new TransactionsPage(page)
+    await transactionPage.goto()
+    const rows = page.getByRole("row")
+
+    await transactionPage.categoryFilterSelect.click()
+    await page.getByRole("option", { name: "Bills" }).click()
+    await expect(rows.nth(1)).toHaveText(/Alpha/)
+
+    await transactionPage.categoryFilterSelect.click()
+    await page.getByRole("option", { name: "Entertainment" }).click()
+    await expect(rows.nth(1)).toHaveText(/Bravo/)
+
+    await transactionPage.categoryFilterSelect.click()
+    await page.getByRole("option", { name: "Travel" }).click()
+    await expect(page.getByRole("paragraph")).toHaveText(
+      "No results match your filters."
+    )
   })
 })
