@@ -6,6 +6,8 @@ export class TransactionsPage {
   readonly emptyState: Locator
 
   readonly searchInput: Locator
+  readonly sortFilterSelect: Locator
+  readonly categoryFilterSelect: Locator
 
   readonly dialogTrigger: Locator
   readonly dialogHeading: Locator
@@ -29,6 +31,8 @@ export class TransactionsPage {
     this.searchInput = page.getByRole("searchbox", {
       name: "Search Transactions",
     })
+    this.sortFilterSelect = page.getByRole("button", { name: "Sort by" })
+    this.categoryFilterSelect = page.getByRole("button", { name: "Sort by" })
 
     this.dialogTrigger = page.getByRole("button", { name: "Add Transaction" })
     this.dialogHeading = page.getByRole("heading", {

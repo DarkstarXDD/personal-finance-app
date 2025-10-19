@@ -82,4 +82,39 @@ test.describe("Transactions Page", () => {
     await transactionPage.searchInput.fill("Game")
     await expect(page.getByRole("cell", { name: "Game store" })).toBeVisible()
   })
+
+  test("can sort transactions", async ({ page, userSession }) => {
+    const categories = await prisma.category.findMany()
+    const baseData = {
+      userId: userSession.userId,
+      transactionType: "EXPENSE" as "EXPENSE" | "INCOME",
+      categoryId: categories[1].id,
+    }
+
+    await prisma.transaction.create({
+      data: { ...baseData, counterparty: "Bravo", amount: 30 },
+    })
+    await prisma.transaction.create({
+      data: { ...baseData, counterparty: "Alpha", amount: 5 },
+    })
+    await prisma.transaction.create({
+      data: { ...baseData, counterparty: "Charlie", amount: 10 },
+    })
+
+    const transactionPage = new TransactionsPage(page)
+    await transactionPage.goto()
+    const rows = page.getByRole("row")
+
+    await transactionPage.sortFilterSelect.click()
+    await page.getByRole("option", { name: "A to Z" }).click()
+    await expect(rows.nth(1)).toHaveText(/Alpha/)
+    await expect(rows.nth(2)).toHaveText(/Bravo/)
+    await expect(rows.nth(3)).toHaveText(/Charlie/)
+
+    await transactionPage.sortFilterSelect.click()
+    await page.getByRole("option", { name: "Highest" }).click()
+    await expect(rows.nth(1)).toHaveText(/Bravo/)
+    await expect(rows.nth(2)).toHaveText(/Charlie/)
+    await expect(rows.nth(3)).toHaveText(/Alpha/)
+  })
 })
