@@ -59,7 +59,3 @@ export class TransactionsPage {
     await expect(this.page.getByText(text)).toBeVisible()
   }
 }
-
-// Seed and see whether transactions appear
-// Check pagination
-// Check Search, Sort and Filter

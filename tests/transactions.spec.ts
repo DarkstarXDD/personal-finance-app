@@ -135,14 +135,15 @@ test.describe("Transactions Page", () => {
       data: {
         ...baseData,
         counterparty: "Alpha",
-        categoryId: categories[0].id,
+        categoryId: categories.find((e) => e.label === "Bills")?.id as string,
       },
     })
     await prisma.transaction.create({
       data: {
         ...baseData,
         counterparty: "Bravo",
-        categoryId: categories[1].id,
+        categoryId: categories.find((e) => e.label === "Education")
+          ?.id as string,
       },
     })
 
@@ -155,7 +156,7 @@ test.describe("Transactions Page", () => {
     await expect(rows.nth(1)).toHaveText(/Alpha/)
 
     await transactionPage.categoryFilterSelect.click()
-    await page.getByRole("option", { name: "Entertainment" }).click()
+    await page.getByRole("option", { name: "Education" }).click()
     await expect(rows.nth(1)).toHaveText(/Bravo/)
 
     await transactionPage.categoryFilterSelect.click()
