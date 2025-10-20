@@ -1,4 +1,4 @@
-import "server-only"
+// Had to remove `import "server-only"` because playwright also uses the `createToken` function.
 
 import { SignJWT, jwtVerify } from "jose"
 import { cookies } from "next/headers"
