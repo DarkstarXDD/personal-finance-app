@@ -34,7 +34,10 @@ export class TransactionsPage {
     this.sortFilterSelect = page.getByRole("button", { name: "Sort by" })
     this.categoryFilterSelect = page.getByRole("button", { name: "Category" })
 
-    this.dialogTrigger = page.getByRole("button", { name: "Add Transaction" })
+    this.dialogTrigger = page.getByRole("button", {
+      name: "Add Transaction...",
+      exact: true,
+    })
     this.dialogHeading = page.getByRole("heading", {
       name: "New Transaction",
       level: 2,
@@ -48,6 +51,7 @@ export class TransactionsPage {
     this.recurringCheckbox = page.locator('[name="isRecurring"]')
     this.addTransactionButton = page.getByRole("button", {
       name: "Add Transaction",
+      exact: true,
     })
   }
 

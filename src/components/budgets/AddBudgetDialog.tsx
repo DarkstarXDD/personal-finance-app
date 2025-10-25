@@ -31,7 +31,7 @@ export default function AddBudgetDialog({
 
   return (
     <DialogTrigger>
-      <Button variant="primary">+ Add Budget</Button>
+      <Button variant="primary">Add Budget...</Button>
       <Dialog title="New Budget">
         {({ close }) => (
           <form
