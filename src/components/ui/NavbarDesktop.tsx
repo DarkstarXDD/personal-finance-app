@@ -158,6 +158,7 @@ export default function NavbarDesktop({
 
         <RacButton
           className={button()}
+          id="navbar-button"
           onPress={() =>
             setIsExpanded((prev) => {
               const newValue = !prev
