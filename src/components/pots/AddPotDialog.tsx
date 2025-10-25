@@ -22,7 +22,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
 
   return (
     <DialogTrigger>
-      <Button variant="primary">+ Add New Pot</Button>
+      <Button variant="primary">Add Pot...</Button>
       <Dialog title="New Pot">
         {({ close }) => (
           <form

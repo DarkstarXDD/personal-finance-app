@@ -40,7 +40,7 @@ export default function AddTransactionDialog({
 
   return (
     <DialogTrigger>
-      <Button variant="primary">+ Add Transaction</Button>
+      <Button variant="primary">Add Transaction...</Button>
       <Dialog title="New Transaction">
         {({ close }) => (
           <form
