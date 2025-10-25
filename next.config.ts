@@ -1,5 +1,4 @@
-// @ts-expect-error no types
-import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin"
+// import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin"
 
 import type { NextConfig } from "next"
 
