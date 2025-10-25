@@ -15,7 +15,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@hookform/resolvers": "5.2.1",
+    "@hookform/resolvers": "5.2.2",
     "@prisma/client": "6.16.1",
     "@prisma/nextjs-monorepo-workaround-plugin": "6.16.1",
     "@tanstack/react-table": "8.21.3",
@@ -30,11 +30,11 @@
     "react": "19.2.0",
     "react-aria-components": "1.10.1",
     "react-dom": "19.2.0",
-    "react-hook-form": "7.62.0",
+    "react-hook-form": "7.65.0",
     "react-icons": "5.5.0",
     "server-only": "0.0.1",
     "use-debounce": "10.0.5",
-    "zod": "4.0.15"
+    "zod": "4.1.12"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "4.1.1",
