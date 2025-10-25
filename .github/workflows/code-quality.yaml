@@ -32,4 +32,6 @@ jobs:
         run: npm run lint
 
       - name: TypeScript type check
-        run: npm run type-check
+        run: |
+          npx next typegen
+          npm run type-check
