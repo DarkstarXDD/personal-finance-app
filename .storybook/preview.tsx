@@ -1,7 +1,8 @@
+import "@/styles/globals.css"
+
 import { MINIMAL_VIEWPORTS } from "storybook/viewport"
 
 import type { Preview } from "@storybook/nextjs-vite"
-import "../src/app/globals.css"
 
 const customViewports = {
   mediumMobile: {
@@ -38,7 +39,7 @@ const preview: Preview = {
 
   decorators: [
     (Story) => (
-      <div className="font-public-sans tracking-normal">
+      <div className="font-inter tracking-normal">
         <Story />
       </div>
     ),
