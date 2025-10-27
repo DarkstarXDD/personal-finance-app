@@ -19,7 +19,7 @@ export default function LoginForm() {
   })
 
   return (
-    <Card className="mx-auto max-w-[35rem]">
+    <Card className="mx-auto max-w-140">
       <div className="grid justify-items-center gap-8">
         <form
           className="grid w-full gap-8"

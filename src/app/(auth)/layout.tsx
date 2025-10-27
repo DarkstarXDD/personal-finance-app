@@ -1,10 +1,11 @@
+import "@/styles/globals.css"
+
 import Image from "next/image"
 
 import BrandLogo from "@/components/icons/BrandLogo"
-import { publicSans } from "@/lib/fonts"
+import { inter } from "@/lib/fonts"
 
 import brandImage from "../../../public/illustration-authentication.svg"
-import "../globals.css"
 
 import type { Metadata } from "next"
 
@@ -43,7 +44,7 @@ export default function AuthLayout({
   return (
     <html lang="en">
       <body
-        className={`${publicSans.variable} font-public-sans bg-beige-100 text-grey-900 grid min-h-dvh grid-rows-[auto_1fr] items-center justify-items-center tracking-normal lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:items-center`}
+        className={`${inter.variable} font-body bg-beige-100 text-grey-900 grid min-h-dvh grid-rows-[auto_1fr] items-center justify-items-center tracking-normal lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:items-center`}
       >
         <div className="bg-grey-900 grid w-full justify-items-center rounded-b-lg px-10 py-6 lg:hidden">
           <BrandLogo />
@@ -55,7 +56,7 @@ export default function AuthLayout({
               src={brandImage}
               alt=""
               priority={true}
-              className="w-[35rem] rounded-xl"
+              className="w-140 rounded-xl"
             />
             <BrandLogo className="absolute top-10 left-10" />
             <div className="absolute bottom-10 left-10 grid max-w-110 gap-6">
