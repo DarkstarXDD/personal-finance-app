@@ -55,7 +55,7 @@ export default function AuthLayout({
               src={brandImage}
               alt=""
               priority={true}
-              className="w-[35rem] rounded-xl"
+              className="w-140 rounded-xl"
             />
             <BrandLogo className="absolute top-10 left-10" />
             <div className="absolute bottom-10 left-10 grid max-w-110 gap-6">
