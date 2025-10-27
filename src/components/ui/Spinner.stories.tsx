@@ -11,12 +11,6 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Light: Story = {
-  args: { theme: "light" },
-  render: () => (
-    <div className="bg-grey-900 flex size-14 flex-col items-center justify-center rounded-lg">
-      <Spinner />
-    </div>
-  ),
-}
-export const Dark: Story = { args: { theme: "dark" } }
+export const Primary: Story = { args: { variant: "primary" } }
+export const Secondary: Story = { args: { variant: "secondary" } }
+export const Destructive: Story = { args: { variant: "destructive" } }

@@ -1,23 +1,62 @@
 import { tv, type VariantProps } from "tailwind-variants"
 
 const spinnerStyles = tv({
-  base: "border-grey-900 size-4 rounded-full border-2 motion-safe:animate-spin motion-safe:[animation-duration:600ms]",
+  slots: {
+    svg: "h-5 w-5 motion-safe:animate-spin motion-safe:[animation-duration:800ms]",
+    backgroundCircle: "",
+    arc: "",
+  },
 
   variants: {
-    theme: {
-      dark: "border-grey-500 border-b-transparent",
-      light: "border-white border-b-transparent",
+    variant: {
+      primary: {
+        backgroundCircle: "text-fg-disabled_subtle",
+        arc: "text-fg-tertiary",
+      },
+      secondary: {
+        backgroundCircle: "text-fg-disabled_subtle",
+        arc: "text-fg-quaternary",
+      },
+      destructive: {
+        backgroundCircle: "text-fg-error-tertiary",
+        arc: "text-fg-error-secondary",
+      },
     },
   },
 
-  defaultVariants: { theme: "light" },
+  defaultVariants: { variant: "primary" },
 })
 
 type SpinnerVariants = VariantProps<typeof spinnerStyles>
 
 export default function Spinner({
-  theme,
+  variant,
   className,
 }: { className?: string } & SpinnerVariants) {
-  return <div className={spinnerStyles({ theme, className })} />
+  const { svg, backgroundCircle, arc } = spinnerStyles({ variant })
+
+  return (
+    <svg className={svg({ className })} viewBox="0 0 50 50">
+      <circle
+        cx="25"
+        cy="25"
+        r="20"
+        stroke="currentColor"
+        strokeWidth="5"
+        className={backgroundCircle()}
+        fill="none"
+      />
+      <circle
+        cx="25"
+        cy="25"
+        r="20"
+        stroke="currentColor"
+        strokeWidth="5"
+        className={arc()}
+        strokeDasharray="30 150"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </svg>
+  )
 }
