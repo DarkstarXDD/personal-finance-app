@@ -6,7 +6,6 @@ const spinnerStyles = tv({
     backgroundCircle: "",
     arc: "",
   },
-
   variants: {
     variant: {
       primary: {
@@ -23,7 +22,6 @@ const spinnerStyles = tv({
       },
     },
   },
-
   defaultVariants: { variant: "primary" },
 })
 
