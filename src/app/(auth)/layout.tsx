@@ -1,10 +1,11 @@
+import "@/styles/globals.css"
+
 import Image from "next/image"
 
 import BrandLogo from "@/components/icons/BrandLogo"
 import { publicSans } from "@/lib/fonts"
 
 import brandImage from "../../../public/illustration-authentication.svg"
-import "../globals.css"
 
 import type { Metadata } from "next"
 

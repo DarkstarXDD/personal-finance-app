@@ -1,7 +1,8 @@
+import "@/styles/globals.css"
+
 import { MINIMAL_VIEWPORTS } from "storybook/viewport"
 
 import type { Preview } from "@storybook/nextjs-vite"
-import "../src/app/globals.css"
 
 const customViewports = {
   mediumMobile: {

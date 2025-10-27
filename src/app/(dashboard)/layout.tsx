@@ -1,10 +1,10 @@
+import "@/styles/globals.css"
+
 import { cookies } from "next/headers"
 
 import NavbarDesktop from "@/components/ui/NavbarDesktop"
 import NavbarMobile from "@/components/ui/NavbarMobile"
 import { publicSans } from "@/lib/fonts"
-
-import "../globals.css"
 
 import type { Metadata } from "next"
 
