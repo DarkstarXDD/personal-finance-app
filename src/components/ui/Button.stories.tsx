@@ -8,6 +8,14 @@ const meta = {
   title: "Components/UI/Buttons/Button",
   component: Button,
 
+  parameters: {
+    docs: {
+      description: {
+        component: "Compact, accessible button used across the app.",
+      },
+    },
+  },
+
   args: {
     children: "Placeholder",
     variant: "primary",
@@ -15,14 +23,6 @@ const meta = {
     isDisabled: false,
     isPending: false,
     onPress: fn(),
-  },
-
-  parameters: {
-    docs: {
-      description: {
-        component: "Compact, accessible button used across the app.",
-      },
-    },
   },
 
   argTypes: {
