@@ -126,7 +126,9 @@
   --color-fg-primary: var(--color-grey-900);
   --color-fg-secondary: var(--color-grey-700);
   --color-fg-tertiary: var(--color-grey-600);
+  --color-fg-tertiary_hover: var(--color-grey-700);
   --color-fg-quaternary: var(--color-grey-400);
+  --color-fg-quaternary_hover: var(--color-grey-500);
   --color-fg-brand-primary: var(--color-brand-600);
   --color-fg-brand-secondary: var(--color-brand-500);
   --color-fg-disabled: var(--color-grey-400);
