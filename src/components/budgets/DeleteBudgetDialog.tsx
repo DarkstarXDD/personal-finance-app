@@ -3,7 +3,7 @@ import { useActionState } from "react"
 import { deleteBudget } from "@/actions/budgets"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
-import { fieldErrorStyles } from "@/components/ui/FieldError"
+// import { fieldErrorStyles } from "@/components/ui/FieldError"
 
 import type { Budget } from "@/data-access/budgets"
 
@@ -34,11 +34,7 @@ export default function DeleteBudgetDialog({
           Are you sure you want to delete this budget? This action cannot be
           reversed, and all the data inside it will be removed forever.
         </p>
-        {error && (
-          <p className={fieldErrorStyles()} role="alert">
-            {error}
-          </p>
-        )}
+        {error && <p role="alert">{error}</p>}
         <Button type="submit" variant="destructive" isPending={isPending}>
           Yes, Confirm Deletion
         </Button>

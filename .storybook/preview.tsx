@@ -39,7 +39,7 @@ const preview: Preview = {
 
   decorators: [
     (Story) => (
-      <div className="font-inter tracking-normal">
+      <div className="font-body">
         <Story />
       </div>
     ),

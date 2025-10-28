@@ -2,11 +2,8 @@ import {
   Label as RacLabel,
   type LabelProps as RacLabelProps,
 } from "react-aria-components"
-import { tv } from "tailwind-variants"
 
-const labelStyles = tv({
-  base: "text-grey-500 text-xs leading-normal font-bold",
-})
+import { cn } from "@/lib/utils"
 
 export default function Label({
   children,
@@ -14,7 +11,13 @@ export default function Label({
   ...props
 }: RacLabelProps) {
   return (
-    <RacLabel {...props} className={labelStyles({ className })}>
+    <RacLabel
+      {...props}
+      className={cn(
+        "text-secondary block text-sm leading-normal font-medium",
+        className
+      )}
+    >
       {children}
     </RacLabel>
   )

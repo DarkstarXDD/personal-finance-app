@@ -1,11 +1,8 @@
 import { FieldError as RacFieldError } from "react-aria-components"
-import { tv } from "tailwind-variants"
+
+import { cn } from "@/lib/utils"
 
 import type { ReactNode } from "react"
-
-export const fieldErrorStyles = tv({
-  base: "text-red text-xs leading-normal font-normal",
-})
 
 export default function FieldError({
   children,
@@ -15,7 +12,12 @@ export default function FieldError({
   className?: string
 }) {
   return (
-    <RacFieldError className={fieldErrorStyles({ className })}>
+    <RacFieldError
+      className={cn(
+        "text-error-primary block text-sm leading-normal font-normal",
+        className
+      )}
+    >
       {children}
     </RacFieldError>
   )

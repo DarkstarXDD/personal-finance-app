@@ -1,6 +1,5 @@
 "use client"
 
-import { ReactNode } from "react"
 import {
   Button as RacButton,
   type ButtonProps as RacButtonProps,
@@ -9,17 +8,28 @@ import { tv, type VariantProps } from "tailwind-variants"
 
 import Spinner from "@/components/ui/Spinner"
 
+import type { ReactNode } from "react"
+
 const buttonStyles = tv({
-  base: "rac-focus-visible:ring-3 rac-pending:opacity-75 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed flex cursor-pointer items-center justify-center gap-2 rounded-lg p-4 text-sm leading-normal font-bold ring-offset-2 transition-all outline-none",
+  base: "rac-focus-visible:ring-2 rac-focus-visible:ring-offset-2 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed flex cursor-pointer items-center justify-center gap-2 rounded-lg leading-normal font-semibold transition-colors outline-none",
   variants: {
     variant: {
       primary:
-        "bg-grey-900 ring-navy rac-hover:bg-grey-900/95 rac-pressed:bg-grey-900/95 text-white",
+        "bg-brand-solid border-brand-solid rac-hover:border-brand-solid_hover ring-brand rac-hover:bg-brand-solid_hover rac-pressed:bg-brand-solid_hover rac-pressed:border-brand-solid_hover rac-disabled:bg-primary rac-disabled:text-disabled_subtle rac-disabled:border-disabled border text-white",
       secondary:
-        "text-grey-500 bg-beige-100 ring-beige-500 rac-hover:bg-beige-300 rac-pressed:bg-beige-300",
+        "text-secondary ring-brand bg-primary border-primary rac-hover:bg-primary_hover rac-pressed:bg-primary_hover rac-disabled:text-disabled_subtle rac-disabled:border-disabled border",
       destructive:
-        "bg-red rac-hover:bg-red/90 rac-pressed:bg-red/90 ring-red text-white",
+        "bg-error-solid rac-disabled:bg-disabled rac-disabled:border-disabled border-error-solid rac-hover:border-error-solid_hover rac-hover:bg-error-solid_hover rac-pressed:bg-error-solid_hover ring-error rac-disabled:text-disabled_subtle border text-white",
     },
+    size: {
+      md: "min-h-10 px-3.5 py-2 text-sm",
+      lg: "text-md min-h-11 px-3.5 py-2",
+      xl: "text-md min-h-13 px-4 py-3",
+    },
+  },
+  defaultVariants: {
+    variant: "primary",
+    size: "xl",
   },
 })
 
@@ -29,6 +39,7 @@ export default function Button({
   children,
   className,
   variant,
+  size,
   isPending,
   ...props
 }: Omit<RacButtonProps, "children" | "className"> &
@@ -37,11 +48,9 @@ export default function Button({
     <RacButton
       {...props}
       isPending={isPending}
-      className={buttonStyles({ variant, className })}
+      className={buttonStyles({ variant, size, className })}
     >
-      {isPending && (
-        <Spinner theme={variant === "secondary" ? "dark" : "light"} />
-      )}
+      {isPending && <Spinner variant={variant} />}
       {children}
     </RacButton>
   )
