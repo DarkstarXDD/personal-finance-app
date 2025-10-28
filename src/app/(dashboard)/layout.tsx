@@ -46,7 +46,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-body bg-beige-100 text-grey-900 grid min-h-dvh grid-rows-[1fr_auto] leading-normal tracking-normal [grid-template-areas:'main'_'navbar'] lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:[grid-template-areas:'navbar_main']`}
+        className={`${inter.variable} font-body bg-primary text-tertiary grid min-h-dvh grid-rows-[1fr_auto] leading-normal tracking-normal [grid-template-areas:'main'_'navbar'] lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:[grid-template-areas:'navbar_main']`}
       >
         <NavbarDesktop
           initialExpanded={isExpanded === "0" ? false : true}
