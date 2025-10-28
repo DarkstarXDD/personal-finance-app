@@ -1,6 +1,5 @@
 "use client"
 
-import { ReactNode } from "react"
 import {
   Button as RacButton,
   type ButtonProps as RacButtonProps,
@@ -8,6 +7,8 @@ import {
 import { tv, type VariantProps } from "tailwind-variants"
 
 import Spinner from "@/components/ui/Spinner"
+
+import type { ReactNode } from "react"
 
 const buttonStyles = tv({
   base: "rac-focus-visible:ring-2 rac-focus-visible:ring-offset-2 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed flex cursor-pointer items-center justify-center gap-2 rounded-lg leading-normal font-semibold transition-colors outline-none",
