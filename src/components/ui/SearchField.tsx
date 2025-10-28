@@ -2,47 +2,47 @@
 
 import {
   SearchField as RacSearchField,
-  Input as RacInput,
   Button as RacButton,
   type SearchFieldProps as RacSearchFieldProps,
 } from "react-aria-components"
 import { PiXCircleFill, PiMagnifyingGlassBold } from "react-icons/pi"
 
+import Input from "@/components/ui/Input"
 import Label from "@/components/ui/Label"
-import { inputStyles } from "@/components/ui/TextField"
 import { cn } from "@/lib/utils"
+
+type SearchFieldProps = Omit<RacSearchFieldProps, "className"> & {
+  label?: string
+  placeholder?: string
+  className?: string
+}
 
 export default function SearchField({
   label,
   placeholder = "Search",
   className,
   ...props
-}: Omit<RacSearchFieldProps, "className"> & {
-  label?: string
-  placeholder?: string
-  className?: string
-}) {
+}: SearchFieldProps) {
   return (
     <RacSearchField
       enterKeyHint="search"
-      className={cn("group w-full", className)}
+      className={cn("w-full", className)}
       {...props}
     >
       {({ isEmpty }) => (
-        <div className="grid justify-items-start gap-1">
+        <div className="grid justify-items-start gap-1.5">
           {label && <Label>{label}</Label>}
+
           <div className="relative w-full">
-            <PiMagnifyingGlassBold className="text-beige-500 absolute top-1/2 left-5 h-4 w-4 -translate-y-1/2" />
-            <RacInput
+            <Input
+              type="search"
               placeholder={placeholder}
-              className={inputStyles({
-                isIcon: true,
-                className: "pr-9",
-              })}
+              icon={PiMagnifyingGlassBold}
             />
+
             {!isEmpty && (
-              <RacButton className="rac-hover:cursor-pointer absolute top-1/2 right-5 -translate-y-1/2 group-empty:hidden">
-                <PiXCircleFill className="text-beige-500 size-5" />
+              <RacButton className="rac-hover:cursor-pointer text-fg-quaternary rac-pressed:text-fg-quaternary_hover rac-hover:text-fg-quaternary_hover absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer rounded-full p-1 outline-none">
+                <PiXCircleFill className="size-5" />
               </RacButton>
             )}
           </div>

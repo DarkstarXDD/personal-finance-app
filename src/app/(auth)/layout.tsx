@@ -44,7 +44,7 @@ export default function AuthLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-body bg-beige-100 text-grey-900 grid min-h-dvh grid-rows-[auto_1fr] items-center justify-items-center tracking-normal lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:items-center`}
+        className={`${inter.variable} font-body text-tertiary bg-primary grid min-h-dvh grid-rows-[auto_1fr] items-center justify-items-center leading-normal tracking-normal lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:items-center`}
       >
         <div className="bg-grey-900 grid w-full justify-items-center rounded-b-lg px-10 py-6 lg:hidden">
           <BrandLogo />

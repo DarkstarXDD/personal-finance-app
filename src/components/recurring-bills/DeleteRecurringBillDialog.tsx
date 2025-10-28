@@ -3,7 +3,7 @@ import { useActionState } from "react"
 import { deleteRecurringBill } from "@/actions/recurring-bills"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
-import { fieldErrorStyles } from "@/components/ui/FieldError"
+// import { fieldErrorStyles } from "@/components/ui/FieldError"
 
 import type { RecurringBill } from "@/data-access/recurring-bills"
 
@@ -37,11 +37,7 @@ export default function DeleteRecurringBillDialog({
             transaction that created it.
           </span>
         </p>
-        {error && (
-          <p className={fieldErrorStyles()} role="alert">
-            {error}
-          </p>
-        )}
+        {error && <p role="alert">{error}</p>}
         <Button type="submit" variant="destructive" isPending={isPending}>
           Yes, Confirm Deletion
         </Button>

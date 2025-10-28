@@ -1,11 +1,8 @@
 import { Text as RacText } from "react-aria-components"
-import { tv } from "tailwind-variants"
+
+import { cn } from "@/lib/utils"
 
 import type { ReactNode } from "react"
-
-const descriptionStyles = tv({
-  base: "text-grey-500 block w-full text-end text-xs leading-normal font-normal",
-})
 
 export default function FieldDescription({
   children,
@@ -15,7 +12,13 @@ export default function FieldDescription({
   className?: string
 }) {
   return (
-    <RacText slot="description" className={descriptionStyles({ className })}>
+    <RacText
+      slot="description"
+      className={cn(
+        "text-tertiary block text-sm leading-normal font-normal",
+        className
+      )}
+    >
       {children}
     </RacText>
   )
