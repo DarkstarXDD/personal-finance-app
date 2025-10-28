@@ -15,7 +15,7 @@ export default function FieldDescription({
     <RacText
       slot="description"
       className={cn(
-        "text-tertiary block text-sm leading-none font-normal",
+        "text-tertiary block text-sm leading-normal font-normal",
         className
       )}
     >

@@ -14,7 +14,7 @@ export default function Label({
     <RacLabel
       {...props}
       className={cn(
-        "text-secondary block text-sm leading-none font-medium",
+        "text-secondary block text-sm leading-normal font-medium",
         className
       )}
     >
