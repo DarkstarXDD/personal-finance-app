@@ -1,7 +1,6 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { PiSortAscendingFill, PiFunnelFill } from "react-icons/pi"
 import { useDebouncedCallback } from "use-debounce"
 
 import SearchField from "@/components/ui/SearchField"
@@ -67,11 +66,9 @@ export default function TableFilters({
           label="Sort by"
           aria-label="Sort by"
           name="sort"
-          selectedKey={readOnlySearchParams.get("sortby") ?? "latest"}
-          onSelectionChange={onSortByChange}
-          shouldHideOnMobile
+          value={readOnlySearchParams.get("sortby") ?? "latest"}
+          onChange={onSortByChange}
           className="max-w-62 md:h-full md:w-full md:min-w-50"
-          mobileIcon={PiSortAscendingFill}
         >
           <SelectItem id="latest">Latest</SelectItem>
           <SelectItem id="oldest">Oldest</SelectItem>
@@ -85,12 +82,10 @@ export default function TableFilters({
           label="Category"
           aria-label="Category"
           name="filter"
-          selectedKey={readOnlySearchParams.get("category") ?? "all"}
-          onSelectionChange={onCategoryChange}
-          shouldHideOnMobile
+          value={readOnlySearchParams.get("category") ?? "all"}
+          onChange={onCategoryChange}
           className="max-w-70 md:h-full md:w-full md:min-w-55"
           items={categoriesWithAll}
-          mobileIcon={PiFunnelFill}
         >
           {(category) => (
             <SelectItem id={category.name}>{category.label}</SelectItem>

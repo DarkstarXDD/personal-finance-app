@@ -1,9 +1,9 @@
 "use client"
 
 import { motion } from "motion/react"
+import { type ReactNode, type Ref } from "react"
 import {
   Select as RacSelect,
-  Button as RacButton,
   SelectValue as RacSelectValue,
   Popover as RacPopover,
   ListBox as RacListBox,
@@ -11,79 +11,13 @@ import {
   type SelectProps as RacSelectProps,
   type ListBoxItemProps as RacListBoxItemProps,
 } from "react-aria-components"
-import {
-  PiCheckBold,
-  PiCaretDownFill,
-  PiSortAscendingFill,
-} from "react-icons/pi"
-import { tv, type VariantProps } from "tailwind-variants"
+import { PiCheckBold, PiCaretDownFill } from "react-icons/pi"
 
+import Button from "@/components/ui/Button"
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
 import Label from "@/components/ui/Label"
-
-import type { ReactNode, Ref } from "react"
-import type { IconType } from "react-icons"
-
-const selectStyles = tv({
-  slots: {
-    outerWrapper: "group",
-    innerWrapper: "grid justify-items-start gap-1",
-    fieldLabel: "",
-    fieldDescription: "",
-    fieldErrorMessage: "",
-    button:
-      "rac-focus-visible:ring-2 group rac-disabled:opacity-40 text-grey-900 ring-beige-500 group-rac-invalid:ring-red cursor-pointer outline-none md:w-full",
-    buttonSpan:
-      "border-beige-500 group-rac-invalid:border-red w-full items-center justify-between gap-2 rounded-lg border px-5 py-3 text-start text-sm leading-normal font-normal",
-    caretDownIcon: "text-grey-500 shrink-0 transition-all duration-300",
-    mobileIconStyles:
-      "group-rac-pressed:text-grey-900/90 group-rac-hover:text-grey-900/90 group-rac-pressed:scale-97 size-8",
-    popoverDiv:
-      "border-grey-200 custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border bg-white px-1 py-1 shadow-xl",
-  },
-
-  variants: {
-    shouldHideOnMobile: {
-      true: {
-        fieldLabel: "sr-only md:not-sr-only",
-        fieldDescription: "sr-only md:not-sr-only",
-        fieldErrorMessage: "sr-only md:not-sr-only",
-        button: "rounded md:rounded-lg",
-        buttonSpan: "hidden md:flex",
-        mobileIconStyles: "block md:hidden",
-        popoverDiv: "min-w-50 md:max-w-full",
-      },
-      false: {
-        mobileIconStyles: "hidden",
-        button: "w-full rounded-lg",
-        buttonSpan: "flex",
-      },
-    },
-
-    isSelectOpen: {
-      true: { caretDownIcon: "rotate-180" },
-      false: { caretDownIcon: "rotate-0" },
-    },
-  },
-
-  defaultVariants: { shouldHideOnMobile: false },
-})
-
-const {
-  outerWrapper,
-  innerWrapper,
-  fieldLabel,
-  button,
-  buttonSpan,
-  mobileIconStyles,
-  caretDownIcon,
-  popoverDiv,
-  fieldDescription,
-  fieldErrorMessage,
-} = selectStyles()
-
-type SelectVariants = VariantProps<typeof selectStyles>
+import { cn } from "@/lib/utils"
 
 type SelectProps<T extends object> = Omit<
   RacSelectProps<T>,
@@ -96,8 +30,7 @@ type SelectProps<T extends object> = Omit<
   children?: ReactNode | ((item: T) => ReactNode)
   ref?: Ref<HTMLDivElement>
   className?: string
-  mobileIcon?: IconType
-} & SelectVariants
+}
 
 function Select<T extends object>({
   label,
@@ -105,49 +38,43 @@ function Select<T extends object>({
   errorMessage,
   isInvalid,
   items,
-  shouldHideOnMobile,
   children,
   ref,
   className,
-  mobileIcon: MobileIcon = PiSortAscendingFill,
   ...props
 }: SelectProps<T>) {
   return (
     <RacSelect
       isInvalid={isInvalid}
       {...props}
-      className={outerWrapper({ className })}
       ref={ref}
+      className={cn("group", className)}
     >
       {({ isOpen }) => (
         <>
-          <div className={innerWrapper({ shouldHideOnMobile })}>
-            <Label className={fieldLabel({ shouldHideOnMobile })}>
-              {label}
-            </Label>
+          <div className="grid justify-items-start gap-1.5">
+            <Label>{label}</Label>
 
-            <RacButton className={button({ shouldHideOnMobile })}>
-              <span className={buttonSpan({ shouldHideOnMobile })}>
-                <RacSelectValue className="rac-placeholder-shown:text-grey-500" />
-                <PiCaretDownFill
-                  className={caretDownIcon({ isSelectOpen: isOpen })}
-                />
-              </span>
-              <MobileIcon
-                className={mobileIconStyles({ shouldHideOnMobile })}
+            <Button
+              variant="secondary"
+              size="lg"
+              className="rac-focus-visible:ring-offset-0 group-rac-invalid:border-error group-rac-invalid:ring-error rac-focus-visible:ring rac-focus-visible:border-brand group-rac-invalid:rac-focus-visible:border-error flex w-full justify-between gap-2 transition-none"
+            >
+              <RacSelectValue className="rac-placeholder-shown:text-placeholder rac-placeholder-shown:font-normal text-primary text-md rac-placeholder-shown:truncate truncate leading-normal font-medium" />
+
+              <PiCaretDownFill
+                className={cn(
+                  "text-fg-quaternary transition-transform duration-300",
+                  isOpen && "rotate-180"
+                )}
               />
-            </RacButton>
+            </Button>
+
+            <FieldError>{errorMessage}</FieldError>
 
             {description && !isInvalid && (
-              <FieldDescription
-                className={fieldDescription({ shouldHideOnMobile })}
-              >
-                {description}
-              </FieldDescription>
+              <FieldDescription>{description}</FieldDescription>
             )}
-            <FieldError className={fieldErrorMessage({ shouldHideOnMobile })}>
-              {errorMessage}
-            </FieldError>
           </div>
 
           <RacPopover>
@@ -155,7 +82,7 @@ function Select<T extends object>({
               initial={{ y: -12, opacity: 0.4 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
-              className={popoverDiv({ shouldHideOnMobile })}
+              className="bg-primary border-secondary custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border p-1.5"
             >
               <RacListBox className="outline-none" items={items}>
                 {children}
@@ -168,31 +95,27 @@ function Select<T extends object>({
   )
 }
 
-const selectItemStyles = tv({
-  base: "rac-focus-visible:bg-beige-100 rac-pressed:bg-beige-300 rac-selected:bg-beige-300 rac-selected:font-bold rac-hover:bg-beige-100 text-grey-900 cursor-pointer rounded-md px-4 py-3 text-sm leading-normal font-normal outline-none",
-})
-
-function SelectItem({
-  className,
-  children,
-  ...props
-}: Omit<RacListBoxItemProps, "children" | "className"> & {
+type SelectItemProps = Omit<RacListBoxItemProps, "children" | "className"> & {
   children: ReactNode
   className?: string
-}) {
+}
+
+function SelectItem({ className, children, ...props }: SelectItemProps) {
   return (
     <RacListBoxItem
-      textValue={typeof children === "string" ? children : undefined}
       {...props}
-      className={selectItemStyles({ className })}
+      textValue={typeof children === "string" ? children : undefined}
+      className={cn(
+        "text-md text-primary rac-selected:bg-active rac-focus-visible:bg-active rac-pressed:bg-active rac-hover:bg-active cursor-pointer truncate rounded-md p-2 leading-normal font-medium outline-none",
+        className
+      )}
     >
       {({ isSelected }) => (
-        <div className="flex w-full items-center justify-between gap-6">
+        <span className="flex w-full items-center justify-between gap-4">
           {children}
-          {isSelected && (
-            <PiCheckBold className="text-grey-500 size-4 shrink-0" />
-          )}
-        </div>
+
+          {isSelected && <PiCheckBold className="text-fg-tertiary size-4" />}
+        </span>
       )}
     </RacListBoxItem>
   )
