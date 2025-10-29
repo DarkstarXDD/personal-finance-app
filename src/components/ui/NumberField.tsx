@@ -45,7 +45,20 @@ export default function NumberField({
     >
       <Label>{label}</Label>
 
-      <RacGroup className="bg-primary border-primary rac-focus-within:border-brand ring-brand rac-focus-within:ring rac-disabled:bg-disabled_subtle rac-disabled:border-disabled rac-invalid:border-error rac-invalid:ring-error rac-invalid:rac-focus-within:border-error rac-disabled:cursor-not-allowed relative flex min-h-11 w-full min-w-0 items-center justify-between rounded-lg border">
+      <RacGroup
+        className={cn(
+          "bg-primary border-primary relative flex min-h-11 w-full min-w-0 items-center justify-between rounded-lg border",
+
+          // Focus styles
+          "ring-brand rac-focus-within:ring rac-focus-within:border-brand",
+
+          // Disabled styles
+          "rac-disabled:bg-disabled_subtle rac-disabled:border-disabled rac-disabled:cursor-not-allowed",
+
+          // Error styles
+          "rac-invalid:border-error rac-invalid:ring-error rac-invalid:rac-focus-within:border-error"
+        )}
+      >
         {isIcon && (
           <Icon className="text-fg-tertiary pointer-events-none absolute left-4 block size-4" />
         )}
