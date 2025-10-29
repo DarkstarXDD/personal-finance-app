@@ -82,5 +82,5 @@ export const WithIcon: Story = {
 }
 
 export const Disabled: Story = {
-  args: { isDisabled: true },
+  args: { icon: PiUserFill, isDisabled: true },
 }

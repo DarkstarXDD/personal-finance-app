@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Low-level input element used by form field components such as TextField, SearchField and NumberField. Supports an optional leading icon and a password visibility toggle when type is `password`.",
+          "Low-level input element used by form field components such as TextField and SearchField. Supports an optional leading icon and a password visibility toggle when type is `password`.",
       },
     },
   },
