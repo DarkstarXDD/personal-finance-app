@@ -27,10 +27,9 @@ const spinnerStyles = tv({
 
 type SpinnerVariants = VariantProps<typeof spinnerStyles>
 
-export default function Spinner({
-  variant,
-  className,
-}: { className?: string } & SpinnerVariants) {
+type SpinnerProps = SpinnerVariants & { className?: string }
+
+export default function Spinner({ variant, className }: SpinnerProps) {
   const { svg, backgroundCircle, arc } = spinnerStyles({ variant })
 
   return (

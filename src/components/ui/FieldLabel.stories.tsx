@@ -1,10 +1,10 @@
-import Label from "@/components/ui/Label"
+import FieldLabel from "@/components/ui/FieldLabel"
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
-  title: "Components/UI/Label",
-  component: Label,
+  title: "Components/UI/FieldLabel",
+  component: FieldLabel,
 
   parameters: {
     docs: {
@@ -30,7 +30,7 @@ const meta = {
       table: { type: { summary: "string" } },
     },
   },
-} satisfies Meta<typeof Label>
+} satisfies Meta<typeof FieldLabel>
 
 export default meta
 

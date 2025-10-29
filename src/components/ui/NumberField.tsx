@@ -1,22 +1,25 @@
-import { Ref } from "react"
+import { type Ref } from "react"
 import {
   NumberField as RacNumberField,
   Group as RacGroup,
   Input as RacInput,
-  Button as RacButton,
   type NumberFieldProps as RacNumberFieldProps,
 } from "react-aria-components"
+import { type IconType } from "react-icons"
 import { PiPlusBold, PiMinusBold } from "react-icons/pi"
 
+import Button from "@/components/ui/Button"
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
-import Label from "@/components/ui/Label"
+import FieldLabel from "@/components/ui/FieldLabel"
+import { cn } from "@/lib/utils"
 
 type NumberFieldProps = Omit<RacNumberFieldProps, "children" | "className"> & {
   label?: string
   description?: string
   errorMessage?: string
   className?: string
+  icon?: IconType
   ref?: Ref<HTMLInputElement>
 }
 
@@ -25,41 +28,74 @@ export default function NumberField({
   description,
   errorMessage,
   isInvalid,
+  isDisabled,
+  icon: Icon,
   ref,
   ...props
 }: NumberFieldProps) {
+  const isIcon = !!Icon
+
   return (
     <RacNumberField
-      isInvalid={isInvalid}
-      className="grid justify-items-start gap-1"
       minValue={0}
+      isInvalid={isInvalid}
+      isDisabled={isDisabled}
+      className="grid justify-items-start gap-1.5"
       {...props}
     >
-      <Label>{label}</Label>
+      <FieldLabel>{label}</FieldLabel>
 
-      <RacGroup className="border-beige-500 rac-focus-within:ring-2 ring-beige-500 rac-disabled:opacity-40 rac-invalid:border-red rac-invalid:ring-red flex w-full min-w-0 justify-between rounded-lg border transition-colors">
+      <RacGroup
+        className={cn(
+          "bg-primary border-primary relative flex min-h-11 w-full min-w-0 items-center justify-between rounded-lg border",
+
+          // Focus styles
+          "ring-brand rac-focus-within:ring rac-focus-within:border-brand",
+
+          // Disabled styles
+          "rac-disabled:bg-disabled_subtle rac-disabled:border-disabled rac-disabled:cursor-not-allowed",
+
+          // Error styles
+          "rac-invalid:border-error rac-invalid:ring-error rac-invalid:rac-focus-within:border-error"
+        )}
+      >
+        {isIcon && (
+          <Icon className="text-fg-tertiary pointer-events-none absolute left-4 block size-4" />
+        )}
+
         <RacInput
           ref={ref}
-          className="text-grey-900 min-w-0 flex-1 rounded-l-lg px-5 py-3 text-base leading-normal font-normal outline-none"
+          className={cn(
+            "text-primary text-md rac-disabled:cursor-not-allowed placeholder:text-placeholder h-full min-w-0 px-3.5 py-2 leading-normal font-normal outline-none",
+            isIcon && "pl-9.5"
+          )}
         />
 
-        <div className="border-beige-500 flex border-l">
-          <RacButton
+        <div className="border-primary flex h-full">
+          <Button
             slot="decrement"
-            className="rac-hover:bg-beige-300 group rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pressed:bg-beige-300 border-beige-500 cursor-pointer px-4 transition-colors"
+            variant="secondary"
+            size="md"
+            isDisabled={isDisabled}
+            className="group rounded-none border-0 border-l"
           >
-            <PiMinusBold className="text-grey-500 group-rac-pressed:scale-95 size-5" />
-          </RacButton>
-          <RacButton
+            <PiMinusBold className="text-fg-quaternary group-rac-hover:text-fg-quaternary_hover group-rac-pressed:scale-95 group-rac-pressed:text-fg-quaternary_hover size-5 transition-colors" />
+          </Button>
+
+          <Button
             slot="increment"
-            className="rac-hover:bg-beige-300 group rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pressed:bg-beige-300 border-beige-500 cursor-pointer rounded-r-lg border-l px-4 transition-colors"
+            variant="secondary"
+            size="md"
+            isDisabled={isDisabled}
+            className="group rounded-none rounded-r-lg border-0 border-l"
           >
-            <PiPlusBold className="text-grey-500 group-rac-pressed:scale-95 size-5" />
-          </RacButton>
+            <PiPlusBold className="text-fg-quaternary group-rac-hover:text-fg-quaternary_hover group-rac-pressed:scale-95 group-rac-pressed:text-fg-quaternary_hover size-5 transition-colors" />
+          </Button>
         </div>
       </RacGroup>
 
       <FieldError>{errorMessage}</FieldError>
+
       {description && !isInvalid && (
         <FieldDescription>{description}</FieldDescription>
       )}

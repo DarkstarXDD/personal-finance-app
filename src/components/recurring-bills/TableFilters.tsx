@@ -1,7 +1,6 @@
 "use client"
 
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
-import { PiSortAscendingFill } from "react-icons/pi"
 import { useDebouncedCallback } from "use-debounce"
 
 import SearchField from "@/components/ui/SearchField"
@@ -49,11 +48,9 @@ export default function TableFilters() {
         label="Sort by"
         aria-label="Sort by"
         name="sort"
-        selectedKey={readOnlySearchParams.get("sortby") ?? "daysAsc"}
-        onSelectionChange={onSortByChange}
-        shouldHideOnMobile
+        value={readOnlySearchParams.get("sortby") ?? "daysAsc"}
+        onChange={onSortByChange}
         className="max-w-62 md:h-full md:w-full md:min-w-50"
-        mobileIcon={PiSortAscendingFill}
       >
         <SelectItem id="daysAsc">Soonest Due</SelectItem>
         <SelectItem id="daysDesc">Latest Due</SelectItem>
