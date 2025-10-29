@@ -20,7 +20,6 @@ const meta = {
   args: {
     placeholder: "Placeholder",
     type: "text",
-    icon: PiUserFill,
   },
 
   argTypes: {

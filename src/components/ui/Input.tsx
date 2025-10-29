@@ -1,19 +1,14 @@
-import { Ref, useState } from "react"
+import { type Ref, useState } from "react"
 import {
   Input as RacInput,
   Button as RacButton,
   type InputProps as RacInputProps,
   type TextFieldProps as RacTextFieldProps,
 } from "react-aria-components"
+import { type IconType } from "react-icons"
 import { PiEyeFill, PiEyeSlashFill } from "react-icons/pi"
 
 import { cn } from "@/lib/utils"
-
-import type { IconType } from "react-icons"
-
-function getInputType(type: InputType, showPassword: boolean) {
-  return type === "password" && showPassword ? "text" : type
-}
 
 type InputType = Pick<RacTextFieldProps, "type">["type"]
 
@@ -25,6 +20,10 @@ type InputProps = Omit<RacInputProps, "type"> & {
   ref?: Ref<HTMLInputElement>
 }
 
+function getInputType(type: InputType, showPassword: boolean) {
+  return type === "password" && showPassword ? "text" : type
+}
+
 export default function Input({
   type = "text",
   className,
@@ -32,14 +31,14 @@ export default function Input({
   ref,
   ...props
 }: InputProps) {
-  const isIcon = !!Icon
-
   const [showPassword, setShowPassword] = useState(false)
+
+  const isIcon = !!Icon
 
   return (
     <div className="relative flex w-full flex-row items-center">
       {isIcon && (
-        <Icon className="text-fg-quaternary pointer-events-none absolute left-4 block size-5 align-middle" />
+        <Icon className="text-fg-quaternary pointer-events-none absolute left-4 block size-4" />
       )}
 
       <RacInput
@@ -48,7 +47,7 @@ export default function Input({
         type={getInputType(type, showPassword)}
         className={cn(
           "text-primary text-md bg-primary border-primary rac-focus:border-brand ring-brand rac-focus:ring placeholder:text-placeholder rac-disabled:bg-disabled_subtle rac-disabled:border-disabled rac-disabled:text-disabled_subtle rac-disabled:placeholder:text-disabled_subtle rac-invalid:border-error rac-invalid:ring-error rac-invalid:rac-focus:border-error flex min-h-11 w-full min-w-0 items-center gap-2 rounded-lg border px-3.5 py-2 leading-normal font-normal outline-none",
-          isIcon && "pl-10.5",
+          isIcon && "pl-9.5",
           type === "password" && "pr-12.5",
           className
         )}
