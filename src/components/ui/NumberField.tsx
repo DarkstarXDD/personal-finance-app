@@ -11,7 +11,7 @@ import { PiPlusBold, PiMinusBold } from "react-icons/pi"
 import Button from "@/components/ui/Button"
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
-import Label from "@/components/ui/Label"
+import FieldLabel from "@/components/ui/FieldLabel"
 import { cn } from "@/lib/utils"
 
 type NumberFieldProps = Omit<RacNumberFieldProps, "children" | "className"> & {
@@ -43,7 +43,7 @@ export default function NumberField({
       className="grid justify-items-start gap-1.5"
       {...props}
     >
-      <Label>{label}</Label>
+      <FieldLabel>{label}</FieldLabel>
 
       <RacGroup
         className={cn(

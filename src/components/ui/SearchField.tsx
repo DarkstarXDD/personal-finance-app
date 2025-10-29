@@ -7,8 +7,8 @@ import {
 } from "react-aria-components"
 import { PiXCircleFill, PiMagnifyingGlassBold } from "react-icons/pi"
 
+import FieldLabel from "@/components/ui/FieldLabel"
 import Input from "@/components/ui/Input"
-import Label from "@/components/ui/Label"
 import { cn } from "@/lib/utils"
 
 type SearchFieldProps = Omit<RacSearchFieldProps, "className"> & {
@@ -31,7 +31,7 @@ export default function SearchField({
     >
       {({ isEmpty }) => (
         <div className="grid justify-items-start gap-1.5">
-          {label && <Label>{label}</Label>}
+          {label && <FieldLabel>{label}</FieldLabel>}
 
           <div className="relative w-full">
             <Input

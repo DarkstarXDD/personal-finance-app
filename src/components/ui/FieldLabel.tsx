@@ -5,7 +5,7 @@ import {
 
 import { cn } from "@/lib/utils"
 
-export default function Label({
+export default function FieldLabel({
   children,
   className,
   ...props

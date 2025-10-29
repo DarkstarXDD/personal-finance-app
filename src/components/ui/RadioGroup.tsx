@@ -6,7 +6,7 @@ import {
 import { tv, VariantProps } from "tailwind-variants"
 
 import FieldError from "@/components/ui/FieldError"
-import Label from "@/components/ui/Label"
+import Label from "@/components/ui/FieldLabel"
 import { cn } from "@/lib/utils"
 
 import type { ReactNode } from "react"

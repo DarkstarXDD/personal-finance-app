@@ -9,8 +9,8 @@ import { type IconType } from "react-icons"
 
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
+import FieldLabel from "@/components/ui/FieldLabel"
 import Input from "@/components/ui/Input"
-import Label from "@/components/ui/Label"
 
 type TextFieldProps = RacTextFieldProps & {
   label?: string
@@ -38,7 +38,7 @@ export default function TextField({
       isInvalid={isInvalid}
       {...props}
     >
-      <Label>{label}</Label>
+      <FieldLabel>{label}</FieldLabel>
 
       <Input icon={Icon} {...{ placeholder, ref, type }} />
 

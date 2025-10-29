@@ -16,7 +16,7 @@ import { PiCheckBold, PiCaretDownFill } from "react-icons/pi"
 import Button from "@/components/ui/Button"
 import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
-import Label from "@/components/ui/Label"
+import FieldLabel from "@/components/ui/FieldLabel"
 import { cn } from "@/lib/utils"
 
 type SelectProps<T extends object> = Omit<
@@ -53,7 +53,7 @@ function Select<T extends object>({
       {({ isOpen }) => (
         <>
           <div className="grid justify-items-start gap-1.5">
-            <Label>{label}</Label>
+            <FieldLabel>{label}</FieldLabel>
 
             <Button
               variant="secondary"
