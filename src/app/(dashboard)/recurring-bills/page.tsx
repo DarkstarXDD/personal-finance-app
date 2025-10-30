@@ -59,7 +59,7 @@ export default async function RecurringBillsPage({
         <p>Keep track of your active bills and see what’s coming up next.</p>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
+      <div className="grid gap-6 xl:grid-cols-[16.5rem_1fr] xl:items-start">
         <Summary summary={summary} />
 
         <div className="md:border-secondary @container grid gap-6 md:rounded-xl md:border md:py-6">
