@@ -1,11 +1,11 @@
 import { useActionState } from "react"
 
-import { deletePot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
+import { deletePot } from "@/features/pots/actions"
 // import { fieldErrorStyles } from "@/components/ui/FieldError"
 
-import type { Pot } from "@/data-access/pots"
+import type { Pot } from "@/features/pots/data-access"
 
 export default function DeletePotDialog({
   pot,

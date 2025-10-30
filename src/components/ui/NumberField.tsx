@@ -79,7 +79,7 @@ export default function NumberField({
             isDisabled={isDisabled}
             className="group rounded-none border-0 border-l"
           >
-            <PiMinusBold className="text-fg-quaternary group-rac-hover:text-fg-quaternary_hover group-rac-pressed:scale-95 group-rac-pressed:text-fg-quaternary_hover size-5 transition-colors" />
+            <PiMinusBold className="text-fg-tertiary group-rac-hover:text-fg-tertiary_hover group-rac-pressed:scale-95 group-rac-pressed:text-fg-tertiary_hover size-5 transition-colors" />
           </Button>
 
           <Button
@@ -89,7 +89,7 @@ export default function NumberField({
             isDisabled={isDisabled}
             className="group rounded-none rounded-r-lg border-0 border-l"
           >
-            <PiPlusBold className="text-fg-quaternary group-rac-hover:text-fg-quaternary_hover group-rac-pressed:scale-95 group-rac-pressed:text-fg-quaternary_hover size-5 transition-colors" />
+            <PiPlusBold className="text-fg-tertiary group-rac-hover:text-fg-tertiary_hover group-rac-pressed:scale-95 group-rac-pressed:text-fg-tertiary_hover size-5 transition-colors" />
           </Button>
         </div>
       </RacGroup>

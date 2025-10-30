@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import * as z from "zod"
 
-import * as pots from "@/data-access/pots"
+import * as pots from "@/features/pots/data-access"
 import {
   idSchema,
   potCreateSchema,

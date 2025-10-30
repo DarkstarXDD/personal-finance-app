@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { createPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
+import { createPot } from "@/features/pots/actions"
 import { potCreateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 

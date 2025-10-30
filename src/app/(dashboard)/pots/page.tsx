@@ -1,12 +1,11 @@
 import { PiTipJarFill } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
-import AddPotDialog from "@/components/pots/AddPotDialog"
-import PotCard from "@/components/pots/PotCard"
 import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
 import { getColors } from "@/data-access/lookups"
-import { getPots } from "@/data-access/pots"
+import AddPotDialog from "@/features/pots/components/AddPotDialog"
+import PotCard from "@/features/pots/components/PotCard"
+import { getPots } from "@/features/pots/data-access"
 
 import type { Metadata } from "next"
 
@@ -19,16 +18,19 @@ export default async function PotsPage() {
   const pots = await getPots()
 
   return (
-    <main className="grid gap-8">
-      <div className="flex items-center justify-between">
-        <Heading as="h1" variant="primary">
-          Pots
-        </Heading>
+    <main className="@container grid gap-8">
+      <div className="grid w-full grid-cols-1 items-start justify-items-start gap-4 md:grid-cols-[1fr_auto]">
+        <div className="grid gap-1">
+          <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
+            Pots
+          </h1>
+          <p>Save toward specific goals and manage your pot balances here.</p>
+        </div>
         <AddPotDialog colors={colors} />
       </div>
 
       {pots.length > 0 ? (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 @3xl:grid-cols-2">
           {pots.map((pot) => (
             <PotCard key={pot.id} pot={pot} colors={colors} />
           ))}
