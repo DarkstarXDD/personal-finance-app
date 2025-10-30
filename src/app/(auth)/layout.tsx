@@ -1,13 +1,13 @@
 import "@/styles/globals.css"
 
+import { type Metadata } from "next"
 import Image from "next/image"
+import { type ReactNode } from "react"
 
 import BrandLogo from "@/components/icons/BrandLogo"
 import { inter } from "@/lib/fonts"
 
 import brandImage from "../../../public/illustration-authentication.svg"
-
-import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Personal Finance App",
@@ -36,19 +36,17 @@ export const metadata: Metadata = {
   },
 }
 
-export default function AuthLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+type AuthLayoutProps = Readonly<{ children: ReactNode }>
+
+export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-body text-tertiary bg-primary grid min-h-dvh grid-rows-[auto_1fr] items-center justify-items-center leading-normal tracking-normal lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:items-center`}
+        className={`${inter.variable} font-body text-tertiary text-md bg-primary grid min-h-dvh items-center justify-items-center leading-normal font-normal tracking-normal lg:grid-cols-[auto_1fr] lg:items-center`}
       >
-        <div className="bg-grey-900 grid w-full justify-items-center rounded-b-lg px-10 py-6 lg:hidden">
+        {/* <div className="bg-grey-900 grid w-full justify-items-center rounded-b-lg px-10 py-6 lg:hidden">
           <BrandLogo />
-        </div>
+        </div> */}
 
         <div className="hidden p-5 lg:block">
           <div className="relative">

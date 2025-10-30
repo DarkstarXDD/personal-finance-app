@@ -8,7 +8,7 @@ import { updateEmail } from "@/actions/account"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
-import { emailSchema } from "@/lib/schemas"
+import { emailSchema } from "@/features/auth/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 export default function Email({ email }: { email: string }) {

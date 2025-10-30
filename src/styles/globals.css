@@ -86,6 +86,10 @@
   --text-color-tertiary: var(--color-grey-600);
   --text-color-quaternary: var(--color-grey-500);
   --text-color-placeholder: var(--color-grey-500);
+  --text-color-brand-primary: var(--color-brand-900);
+  --text-color-brand-secondary: var(--color-brand-700);
+  --text-color-brand-secondary_hover: var(--color-brand-800);
+  --text-color-brand-tertiary: var(--color-brand-600);
   --text-color-disabled: var(--color-grey-500);
   --text-color-disabled_subtle: var(--color-grey-400);
   --text-color-error-primary: var(--color-error-600);

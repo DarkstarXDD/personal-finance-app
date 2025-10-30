@@ -1,46 +1,11 @@
 import * as z from "zod"
 
 // ============================================
-// ========== Signup Schema and Type ==========
-// ============================================
-
-export const signupSchema = z.object({
-  name: z.string().trim().min(1, "Name cannot be empty."),
-  email: z.email("Invalid email format.").toLowerCase(),
-  password: z.string().min(8, "Password must be at least 8 characters.").trim(),
-})
-export type SignupSchema = z.infer<typeof signupSchema>
-
-// ============================================
-// =========== Login Schema and Type ==========
-// ============================================
-
-export const loginSchema = z.object({
-  email: z.email("Invalid email format.").toLowerCase(),
-  password: z.string().trim().min(1, "Password cannot be empty."),
-})
-export type LoginSchema = z.infer<typeof loginSchema>
-
-// ============================================
 // ============ Id Schema and Type ============
 // ============================================
 
 export const idSchema = z.object({ id: z.cuid() })
-export type IdSchema = z.infer<typeof idSchema>
-
-// ============================================
-// =========== Name Schema and Type ===========
-// ============================================
-
-export const nameSchema = signupSchema.pick({ name: true })
-export type NameSchema = z.infer<typeof nameSchema>
-
-// ============================================
-// ========== Email Schema and Type ===========
-// ============================================
-
-export const emailSchema = signupSchema.pick({ email: true })
-export type EmailSchema = z.infer<typeof emailSchema>
+export type Id = z.infer<typeof idSchema>
 
 // ============================================
 // ===== Password Update Schema and Type ======

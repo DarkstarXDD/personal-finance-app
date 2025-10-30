@@ -1,6 +1,6 @@
-import SignupForm from "@/components/auth/SignupForm"
+import { type Metadata } from "next"
 
-import type { Metadata } from "next"
+import SignupForm from "@/features/auth/components/SignupForm"
 
 export const metadata: Metadata = {
   title: "Sign Up - Personal Finance",

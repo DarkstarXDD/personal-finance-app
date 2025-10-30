@@ -8,7 +8,7 @@ import { updateName } from "@/actions/account"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
-import { nameSchema } from "@/lib/schemas"
+import { nameSchema } from "@/features/auth/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 export default function Username({ name }: { name: string }) {

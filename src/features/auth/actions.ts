@@ -4,13 +4,13 @@ import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
 import * as z from "zod"
 
-import { prisma, Prisma } from "@/lib/prisma"
 import {
   signupSchema,
   loginSchema,
-  type SignupSchema,
-  type LoginSchema,
-} from "@/lib/schemas"
+  type Signup,
+  type Login,
+} from "@/features/auth/schemas"
+import { prisma, Prisma } from "@/lib/prisma"
 import { createSession } from "@/lib/session"
 
 import type { RegisterUserErrors, LoginUserErrors } from "@/lib/types"
@@ -20,7 +20,7 @@ import type { RegisterUserErrors, LoginUserErrors } from "@/lib/types"
 // ============================================
 
 export async function registerUser(
-  formData: SignupSchema
+  formData: Signup
 ): Promise<RegisterUserErrors | null> {
   const parsed = signupSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
@@ -57,7 +57,7 @@ export async function registerUser(
 // ============================================
 
 export async function loginUser(
-  formData: LoginSchema
+  formData: Login
 ): Promise<LoginUserErrors | null> {
   const parsed = loginSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors

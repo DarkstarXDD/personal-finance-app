@@ -11,6 +11,7 @@ import FieldDescription from "@/components/ui/FieldDescription"
 import FieldError from "@/components/ui/FieldError"
 import FieldLabel from "@/components/ui/FieldLabel"
 import Input from "@/components/ui/Input"
+import { cn } from "@/lib/utils"
 
 type TextFieldProps = RacTextFieldProps & {
   label?: string
@@ -30,11 +31,12 @@ export default function TextField({
   isInvalid,
   ref,
   type,
+  className,
   ...props
 }: TextFieldProps) {
   return (
     <RacTextField
-      className="grid w-full justify-items-start gap-1.5"
+      className={cn("grid w-full justify-items-start gap-1.5", className)}
       isInvalid={isInvalid}
       {...props}
     >

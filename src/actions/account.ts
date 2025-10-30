@@ -8,12 +8,11 @@ import * as z from "zod"
 import * as account from "@/data-access/account"
 import {
   nameSchema,
-  type NameSchema,
+  type Name,
   emailSchema,
-  type EmailSchema,
-  passwordUpdateSchema,
-  type PasswordUpdateSchema,
-} from "@/lib/schemas"
+  type Email,
+} from "@/features/auth/schemas"
+import { passwordUpdateSchema, type PasswordUpdateSchema } from "@/lib/schemas"
 import {
   EmailUpdateErrors,
   NameUpdateErrors,
@@ -25,7 +24,7 @@ import {
 // ============================================
 
 export async function updateName(
-  formData: NameSchema
+  formData: Name
 ): Promise<NameUpdateErrors | null> {
   const parsed = nameSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
@@ -44,7 +43,7 @@ export async function updateName(
 // ============================================
 
 export async function updateEmail(
-  formData: EmailSchema
+  formData: Email
 ): Promise<EmailUpdateErrors | null> {
   const parsed = emailSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
