@@ -50,7 +50,7 @@ export default function TableFilters({ categories }: TableFiltersProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-6">
+    <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-6 md:px-6">
       <SearchField
         label="Search Transactions"
         name="query"

@@ -38,7 +38,13 @@ const paginationStyles = tv({
   ],
 })
 
-export default function Pagination({ totalPages }: { totalPages: number }) {
+export default function Pagination({
+  totalPages,
+  className,
+}: {
+  totalPages: number
+  className?: string
+}) {
   const readOnlySearchParams = useSearchParams()
   const path = usePathname()
 
@@ -56,7 +62,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const { ulStyles } = paginationStyles()
 
   return (
-    <nav aria-label="Pagination">
+    <nav aria-label="Pagination" className={className}>
       {/* Mobile Pagination */}
       <ul className={ulStyles({ className: "sm:hidden" })}>
         <PaginationPrevious
