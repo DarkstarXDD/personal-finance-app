@@ -11,7 +11,7 @@ import { format } from "date-fns"
 import DaysUntilDue from "@/features/recurring-bills/components/DaysUntilDue"
 import OptionsMenu from "@/features/recurring-bills/components/OptionsMenu"
 import { type RecurringBill } from "@/features/recurring-bills/data-access"
-import { currencyFormatter } from "@/lib/utils"
+import TransactionAmount from "@/features/transactions/components/TransactionAmount"
 
 const columnHelper = createColumnHelper<RecurringBill>()
 
@@ -19,7 +19,7 @@ const columns = [
   columnHelper.accessor("counterparty", {
     header: "Bill Title",
     cell: (data) => (
-      <span className="text-grey-900 text-sm leading-normal font-bold">
+      <span className="text-primary text-sm font-medium">
         {data.getValue()}
       </span>
     ),
@@ -28,9 +28,7 @@ const columns = [
   columnHelper.accessor("dueDate", {
     header: "Due Date",
     cell: (data) => (
-      <span className="text-grey-500 text-xs leading-normal font-normal">
-        {format(data.getValue(), "dd MMM yyyy")}
-      </span>
+      <span className="text-sm">{format(data.getValue(), "dd MMM yyyy")}</span>
     ),
   }),
 
@@ -42,8 +40,8 @@ const columns = [
   columnHelper.accessor("amount", {
     header: () => <span className="block w-full text-end">Amount</span>,
     cell: (data) => (
-      <span className="text-grey-900 block w-full text-end text-sm leading-normal font-bold">
-        {currencyFormatter.format(Number(data.getValue()))}
+      <span className="block w-full text-end">
+        <TransactionAmount transactionAmount={data.getValue()} />
       </span>
     ),
     size: 50,
@@ -63,11 +61,9 @@ const columns = [
   }),
 ]
 
-export default function TableDesktop({
-  recurringBills,
-}: {
-  recurringBills: RecurringBill[]
-}) {
+type TableDesktopProps = { recurringBills: RecurringBill[] }
+
+export default function TableDesktop({ recurringBills }: TableDesktopProps) {
   const table = useReactTable({
     data: recurringBills,
     columns,
@@ -78,11 +74,14 @@ export default function TableDesktop({
       <table className="w-full" style={{ minWidth: table.getTotalSize() }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="border-beige-100 border-b">
+            <tr
+              key={headerGroup.id}
+              className="bg-secondary border-secondary border-t border-b"
+            >
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="text-grey-500 px-4 pt-3 pb-5 text-start text-xs leading-normal font-normal"
+                  className="px-6 py-3.5 text-start text-xs leading-normal font-semibold"
                   style={{ width: header.getSize() }}
                 >
                   {flexRender(
@@ -98,13 +97,13 @@ export default function TableDesktop({
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              className="border-grey-100 hover:bg-beige-100 group border-b last:border-none"
+              className="border-secondary group border-b last:border-none"
             >
               {row.getAllCells().map((cell) => (
                 <td
                   key={cell.id}
                   style={{ width: cell.column.getSize() }}
-                  className="px-4 py-4"
+                  className="px-6 py-4 group-last:pb-0"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
