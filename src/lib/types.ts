@@ -1,12 +1,9 @@
+import type { Signup, Login, Name, Email } from "@/features/auth/schemas"
 import type {
-  SignupSchema,
-  LoginSchema,
   PotAmountUpdate,
   PotCreate,
   TransactionCreate,
   BudgetCreate,
-  NameSchema,
-  EmailSchema,
   PasswordUpdateSchema,
 } from "@/lib/schemas"
 
@@ -15,11 +12,11 @@ export type DALReturn<T extends Record<string, string[]>> =
   | { success: false; fieldErrors: T }
 
 export type RegisterUserErrors = {
-  [Key in keyof SignupSchema]?: string[]
+  [Key in keyof Signup]?: string[]
 }
 
 export type LoginUserErrors = {
-  [Key in keyof LoginSchema]?: string[]
+  [Key in keyof Login]?: string[]
 }
 
 export type TransactionCreateErrors = {
@@ -39,11 +36,11 @@ export type PotAmountUpdateErrors = {
 }
 
 export type NameUpdateErrors = {
-  [Key in keyof NameSchema]?: string[]
+  [Key in keyof Name]?: string[]
 }
 
 export type EmailUpdateErrors = {
-  [Key in keyof EmailSchema]?: string[]
+  [Key in keyof Email]?: string[]
 }
 
 export type PasswordUpdateErrors = {
