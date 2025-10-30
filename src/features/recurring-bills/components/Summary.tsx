@@ -2,9 +2,8 @@ import { PiReceiptFill } from "react-icons/pi"
 
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
+import { type MonthlySummary } from "@/features/recurring-bills/helpers"
 import { currencyFormatter } from "@/lib/utils"
-
-import type { MonthlySummary } from "@/lib/helpers/recurring-bills"
 
 export default function Summary({
   totalValue,

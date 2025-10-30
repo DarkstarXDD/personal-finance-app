@@ -1,12 +1,11 @@
 "use client"
 
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
+import { type Key } from "react-aria-components"
 import { useDebouncedCallback } from "use-debounce"
 
 import SearchField from "@/components/ui/SearchField"
 import { Select, SelectItem } from "@/components/ui/Select"
-
-import type { Key } from "react-aria-components"
 
 export default function TableFilters() {
   const path = usePathname()

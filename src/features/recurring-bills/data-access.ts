@@ -9,7 +9,7 @@ import {
   getDueDate,
   getMonthlySummary,
   type BillMonthlyStatus,
-} from "@/lib/helpers/recurring-bills"
+} from "@/features/recurring-bills/helpers"
 import { prisma, type Prisma } from "@/lib/prisma"
 import { TransactionCreate } from "@/lib/schemas"
 import { TransactionCreateErrors, DALReturn } from "@/lib/types"

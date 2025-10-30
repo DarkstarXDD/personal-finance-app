@@ -8,11 +8,10 @@ import {
 } from "@tanstack/react-table"
 import { format } from "date-fns"
 
-import DaysUntilDue from "@/components/recurring-bills/DaysUntilDue"
-import OptionsMenu from "@/components/recurring-bills/OptionsMenu"
+import DaysUntilDue from "@/features/recurring-bills/components/DaysUntilDue"
+import OptionsMenu from "@/features/recurring-bills/components/OptionsMenu"
+import { type RecurringBill } from "@/features/recurring-bills/data-access"
 import { currencyFormatter } from "@/lib/utils"
-
-import type { RecurringBill } from "@/data-access/recurring-bills"
 
 const columnHelper = createColumnHelper<RecurringBill>()
 

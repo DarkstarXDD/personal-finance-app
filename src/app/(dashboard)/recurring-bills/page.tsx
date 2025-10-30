@@ -1,16 +1,15 @@
+import { type Metadata } from "next"
 import { PiReceiptFill } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
 import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
-import Summary from "@/components/recurring-bills/Summary"
-import TableDesktop from "@/components/recurring-bills/TableDesktop"
-import TableFilters from "@/components/recurring-bills/TableFilters"
-import TableMobile from "@/components/recurring-bills/TableMobile"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
-import { getRecurringBills } from "@/data-access/recurring-bills"
-
-import type { Metadata } from "next"
+import Summary from "@/features/recurring-bills/components/Summary"
+import TableDesktop from "@/features/recurring-bills/components/TableDesktop"
+import TableFilters from "@/features/recurring-bills/components/TableFilters"
+import TableMobile from "@/features/recurring-bills/components/TableMobile"
+import { getRecurringBills } from "@/features/recurring-bills/data-access"
 
 export const metadata: Metadata = {
   title: "Recurring Bills - Personal Finance",
