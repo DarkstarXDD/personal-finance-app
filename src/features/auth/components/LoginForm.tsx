@@ -1,15 +1,14 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
 import { useForm, Controller } from "react-hook-form"
 
-import { loginUser } from "@/actions/auth"
+import Logo from "@/components/icons/Logo"
 import Button from "@/components/ui/Button"
-import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
-import Link from "@/components/ui/Link"
 import TextField from "@/components/ui/TextField"
-import { loginSchema } from "@/lib/schemas"
+import { loginUser } from "@/features/auth/actions"
+import { loginSchema } from "@/features/auth/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 export default function LoginForm() {
@@ -19,9 +18,11 @@ export default function LoginForm() {
   })
 
   return (
-    <Card className="mx-auto max-w-140">
-      <div className="grid justify-items-center gap-8">
+    <div className="mx-auto grid max-w-90 justify-items-center gap-8">
+      <div className="grid w-full justify-items-center gap-6">
+        <Logo />
         <form
+          noValidate
           className="grid w-full gap-8"
           onSubmit={form.handleSubmit(async (data) => {
             const response = await loginUser(data)
@@ -31,7 +32,15 @@ export default function LoginForm() {
             }
           })}
         >
-          <Heading as="h1">Login</Heading>
+          <div className="grid justify-items-center gap-3">
+            <h1 className="text-primary text-3xl leading-tight font-semibold">
+              Log In
+            </h1>
+            <p className="text-center">
+              Welcome back! Please enter your details.
+            </p>
+          </div>
+
           <div className="grid gap-4">
             <Controller
               name="email"
@@ -39,7 +48,9 @@ export default function LoginForm() {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Email"
+                  type="email"
                   autoComplete="email"
+                  placeholder="johndoe@example.com"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
@@ -53,8 +64,8 @@ export default function LoginForm() {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Password"
-                  autoComplete="current-password"
                   type="password"
+                  autoComplete="current-password"
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
@@ -63,23 +74,27 @@ export default function LoginForm() {
               )}
             />
           </div>
+
           <Button
             variant="primary"
+            size="xl"
             type="submit"
             isPending={form.formState.isSubmitting}
           >
             Login
           </Button>
         </form>
-        <p className="flex items-center gap-2">
-          <span className="text-grey-500 text-sm leading-normal font-normal">
-            Need to create an account?
-          </span>
-          <Link href="/signup" className="font-bold">
-            Sign Up
-          </Link>
-        </p>
       </div>
-    </Card>
+
+      <p className="flex items-center gap-2 text-sm">
+        <span>Need to create an account?</span>
+        <Link
+          href="/signup"
+          className="text-brand-secondary hover:text-brand-secondary_hover font-semibold underline"
+        >
+          Sign Up
+        </Link>
+      </p>
+    </div>
   )
 }
