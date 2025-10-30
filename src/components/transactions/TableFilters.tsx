@@ -1,19 +1,16 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { type Key } from "react-aria-components"
 import { useDebouncedCallback } from "use-debounce"
 
 import SearchField from "@/components/ui/SearchField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import { Category } from "@/data-access/lookups"
 
-import type { Key } from "react-aria-components"
+type TableFiltersProps = { categories: Category[] }
 
-export default function TableFilters({
-  categories,
-}: {
-  categories: Category[]
-}) {
+export default function TableFilters({ categories }: TableFiltersProps) {
   const path = usePathname()
   const router = useRouter()
   const readOnlySearchParams = useSearchParams()
@@ -53,22 +50,23 @@ export default function TableFilters({
   }
 
   return (
-    <div className="flex items-center justify-between gap-6 md:items-start">
+    <div className="flex flex-col gap-4 md:flex-row md:justify-between md:gap-6">
       <SearchField
-        placeholder="Pet Food..."
         label="Search Transactions"
-        className="max-w-80"
+        name="query"
+        placeholder="Echo Games Store..."
         defaultValue={readOnlySearchParams.get("query") ?? ""}
         onChange={onSearchChange}
+        className="md:max-w-70"
       />
-      <div className="flex items-start justify-end gap-6 md:w-full">
+      <div className="flex w-full gap-4 md:flex-row md:justify-end lg:gap-6">
         <Select
           label="Sort by"
           aria-label="Sort by"
           name="sort"
           value={readOnlySearchParams.get("sortby") ?? "latest"}
           onChange={onSortByChange}
-          className="max-w-62 md:h-full md:w-full md:min-w-50"
+          className="w-full md:max-w-40"
         >
           <SelectItem id="latest">Latest</SelectItem>
           <SelectItem id="oldest">Oldest</SelectItem>
@@ -84,8 +82,8 @@ export default function TableFilters({
           name="filter"
           value={readOnlySearchParams.get("category") ?? "all"}
           onChange={onCategoryChange}
-          className="max-w-70 md:h-full md:w-full md:min-w-55"
           items={categoriesWithAll}
+          className="w-full md:max-w-60"
         >
           {(category) => (
             <SelectItem id={category.name}>{category.label}</SelectItem>
