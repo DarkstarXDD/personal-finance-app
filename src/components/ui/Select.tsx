@@ -106,7 +106,7 @@ function SelectItem({ className, children, ...props }: SelectItemProps) {
       {...props}
       textValue={typeof children === "string" ? children : undefined}
       className={cn(
-        "text-md text-primary rac-selected:bg-active rac-focus-visible:bg-active rac-pressed:bg-active rac-hover:bg-active cursor-pointer truncate rounded-md p-2 leading-normal font-medium outline-none",
+        "text-md text-primary rac-selected:bg-active rac-focus-visible:bg-active rac-pressed:bg-active rac-hover:bg-active cursor-pointer rounded-md p-2 leading-normal font-medium outline-none",
         className
       )}
     >

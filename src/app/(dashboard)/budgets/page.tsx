@@ -8,7 +8,7 @@ import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import { getBudgets } from "@/data-access/budgets"
 import { getCategories, getColors } from "@/data-access/lookups"
-import { getTransactionsForBudget } from "@/data-access/transactions"
+import { getTransactionsForBudget } from "@/features/transactions/data-access"
 
 import type { Metadata } from "next"
 

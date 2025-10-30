@@ -1,4 +1,4 @@
-import TransactionAmount from "@/components/transactions/TransactionAmount"
+import TransactionAmount from "@/features/transactions/components/TransactionAmount"
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 

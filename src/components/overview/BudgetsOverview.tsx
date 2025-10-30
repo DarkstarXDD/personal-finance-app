@@ -6,7 +6,7 @@ import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import { getBudgets } from "@/data-access/budgets"
-import { getTransactionsForBudget } from "@/data-access/transactions"
+import { getTransactionsForBudget } from "@/features/transactions/data-access"
 
 export default async function BudgetsOverview() {
   const budgets = await getBudgets()

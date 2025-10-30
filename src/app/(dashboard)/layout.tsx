@@ -1,12 +1,11 @@
 import "@/styles/globals.css"
 
+import { type Metadata } from "next"
 import { cookies } from "next/headers"
 
 import NavbarDesktop from "@/components/ui/NavbarDesktop"
 import NavbarMobile from "@/components/ui/NavbarMobile"
 import { inter } from "@/lib/fonts"
-
-import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Personal Finance App",
@@ -35,18 +34,18 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({
+type DashboardLayoutProps = Readonly<{ children: React.ReactNode }>
+
+export default async function DashboardLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: DashboardLayoutProps) {
   const cookieStore = await cookies()
   const isExpanded = cookieStore.get("isExpanded")?.value
 
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-body bg-primary text-tertiary grid min-h-dvh grid-rows-[1fr_auto] leading-normal tracking-normal [grid-template-areas:'main'_'navbar'] lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:[grid-template-areas:'navbar_main']`}
+        className={`${inter.variable} font-body bg-primary text-tertiary text-md grid min-h-dvh grid-rows-[1fr_auto] leading-normal font-normal tracking-normal [grid-template-areas:'main'_'navbar'] lg:grid-cols-[auto_1fr] lg:grid-rows-1 lg:[grid-template-areas:'navbar_main']`}
       >
         <NavbarDesktop
           initialExpanded={isExpanded === "0" ? false : true}

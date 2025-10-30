@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller, useWatch } from "react-hook-form"
 
-import { createTransaction } from "@/actions/transactions"
 import Button from "@/components/ui/Button"
 import Checkbox from "@/components/ui/Checkbox"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
@@ -11,6 +10,7 @@ import NumberField from "@/components/ui/NumberField"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
+import { createTransaction } from "@/features/transactions/actions"
 import { TransactionCreate, transactionCreateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 

@@ -4,7 +4,7 @@ import Skeleton from "@/components/ui/Skeleton"
 export default function SummaryCardsLoading() {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-      <Card padding="md" theme="dark" className="w-full shadow-none">
+      <Card padding="md" className="w-full shadow-none">
         <dl className="grid gap-3">
           <dt className="text-sm leading-normal font-normal">
             Current Balance
