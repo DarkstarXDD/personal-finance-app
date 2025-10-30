@@ -64,14 +64,15 @@ export default async function RecurringBillsPage({
 
         <div className="@container grid gap-6">
           <TableFilters />
-          {/* {recurringBills.length > 0 ? (
+
+          {recurringBills.length > 0 ? (
             <>
               <TableMobile recurringBills={recurringBills} />
               <TableDesktop recurringBills={recurringBills} />
             </>
           ) : (
             <FilteredEmptyState />
-          )} */}
+          )}
         </div>
       </div>
     </main>

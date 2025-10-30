@@ -34,22 +34,22 @@ export default function TableFilters() {
   }
 
   return (
-    <div className="flex items-center justify-between gap-6 md:items-start">
+    <div className="flex flex-col gap-4 md:px-6 @xl:flex-row @xl:justify-between @xl:gap-6">
       <SearchField
-        placeholder="Spotify..."
         label="Search Recurring Bills"
-        className="max-w-80"
+        name="query"
+        placeholder="Spotify..."
         defaultValue={readOnlySearchParams.get("query") ?? ""}
         onChange={onSearchChange}
+        className="md:max-w-70"
       />
 
       <Select
         label="Sort by"
-        aria-label="Sort by"
         name="sort"
         value={readOnlySearchParams.get("sortby") ?? "daysAsc"}
         onChange={onSortByChange}
-        className="max-w-62 md:h-full md:w-full md:min-w-50"
+        className="w-full md:max-w-50"
       >
         <SelectItem id="daysAsc">Soonest Due</SelectItem>
         <SelectItem id="daysDesc">Latest Due</SelectItem>
