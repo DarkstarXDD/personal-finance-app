@@ -3,9 +3,9 @@ import { PiTipJarFill } from "react-icons/pi"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import { getColors } from "@/data-access/lookups"
-import { getPots } from "@/data-access/pots"
 import AddPotDialog from "@/features/pots/components/AddPotDialog"
 import PotCard from "@/features/pots/components/PotCard"
+import { getPots } from "@/features/pots/data-access"
 
 import type { Metadata } from "next"
 

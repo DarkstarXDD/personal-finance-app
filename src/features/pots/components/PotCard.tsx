@@ -14,7 +14,7 @@ import WithdrawFromPotDialog from "@/features/pots/components/WithdrawFromPotDia
 import { currencyFormatter } from "@/lib/utils"
 
 import type { Color } from "@/data-access/lookups"
-import type { Pot } from "@/data-access/pots"
+import type { Pot } from "@/features/pots/data-access"
 
 type PotCardProps = { pot: Pot; colors: Color[] }
 

@@ -6,15 +6,15 @@ import { useEffect } from "react"
 import { ProgressBar } from "react-aria-components"
 import { useForm, Controller } from "react-hook-form"
 
-import { addToPot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import Label from "@/components/ui/FieldLabel"
 import NumberField from "@/components/ui/NumberField"
+import { addToPot } from "@/features/pots/actions"
 import { potAmountUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Pot } from "@/data-access/pots"
+import type { Pot } from "@/features/pots/data-access"
 
 export default function AddToPotDialog({ pot }: { pot: Pot }) {
   const form = useForm({
