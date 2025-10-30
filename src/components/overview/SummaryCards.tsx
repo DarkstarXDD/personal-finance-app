@@ -1,6 +1,6 @@
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
-import { getTransactionTotals } from "@/data-access/transactions"
+import { getTransactionTotals } from "@/features/transactions/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
 export default async function SummaryCards() {
@@ -8,7 +8,7 @@ export default async function SummaryCards() {
 
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-      <Card padding="md" theme="dark" className="grid w-full gap-3 shadow-none">
+      <Card padding="md" className="grid w-full gap-3 shadow-none">
         <Heading as="h2" variant="tertiary" className="text-white">
           Current Balance
         </Heading>

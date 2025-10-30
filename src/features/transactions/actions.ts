@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import * as z from "zod"
 
 import * as recurringBills from "@/data-access/recurring-bills"
-import * as transactions from "@/data-access/transactions"
+import * as transactions from "@/features/transactions/data-access"
 import { transactionCreateSchema, type TransactionCreate } from "@/lib/schemas"
 
 import type { TransactionCreateErrors } from "@/lib/types"

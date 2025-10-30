@@ -1,37 +1,24 @@
+import { type ReactNode } from "react"
 import { tv, VariantProps } from "tailwind-variants"
 
-import type { ReactNode } from "react"
-
 const cardStyles = tv({
-  base: "rounded-xl shadow-xs",
+  base: "border-secondary bg-primary rounded-xl border",
 
   variants: {
-    theme: {
-      light: "text-grey-900 bg-white",
-      dark: "bg-grey-900 text-white",
-    },
     padding: {
-      sm: "p-4",
-      md: "p-5 md:p-6",
-      lg: "p-6 md:p-8",
+      sm: "p-5",
+      md: "p-6",
+      lg: "p-32",
     },
   },
 
-  defaultVariants: {
-    theme: "light",
-    padding: "lg",
-  },
+  defaultVariants: { padding: "md" },
 })
 
 type CardVariants = VariantProps<typeof cardStyles>
 
-export default function Card({
-  children,
-  className,
-  theme,
-  padding,
-}: { children: ReactNode; className?: string } & CardVariants) {
-  return (
-    <div className={cardStyles({ theme, padding, className })}>{children}</div>
-  )
+type CardProps = { children: ReactNode; className?: string } & CardVariants
+
+export default function Card({ children, className, padding }: CardProps) {
+  return <div className={cardStyles({ padding, className })}>{children}</div>
 }

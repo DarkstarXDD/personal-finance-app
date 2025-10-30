@@ -8,10 +8,9 @@ import {
 } from "@tanstack/react-table"
 import { format } from "date-fns"
 
-import TransactionAmount from "@/components/transactions/TransactionAmount"
+import TransactionAmount from "@/features/transactions/components/TransactionAmount"
+import { type Transaction } from "@/features/transactions/data-access"
 import { cn } from "@/lib/utils"
-
-import type { Transaction } from "@/data-access/transactions"
 
 const columnHelper = createColumnHelper<Transaction>()
 
@@ -19,25 +18,19 @@ const columns = [
   columnHelper.accessor("counterparty", {
     header: "Recipient / Sender",
     cell: (data) => (
-      <span className="text-grey-900 text-sm leading-normal font-bold">
+      <span className="text-primary text-sm font-medium">
         {data.getValue()}
       </span>
     ),
   }),
   columnHelper.accessor("category", {
     header: "Category",
-    cell: (data) => (
-      <span className="text-grey-500 text-xs leading-normal font-normal">
-        {data.getValue().label}
-      </span>
-    ),
+    cell: (data) => <span className="text-sm">{data.getValue().label}</span>,
   }),
   columnHelper.accessor("createdAt", {
     header: "Transaction Date",
     cell: (data) => (
-      <span className="text-grey-500 text-xs leading-normal font-normal">
-        {format(data.getValue(), "dd MMM yyyy")}
-      </span>
+      <span className="text-sm">{format(data.getValue(), "dd MMM yyyy")}</span>
     ),
   }),
   columnHelper.accessor("amount", {
@@ -56,13 +49,12 @@ const columns = [
   }),
 ]
 
+type TableDesktopProps = { transactions: Transaction[]; className?: string }
+
 export default function TableDesktop({
   transactions,
   className,
-}: {
-  transactions: Transaction[]
-  className?: string
-}) {
+}: TableDesktopProps) {
   const table = useReactTable({
     data: transactions,
     columns,
@@ -74,11 +66,14 @@ export default function TableDesktop({
       <table className="w-full" style={{ minWidth: table.getTotalSize() }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="border-beige-100 border-b">
+            <tr
+              key={headerGroup.id}
+              className="bg-secondary border-secondary border-t border-b"
+            >
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="text-grey-500 px-4 pt-3 pb-5 text-start text-xs leading-normal font-normal"
+                  className="px-6 py-3.5 text-start text-xs leading-normal font-semibold"
                   style={{ width: header.getSize() }}
                 >
                   {flexRender(
@@ -90,17 +85,18 @@ export default function TableDesktop({
             </tr>
           ))}
         </thead>
+
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              className="border-grey-100 hover:bg-beige-100 border-b last:border-none"
+              className="border-secondary border-b last:border-none"
             >
               {row.getAllCells().map((cell) => (
                 <td
                   key={cell.id}
                   style={{ width: cell.column.getSize() }}
-                  className="px-4 py-4"
+                  className="px-6 py-4"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
