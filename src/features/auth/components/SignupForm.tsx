@@ -96,7 +96,7 @@ export default function SignupForm() {
             type="submit"
             isPending={form.formState.isSubmitting}
           >
-            Login
+            Create Account
           </Button>
         </form>
       </div>

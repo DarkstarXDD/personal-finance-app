@@ -81,7 +81,7 @@ export default function LoginForm() {
             type="submit"
             isPending={form.formState.isSubmitting}
           >
-            Login
+            Log In
           </Button>
         </form>
       </div>
