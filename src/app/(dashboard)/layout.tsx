@@ -1,12 +1,11 @@
 import "@/styles/globals.css"
 
+import { type Metadata } from "next"
 import { cookies } from "next/headers"
 
 import NavbarDesktop from "@/components/ui/NavbarDesktop"
 import NavbarMobile from "@/components/ui/NavbarMobile"
 import { inter } from "@/lib/fonts"
-
-import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Personal Finance App",
@@ -35,11 +34,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({
+type DashboardLayoutProps = Readonly<{ children: React.ReactNode }>
+
+export default async function DashboardLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: DashboardLayoutProps) {
   const cookieStore = await cookies()
   const isExpanded = cookieStore.get("isExpanded")?.value
 
