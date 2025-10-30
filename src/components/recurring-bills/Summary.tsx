@@ -18,10 +18,7 @@ export default function Summary({
 
   return (
     <div className="grid gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-1">
-      <Card
-        theme="dark"
-        className="flex items-center gap-5 md:flex-col md:items-start md:gap-8"
-      >
+      <Card className="flex items-center gap-5 md:flex-col md:items-start md:gap-8">
         <PiReceiptFill className="size-10 shrink-0 text-white" />
         <div className="grid gap-3">
           <Heading as="h2" variant="tertiary" className="text-white">
@@ -33,7 +30,7 @@ export default function Summary({
         </div>
       </Card>
 
-      <Card theme="light" className="grid gap-5">
+      <Card className="grid gap-5">
         <Heading as="h2" variant="secondary" className="text-base">
           <span>Summary for</span>
           <span className="text-turquoise"> {currentMonth}</span>
