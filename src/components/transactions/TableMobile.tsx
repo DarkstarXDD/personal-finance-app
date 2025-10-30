@@ -3,26 +3,24 @@
 import { format } from "date-fns"
 
 import TransactionAmount from "@/components/transactions/TransactionAmount"
+import { type Transaction } from "@/data-access/transactions"
 import { cn } from "@/lib/utils"
 
-import type { Transaction } from "@/data-access/transactions"
+type TableMobileProps = { transactions: Transaction[]; className?: string }
 
 export default function TableMobile({
   transactions,
   className,
-}: {
-  transactions: Transaction[]
-  className?: string
-}) {
+}: TableMobileProps) {
   return (
     <ul className={cn(className)}>
       {transactions.map((transaction) => (
         <li
           key={transaction.id}
-          className="border-b-grey-100 grid gap-1 border-b py-4 first:pt-0 last:border-none last:pb-0"
+          className="border-secondary grid gap-1 border-b p-4 last:border-none"
         >
           <div className="flex items-center justify-between gap-2">
-            <p className="text-grey-900 text-sm leading-normal font-bold">
+            <p className="text-primary text-sm font-medium">
               {transaction.counterparty}
             </p>
             <TransactionAmount
@@ -30,7 +28,8 @@ export default function TableMobile({
               transactionType={transaction.transactionType}
             />
           </div>
-          <div className="text-grey-500 flex items-center justify-between gap-2 text-xs leading-normal font-normal">
+
+          <div className="flex items-center justify-between gap-2 text-sm">
             <p>{transaction.category.label}</p>
             <p>{format(transaction.createdAt, "dd MMM yyyy")}</p>
           </div>
