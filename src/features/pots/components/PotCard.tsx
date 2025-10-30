@@ -65,6 +65,7 @@ export default function PotCard({ pot, colors }: PotCardProps) {
       </div>
 
       <ProgressBar
+        aria-label={`${pot.name} progress`}
         value={pot.currentAmount}
         minValue={0}
         maxValue={pot.target}
