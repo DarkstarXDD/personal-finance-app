@@ -2,17 +2,17 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
-import { updatePot } from "@/actions/pots"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
+import { updatePot } from "@/features/pots/actions"
 import { potUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Pot } from "@/data-access/pots"
+import type { Pot } from "@/features/pots/data-access"
 
 export default function EditPotDialog({
   pot,

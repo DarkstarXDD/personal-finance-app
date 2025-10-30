@@ -5,7 +5,7 @@ import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
 import MetricItem from "@/components/ui/MetricItem"
-import { getPots } from "@/data-access/pots"
+import { getPots } from "@/features/pots/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
 export default async function PotsOverview() {
