@@ -17,7 +17,7 @@ export default function TableMobile({
       {transactions.map((transaction) => (
         <li
           key={transaction.id}
-          className="border-secondary grid gap-1 border-b p-4 last:border-none"
+          className="border-secondary grid gap-1 border-b py-4 last:border-none"
         >
           <div className="flex items-center justify-between gap-2">
             <p className="text-primary text-sm font-medium">

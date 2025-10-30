@@ -57,9 +57,9 @@ export default function TableFilters({ categories }: TableFiltersProps) {
         placeholder="Echo Games Store..."
         defaultValue={readOnlySearchParams.get("query") ?? ""}
         onChange={onSearchChange}
-        className="md:max-w-70"
+        className="md:max-w-60 xl:max-w-70"
       />
-      <div className="flex w-full gap-4 md:flex-row md:justify-end lg:gap-6">
+      <div className="flex w-full gap-4 md:flex-row md:justify-end xl:gap-6">
         <Select
           label="Sort by"
           aria-label="Sort by"

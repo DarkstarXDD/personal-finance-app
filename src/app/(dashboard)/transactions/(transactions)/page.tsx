@@ -7,7 +7,6 @@ import TableDesktop from "@/components/transactions/TableDesktop"
 import TableFilters from "@/components/transactions/TableFilters"
 import TableMobile from "@/components/transactions/TableMobile"
 import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
 import Pagination from "@/components/ui/Pagination"
 import { getCategories } from "@/data-access/lookups"
 import { getTransactions } from "@/data-access/transactions"
@@ -45,13 +44,19 @@ export default async function TransactionsPage({
 
   if (totalItemsWithoutFiltering === 0) {
     return (
-      <main className="grid gap-8">
-        <div className="flex items-center justify-between gap-2">
-          <Heading as="h1" variant="primary">
-            Transactions
-          </Heading>
+      <main className="grid content-start items-start gap-8">
+        <div className="grid w-full grid-cols-1 items-start justify-items-start gap-4 md:grid-cols-[1fr_auto]">
+          <div className="grid gap-1">
+            <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
+              Transactions
+            </h1>
+            <p>
+              Review your past activity and add new income or expenses here.
+            </p>
+          </div>
           <AddTransactionDialog categories={categories} />
         </div>
+
         <Card>
           <EmptyState
             icon={PiArrowsDownUpFill}
@@ -65,15 +70,18 @@ export default async function TransactionsPage({
   }
 
   return (
-    <main className="grid gap-8">
-      <div className="flex items-center justify-between gap-2">
-        <Heading as="h1" variant="primary">
-          Transactions
-        </Heading>
+    <main className="grid content-start items-start gap-8">
+      <div className="grid w-full grid-cols-1 items-start justify-items-start gap-4 md:grid-cols-[1fr_auto]">
+        <div className="grid gap-1">
+          <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
+            Transactions
+          </h1>
+          <p>Review your past activity and add new income or expenses here.</p>
+        </div>
         <AddTransactionDialog categories={categories} />
       </div>
 
-      <Card className="grid gap-6">
+      <div className="md:border-secondary grid gap-6 md:rounded-xl md:border md:py-6">
         <TableFilters categories={categories} />
 
         {transactions.length > 0 ? (
@@ -88,8 +96,8 @@ export default async function TransactionsPage({
           <FilteredEmptyState />
         )}
 
-        <Pagination totalPages={totalPages} />
-      </Card>
+        <Pagination totalPages={totalPages} className="md:px-6" />
+      </div>
     </main>
   )
 }
