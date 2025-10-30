@@ -1,71 +1,51 @@
-import { PiReceiptFill } from "react-icons/pi"
-
 import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
-import { type MonthlySummary } from "@/features/recurring-bills/helpers"
+import { type Summary } from "@/features/recurring-bills/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
-export default function Summary({
-  totalValue,
-  monthlySummary,
-}: {
-  totalValue?: string | number
-  monthlySummary: MonthlySummary
-}) {
+export default function Summary({ summary }: { summary: Summary }) {
   const today = new Date()
   const currentMonth = today.toLocaleDateString(undefined, { month: "long" })
 
   return (
-    <div className="grid gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-1">
-      <Card className="flex items-center gap-5 md:flex-col md:items-start md:gap-8">
-        <PiReceiptFill className="size-10 shrink-0 text-white" />
-        <div className="grid gap-3">
-          <Heading as="h2" variant="tertiary" className="text-white">
-            Total biils
-          </Heading>
-          <p className="text-3xl leading-tight font-bold text-white">
-            {currencyFormatter.format(Number(totalValue ?? 0))}
-          </p>
-        </div>
+    <div className="grid gap-6">
+      <Card size="sm" className="grid gap-1">
+        <h2 className="text-sm font-medium">Total Bills</h2>
+        <p className="text-primary text-2xl font-semibold">
+          {summary.billCount}
+        </p>
       </Card>
 
-      <Card className="grid gap-5">
-        <Heading as="h2" variant="secondary" className="text-base">
-          <span>Summary for</span>
-          <span className="text-turquoise"> {currentMonth}</span>
-        </Heading>
-        <dl>
-          <div className="border-grey-100 flex justify-between gap-2 border-b pb-4">
-            <dt className="text-grey-500 text-sm leading-normal font-semibold">
-              Paid Bills
-            </dt>
-            <dd className="text-grey-900 text-sm leading-normal font-bold">
-              <span>{monthlySummary.paid.count} </span>
-              <span>
-                ({currencyFormatter.format(monthlySummary.paid.total)})
-              </span>
+      <Card size="sm" className="grid gap-1">
+        <h2 className="text-sm font-medium">Total Amount</h2>
+        <p className="text-primary text-2xl font-semibold">
+          {currencyFormatter.format(Number(summary.sum ?? 0))}
+        </p>
+      </Card>
+
+      <Card size="sm" className="grid gap-6">
+        <h2 className="text-lg leading-tight font-semibold">
+          Summary for <span className="text-primary">{currentMonth}</span>
+        </h2>
+
+        <dl className="grid gap-4">
+          <div className="grid gap-1">
+            <dt className="text-sm font-medium">Paid Bills</dt>
+            <dd className="text-primary text-2xl font-semibold">
+              {currencyFormatter.format(summary.monthlySummary.paid.total)}
             </dd>
           </div>
-          <div className="border-grey-100 flex justify-between gap-2 border-b py-4">
-            <dt className="text-grey-500 text-sm leading-normal font-semibold">
-              Total Upcoming
-            </dt>
-            <dd className="text-grey-900 text-sm leading-normal font-bold">
-              <span>{monthlySummary.upcoming.count} </span>
-              <span>
-                ({currencyFormatter.format(monthlySummary.upcoming.total)})
-              </span>
+
+          <div className="grid gap-1">
+            <dt className="text-sm font-medium">Total Upcoming</dt>
+            <dd className="text-primary text-2xl font-semibold">
+              {currencyFormatter.format(summary.monthlySummary.upcoming.total)}
             </dd>
           </div>
-          <div className="flex justify-between gap-2 pt-4">
-            <dt className="text-red text-sm leading-normal font-semibold">
-              Due Soon
-            </dt>
-            <dd className="text-red text-sm leading-normal font-bold">
-              <span>{monthlySummary.dueSoon.count} </span>
-              <span>
-                ({currencyFormatter.format(monthlySummary.dueSoon.total)})
-              </span>
+
+          <div className="grid gap-1">
+            <dt className="text-sm font-medium">Due Soon</dt>
+            <dd className="text-primary text-2xl font-semibold">
+              {currencyFormatter.format(summary.monthlySummary.dueSoon.total)}
             </dd>
           </div>
         </dl>
