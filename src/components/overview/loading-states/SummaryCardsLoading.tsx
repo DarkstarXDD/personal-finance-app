@@ -4,7 +4,7 @@ import Skeleton from "@/components/ui/Skeleton"
 export default function SummaryCardsLoading() {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-      <Card padding="md" className="w-full shadow-none">
+      <Card size="md" className="w-full shadow-none">
         <dl className="grid gap-3">
           <dt className="text-sm leading-normal font-normal">
             Current Balance
@@ -15,7 +15,7 @@ export default function SummaryCardsLoading() {
         </dl>
       </Card>
 
-      <Card padding="md" className="w-full shadow-none">
+      <Card size="md" className="w-full shadow-none">
         <dl className="grid gap-3">
           <dt className="text-grey-500 text-sm leading-normal font-normal">
             Income
@@ -26,7 +26,7 @@ export default function SummaryCardsLoading() {
         </dl>
       </Card>
 
-      <Card padding="md" className="w-full shadow-none">
+      <Card size="md" className="w-full shadow-none">
         <dl className="grid gap-3">
           <dt className="text-grey-500 text-sm leading-normal font-normal">
             Expenses

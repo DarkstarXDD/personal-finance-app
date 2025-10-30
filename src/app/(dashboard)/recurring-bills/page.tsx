@@ -4,7 +4,6 @@ import { PiReceiptFill } from "react-icons/pi"
 import EmptyState from "@/components/empty-states/EmptyState"
 import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
 import Summary from "@/features/recurring-bills/components/Summary"
 import TableDesktop from "@/features/recurring-bills/components/TableDesktop"
 import TableFilters from "@/features/recurring-bills/components/TableFilters"
@@ -27,15 +26,18 @@ export default async function RecurringBillsPage({
 
   const { recurringBills, summary } = await getRecurringBills({ query, sortby })
 
-  if (summary.count === 0) {
+  if (summary.billCount === 0) {
     return (
       <main className="grid gap-8">
-        <Heading as="h1">Recurring Bills</Heading>
+        <div className="grid gap-1">
+          <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
+            Recurring Bills
+          </h1>
+          <p>Keep track of your active bills and see what’s coming up next.</p>
+        </div>
+
         <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
-          <Summary
-            totalValue={summary.sum}
-            monthlySummary={summary.monthlySummary}
-          />
+          <Summary summary={summary} />
           <Card>
             <EmptyState
               icon={PiReceiptFill}
@@ -50,24 +52,27 @@ export default async function RecurringBillsPage({
 
   return (
     <main className="grid gap-8">
-      <Heading as="h1">Recurring Bills</Heading>
-      <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
-        <Summary
-          totalValue={summary.sum}
-          monthlySummary={summary.monthlySummary}
-        />
+      <div className="grid gap-1">
+        <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
+          Recurring Bills
+        </h1>
+        <p>Keep track of your active bills and see what’s coming up next.</p>
+      </div>
 
-        <Card className="grid gap-6 md:pb-4">
+      <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
+        <Summary summary={summary} />
+
+        <div className="@container grid gap-6">
           <TableFilters />
-          {recurringBills.length > 0 ? (
+          {/* {recurringBills.length > 0 ? (
             <>
               <TableMobile recurringBills={recurringBills} />
               <TableDesktop recurringBills={recurringBills} />
             </>
           ) : (
             <FilteredEmptyState />
-          )}
-        </Card>
+          )} */}
+        </div>
       </div>
     </main>
   )

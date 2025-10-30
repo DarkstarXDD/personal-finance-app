@@ -8,6 +8,7 @@ import {
   getDaysUntilDue,
   getDueDate,
   getMonthlySummary,
+  type MonthlySummary,
   type BillMonthlyStatus,
 } from "@/features/recurring-bills/helpers"
 import { prisma, type Prisma } from "@/lib/prisma"
@@ -68,6 +69,12 @@ export type RecurringBill = Omit<RecurringBillRaw, "amount"> & {
   dueDate: Date
   daysUntilDue: number
   monthlyStatus: BillMonthlyStatus
+}
+
+export type Summary = {
+  sum: string | undefined
+  billCount: number
+  monthlySummary: MonthlySummary
 }
 
 type GetRecurringBillsParams = {
@@ -174,7 +181,7 @@ export async function getRecurringBills({
     recurringBills: filteredRecurringBillsEnriched,
     summary: {
       sum: recurringBillsSummary._sum.amount?.toString(),
-      count: recurringBillsSummary._count._all,
+      billCount: recurringBillsSummary._count._all,
       monthlySummary: getMonthlySummary(allRecurringBillsEnriched),
     },
   }
