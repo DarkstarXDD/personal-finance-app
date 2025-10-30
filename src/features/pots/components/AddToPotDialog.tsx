@@ -31,8 +31,8 @@ export default function AddToPotDialog({ pot }: { pot: Pot }) {
 
   return (
     <DialogTrigger>
-      <Button variant="secondary" className="w-full">
-        + Add Money
+      <Button variant="secondary" size="lg" className="w-full">
+        + Add
       </Button>
       <Dialog title={`Add to ‘${pot.name}’`}>
         {({ close }) => (

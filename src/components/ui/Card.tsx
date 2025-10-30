@@ -8,7 +8,7 @@ const cardStyles = tv({
     padding: {
       sm: "p-5",
       md: "p-6",
-      lg: "p-32",
+      lg: "p-6 md:p-8",
     },
   },
 

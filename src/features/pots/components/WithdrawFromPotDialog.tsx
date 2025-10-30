@@ -31,8 +31,8 @@ export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
 
   return (
     <DialogTrigger>
-      <Button variant="secondary" className="w-full">
-        Withdraw
+      <Button variant="secondary" size="lg" className="w-full">
+        - Withdraw
       </Button>
       <Dialog title={`Withdraw from ‘${pot.name}’`}>
         {({ close }) => (
