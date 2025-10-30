@@ -1,6 +1,6 @@
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
-import { getTransactionTotals } from "@/data-access/transactions"
+import { getTransactionTotals } from "@/features/transactions/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
 export default async function SummaryCards() {

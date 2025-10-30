@@ -8,8 +8,8 @@ import {
 } from "@tanstack/react-table"
 import { format } from "date-fns"
 
-import TransactionAmount from "@/components/transactions/TransactionAmount"
-import { type Transaction } from "@/data-access/transactions"
+import TransactionAmount from "@/features/transactions/components/TransactionAmount"
+import { type Transaction } from "@/features/transactions/data-access"
 import { cn } from "@/lib/utils"
 
 const columnHelper = createColumnHelper<Transaction>()

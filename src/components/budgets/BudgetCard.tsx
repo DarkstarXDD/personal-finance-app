@@ -9,7 +9,6 @@ import { PiWarningCircleFill } from "react-icons/pi"
 import DeleteBudgetDialog from "@/components/budgets/DeleteBudgetDialog"
 import EditBudgetDialog from "@/components/budgets/EditBudgetDialog"
 import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
-import TransactionAmount from "@/components/transactions/TransactionAmount"
 import Card from "@/components/ui/Card"
 import Label from "@/components/ui/FieldLabel"
 import Heading from "@/components/ui/Heading"
@@ -18,10 +17,11 @@ import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
 import MetricItem from "@/components/ui/MetricItem"
 import { Category, Color } from "@/data-access/lookups"
+import TransactionAmount from "@/features/transactions/components/TransactionAmount"
 import { currencyFormatter } from "@/lib/utils"
 
 import type { Budget } from "@/data-access/budgets"
-import type { Transaction } from "@/data-access/transactions"
+import type { Transaction } from "@/features/transactions/data-access"
 
 export default function BudgetCard({
   budget,

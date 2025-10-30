@@ -1,11 +1,11 @@
 import { PiArrowsDownUpFill } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
-import TableMobile from "@/components/transactions/TableMobile"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
-import { getTransactions } from "@/data-access/transactions"
+import TableMobile from "@/features/transactions/components/TableMobile"
+import { getTransactions } from "@/features/transactions/data-access"
 
 export default async function TransactionsOverview() {
   const { transactions } = await getTransactions({ take: 5 })
