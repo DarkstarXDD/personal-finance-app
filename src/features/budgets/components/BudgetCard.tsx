@@ -8,12 +8,9 @@ import { PiWarningCircleFill } from "react-icons/pi"
 
 import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import Card from "@/components/ui/Card"
-import Label from "@/components/ui/FieldLabel"
-import Heading from "@/components/ui/Heading"
 import IconButton from "@/components/ui/IconButton"
 import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
-import MetricItem from "@/components/ui/MetricItem"
 import { Category, Color } from "@/data-access/lookups"
 import DeleteBudgetDialog from "@/features/budgets/components/DeleteBudgetDialog"
 import EditBudgetDialog from "@/features/budgets/components/EditBudgetDialog"
@@ -23,15 +20,17 @@ import { currencyFormatter } from "@/lib/utils"
 import type { Budget } from "@/features/budgets/data-access"
 import type { Transaction } from "@/features/transactions/data-access"
 
+type BudgetCardProps = {
+  budget: Budget & { transactions: Transaction[]; totalSpent: number }
+  categories: Category[]
+  colors: Color[]
+}
+
 export default function BudgetCard({
   budget,
   categories,
   colors,
-}: {
-  budget: Budget & { transactions: Transaction[]; totalSpent: number }
-  categories: Category[]
-  colors: Color[]
-}) {
+}: BudgetCardProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
@@ -39,16 +38,15 @@ export default function BudgetCard({
     Number(budget.maximumSpend) - Number(budget.totalSpent)
 
   return (
-    <Card className="grid gap-5">
+    <Card size="lg" className="grid gap-8">
       <div className="flex items-center justify-start gap-4">
         <span
           className="size-4 rounded-full"
           style={{ backgroundColor: budget.color.value }}
         />
-        <Heading as="h2" variant="secondary">
+        <h2 className="text-primary text-lg leading-tight font-semibold">
           {budget.category.label}
-        </Heading>
-
+        </h2>
         <MenuTrigger>
           <IconButton variant="options" className="ml-auto" />
           <Menu>
@@ -66,57 +64,58 @@ export default function BudgetCard({
       </div>
 
       <div className="grid gap-8">
+        <p>
+          <span className="text-primary text-3xl leading-tight font-semibold">
+            {currencyFormatter.format(budget.totalSpent)}
+          </span>
+          <span className="font-medium">
+            {" "}
+            of {currencyFormatter.format(budget.maximumSpend)}
+          </span>
+        </p>
+
         <ProgressBar
+          aria-label={`${budget.category.name} progress`}
           value={Number(budget.totalSpent)}
           minValue={0}
           maxValue={Number(budget.maximumSpend)}
+          formatOptions={{ style: "currency", currency: "USD" }}
         >
           {({ percentage }) => (
-            <div className="grid gap-4">
-              <Label>
-                Maximum of{" "}
-                {currencyFormatter.format(Number(budget.maximumSpend))}
-              </Label>
-              <div className="bg-beige-100 flex h-8 w-full items-center rounded-sm p-1">
+            <div className="grid gap-1.5">
+              <div className="bg-quaternary h-3 rounded">
                 <motion.div
-                  className="h-full rounded-sm"
+                  className="h-full rounded"
                   style={{ backgroundColor: budget.color.value }}
                   initial={{ width: 0 }}
                   animate={{ width: percentage + "%" }}
                   transition={{ delay: 0.18 }}
                 />
               </div>
+
+              <div className="flex justify-between gap-2 text-sm font-medium">
+                <p>{Math.round(percentage ?? 0)}% used</p>
+                <p>
+                  {remainingAmount > 0
+                    ? currencyFormatter.format(remainingAmount)
+                    : currencyFormatter.format(0)}{" "}
+                  remaining
+                </p>
+              </div>
             </div>
           )}
         </ProgressBar>
 
         {Number(budget.maximumSpend) < Number(budget.totalSpent) && (
-          <p className="text-red flex gap-2 text-sm leading-normal font-normal">
-            <PiWarningCircleFill className="size-5" />
+          <p className="text-error-primary flex items-center gap-2 text-sm">
+            <PiWarningCircleFill className="text-fg-error-secondary size-5" />
             You’ve exceeded this month’s budget for this category.
           </p>
         )}
 
-        <div className="grid grid-cols-2">
-          <MetricItem
-            label="Spent"
-            color={budget.color.value}
-            value={currencyFormatter.format(Number(budget.totalSpent))}
-          />
-          <MetricItem
-            label="Free"
-            color="#f8f4f0"
-            value={currencyFormatter.format(
-              remainingAmount < 0 ? 0 : remainingAmount
-            )}
-          />
-        </div>
-
-        <div className="bg-beige-100 grid gap-5 rounded-xl p-4 md:p-5">
-          <div className="flex justify-between">
-            <h3 className="text-grey-900 text-base leading-normal font-bold">
-              Latest Spending
-            </h3>
+        <Card size="sm" className="bg-secondary grid gap-5 px-0">
+          <div className="flex items-center justify-between px-4">
+            <h3 className="text-primary font-semibold">Latest Spending</h3>
             <Link
               href={`/transactions?category=${budget.category.name}`}
               withIcon
@@ -124,6 +123,7 @@ export default function BudgetCard({
               See All
             </Link>
           </div>
+
           {budget.transactions.length === 0 ? (
             <FilteredEmptyState message="No expenses under this category for this month." />
           ) : (
@@ -131,24 +131,28 @@ export default function BudgetCard({
               {budget.transactions.map((transaction) => (
                 <li
                   key={transaction.id}
-                  className="border-grey-200 grid grid-cols-2 gap-1 border-b py-3 first:pt-0 last:border-none last:pb-0"
+                  className="border-secondary grid grid-cols-2 gap-x-2 gap-y-1 border-b px-4 py-4 first:pt-0 last:border-none last:pb-0"
                 >
-                  <h4 className="text-grey-900 row-span-2 text-xs leading-normal font-bold">
+                  <p className="text-primary text-sm font-medium">
                     {transaction.counterparty}
-                  </h4>
+                  </p>
+
                   <TransactionAmount
                     amount={transaction.amount}
                     transactionType={transaction.transactionType}
-                    className="justify-self-end text-xs"
+                    className="justify-self-end"
                   />
-                  <p className="text-grey-500 justify-self-end text-xs leading-normal font-normal">
+
+                  <p className="text-sm">{transaction.category.label}</p>
+
+                  <p className="justify-self-end text-sm">
                     {format(transaction.createdAt, "dd MMM yyyy")}
                   </p>
                 </li>
               ))}
             </ul>
           )}
-        </div>
+        </Card>
       </div>
 
       <EditBudgetDialog

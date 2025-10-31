@@ -20,6 +20,7 @@ export default async function BudgetsPage() {
   const categories = await getCategories()
   const colors = await getColors()
   const budgets = await getBudgets()
+
   const budgetsWithTransactions = await Promise.all(
     budgets.map(async (budget) => {
       const { transactions, totalSpent } = await getTransactionsForBudget(
