@@ -15,6 +15,17 @@ export default function PageHeader({
   action: Action,
   className,
 }: PageHeaderProps) {
+  if (Action === undefined) {
+    return (
+      <div className="grid gap-1">
+        <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
+          {title}
+        </h1>
+        <p>{description}</p>
+      </div>
+    )
+  }
+
   return (
     <div
       className={cn(
