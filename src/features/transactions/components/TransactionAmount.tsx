@@ -1,24 +1,25 @@
+import { type Transaction } from "@/features/transactions/data-access"
 import { cn, currencyFormatter } from "@/lib/utils"
 
 type TransactionAmountProps = {
-  transactionAmount: string | number
-  transactionType?: "INCOME" | "EXPENSE"
+  amount: Transaction["amount"]
+  transactionType?: Transaction["transactionType"]
   className?: string
 }
 
 export default function TransactionAmount({
-  transactionAmount,
+  amount,
   transactionType,
   className,
 }: TransactionAmountProps) {
-  const amount = currencyFormatter.format(Number(transactionAmount))
+  const formattedAmount = currencyFormatter.format(Number(amount))
 
   if (transactionType === "INCOME") {
     return (
       <p
         className={cn("text-success-primary text-sm font-semibold", className)}
       >
-        {`+${amount}`}
+        {`+${formattedAmount}`}
       </p>
     )
   }
@@ -26,13 +27,13 @@ export default function TransactionAmount({
   if (transactionType === "EXPENSE") {
     return (
       <p className={cn("text-error-primary text-sm font-semibold", className)}>
-        {`-${amount}`}
+        {`-${formattedAmount}`}
       </p>
     )
   } else {
     return (
       <p className={cn("text-primary text-sm font-semibold", className)}>
-        {`${amount}`}
+        {`${formattedAmount}`}
       </p>
     )
   }

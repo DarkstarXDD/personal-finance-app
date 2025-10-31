@@ -137,7 +137,7 @@ export default function BudgetCard({
                     {transaction.counterparty}
                   </h4>
                   <TransactionAmount
-                    transactionAmount={transaction.amount}
+                    amount={transaction.amount}
                     transactionType={transaction.transactionType}
                     className="justify-self-end text-xs"
                   />

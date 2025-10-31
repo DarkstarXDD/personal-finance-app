@@ -62,7 +62,6 @@ export default function TableFilters({ categories }: TableFiltersProps) {
       <div className="flex w-full gap-4 md:flex-row md:justify-end xl:gap-6">
         <Select
           label="Sort by"
-          aria-label="Sort by"
           name="sort"
           value={readOnlySearchParams.get("sortby") ?? "latest"}
           onChange={onSortByChange}
@@ -78,7 +77,6 @@ export default function TableFilters({ categories }: TableFiltersProps) {
 
         <Select
           label="Category"
-          aria-label="Category"
           name="filter"
           value={readOnlySearchParams.get("category") ?? "all"}
           onChange={onCategoryChange}
