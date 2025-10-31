@@ -1,8 +1,8 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
-import { PiEnvelopeFill } from "react-icons/pi"
+import { useForm, Controller } from "react-hook-form"
+import { FiMail } from "react-icons/fi"
 
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
@@ -18,7 +18,7 @@ export default function Email({ email }: { email: string }) {
   })
 
   return (
-    <Card>
+    <Card size="md">
       <form
         className="grid gap-6"
         onSubmit={form.handleSubmit(async (data) => {
@@ -29,13 +29,15 @@ export default function Email({ email }: { email: string }) {
           }
         })}
       >
-        <div className="grid gap-2">
-          <h3 className="text-grey-900 flex items-center gap-2 text-base leading-none font-semibold">
-            <PiEnvelopeFill className="text-grey-500 size-5" />
-            Email
-          </h3>
-          <p className="text-grey-500 text-sm">Update your email address.</p>
+        <div className="grid gap-1">
+          <div className="flex items-center gap-2">
+            <FiMail className="text-fg-quaternary size-5" />
+            <h3 className="text-primary font-semibold">Email</h3>
+          </div>
+
+          <p className="text-sm">Update your email.</p>
         </div>
+
         <div className="grid gap-4">
           <Controller
             name="email"
@@ -54,6 +56,7 @@ export default function Email({ email }: { email: string }) {
           <Button
             type="submit"
             variant="primary"
+            size="lg"
             className="justify-self-start"
             isPending={form.formState.isSubmitting}
           >

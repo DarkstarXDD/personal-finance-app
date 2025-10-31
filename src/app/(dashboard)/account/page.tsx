@@ -23,16 +23,12 @@ export default async function AccountPage() {
         <Password />
       </div>
 
-      <div className="bg-beige-300 h-px w-full" />
+      <div className="border-secondary w-full border-b" />
 
       <div className="grid gap-6">
-        <div className="grid gap-2">
-          <h2 className="text-grey-900 text-2xl leading-none font-bold">
-            Danger Zone
-          </h2>
-          <p className="text-grey-500 text-base">
-            Irreversible actions that affect your account.
-          </p>
+        <div className="grid gap-1">
+          <h2 className="text-primary text-xl font-semibold">Danger Zone</h2>
+          <p>Irreversible actions that affect your account.</p>
         </div>
 
         <div className="grid gap-6 @5xl:grid-cols-2">
