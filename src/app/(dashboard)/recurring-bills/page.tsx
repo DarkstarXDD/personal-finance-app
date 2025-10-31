@@ -67,8 +67,14 @@ export default async function RecurringBillsPage({
 
           {recurringBills.length > 0 ? (
             <>
-              <TableMobile recurringBills={recurringBills} />
-              <TableDesktop recurringBills={recurringBills} />
+              <TableMobile
+                recurringBills={recurringBills}
+                className="md:hidden"
+              />
+              <TableDesktop
+                recurringBills={recurringBills}
+                className="hidden md:block"
+              />
             </>
           ) : (
             <FilteredEmptyState />

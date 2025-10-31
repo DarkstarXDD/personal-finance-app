@@ -61,16 +61,19 @@ const columns = [
   }),
 ]
 
-type TableDesktopProps = { recurringBills: RecurringBill[] }
+type TableDesktopProps = { recurringBills: RecurringBill[]; className?: string }
 
-export default function TableDesktop({ recurringBills }: TableDesktopProps) {
+export default function TableDesktop({
+  recurringBills,
+  className,
+}: TableDesktopProps) {
   const table = useReactTable({
     data: recurringBills,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
   return (
-    <div className="hidden w-full md:block">
+    <div className={className}>
       <table className="w-full" style={{ minWidth: table.getTotalSize() }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

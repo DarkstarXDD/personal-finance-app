@@ -8,7 +8,7 @@ export default function Summary({ summary }: { summary: Summary }) {
 
   return (
     <div className="@container">
-      <div className="grid gap-6 @xl:grid-cols-2">
+      <div className="grid gap-6 @lg:grid-cols-2">
         <Card size="sm" className="grid gap-1">
           <h2 className="text-sm font-medium">Total Bills</h2>
           <p className="text-primary text-2xl font-semibold">
@@ -23,7 +23,7 @@ export default function Summary({ summary }: { summary: Summary }) {
           </p>
         </Card>
 
-        <Card size="sm" className="grid gap-6 @xl:col-span-2">
+        <Card size="sm" className="grid gap-6 @lg:col-span-2">
           <h2 className="text-lg leading-tight font-semibold">
             Summary for <span className="text-primary">{currentMonth}</span>
           </h2>

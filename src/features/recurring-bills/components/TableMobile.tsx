@@ -5,11 +5,14 @@ import OptionsMenu from "@/features/recurring-bills/components/OptionsMenu"
 import { type RecurringBill } from "@/features/recurring-bills/data-access"
 import TransactionAmount from "@/features/transactions/components/TransactionAmount"
 
-type TableMobileProps = { recurringBills: RecurringBill[] }
+type TableMobileProps = { recurringBills: RecurringBill[]; className?: string }
 
-export default function TableMobile({ recurringBills }: TableMobileProps) {
+export default function TableMobile({
+  recurringBills,
+  className,
+}: TableMobileProps) {
   return (
-    <ul className="md:hidden">
+    <ul className={className}>
       {recurringBills.map((recurringBill) => (
         <li
           key={recurringBill.id}
