@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import * as z from "zod"
 
-import * as recurringBills from "@/data-access/recurring-bills"
+import * as recurringBills from "@/features/recurring-bills/data-access"
 import * as transactions from "@/features/transactions/data-access"
 import { transactionCreateSchema, type TransactionCreate } from "@/lib/schemas"
 

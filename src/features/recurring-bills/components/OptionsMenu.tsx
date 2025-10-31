@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 
-import DeleteRecurringBillDialog from "@/components/recurring-bills/DeleteRecurringBillDialog"
 import IconButton from "@/components/ui/IconButton"
 import { Menu, MenuItem, MenuTrigger } from "@/components/ui/Menu"
-import { RecurringBill } from "@/data-access/recurring-bills"
+import DeleteRecurringBillDialog from "@/features/recurring-bills/components/DeleteRecurringBillDialog"
+import { RecurringBill } from "@/features/recurring-bills/data-access"
 
 export default function OptionsMenu({
   recurringBill,

@@ -39,7 +39,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-body text-tertiary text-md bg-primary grid min-h-dvh items-center leading-normal font-normal tracking-normal`}
+        className={`${inter.variable} font-body text-tertiary text-md bg-primary grid min-h-dvh items-center leading-normal font-normal tracking-normal antialiased`}
       >
         <div className="m-auto grid w-full max-w-400 items-center justify-items-center lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="w-full px-4 py-6 md:px-10 md:py-8">{children}</div>

@@ -8,11 +8,11 @@ const meta = {
   args: {
     children:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia elit in iaculis vulputate. Sed pretium imperdiet ligula, sit amet rutrum tortor volutpat nec. Donec lobortis pharetra lectus, sed porttitor mauris pellentesque ut. Quisque mi mi, ornare id maximus nec, dignissim id arcu. Integer mollis semper sem non eleifend. Donec sed felis quam. Curabitur hendrerit odio ut feugiat vulputate. Sed vitae tincidunt nisi. Morbi orci mauris, fermentum id fringilla sit amet, aliquam vitae magna. Sed tempus lobortis felis. Nunc et risus elementum, volutpat est pretium, consequat odio. Sed vitae velit justo.",
-    padding: "lg",
+    size: "lg",
   },
   argTypes: {
     className: { table: { disable: true } },
-    padding: {
+    size: {
       control: "select",
       description: "The padding around the content of the card.",
       options: ["sm", "md", "lg"],
@@ -35,11 +35,11 @@ export const Default: Story = {}
 export const LightTheme: Story = {}
 export const DarkTheme: Story = {}
 export const PaddingSmall: Story = {
-  args: { padding: "sm" },
+  args: { size: "sm" },
 }
 export const PaddingMedium: Story = {
-  args: { padding: "md" },
+  args: { size: "md" },
 }
 export const PaddingLarge: Story = {
-  args: { padding: "lg" },
+  args: { size: "lg" },
 }

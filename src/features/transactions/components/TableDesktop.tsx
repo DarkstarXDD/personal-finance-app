@@ -10,7 +10,6 @@ import { format } from "date-fns"
 
 import TransactionAmount from "@/features/transactions/components/TransactionAmount"
 import { type Transaction } from "@/features/transactions/data-access"
-import { cn } from "@/lib/utils"
 
 const columnHelper = createColumnHelper<Transaction>()
 
@@ -23,26 +22,26 @@ const columns = [
       </span>
     ),
   }),
+
   columnHelper.accessor("category", {
     header: "Category",
     cell: (data) => <span className="text-sm">{data.getValue().label}</span>,
   }),
+
   columnHelper.accessor("createdAt", {
     header: "Transaction Date",
     cell: (data) => (
       <span className="text-sm">{format(data.getValue(), "dd MMM yyyy")}</span>
     ),
   }),
+
   columnHelper.accessor("amount", {
     header: () => <span className="block w-full text-end">Amount</span>,
     cell: (data) => {
       const { amount, transactionType } = data.row.original
       return (
         <span className="block w-full text-end">
-          <TransactionAmount
-            transactionAmount={amount}
-            transactionType={transactionType}
-          />
+          <TransactionAmount {...{ amount, transactionType }} />
         </span>
       )
     },
@@ -62,18 +61,18 @@ export default function TableDesktop({
   })
 
   return (
-    <div className={cn("w-full", className)}>
+    <div className={className}>
       <table className="w-full" style={{ minWidth: table.getTotalSize() }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
               key={headerGroup.id}
-              className="bg-secondary border-secondary border-t border-b"
+              className="bg-secondary border-secondary border-y"
             >
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="px-6 py-3.5 text-start text-xs leading-normal font-semibold"
+                  className="px-6 py-3.5 text-start text-xs font-semibold"
                   style={{ width: header.getSize() }}
                 >
                   {flexRender(

@@ -1,12 +1,12 @@
 import { PiReceiptFill } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
-import TableDesktop from "@/components/recurring-bills/TableDesktop"
-import TableMobile from "@/components/recurring-bills/TableMobile"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
-import { getRecurringBills } from "@/data-access/recurring-bills"
+import TableDesktop from "@/features/recurring-bills/components/TableDesktop"
+import TableMobile from "@/features/recurring-bills/components/TableMobile"
+import { getRecurringBills } from "@/features/recurring-bills/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
 export default async function RecurringBillsOverview() {

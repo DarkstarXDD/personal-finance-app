@@ -1,11 +1,9 @@
 import { useActionState } from "react"
 
-import { deleteRecurringBill } from "@/actions/recurring-bills"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
-// import { fieldErrorStyles } from "@/components/ui/FieldError"
-
-import type { RecurringBill } from "@/data-access/recurring-bills"
+import { deleteRecurringBill } from "@/features/recurring-bills/actions"
+import { type RecurringBill } from "@/features/recurring-bills/data-access"
 
 export default function DeleteRecurringBillDialog({
   isOpen,

@@ -7,7 +7,7 @@ import {
 
 import { DUE_SOON_THRESHOLD_DAYS } from "@/lib/constants"
 
-import type { RecurringBill } from "@/data-access/recurring-bills"
+import type { RecurringBill } from "@/features/recurring-bills/data-access"
 
 // ============================================
 // ============ Get Bill Due Date =============

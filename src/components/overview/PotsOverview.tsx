@@ -25,7 +25,7 @@ export default async function PotsOverview() {
       {pots.length > 0 ? (
         <div className="grid gap-5 md:grid-cols-[2fr_3fr]">
           <Card
-            padding="sm"
+            size="sm"
             className="bg-beige-100 flex items-center justify-start gap-4"
           >
             <PiTipJar className="text-green size-10" />

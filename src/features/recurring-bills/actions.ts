@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 
-import * as recurringBills from "@/data-access/recurring-bills"
+import * as recurringBills from "@/features/recurring-bills/data-access"
 import { idSchema } from "@/lib/schemas"
 
 export async function deleteRecurringBill(
