@@ -1,11 +1,11 @@
 import { useActionState } from "react"
 
-import { deleteBudget } from "@/actions/budgets"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
+import { deleteBudget } from "@/features/budgets/actions"
 // import { fieldErrorStyles } from "@/components/ui/FieldError"
 
-import type { Budget } from "@/data-access/budgets"
+import type { Budget } from "@/features/budgets/data-access"
 
 export default function DeleteBudgetDialog({
   isOpen,

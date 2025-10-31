@@ -1,11 +1,11 @@
 import { PiChartDonutFill } from "react-icons/pi"
 
-import BudgetsSummary from "@/components/budgets/BudgetsSummary"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
-import { getBudgets } from "@/data-access/budgets"
+import BudgetsSummary from "@/features/budgets/components/BudgetsSummary"
+import { getBudgets } from "@/features/budgets/data-access"
 import { getTransactionsForBudget } from "@/features/transactions/data-access"
 
 export default async function BudgetsOverview() {
