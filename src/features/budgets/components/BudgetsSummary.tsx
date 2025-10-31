@@ -58,7 +58,7 @@ function SummaryItem({
 
         <span className="text-primary font-semibold">
           {currencyFormatter.format(Number(currentSpend))}{" "}
-          <span className="text-tertiary text-xs font-medium">
+          <span className="text-tertiary text-sm font-medium">
             of {currencyFormatter.format(maximumSpend)}
           </span>
         </span>
