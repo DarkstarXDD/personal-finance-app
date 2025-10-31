@@ -6,8 +6,6 @@ import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 import { PiWarningCircleFill } from "react-icons/pi"
 
-import DeleteBudgetDialog from "@/components/budgets/DeleteBudgetDialog"
-import EditBudgetDialog from "@/components/budgets/EditBudgetDialog"
 import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import Card from "@/components/ui/Card"
 import Label from "@/components/ui/FieldLabel"
@@ -17,10 +15,12 @@ import Link from "@/components/ui/Link"
 import { Menu, MenuTrigger, MenuItem } from "@/components/ui/Menu"
 import MetricItem from "@/components/ui/MetricItem"
 import { Category, Color } from "@/data-access/lookups"
+import DeleteBudgetDialog from "@/features/budgets/components/DeleteBudgetDialog"
+import EditBudgetDialog from "@/features/budgets/components/EditBudgetDialog"
 import TransactionAmount from "@/features/transactions/components/TransactionAmount"
 import { currencyFormatter } from "@/lib/utils"
 
-import type { Budget } from "@/data-access/budgets"
+import type { Budget } from "@/features/budgets/data-access"
 import type { Transaction } from "@/features/transactions/data-access"
 
 export default function BudgetCard({

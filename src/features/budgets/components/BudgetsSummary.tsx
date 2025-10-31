@@ -1,7 +1,7 @@
 import DonutChart from "@/components/ui/DonutChart"
 import { currencyFormatter } from "@/lib/utils"
 
-import type { Budget } from "@/data-access/budgets"
+import type { Budget } from "@/features/budgets/data-access"
 import type { Transaction } from "@/features/transactions/data-access"
 
 export default function BudgetsSummary({

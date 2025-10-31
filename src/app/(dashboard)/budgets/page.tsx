@@ -1,13 +1,13 @@
 import { PiChartDonutFill } from "react-icons/pi"
 
-import AddBudgetDialog from "@/components/budgets/AddBudgetDialog"
-import BudgetCard from "@/components/budgets/BudgetCard"
-import BudgetsSummary from "@/components/budgets/BudgetsSummary"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Heading from "@/components/ui/Heading"
-import { getBudgets } from "@/data-access/budgets"
 import { getCategories, getColors } from "@/data-access/lookups"
+import AddBudgetDialog from "@/features/budgets/components/AddBudgetDialog"
+import BudgetCard from "@/features/budgets/components/BudgetCard"
+import BudgetsSummary from "@/features/budgets/components/BudgetsSummary"
+import { getBudgets } from "@/features/budgets/data-access"
 import { getTransactionsForBudget } from "@/features/transactions/data-access"
 
 import type { Metadata } from "next"

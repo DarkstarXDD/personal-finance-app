@@ -2,16 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 
-import { updateBudget } from "@/actions/budgets"
 import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
+import { updateBudget } from "@/features/budgets/actions"
 import { budgetUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Budget } from "@/data-access/budgets"
 import type { Category, Color } from "@/data-access/lookups"
+import type { Budget } from "@/features/budgets/data-access"
 
 export default function EditBudgetDialog({
   isOpen,
