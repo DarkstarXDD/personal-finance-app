@@ -41,10 +41,7 @@ const columns = [
       const { amount, transactionType } = data.row.original
       return (
         <span className="block w-full text-end">
-          <TransactionAmount
-            transactionAmount={amount}
-            transactionType={transactionType}
-          />
+          <TransactionAmount {...{ amount, transactionType }} />
         </span>
       )
     },

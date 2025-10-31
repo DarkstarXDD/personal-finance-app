@@ -10,7 +10,7 @@ const meta = {
   },
 
   argTypes: {
-    transactionAmount: {
+    amount: {
       description: "Amount of the transaction.",
       table: { type: { summary: "string | number" } },
     },
@@ -25,7 +25,7 @@ const meta = {
   },
 
   args: {
-    transactionAmount: "450",
+    amount: "450",
   },
 } satisfies Meta<typeof TransactionAmount>
 

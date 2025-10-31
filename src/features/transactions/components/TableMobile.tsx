@@ -21,7 +21,7 @@ export default function TableMobile({
           </p>
 
           <TransactionAmount
-            transactionAmount={transaction.amount}
+            amount={transaction.amount}
             transactionType={transaction.transactionType}
             className="justify-self-end"
           />

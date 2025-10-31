@@ -19,7 +19,7 @@ export default function TableMobile({ recurringBills }: TableMobileProps) {
             {recurringBill.counterparty}
           </h3>
           <TransactionAmount
-            transactionAmount={recurringBill.amount}
+            amount={recurringBill.amount}
             className="text-end"
           />
           <p className="text-sm">

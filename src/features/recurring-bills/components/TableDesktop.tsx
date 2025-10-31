@@ -41,7 +41,7 @@ const columns = [
     header: () => <span className="block w-full text-end">Amount</span>,
     cell: (data) => (
       <span className="block w-full text-end">
-        <TransactionAmount transactionAmount={data.getValue()} />
+        <TransactionAmount amount={data.getValue()} />
       </span>
     ),
     size: 50,
