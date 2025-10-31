@@ -7,10 +7,21 @@ const meta = {
   component: TransactionAmount,
   parameters: {
     layout: "padded",
+    docs: {
+      description: {
+        component:
+          "Renders a formatted transaction amount. Optionally, adds '+' or '−, and a color, if the transaction type is given.",
+      },
+    },
+  },
+
+  args: {
+    amount: "450",
   },
 
   argTypes: {
     amount: {
+      control: "text",
       description: "Amount of the transaction.",
       table: { type: { summary: "string | number" } },
     },
@@ -22,10 +33,6 @@ const meta = {
       control: "select",
       options: ["INCOME", "EXPENSE"],
     },
-  },
-
-  args: {
-    amount: "450",
   },
 } satisfies Meta<typeof TransactionAmount>
 
