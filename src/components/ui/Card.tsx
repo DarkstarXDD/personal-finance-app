@@ -2,13 +2,13 @@ import { type ReactNode } from "react"
 import { tv, VariantProps } from "tailwind-variants"
 
 const cardStyles = tv({
-  base: "border-secondary bg-primary rounded-xl border",
+  base: "border-secondary bg-primary rounded-xl border shadow-xs",
 
   variants: {
     size: {
       sm: "p-5",
       md: "p-6",
-      lg: "p-6 md:p-8",
+      lg: "p-5 sm:p-6 md:p-8",
     },
   },
 

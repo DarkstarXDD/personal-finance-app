@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import * as z from "zod"
 
-import * as budgets from "@/data-access/budgets"
+import * as budgets from "@/features/budgets/data-access"
 import {
   budgetCreateSchema,
   budgetUpdateSchema,

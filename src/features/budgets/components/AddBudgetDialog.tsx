@@ -3,11 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller } from "react-hook-form"
 
-import { createBudget } from "@/actions/budgets"
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
+import { createBudget } from "@/features/budgets/actions"
 import { budgetCreateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
