@@ -81,7 +81,7 @@ export default async function TransactionsPage({
         <AddTransactionDialog categories={categories} />
       </div>
 
-      <div className="md:border-secondary grid gap-6 md:rounded-xl md:border md:py-6">
+      <div className="md:border-secondary grid gap-6 shadow-xs md:rounded-xl md:border md:py-6">
         <TableFilters categories={categories} />
 
         {transactions.length > 0 ? (
