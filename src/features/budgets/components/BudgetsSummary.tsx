@@ -1,16 +1,15 @@
 import DonutChart from "@/components/ui/DonutChart"
+import { type Budget } from "@/features/budgets/data-access"
+import { type Transaction } from "@/features/transactions/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
-import type { Budget } from "@/features/budgets/data-access"
-import type { Transaction } from "@/features/transactions/data-access"
-
-export default function BudgetsSummary({
-  budgets,
-}: {
+type BudgetsSummaryProps = {
   budgets: (Budget & { transactions: Transaction[]; totalSpent: number })[]
-}) {
+}
+
+export default function BudgetsSummary({ budgets }: BudgetsSummaryProps) {
   return (
-    <div className="grid gap-6 md:grid-cols-2 md:items-center 2xl:grid-cols-1">
+    <div className="grid gap-8 md:grid-cols-2 md:items-start 2xl:grid-cols-1">
       <DonutChart
         chartData={budgets.map((budget) => ({
           label: budget.category.label,
@@ -19,7 +18,8 @@ export default function BudgetsSummary({
           color: budget.color.value,
         }))}
       />
-      <ul>
+
+      <ul className="@container">
         {budgets.map((budget) => (
           <SummaryItem
             key={budget.id}
@@ -34,29 +34,35 @@ export default function BudgetsSummary({
   )
 }
 
+type SummaryItemProps = {
+  budgetCategory: string
+  currentSpend: number
+  maximumSpend: number
+  color: string
+}
+
 function SummaryItem({
   budgetCategory,
   currentSpend,
   maximumSpend,
   color,
-}: {
-  budgetCategory: string
-  currentSpend: number
-  maximumSpend: number
-  color: string
-}) {
+}: SummaryItemProps) {
   return (
-    <li className="border-grey-100 flex items-center gap-4 border-b pt-4 pb-4 first:pt-0 last:border-none last:pb-0">
+    <li className="border-secondary flex items-start gap-4 border-b py-4 first:pt-0 last:border-none last:pb-0 @xs:items-center">
       <span className="h-5 w-1 rounded-lg" style={{ backgroundColor: color }} />
-      <span className="text-grey-500 text-sm leading-normal font-normal">
-        {budgetCategory}
-      </span>
-      <span className="text-grey-900 ml-auto text-base leading-normal font-bold">
-        {currencyFormatter.format(Number(currentSpend))}{" "}
-        <span className="text-grey-500 text-xs leading-normal font-normal">
-          of {currencyFormatter.format(maximumSpend)}
+
+      <div className="flex w-full flex-col gap-1 @xs:flex-row @xs:items-center @xs:justify-between">
+        <span className="text-sm leading-none font-medium">
+          {budgetCategory}
         </span>
-      </span>
+
+        <span className="text-primary font-semibold">
+          {currencyFormatter.format(Number(currentSpend))}{" "}
+          <span className="text-tertiary text-xs font-medium">
+            of {currencyFormatter.format(maximumSpend)}
+          </span>
+        </span>
+      </div>
     </li>
   )
 }

@@ -8,7 +8,7 @@ const cardStyles = tv({
     size: {
       sm: "p-5",
       md: "p-6",
-      lg: "p-6 md:p-8",
+      lg: "p-5 sm:p-6 md:p-8",
     },
   },
 
