@@ -4,10 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { PiLockFill } from "react-icons/pi"
 
-import { updatePassword } from "@/actions/account"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
+import { updatePassword } from "@/features/account-settings/actions"
 import { passwordUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 

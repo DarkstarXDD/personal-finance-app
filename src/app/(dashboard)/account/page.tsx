@@ -1,10 +1,10 @@
-import DeleteAccount from "@/components/account/DeleteAccount"
-import Email from "@/components/account/Email"
-import Password from "@/components/account/Password"
-import SignOut from "@/components/account/SignOut"
-import Username from "@/components/account/Username"
 import Heading from "@/components/ui/Heading"
-import { getUser } from "@/data-access/account"
+import DeleteAccount from "@/features/account-settings/components/DeleteAccount"
+import Email from "@/features/account-settings/components/Email"
+import Password from "@/features/account-settings/components/Password"
+import SignOut from "@/features/account-settings/components/SignOut"
+import Username from "@/features/account-settings/components/Username"
+import { getUser } from "@/features/account-settings/data-access"
 
 export default async function AccountPage() {
   const user = await getUser()

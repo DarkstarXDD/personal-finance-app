@@ -3,9 +3,9 @@
 import { useFormStatus } from "react-dom"
 import { PiSignOutBold } from "react-icons/pi"
 
-import { signOut } from "@/actions/account"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
+import { signOut } from "@/features/account-settings/actions"
 
 export default function SignOut() {
   return (

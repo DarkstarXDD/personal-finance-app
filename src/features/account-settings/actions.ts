@@ -5,7 +5,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import * as z from "zod"
 
-import * as account from "@/data-access/account"
+import * as account from "@/features/account-settings/data-access"
 import {
   nameSchema,
   type Name,
