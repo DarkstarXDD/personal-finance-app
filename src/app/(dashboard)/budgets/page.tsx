@@ -1,5 +1,6 @@
 import { PiChartDonutFill } from "react-icons/pi"
 
+import PageHeader from "@/components/common/PageHeader"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import { getCategories, getColors } from "@/data-access/lookups"
@@ -31,17 +32,11 @@ export default async function BudgetsPage() {
 
   return (
     <main className="@container grid gap-8">
-      <div className="grid w-full grid-cols-1 items-start justify-items-start gap-4 md:grid-cols-[1fr_auto]">
-        <div className="grid gap-1">
-          <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
-            Budgets
-          </h1>
-          <p>
-            Set monthly limits and track how much you’ve spent in each category.
-          </p>
-        </div>
-        <AddBudgetDialog categories={categories} colors={colors} />
-      </div>
+      <PageHeader
+        title="Budgets"
+        description="Set monthly limits and track how much you’ve spent in each category."
+        action={<AddBudgetDialog categories={categories} colors={colors} />}
+      />
 
       {budgets.length > 0 ? (
         <div className="grid gap-6 2xl:grid-cols-[auto_1fr] 2xl:items-start">

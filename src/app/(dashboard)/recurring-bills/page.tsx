@@ -1,6 +1,7 @@
 import { type Metadata } from "next"
 import { PiReceiptFill } from "react-icons/pi"
 
+import PageHeader from "@/components/common/PageHeader"
 import EmptyState from "@/components/empty-states/EmptyState"
 import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import Card from "@/components/ui/Card"
@@ -29,12 +30,10 @@ export default async function RecurringBillsPage({
   if (summary.billCount === 0) {
     return (
       <main className="grid gap-8">
-        <div className="grid gap-1">
-          <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
-            Recurring Bills
-          </h1>
-          <p>Keep track of your active bills and see what’s coming up next.</p>
-        </div>
+        <PageHeader
+          title="Recurring Bills"
+          description="Keep track of your active bills and see what’s coming up next."
+        />
 
         <div className="grid gap-6 xl:grid-cols-[20rem_1fr] xl:items-start">
           <Summary summary={summary} />
@@ -52,12 +51,10 @@ export default async function RecurringBillsPage({
 
   return (
     <main className="grid gap-8">
-      <div className="grid gap-1">
-        <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
-          Recurring Bills
-        </h1>
-        <p>Keep track of your active bills and see what’s coming up next.</p>
-      </div>
+      <PageHeader
+        title="Recurring Bills"
+        description="Keep track of your active bills and see what’s coming up next."
+      />
 
       <div className="grid gap-6 xl:grid-cols-[16.5rem_1fr] xl:items-start">
         <Summary summary={summary} />
