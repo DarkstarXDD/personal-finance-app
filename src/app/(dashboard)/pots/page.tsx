@@ -1,5 +1,6 @@
 import { PiTipJarFill } from "react-icons/pi"
 
+import PageHeader from "@/components/common/PageHeader"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import { getColors } from "@/data-access/lookups"
@@ -19,15 +20,11 @@ export default async function PotsPage() {
 
   return (
     <main className="@container grid gap-8">
-      <div className="grid w-full grid-cols-1 items-start justify-items-start gap-4 md:grid-cols-[1fr_auto]">
-        <div className="grid gap-1">
-          <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
-            Pots
-          </h1>
-          <p>Save toward specific goals and manage your pot balances here.</p>
-        </div>
-        <AddPotDialog colors={colors} />
-      </div>
+      <PageHeader
+        title="Pots"
+        description="Save toward specific goals and manage your pot balances here."
+        action={<AddPotDialog colors={colors} />}
+      />
 
       {pots.length > 0 ? (
         <div className="grid gap-6 @3xl:grid-cols-2">

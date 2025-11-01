@@ -25,6 +25,7 @@ export const getUser = cache(async () => {
     where: { id: userId },
     select: { id: true, email: true, name: true },
   })
+
   if (!user) redirect("/login")
   return user
 })
