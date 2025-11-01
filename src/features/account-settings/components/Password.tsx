@@ -2,12 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
-import { PiLockFill } from "react-icons/pi"
+// import { PiLockFill } from "react-icons/pi"
+import { FiLock } from "react-icons/fi"
 
-import { updatePassword } from "@/actions/account"
 import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
+import { updatePassword } from "@/features/account-settings/actions"
 import { passwordUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
@@ -22,7 +23,7 @@ export default function Password() {
   })
 
   return (
-    <Card className="@5xl:col-span-2">
+    <Card size="md" className="@5xl:col-span-2">
       <form
         className="grid gap-6"
         onSubmit={form.handleSubmit(async (data) => {
@@ -34,15 +35,17 @@ export default function Password() {
           form.reset()
         })}
       >
-        <div className="grid gap-2">
-          <h3 className="text-grey-900 flex items-center gap-2 text-base leading-none font-semibold">
-            <PiLockFill className="text-grey-500 size-5" />
-            Password
-          </h3>
-          <p className="text-grey-500 text-sm">
+        <div className="grid gap-1">
+          <div className="flex items-center gap-2">
+            <FiLock className="text-fg-quaternary size-5" />
+            <h3 className="text-primary font-semibold">Password</h3>
+          </div>
+
+          <p className="text-sm">
             Change your password to keep your account secure.
           </p>
         </div>
+
         <div className="grid gap-4">
           <div className="flex flex-col items-start gap-4 @5xl:flex-row">
             <Controller
@@ -94,6 +97,7 @@ export default function Password() {
           <Button
             type="submit"
             variant="primary"
+            size="lg"
             className="justify-self-start"
             isPending={form.formState.isSubmitting}
           >

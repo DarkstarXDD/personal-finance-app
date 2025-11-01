@@ -1,5 +1,6 @@
 import { PiArrowsDownUpFill } from "react-icons/pi"
 
+import PageHeader from "@/components/common/PageHeader"
 import EmptyState from "@/components/empty-states/EmptyState"
 import FilteredEmptyState from "@/components/empty-states/FilteredEmptyState"
 import Card from "@/components/ui/Card"
@@ -45,17 +46,11 @@ export default async function TransactionsPage({
   if (totalItemsWithoutFiltering === 0) {
     return (
       <main className="grid content-start items-start gap-8">
-        <div className="grid w-full grid-cols-1 items-start justify-items-start gap-4 md:grid-cols-[1fr_auto]">
-          <div className="grid gap-1">
-            <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
-              Transactions
-            </h1>
-            <p>
-              Review your past activity and add new income or expenses here.
-            </p>
-          </div>
-          <AddTransactionDialog categories={categories} />
-        </div>
+        <PageHeader
+          title="Transactions"
+          description="Review your past activity and add new income or expenses here."
+          action={<AddTransactionDialog categories={categories} />}
+        />
 
         <Card>
           <EmptyState
@@ -71,15 +66,11 @@ export default async function TransactionsPage({
 
   return (
     <main className="grid content-start items-start gap-8">
-      <div className="grid w-full grid-cols-1 items-start justify-items-start gap-4 md:grid-cols-[1fr_auto]">
-        <div className="grid gap-1">
-          <h1 className="text-primary text-3xl leading-tight font-semibold tracking-tight">
-            Transactions
-          </h1>
-          <p>Review your past activity and add new income or expenses here.</p>
-        </div>
-        <AddTransactionDialog categories={categories} />
-      </div>
+      <PageHeader
+        title="Transactions"
+        description="Review your past activity and add new income or expenses here."
+        action={<AddTransactionDialog categories={categories} />}
+      />
 
       <div className="md:border-secondary grid gap-6 shadow-xs md:rounded-xl md:border md:py-6">
         <TableFilters categories={categories} />
