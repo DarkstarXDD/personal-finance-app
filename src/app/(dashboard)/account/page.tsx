@@ -20,7 +20,7 @@ export default async function AccountPage() {
         <h2 className="sr-only">User details</h2>
         <Username name={user.name} />
         <Email email={user.email} />
-        <Password />
+        <Password className="@5xl:col-span-2" />
       </div>
 
       <div className="border-secondary w-full border-b" />
