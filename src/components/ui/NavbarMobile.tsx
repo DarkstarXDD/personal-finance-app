@@ -8,7 +8,7 @@ import {
   PiChartDonutFill as BudgetsIcon,
   PiTipJarFill as PotsIcon,
   PiReceiptFill as BillsIcon,
-  PiUserFill as AccountIcon,
+  PiGearSixFill as SettingsIcon,
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
@@ -54,10 +54,10 @@ export default function NavbarMobile({ className }: { className?: string }) {
           title="Recurring Bills"
         />
         <NavItemMobile
-          href="/account"
-          label="Account"
-          icon={AccountIcon}
-          title="Account"
+          href="/settings"
+          label="Settings"
+          icon={SettingsIcon}
+          title="Settings"
         />
       </ul>
     </nav>

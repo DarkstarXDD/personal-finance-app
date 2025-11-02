@@ -6,7 +6,7 @@ import SignOut from "@/features/account-settings/components/SignOut"
 import Username from "@/features/account-settings/components/Username"
 import { getUser } from "@/features/account-settings/data-access"
 
-export default async function AccountPage() {
+export default async function SettingsPage() {
   const user = await getUser()
 
   return (
