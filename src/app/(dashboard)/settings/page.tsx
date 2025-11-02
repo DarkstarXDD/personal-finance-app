@@ -6,7 +6,7 @@ import SignOut from "@/features/account-settings/components/SignOut"
 import Username from "@/features/account-settings/components/Username"
 import { getUser } from "@/features/account-settings/data-access"
 
-export default async function AccountPage() {
+export default async function SettingsPage() {
   const user = await getUser()
 
   return (
@@ -20,7 +20,7 @@ export default async function AccountPage() {
         <h2 className="sr-only">User details</h2>
         <Username name={user.name} />
         <Email email={user.email} />
-        <Password />
+        <Password className="@5xl:col-span-2" />
       </div>
 
       <div className="border-secondary w-full border-b" />

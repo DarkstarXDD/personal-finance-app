@@ -12,7 +12,9 @@ import { updatePassword } from "@/features/account-settings/actions"
 import { passwordUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-export default function Password() {
+type PasswordProps = { className?: string }
+
+export default function Password({ className }: PasswordProps) {
   const form = useForm({
     resolver: zodResolver(passwordUpdateSchema),
     defaultValues: {
@@ -23,7 +25,7 @@ export default function Password() {
   })
 
   return (
-    <Card size="md" className="@5xl:col-span-2">
+    <Card size="md" className={className}>
       <form
         className="grid gap-6"
         onSubmit={form.handleSubmit(async (data) => {
