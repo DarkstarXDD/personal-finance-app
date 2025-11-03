@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
+import { type ReactNode } from "react"
 import {
   DialogTrigger as RacDialogTrigger,
   ModalOverlay as RacModalOverlay,
@@ -14,46 +15,59 @@ import {
 import Card from "@/components/ui/Card"
 import IconButton from "@/components/ui/IconButton"
 
-import type { ReactNode } from "react"
-
 const MotionRacModal = motion.create(RacModal)
 
-function DialogTrigger(props: { children: ReactNode }) {
+// ============================================
+// ============== Dialog Ttigger ==============
+// ============================================
+
+type DialogTriggerProps = { children: ReactNode }
+
+function DialogTrigger(props: DialogTriggerProps) {
   return <RacDialogTrigger {...props} />
 }
 
-function Dialog({
-  title,
-  children,
-  role,
-  ...props
-}: Omit<RacModalOverlayProps, "children"> & {
+// ============================================
+// ================== Dialog ==================
+// ============================================
+
+type DialogProps = Omit<RacModalOverlayProps, "children"> & {
   title: string
+  description?: string
   children?: ReactNode | ((opts: RacDialogRenderProps) => ReactNode)
   role?: "dialog" | "alertdialog"
-}) {
+}
+
+function Dialog({ title, description, children, role, ...props }: DialogProps) {
   return (
     <RacModalOverlay
       {...props}
-      className="bg-grey-900/50 fixed inset-0 flex flex-col items-center justify-center overflow-y-auto p-5"
+      className="bg-overlay/70 fixed inset-0 flex flex-col items-center justify-center overflow-y-auto p-5 transition-all duration-700"
     >
       <MotionRacModal
-        initial={{ scale: 0.8 }}
+        initial={{ scale: 0.85 }}
         animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        className="w-full max-w-[35rem]"
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 20,
+        }}
+        className="w-full max-w-lg will-change-transform"
       >
         <RacDialog className="outline-none" role={role}>
           {(dialogRenderProps) => (
-            <Card>
-              <div className="mb-6 flex items-center justify-between gap-2 md:mb-5">
+            <Card size="md">
+              <div className="mb-6 grid grid-cols-[1fr_auto] gap-2">
                 <RacHeading
                   slot="title"
-                  className="text-grey-900 text-xl leading-tight font-bold md:text-3xl"
+                  className="text-primary text-2xl leading-tight font-semibold"
                 >
                   {title}
                 </RacHeading>
+
                 <IconButton variant="close" slot="close" />
+
+                <p className="text-tertiary text-sm">{description}</p>
               </div>
               {typeof children === "function"
                 ? children(dialogRenderProps)

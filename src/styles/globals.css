@@ -126,6 +126,7 @@
   --background-color-error-secondary: var(--color-error-100);
   --background-color-error-solid: var(--color-error-600);
   --background-color-error-solid_hover: var(--color-error-700);
+  --background-color-overlay: var(--color-grey-950);
 
   /* ------------ Foreground Colors ------------ */
   --color-fg-white: var(--color-white);
@@ -205,5 +206,15 @@
 
   .custom-scrollbar::-webkit-scrollbar-track {
     background-color: transparent;
+  }
+
+  @keyframes custom-scale-up {
+    from {
+      opacity: 0.75;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 }

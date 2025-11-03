@@ -7,18 +7,29 @@ import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 const meta = {
   title: "Components/UI/Dialog",
   component: Dialog,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Modal dialog overlay with animated entry. Provides a title, optional description, and slot-based children. Use `DialogTrigger` for an automatic trigger or control it via `isOpen`/`onOpenChange`.",
+      },
+    },
+  },
   args: {
     title: "Dialog Title",
+    description: "Dialog title support text.",
     role: "dialog",
   },
   argTypes: {
     title: {
       control: "text",
       description: "The title (heading) of the dialog.",
-      table: {
-        defaultValue: { summary: "Dialog Title" },
-        type: { summary: "string" },
-      },
+      table: { type: { summary: "string" } },
+    },
+    description: {
+      control: "text",
+      description: "Optional supporting text shown beneath the title.",
+      table: { type: { summary: "string | ReactNode" } },
     },
     role: {
       control: "select",
@@ -30,10 +41,22 @@ const meta = {
         type: { summary: '"dialog" | "alertdialog"' },
       },
     },
+    isOpen: {
+      control: "boolean",
+      description:
+        "Controlled open state for the dialog (use with onOpenChange).",
+      table: { type: { summary: "boolean" } },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description: "Callback when open state changes.",
+      table: { type: { summary: "(isOpen: boolean) => void" } },
+    },
     children: {
       control: { disable: true },
       table: { type: { summary: "ReactNode | ({close}) => ReactNode" } },
     },
+    className: { table: { disable: true } },
   },
 } satisfies Meta<typeof Dialog>
 
