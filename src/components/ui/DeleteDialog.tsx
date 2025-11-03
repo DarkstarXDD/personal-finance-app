@@ -72,57 +72,61 @@ function DeleteDialog({
         <RacDialog className="outline-none" role="alertdialog">
           {(dialogRenderProps) => (
             <Card size="md" className="grid gap-5">
-              <div className="grid gap-4">
-                <div className="flex items-start justify-between">
-                  <div className="bg-error-secondary text-fg-error-primary flex size-12 items-center justify-center rounded-full">
-                    <TrashIcon className="size-6" />
-                  </div>
-                  <IconButton variant="close" slot="close" />
-                </div>
-
-                <div className="grid gap-1">
-                  <RacHeading
-                    slot="title"
-                    className="text-primary text-lg leading-tight font-semibold"
-                  >
-                    {title}
-                  </RacHeading>
-                  <p className="text-tertiary text-sm">{description}</p>
-                </div>
-              </div>
-
               <form className="grid gap-8" action={deleteAction}>
-                <input name="itemId" value={itemId} type="hidden" />
+                <div className="grid gap-4">
+                  <div className="flex items-start justify-between">
+                    <div className="bg-error-secondary text-fg-error-primary flex size-12 items-center justify-center rounded-full">
+                      <TrashIcon className="size-6" />
+                    </div>
+                    <IconButton variant="close" slot="close" />
+                  </div>
 
-                {error && (
-                  <p className="text-error-primary text-sm" role="alert">
-                    {error}
-                  </p>
-                )}
+                  <div className="grid gap-1">
+                    <RacHeading
+                      slot="title"
+                      className="text-primary text-lg leading-tight font-semibold"
+                    >
+                      {title}
+                    </RacHeading>
+                    <div className="grid gap-4">
+                      <p className="text-tertiary text-sm">{description}</p>
 
-                {typeof children === "function"
-                  ? children(dialogRenderProps)
-                  : children}
+                      <input name="itemId" value={itemId} type="hidden" />
 
-                <div className="flex w-full flex-col gap-3 md:flex-row">
-                  <Button
-                    slot="close"
-                    variant="secondary"
-                    size="md"
-                    className="w-full"
-                    isDisabled={isPending}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    type="submit"
-                    size="md"
-                    className="w-full"
-                    isPending={isPending}
-                  >
-                    Delete
-                  </Button>
+                      {typeof children === "function"
+                        ? children(dialogRenderProps)
+                        : children}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  {error && (
+                    <p className="text-error-primary text-sm" role="alert">
+                      {error}
+                    </p>
+                  )}
+
+                  <div className="flex w-full flex-col gap-3 md:flex-row">
+                    <Button
+                      slot="close"
+                      variant="secondary"
+                      size="md"
+                      className="w-full"
+                      isDisabled={isPending}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      type="submit"
+                      size="md"
+                      className="w-full"
+                      isPending={isPending}
+                    >
+                      Delete
+                    </Button>
+                  </div>
                 </div>
               </form>
             </Card>
