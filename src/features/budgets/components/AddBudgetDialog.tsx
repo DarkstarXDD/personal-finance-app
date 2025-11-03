@@ -7,19 +7,20 @@ import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
+import { type Category, Color } from "@/data-access/lookups"
 import { createBudget } from "@/features/budgets/actions"
 import { budgetCreateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Category, Color } from "@/data-access/lookups"
+type AddBudgetDialogProps = {
+  categories: Category[]
+  colors: Color[]
+}
 
 export default function AddBudgetDialog({
   categories,
   colors,
-}: {
-  categories: Category[]
-  colors: Color[]
-}) {
+}: AddBudgetDialogProps) {
   const form = useForm({
     resolver: zodResolver(budgetCreateSchema),
     defaultValues: {
@@ -31,11 +32,17 @@ export default function AddBudgetDialog({
 
   return (
     <DialogTrigger>
-      <Button variant="primary">Add Budget...</Button>
-      <Dialog title="New Budget">
+      <Button variant="primary" size="xl">
+        Add Budget...
+      </Button>
+
+      <Dialog
+        title="New Budget"
+        description="Choose a category to set a spending budget. These categories can help you monitor spending."
+      >
         {({ close }) => (
           <form
-            className="grid gap-5"
+            className="grid gap-6"
             onSubmit={form.handleSubmit(async (data) => {
               const response = await createBudget(data)
               if (response) {
@@ -46,10 +53,6 @@ export default function AddBudgetDialog({
               close()
             })}
           >
-            <p className="text-grey-500 text-sm leading-normal font-normal">
-              Choose a category to set a spending budget. These categories can
-              help you monitor spending.
-            </p>
             <div className="grid gap-4">
               <Controller
                 name="categoryId"
@@ -59,15 +62,15 @@ export default function AddBudgetDialog({
                   fieldState: { invalid, error },
                 }) => (
                   <Select
+                    ref={ref}
                     label="Budget Category"
                     placeholder="Select a Category..."
                     name={name}
-                    selectedKey={value}
-                    onSelectionChange={(selected) => onChange(selected)}
-                    ref={ref}
+                    value={value}
+                    onChange={(selected) => onChange(selected)}
                     isInvalid={invalid}
-                    isDisabled={form.formState.isSubmitting}
                     errorMessage={error?.message}
+                    isDisabled={form.formState.isSubmitting}
                     items={categories}
                   >
                     {(item) => (
@@ -102,15 +105,15 @@ export default function AddBudgetDialog({
                   fieldState: { invalid, error },
                 }) => (
                   <Select
+                    ref={ref}
                     label="Theme"
                     placeholder="Select a Color..."
                     name={name}
-                    selectedKey={value}
-                    onSelectionChange={(selected) => onChange(selected)}
-                    ref={ref}
+                    value={value}
+                    onChange={(selected) => onChange(selected)}
                     isInvalid={invalid}
-                    isDisabled={form.formState.isSubmitting}
                     errorMessage={error?.message}
+                    isDisabled={form.formState.isSubmitting}
                     items={colors}
                   >
                     {(item) => (
@@ -131,6 +134,7 @@ export default function AddBudgetDialog({
             <Button
               variant="primary"
               type="submit"
+              size="lg"
               isPending={form.formState.isSubmitting}
             >
               Add Budget

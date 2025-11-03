@@ -7,6 +7,7 @@ import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 const meta = {
   title: "Components/UI/Dialog",
   component: Dialog,
+
   parameters: {
     docs: {
       description: {
@@ -20,6 +21,7 @@ const meta = {
     description: "Dialog title support text.",
     role: "dialog",
   },
+
   argTypes: {
     title: {
       control: "text",
