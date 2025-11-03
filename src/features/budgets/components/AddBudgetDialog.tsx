@@ -131,6 +131,7 @@ export default function AddBudgetDialog({
                 )}
               />
             </div>
+
             <Button
               variant="primary"
               type="submit"
