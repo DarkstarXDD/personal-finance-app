@@ -117,6 +117,7 @@
   --background-color-secondary: var(--color-grey-50);
   --background-color-tertiary: var(--color-grey-100);
   --background-color-quaternary: var(--color-grey-200);
+  --background-color-brand: var(--color-brand-500);
   --background-color-brand-solid: var(--color-brand-900);
   --background-color-brand-solid_hover: var(--color-brand-800);
   --background-color-active: var(--color-grey-100);
