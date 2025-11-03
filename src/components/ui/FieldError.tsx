@@ -12,7 +12,7 @@ export default function FieldError({ children, className }: FieldErrorProps) {
   return (
     <RacFieldError
       className={cn(
-        "text-error-primary block text-sm leading-normal font-normal",
+        "text-error-primary block text-sm leading-tight font-normal",
         className
       )}
     >
