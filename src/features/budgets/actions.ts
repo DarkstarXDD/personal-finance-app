@@ -56,7 +56,7 @@ export async function deleteBudget(
   prev: unknown,
   formData: FormData
 ): Promise<string | null> {
-  const budgetId = formData.get("budgetId")
+  const budgetId = formData.get("itemId")
 
   const parsed = idSchema.safeParse({ id: budgetId })
   if (!parsed.success) return "Error deleting budget. Please try agian."

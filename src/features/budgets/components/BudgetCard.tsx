@@ -52,13 +52,13 @@ export default function BudgetCard({
             <IconButton variant="options" className="ml-auto" />
             <Menu>
               <MenuItem onAction={() => setIsEditDialogOpen(true)}>
-                Edit Budget
+                Edit Budget...
               </MenuItem>
               <MenuItem
-                className="text-red"
+                className="text-error-primary"
                 onAction={() => setIsDeleteDialogOpen(true)}
               >
-                Delete Budget
+                Delete Budget...
               </MenuItem>
             </Menu>
           </MenuTrigger>

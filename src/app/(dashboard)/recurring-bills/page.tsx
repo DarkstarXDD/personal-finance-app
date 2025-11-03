@@ -59,7 +59,7 @@ export default async function RecurringBillsPage({
       <div className="grid gap-6 xl:grid-cols-[16.5rem_1fr] xl:items-start">
         <Summary summary={summary} />
 
-        <div className="md:border-secondary @container grid gap-6 shadow-xs md:rounded-xl md:border md:py-6">
+        <div className="md:border-secondary @container grid gap-6 md:rounded-xl md:border md:py-6 md:shadow-xs">
           <TableFilters />
 
           {recurringBills.length > 0 ? (

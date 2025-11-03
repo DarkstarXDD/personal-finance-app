@@ -9,22 +9,23 @@ import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
 import { updatePot } from "@/features/pots/actions"
+import { type Pot } from "@/features/pots/data-access"
 import { potUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Pot } from "@/features/pots/data-access"
+type EditPotDialog = {
+  pot: Pot
+  colors: Color[]
+  isOpen: boolean
+  onOpenChange: (isOpen: boolean) => void
+}
 
 export default function EditPotDialog({
   pot,
   colors,
   isOpen,
   onOpenChange,
-}: {
-  pot: Pot
-  colors: Color[]
-  isOpen: boolean
-  onOpenChange: (isOpen: boolean) => void
-}) {
+}: EditPotDialog) {
   const form = useForm({
     resolver: zodResolver(potUpdateSchema),
     defaultValues: {
@@ -47,6 +48,7 @@ export default function EditPotDialog({
   return (
     <Dialog
       title="Edit Pot"
+      description="Update your pot details or adjust your savings target to stay aligned with your goals."
       isOpen={isOpen}
       onOpenChange={(isOpen) => {
         form.reset()
@@ -55,7 +57,7 @@ export default function EditPotDialog({
     >
       {({ close }) => (
         <form
-          className="grid gap-5"
+          className="grid gap-6"
           onSubmit={form.handleSubmit(async (data) => {
             const response = await updatePot(data)
             if (response) {
@@ -65,19 +67,16 @@ export default function EditPotDialog({
             close()
           })}
         >
-          <p className="text-grey-500 text-sm leading-normal font-normal">
-            Update your pot details or adjust your savings target to stay
-            aligned with your goals.
-          </p>
           <div className="grid gap-4">
             <input {...form.register("id")} type="hidden" />
+
             <Controller
               name="name"
               control={form.control}
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   label="Pot Name"
-                  description="Max 30 characters"
+                  description="Max 30 characters."
                   {...field}
                   isInvalid={invalid}
                   errorMessage={error?.message}
@@ -85,6 +84,7 @@ export default function EditPotDialog({
                 />
               )}
             />
+
             <Controller
               name="target"
               control={form.control}
@@ -99,6 +99,7 @@ export default function EditPotDialog({
                 />
               )}
             />
+
             <Controller
               name="colorId"
               control={form.control}
@@ -107,15 +108,15 @@ export default function EditPotDialog({
                 fieldState: { invalid, error },
               }) => (
                 <Select
+                  ref={ref}
                   label="Theme"
                   placeholder="Select a color"
                   name={name}
-                  selectedKey={value}
-                  onSelectionChange={(selected) => onChange(selected)}
-                  ref={ref}
+                  value={value}
+                  onChange={(selected) => onChange(selected)}
                   isInvalid={invalid}
-                  isDisabled={form.formState.isSubmitting}
                   errorMessage={error?.message}
+                  isDisabled={form.formState.isSubmitting}
                   items={colors}
                 >
                   {(item) => (
@@ -133,9 +134,11 @@ export default function EditPotDialog({
               )}
             />
           </div>
+
           <Button
             variant="primary"
             type="submit"
+            size="lg"
             isPending={form.formState.isSubmitting}
           >
             Save Changes

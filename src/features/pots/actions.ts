@@ -58,11 +58,10 @@ export async function deletePot(
   prev: unknown,
   formData: FormData
 ): Promise<string | null> {
-  const potId = formData.get("potId")
+  const potId = formData.get("itemId")
+
   const parsed = idSchema.safeParse({ id: potId })
-  if (!parsed.success) {
-    return "Error deleting pot. Please try agian."
-  }
+  if (!parsed.success) return "Error deleting pot. Please try agian."
 
   const response = await pots.deletePot(parsed.data.id)
   if (!response.success) return "Error deleting pot. Please try again."

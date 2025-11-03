@@ -13,7 +13,7 @@ export default function FieldDescription({
     <RacText
       slot="description"
       className={cn(
-        "text-tertiary block text-sm leading-normal font-normal",
+        "text-tertiary block justify-self-end text-sm leading-tight font-normal",
         className
       )}
     >
