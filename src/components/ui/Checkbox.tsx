@@ -1,28 +1,50 @@
 "use client"
 
 import { motion } from "motion/react"
+import { type ReactNode } from "react"
 import {
   Checkbox as RacCheckbox,
   type CheckboxProps as RacCheckboxProps,
 } from "react-aria-components"
 
-import type { ReactNode } from "react"
+import { cn } from "@/lib/utils"
 
-export default function Checkbox({
-  children,
-  ...props
-}: Omit<RacCheckboxProps, "children"> & { children: ReactNode }) {
+type CheckboxProps = Omit<RacCheckboxProps, "children"> & {
+  children: ReactNode
+}
+
+export default function Checkbox({ children, ...props }: CheckboxProps) {
   return (
     <RacCheckbox
       {...props}
-      className="group rac-disabled:opacity-40 rac-disabled:cursor-not-allowed flex cursor-pointer items-center gap-2"
+      className="group rac-disabled:cursor-not-allowed flex cursor-pointer items-start gap-2"
     >
-      {({ isSelected }) => (
+      {({ isSelected, isHovered, isPressed, isFocusVisible }) => (
         <>
-          <span className="group-rac-selected:bg-beige-500 group-rac-focus-visible:outline-2 outline-beige-500 border-beige-500 relative flex h-5 w-5 items-center justify-center rounded-sm border-2 bg-white outline-offset-2">
+          <span
+            className={cn(
+              "border-primary bg-primary flex size-5 items-center justify-center rounded-sm border text-white",
+
+              // Hover
+              isHovered && "bg-primary_hover",
+
+              // Pressed
+              isPressed && "bg-primary_hover",
+
+              // Focus visible
+              isFocusVisible && "ring-brand border-brand ring",
+
+              // Selected
+              "group-rac-selected:bg-brand group-rac-selected:border-brand",
+
+              // Disabled
+              "group-rac-disabled:bg-disabled_subtle group-rac-disabled:border-disabled group-rac-disabled:text-disabled_subtle"
+            )}
+          >
             {isSelected && <CheckIcon />}
           </span>
-          <span className="text-grey-500 text-sm leading-normal font-normal">
+
+          <span className="text-secondary text-sm leading-normal font-medium">
             {children}
           </span>
         </>
@@ -34,7 +56,7 @@ export default function Checkbox({
 function CheckIcon() {
   return (
     <svg
-      className="h-4 w-4 text-white"
+      className="size-4"
       stroke="currentColor"
       strokeWidth={3}
       fill="none"
