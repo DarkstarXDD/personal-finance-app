@@ -96,6 +96,7 @@ export default function TableDesktop({
             </tr>
           ))}
         </thead>
+
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr

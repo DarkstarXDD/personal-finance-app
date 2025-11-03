@@ -37,13 +37,13 @@ export default function PotCard({ pot, colors }: PotCardProps) {
           <IconButton variant="options" className="ml-auto" />
           <Menu>
             <MenuItem onAction={() => setIsEditDialogOpen(true)}>
-              Edit Pot
+              Edit Pot...
             </MenuItem>
             <MenuItem
-              className="text-red"
+              className="text-error-primary"
               onAction={() => setIsDeleteDialogOpen(true)}
             >
-              Delete Pot
+              Delete Pot...
             </MenuItem>
           </Menu>
         </MenuTrigger>

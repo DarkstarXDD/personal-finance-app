@@ -8,13 +8,14 @@ import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
+import { type Color } from "@/data-access/lookups"
 import { createPot } from "@/features/pots/actions"
 import { potCreateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Color } from "@/data-access/lookups"
+type AddPotDialogProps = { colors: Color[] }
 
-export default function AddPotDialog({ colors }: { colors: Color[] }) {
+export default function AddPotDialog({ colors }: AddPotDialogProps) {
   const form = useForm({
     resolver: zodResolver(potCreateSchema),
     defaultValues: { name: "", target: 0, colorId: "" },
@@ -22,11 +23,17 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
 
   return (
     <DialogTrigger>
-      <Button variant="primary">Add Pot...</Button>
-      <Dialog title="New Pot">
+      <Button variant="primary" size="xl">
+        Add Pot...
+      </Button>
+
+      <Dialog
+        title="New Pot"
+        description="Create a pot to set savings targets. These can help keep you on track as you save for special purchases."
+      >
         {({ close }) => (
           <form
-            className="grid gap-5"
+            className="grid gap-6"
             onSubmit={form.handleSubmit(async (data) => {
               const response = await createPot(data)
               if (response) {
@@ -37,10 +44,6 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
               close()
             })}
           >
-            <p className="text-grey-500 text-sm leading-normal font-normal">
-              Create a pot to set savings targets. These can help keep you on
-              track as you save for special purchases.
-            </p>
             <div className="grid gap-4">
               <Controller
                 name="name"
@@ -48,8 +51,9 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
                     label="Pot Name"
-                    placeholder="Rainy Days..."
-                    description="Max 30 characters"
+                    type="text"
+                    placeholder="New Computer..."
+                    description="Max 30 characters."
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
@@ -57,6 +61,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                   />
                 )}
               />
+
               <Controller
                 name="target"
                 control={form.control}
@@ -71,6 +76,7 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                   />
                 )}
               />
+
               <Controller
                 name="colorId"
                 control={form.control}
@@ -79,15 +85,15 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                   fieldState: { invalid, error },
                 }) => (
                   <Select
+                    ref={ref}
                     label="Theme"
                     placeholder="Select a Color..."
                     name={name}
-                    selectedKey={value}
-                    onSelectionChange={(selected) => onChange(selected)}
-                    ref={ref}
+                    value={value}
+                    onChange={(selected) => onChange(selected)}
                     isInvalid={invalid}
-                    isDisabled={form.formState.isSubmitting}
                     errorMessage={error?.message}
+                    isDisabled={form.formState.isSubmitting}
                     items={colors}
                   >
                     {(item) => (
@@ -105,9 +111,11 @@ export default function AddPotDialog({ colors }: { colors: Color[] }) {
                 )}
               />
             </div>
+
             <Button
               variant="primary"
               type="submit"
+              size="lg"
               isPending={form.formState.isSubmitting}
             >
               Add Pot

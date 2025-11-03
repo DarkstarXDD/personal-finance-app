@@ -6,44 +6,36 @@ import {
 } from "react-aria-components"
 import { IoCloseCircleOutline as CloseIcon } from "react-icons/io5"
 import { PiDotsThreeOutlineFill as OptionsIcon } from "react-icons/pi"
-import { tv, type VariantProps } from "tailwind-variants"
 
-const iconButtonStyles = tv({
-  slots: {
-    buttonStyles:
-      "ring-beige-500 text-grey-500 rac-pressed:text-beige-500 rac-hover:text-beige-500 rac-focus-visible:ring-3 rac-disabled:opacity-40 rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed cursor-pointer rounded-full bg-transparent p-0 ring-offset-2 transition-all outline-none",
-    iconStyles: "shrink-0",
-  },
+import { cn } from "@/lib/utils"
 
-  variants: {
-    variant: {
-      close: { iconStyles: "size-7" },
-      options: { iconStyles: "size-5" },
-    },
-  },
-  defaultVariants: {
-    variant: "close",
-  },
-})
-
-const { buttonStyles, iconStyles } = iconButtonStyles()
-
-type IconVariants = VariantProps<typeof iconButtonStyles>
+type IconButtonProps = Omit<RacButtonProps, "children" | "className"> & {
+  variant: "close" | "options"
+  className?: string
+}
 
 export default function IconButton({
   variant,
   className,
   ...props
-}: Omit<RacButtonProps, "children" | "className"> &
-  IconVariants & { className?: string }) {
+}: IconButtonProps) {
   const Icon = variant === "options" ? OptionsIcon : CloseIcon
+
   return (
     <RacButton
       aria-label={variant === "options" ? "Options" : "Close"}
       {...props}
-      className={buttonStyles({ className })}
+      className={cn(
+        "text-fg-tertiary ring-brand bg-primary border-primary rac-hover:text-fg-tertiary_hover rac-pressed:text-fg-tertiary_hover rac-disabled:cursor-not-allowed rac-pending:cursor-not-allowed rac-focus-visible:ring-2 rac-disabled:text-disabled_subtle cursor-pointer rounded-full ring-offset-1 transition-colors outline-none",
+        className
+      )}
     >
-      <Icon className={iconStyles({ variant })} />
+      <Icon
+        className={cn(
+          variant == "close" && "size-7",
+          variant == "options" && "size-5"
+        )}
+      />
     </RacButton>
   )
 }

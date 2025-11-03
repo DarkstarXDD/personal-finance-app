@@ -2,24 +2,31 @@ import { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { useState } from "react"
 
 import Button from "@/components/ui/Button"
-import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
+import { DeleteDialogTrigger, DeleteDialog } from "@/components/ui/DeleteDialog"
 
 const meta = {
-  title: "Components/UI/Dialog",
-  component: Dialog,
+  title: "Components/UI/DeleteDialog",
+  component: DeleteDialog,
 
   parameters: {
     docs: {
       description: {
         component:
-          "Modal dialog overlay with animated entry. Provides a title, optional description, and slot-based children. Use `DialogTrigger` for an automatic trigger or control it via `isOpen`/`onOpenChange`.",
+          "Dialog for delete confirmations. Provides a title, optional description, and slot-based children. Use `DialogTrigger` for an automatic trigger or control it via `isOpen`/`onOpenChange`.",
       },
     },
   },
+
   args: {
-    title: "Dialog Title",
-    description: "Dialog title support text.",
-    role: "dialog",
+    title: "Delete blog post.",
+    description:
+      "Are you sure you want to delete this post? This action cannot be undone.",
+    // stub server action for Storybook — returns null (no error)
+    action: async (_prev: string | null | undefined, _formData: FormData) => {
+      void _prev
+      void _formData
+      return null
+    },
   },
 
   argTypes: {
@@ -33,16 +40,25 @@ const meta = {
       description: "Optional supporting text shown beneath the title.",
       table: { type: { summary: "string | ReactNode" } },
     },
-    role: {
-      control: "select",
-      options: ["dialog", "alertdialog"],
+
+    action: {
+      control: false,
       description:
-        "Defines the role of the dialog, which affects accessibility.",
+        "Server action or handler invoked when the delete form is submitted. Receives (prev, formData) and should return an error string or null.",
       table: {
-        defaultValue: { summary: "dialog" },
-        type: { summary: '"dialog" | "alertdialog"' },
+        type: {
+          summary:
+            "(prev: string | null | undefined, formData: FormData) => Promise<string | null | undefined>",
+        },
       },
     },
+    itemId: {
+      control: "text",
+      description:
+        "Optional id of the item being deleted (included in the form).",
+      table: { type: { summary: "string | number" } },
+    },
+
     isOpen: {
       control: "boolean",
       description:
@@ -55,35 +71,28 @@ const meta = {
       table: { type: { summary: "(isOpen: boolean) => void" } },
     },
     children: {
-      control: { disable: true },
       table: { type: { summary: "ReactNode | ({close}) => ReactNode" } },
     },
     className: { table: { disable: true } },
   },
-} satisfies Meta<typeof Dialog>
+} satisfies Meta<typeof DeleteDialog>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  args: {},
   render: (args) => (
-    <DialogTrigger>
+    <DeleteDialogTrigger>
       <Button variant="primary">Open Dialog</Button>
-      <Dialog {...args}>
-        <div className="grid gap-4">
-          <p>
-            This is a dialog content area. You can place any content here, such
-            as forms, text, or other components.
-          </p>
-          <Button variant="primary">Action Button</Button>
-        </div>
-      </Dialog>
-    </DialogTrigger>
+      <DeleteDialog {...args} />
+    </DeleteDialogTrigger>
   ),
 }
 
 export const Controlled: Story = {
+  args: {},
   render: (args) => {
     function Example() {
       const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -93,21 +102,11 @@ export const Controlled: Story = {
           <Button variant="primary" onPress={() => setIsDialogOpen(true)}>
             Open Dialog
           </Button>
-          <Dialog
+          <DeleteDialog
             {...args}
             isOpen={isDialogOpen}
             onOpenChange={setIsDialogOpen}
-          >
-            <div className="grid gap-4">
-              <p>
-                This is a dialog content area. You can place any content here,
-                such as forms, text, or other components.
-              </p>
-              <Button variant="primary" slot="close">
-                Close Dialog
-              </Button>
-            </div>
-          </Dialog>
+          />
         </>
       )
     }
@@ -121,4 +120,21 @@ export const Controlled: Story = {
       },
     },
   },
+}
+
+export const WithExtraContent: Story = {
+  args: {},
+  render: (args) => (
+    <DeleteDialogTrigger>
+      <Button variant="primary">Open Dialog</Button>
+      <DeleteDialog {...args}>
+        <div className="grid gap-4">
+          <p>
+            Optional extra content. You can place any content here, such as
+            forms, text, or other components.
+          </p>
+        </div>
+      </DeleteDialog>
+    </DeleteDialogTrigger>
+  ),
 }

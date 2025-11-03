@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Controller, useWatch } from "react-hook-form"
+import { PiArrowsInSimpleFill, PiArrowsOutSimpleFill } from "react-icons/pi"
 
 import Button from "@/components/ui/Button"
 import Checkbox from "@/components/ui/Checkbox"
@@ -10,11 +11,10 @@ import NumberField from "@/components/ui/NumberField"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
+import { type Category } from "@/data-access/lookups"
 import { createTransaction } from "@/features/transactions/actions"
 import { TransactionCreate, transactionCreateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
-
-import type { Category } from "@/data-access/lookups"
 
 export default function AddTransactionDialog({
   categories,
@@ -40,11 +40,17 @@ export default function AddTransactionDialog({
 
   return (
     <DialogTrigger>
-      <Button variant="primary">Add Transaction...</Button>
-      <Dialog title="New Transaction">
+      <Button variant="primary" size="xl">
+        Add Transaction...
+      </Button>
+
+      <Dialog
+        title="New Transaction"
+        description="Create a transaction to record your money flow."
+      >
         {({ close }) => (
           <form
-            className="grid gap-5"
+            className="grid gap-6"
             onSubmit={form.handleSubmit(async (data) => {
               const response = await createTransaction(data)
               if (response) {
@@ -55,9 +61,6 @@ export default function AddTransactionDialog({
               close()
             })}
           >
-            <p className="text-grey-500 text-sm leading-normal font-normal">
-              Create a transaction to record your money flow.
-            </p>
             <div className="grid gap-4">
               <Controller
                 name="transactionType"
@@ -65,18 +68,26 @@ export default function AddTransactionDialog({
                 render={({ field, fieldState: { invalid, error } }) => (
                   <RadioGroup
                     label="Transaction Type"
-                    layout="horizontal"
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
                     isDisabled={form.formState.isSubmitting}
                   >
-                    <RadioGroupItem value="INCOME" data-testid="income-radio">
-                      Income
-                    </RadioGroupItem>
-                    <RadioGroupItem value="EXPENSE" data-testid="expense-radio">
-                      Expense
-                    </RadioGroupItem>
+                    <RadioGroupItem
+                      title="Income"
+                      description="Money you received."
+                      icon={PiArrowsInSimpleFill}
+                      value="INCOME"
+                      data-testid="income-radio"
+                    />
+
+                    <RadioGroupItem
+                      title="Expense"
+                      description="Money you spent."
+                      icon={PiArrowsOutSimpleFill}
+                      value="EXPENSE"
+                      data-testid="expense-radio"
+                    />
                   </RadioGroup>
                 )}
               />
@@ -88,7 +99,7 @@ export default function AddTransactionDialog({
                   <TextField
                     label="Counterparty"
                     placeholder="Echo Game Store..."
-                    description="Max 30 characters"
+                    description="Max 30 characters."
                     {...field}
                     isInvalid={invalid}
                     errorMessage={error?.message}
@@ -123,12 +134,12 @@ export default function AddTransactionDialog({
                     label="Category"
                     placeholder="Select a Category"
                     name={name}
-                    selectedKey={value}
-                    onSelectionChange={(selected) => onChange(selected)}
+                    value={value}
+                    onChange={(selected) => onChange(selected)}
                     ref={ref}
                     isInvalid={invalid}
-                    isDisabled={form.formState.isSubmitting}
                     errorMessage={error?.message}
+                    isDisabled={form.formState.isSubmitting}
                     items={categories}
                   >
                     {(item) => (
@@ -158,9 +169,11 @@ export default function AddTransactionDialog({
                 )}
               />
             </div>
+
             <Button
               variant="primary"
               type="submit"
+              size="lg"
               isPending={form.formState.isSubmitting}
             >
               Add Transaction

@@ -117,6 +117,7 @@
   --background-color-secondary: var(--color-grey-50);
   --background-color-tertiary: var(--color-grey-100);
   --background-color-quaternary: var(--color-grey-200);
+  --background-color-brand: var(--color-brand-500);
   --background-color-brand-solid: var(--color-brand-900);
   --background-color-brand-solid_hover: var(--color-brand-800);
   --background-color-active: var(--color-grey-100);
@@ -126,6 +127,7 @@
   --background-color-error-secondary: var(--color-error-100);
   --background-color-error-solid: var(--color-error-600);
   --background-color-error-solid_hover: var(--color-error-700);
+  --background-color-overlay: var(--color-grey-950);
 
   /* ------------ Foreground Colors ------------ */
   --color-fg-white: var(--color-white);
@@ -205,5 +207,15 @@
 
   .custom-scrollbar::-webkit-scrollbar-track {
     background-color: transparent;
+  }
+
+  @keyframes custom-scale-up {
+    from {
+      opacity: 0.75;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 }

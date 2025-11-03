@@ -6,12 +6,19 @@ import Button from "@/components/ui/Button"
 import { Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
+import { type Category, Color } from "@/data-access/lookups"
 import { updateBudget } from "@/features/budgets/actions"
+import { type Budget } from "@/features/budgets/data-access"
 import { budgetUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Category, Color } from "@/data-access/lookups"
-import type { Budget } from "@/features/budgets/data-access"
+type EditBudgetDialogProps = {
+  isOpen: boolean
+  onOpenChange: (isOpen: boolean) => void
+  categories: Category[]
+  colors: Color[]
+  budget: Budget
+}
 
 export default function EditBudgetDialog({
   isOpen,
@@ -19,13 +26,7 @@ export default function EditBudgetDialog({
   categories,
   colors,
   budget,
-}: {
-  isOpen: boolean
-  onOpenChange: (isOpen: boolean) => void
-  categories: Category[]
-  colors: Color[]
-  budget: Budget
-}) {
+}: EditBudgetDialogProps) {
   const form = useForm({
     resolver: zodResolver(budgetUpdateSchema),
     defaultValues: {
@@ -48,6 +49,7 @@ export default function EditBudgetDialog({
   return (
     <Dialog
       title="Edit Budget"
+      description="As your budgets change, feel free to update your spending limits."
       isOpen={isOpen}
       onOpenChange={(isOpen) => {
         form.reset()
@@ -66,9 +68,6 @@ export default function EditBudgetDialog({
             close()
           })}
         >
-          <p className="text-grey-500 text-sm leading-normal font-normal">
-            As your budgets change, feel free to update your spending limits.
-          </p>
           <div className="grid gap-4">
             <input {...form.register("id")} type="hidden" />
             <Controller
@@ -79,15 +78,15 @@ export default function EditBudgetDialog({
                 fieldState: { invalid, error },
               }) => (
                 <Select
+                  ref={ref}
                   label="Budget Category"
                   placeholder="Select a Category"
                   name={name}
-                  selectedKey={value}
-                  onSelectionChange={(selected) => onChange(selected)}
-                  ref={ref}
+                  value={value}
+                  onChange={(selected) => onChange(selected)}
                   isInvalid={invalid}
-                  isDisabled={form.formState.isSubmitting}
                   errorMessage={error?.message}
+                  isDisabled={form.formState.isSubmitting}
                   items={categories}
                 >
                   {(item) => (
@@ -122,15 +121,15 @@ export default function EditBudgetDialog({
                 fieldState: { invalid, error },
               }) => (
                 <Select
+                  ref={ref}
                   label="Theme"
                   placeholder="Select a color"
                   name={name}
-                  selectedKey={value}
-                  onSelectionChange={(selected) => onChange(selected)}
-                  ref={ref}
+                  value={value}
+                  onChange={(selected) => onChange(selected)}
                   isInvalid={invalid}
-                  isDisabled={form.formState.isSubmitting}
                   errorMessage={error?.message}
+                  isDisabled={form.formState.isSubmitting}
                   items={colors}
                 >
                   {(item) => (
@@ -151,6 +150,7 @@ export default function EditBudgetDialog({
           <Button
             variant="primary"
             type="submit"
+            size="lg"
             isPending={form.formState.isSubmitting}
           >
             Save Changes
