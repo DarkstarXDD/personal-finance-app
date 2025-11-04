@@ -27,11 +27,12 @@ export default function OverviewPage() {
 
       <Suspense fallback={<SummaryCardsLoading />}>
         <SummaryCards />
-        <SummaryCardsLoading />
       </Suspense>
 
-      {/* <div className="grid gap-6 2xl:grid-cols-2">
-        <Suspense fallback={<PotsOverviewLoading />}>
+      <div className="grid gap-6 2xl:grid-cols-2">
+        <TransactionsOverview />
+
+        {/* <Suspense fallback={<PotsOverviewLoading />}>
           <PotsOverview />
         </Suspense>
 
@@ -39,14 +40,11 @@ export default function OverviewPage() {
           <BudgetsOverview />
         </Suspense>
 
-        <Suspense fallback={<TransactionsOverviewLoading />}>
-          <TransactionsOverview />
-        </Suspense>
 
         <Suspense fallback={<RecurringBillsOverviewLoading />}>
           <RecurringBillsOverview />
-        </Suspense>
-      </div> */}
+        </Suspense> */}
+      </div>
     </main>
   )
 }
