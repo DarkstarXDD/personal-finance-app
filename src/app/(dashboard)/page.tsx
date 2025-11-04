@@ -1,18 +1,17 @@
+import { type Metadata } from "next"
 import { Suspense } from "react"
 
-import BudgetsOverview from "@/components/overview/BudgetsOverview"
+import PageHeader from "@/components/common/PageHeader"
 import BudgetsOverviewLoading from "@/components/overview/loading-states/BudgetsOverviewLoading"
 import PotsOverviewLoading from "@/components/overview/loading-states/PotsOverviewLoading"
 import RecurringBillsOverviewLoading from "@/components/overview/loading-states/RecurringBillsOverviewLoading"
 import SummaryCardsLoading from "@/components/overview/loading-states/SummaryCardsLoading"
 import TransactionsOverviewLoading from "@/components/overview/loading-states/TransactionsOverviewLoading"
-import PotsOverview from "@/components/overview/PotsOverview"
-import RecurringBillsOverview from "@/components/overview/RecurringBillsOverview"
-import SummaryCards from "@/components/overview/SummaryCards"
-import TransactionsOverview from "@/components/overview/TransactionsOverview"
-import Heading from "@/components/ui/Heading"
-
-import type { Metadata } from "next"
+import BudgetsOverview from "@/features/overview/components/BudgetsOverview"
+import PotsOverview from "@/features/overview/components/PotsOverview"
+import RecurringBillsOverview from "@/features/overview/components/RecurringBillsOverview"
+import SummaryCards from "@/features/overview/components/SummaryCards"
+import TransactionsOverview from "@/features/overview/components/TransactionsOverview"
 
 export const metadata: Metadata = {
   title: "Overview - Personal Finance",
@@ -21,9 +20,10 @@ export const metadata: Metadata = {
 export default function OverviewPage() {
   return (
     <main className="grid gap-8">
-      <Heading as="h1" variant="primary">
-        Overview
-      </Heading>
+      <PageHeader
+        title="Overview"
+        description="summary of your financial activity across all sections."
+      />
 
       <Suspense fallback={<SummaryCardsLoading />}>
         <SummaryCards />

@@ -1,3 +1,4 @@
+import { type Metadata } from "next"
 import { PiArrowsDownUpFill } from "react-icons/pi"
 
 import PageHeader from "@/components/common/PageHeader"
@@ -11,8 +12,6 @@ import TableDesktop from "@/features/transactions/components/TableDesktop"
 import TableFilters from "@/features/transactions/components/TableFilters"
 import TableMobile from "@/features/transactions/components/TableMobile"
 import { getTransactions } from "@/features/transactions/data-access"
-
-import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Transactions - Personal Finance",
