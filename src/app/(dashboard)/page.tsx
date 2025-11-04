@@ -2,7 +2,6 @@ import { type Metadata } from "next"
 import { Suspense } from "react"
 
 import PageHeader from "@/components/common/PageHeader"
-import BudgetsOverviewLoading from "@/components/overview/loading-states/BudgetsOverviewLoading"
 import PotsOverviewLoading from "@/components/overview/loading-states/PotsOverviewLoading"
 import RecurringBillsOverviewLoading from "@/components/overview/loading-states/RecurringBillsOverviewLoading"
 import TransactionsOverviewLoading from "@/components/overview/loading-states/TransactionsOverviewLoading"
@@ -32,13 +31,12 @@ export default function OverviewPage() {
       <div className="grid gap-6 2xl:grid-cols-2">
         <TransactionsOverview />
 
+        <BudgetsOverview />
+
         {/* <Suspense fallback={<PotsOverviewLoading />}>
           <PotsOverview />
         </Suspense>
 
-        <Suspense fallback={<BudgetsOverviewLoading />}>
-          <BudgetsOverview />
-        </Suspense>
 
 
         <Suspense fallback={<RecurringBillsOverviewLoading />}>
