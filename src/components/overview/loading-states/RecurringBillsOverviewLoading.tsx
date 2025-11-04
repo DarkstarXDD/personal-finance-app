@@ -19,15 +19,15 @@ export default function RecurringBillsOverviewLoading() {
       </div>
 
       <div className="grid gap-3">
-        <Skeleton theme="dark" className="flex justify-between px-4 py-5">
+        <Skeleton className="flex justify-between px-4 py-5">
           <Skeleton className="h-5 w-20" />
           <Skeleton className="h-5 w-12" />
         </Skeleton>
-        <Skeleton theme="dark" className="flex justify-between px-4 py-5">
+        <Skeleton className="flex justify-between px-4 py-5">
           <Skeleton className="h-5 w-20" />
           <Skeleton className="h-5 w-12" />
         </Skeleton>
-        <Skeleton theme="dark" className="flex justify-between px-4 py-5">
+        <Skeleton className="flex justify-between px-4 py-5">
           <Skeleton className="h-5 w-20" />
           <Skeleton className="h-5 w-12" />
         </Skeleton>

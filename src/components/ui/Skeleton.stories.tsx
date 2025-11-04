@@ -11,5 +11,4 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Light: Story = { args: { className: "w-24 h-4" } }
-export const Dark: Story = { args: { theme: "dark", className: "w-24 h-4" } }
+export const Default: Story = { args: { className: "w-24 h-4" } }
