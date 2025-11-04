@@ -100,6 +100,8 @@ export async function getBudgets(take?: number) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+
   const budgets = await prisma.budget.findMany({
     where: { userId },
     orderBy: { createdAt: "desc" },
