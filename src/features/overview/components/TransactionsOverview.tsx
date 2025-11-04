@@ -37,10 +37,12 @@ async function Transactions() {
       {transactions.length > 0 ? (
         <>
           <TableMobile transactions={transactions} className="md:hidden" />
-          <TableDesktop
-            transactions={transactions}
-            className="hidden md:block"
-          />
+          <div className="overflow-auto">
+            <TableDesktop
+              transactions={transactions}
+              className="hidden md:block"
+            />
+          </div>
         </>
       ) : (
         <EmptyState
