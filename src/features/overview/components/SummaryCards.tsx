@@ -1,5 +1,4 @@
 import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
 import { getTransactionTotals } from "@/features/transactions/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
@@ -8,29 +7,23 @@ export default async function SummaryCards() {
 
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-      <Card size="md" className="grid w-full gap-3 shadow-none">
-        <Heading as="h2" variant="tertiary" className="text-white">
-          Current Balance
-        </Heading>
-        <p className="text-3xl leading-tight font-bold text-white">
+      <Card size="sm" className="grid w-full gap-1">
+        <h2 className="text-sm font-medium">Current Balance</h2>
+        <p className="text-primary text-2xl font-semibold">
           {currencyFormatter.format(currentBalance)}
         </p>
       </Card>
 
-      <Card size="md" className="grid w-full gap-3 shadow-none">
-        <Heading as="h2" variant="tertiary">
-          Income
-        </Heading>
-        <p className="text-grey-900 text-3xl leading-tight font-bold">
+      <Card size="sm" className="grid w-full gap-1">
+        <h2 className="text-sm font-medium">Income</h2>
+        <p className="text-primary text-2xl font-semibold">
           {currencyFormatter.format(income)}
         </p>
       </Card>
 
-      <Card size="md" className="grid w-full gap-3 shadow-none">
-        <Heading as="h2" variant="tertiary">
-          Expenses
-        </Heading>
-        <p className="text-grey-900 text-3xl leading-tight font-bold">
+      <Card size="sm" className="grid w-full gap-1">
+        <h2 className="text-sm font-medium">Expenses</h2>
+        <p className="text-primary text-2xl font-semibold">
           {currencyFormatter.format(expense)}
         </p>
       </Card>
