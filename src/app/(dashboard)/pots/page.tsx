@@ -1,3 +1,4 @@
+import { type Metadata } from "next"
 import { PiTipJarFill } from "react-icons/pi"
 
 import PageHeader from "@/components/common/PageHeader"
@@ -8,8 +9,6 @@ import AddPotDialog from "@/features/pots/components/AddPotDialog"
 import PotCard from "@/features/pots/components/PotCard"
 import PotsSummary from "@/features/pots/components/PotsSummary"
 import { getPots } from "@/features/pots/data-access"
-
-import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Pots - Personal Finance",

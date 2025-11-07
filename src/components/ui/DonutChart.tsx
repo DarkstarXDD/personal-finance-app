@@ -50,10 +50,10 @@ export default function DonutChart({ chartData }: { chartData: Slice[] }) {
 
       {hovered && (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <p className="text-grey-900 text-center text-base leading-normal font-semibold">
+          <p className="text-primary text-center font-semibold">
             {hovered.label}
           </p>
-          <p className="text-grey-900 text-center text-base leading-normal font-medium">
+          <p className="text-primary text-center font-medium">
             {currencyFormatter.format(hovered.target)}
           </p>
         </div>
@@ -62,10 +62,10 @@ export default function DonutChart({ chartData }: { chartData: Slice[] }) {
       {!hovered && (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <p className="grid content-start justify-items-center gap-2">
-            <span className="text-grey-900 text-xl leading-tight font-bold">
+            <span className="text-primary text-xl leading-tight font-semibold">
               {currencyFormatter.format(totalCurrent)}
             </span>
-            <span className="text-grey-500 text-sm leading-normal font-normal">
+            <span className="text-tertiary text-sm font-medium">
               of {currencyFormatter.format(totaltarget)}
             </span>
           </p>
