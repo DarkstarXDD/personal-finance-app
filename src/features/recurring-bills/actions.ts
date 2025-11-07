@@ -9,7 +9,7 @@ export async function deleteRecurringBill(
   prev: unknown,
   formData: FormData
 ): Promise<string | null> {
-  const recurringBillId = formData.get("recurringBillId")
+  const recurringBillId = formData.get("itemId")
   const parsed = idSchema.safeParse({ id: recurringBillId })
   if (!parsed.success) {
     return "Error deleting bill. Please try agian."

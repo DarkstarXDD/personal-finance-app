@@ -11,7 +11,7 @@ export default function Loading() {
         <Heading as="h1" variant="primary">
           Transactions
         </Heading>
-        <Skeleton theme="dark" className="h-13 w-38" />
+        <Skeleton className="h-13 w-38" />
       </div>
 
       <Card className="grid gap-6">

@@ -86,6 +86,7 @@
   --text-color-primary: var(--color-grey-900);
   --text-color-secondary: var(--color-grey-700);
   --text-color-tertiary: var(--color-grey-600);
+  --text-color-tertiary_hover: var(--color-grey-700);
   --text-color-quaternary: var(--color-grey-500);
   --text-color-placeholder: var(--color-grey-500);
   --text-color-brand-primary: var(--color-brand-900);
@@ -128,6 +129,7 @@
   --background-color-error-solid: var(--color-error-600);
   --background-color-error-solid_hover: var(--color-error-700);
   --background-color-overlay: var(--color-grey-950);
+  --background-color-skeleton: var(--color-grey-300);
 
   /* ------------ Foreground Colors ------------ */
   --color-fg-white: var(--color-white);
