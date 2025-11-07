@@ -40,7 +40,7 @@ export default async function BudgetsPage() {
 
       {budgets.length > 0 ? (
         <div className="grid items-start gap-6 @6xl:grid-cols-[2fr_5fr]">
-          <Card size="lg" className="grid gap-6">
+          <Card size="lg" className="@container grid content-start gap-8">
             <h2 className="text-primary text-lg leading-tight font-semibold">
               Spending Summary
             </h2>

@@ -165,6 +165,8 @@ export async function getPots(take?: number) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
+  // await new Promise((resolve) => setTimeout(resolve, 2000))
+
   const [pots, aggregates] = await prisma.$transaction([
     prisma.pot.findMany({
       where: { userId },

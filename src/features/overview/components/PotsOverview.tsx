@@ -21,9 +21,11 @@ export default function PotsOverview() {
         </Link>
       </div>
 
-      <Suspense fallback={<PotsOverviewLoading />}>
-        <Pots />
-      </Suspense>
+      <div className="@container">
+        <Suspense fallback={<PotsOverviewLoading />}>
+          <Pots />
+        </Suspense>
+      </div>
     </Card>
   )
 }
