@@ -22,9 +22,11 @@ export default function BudgetsOverview() {
         </Link>
       </div>
 
-      <Suspense fallback={<BudgetsSummaryLoading />}>
-        <Budgets />
-      </Suspense>
+      <div className="@container">
+        <Suspense fallback={<BudgetsSummaryLoading />}>
+          <Budgets />
+        </Suspense>
+      </div>
     </Card>
   )
 }

@@ -9,7 +9,7 @@ type BudgetsSummaryProps = {
 
 export default function BudgetsSummary({ budgets }: BudgetsSummaryProps) {
   return (
-    <div className="grid gap-8 md:grid-cols-2 md:items-start 2xl:grid-cols-1">
+    <div className="grid items-center gap-8 2xl:grid-cols-1 @xl:grid-cols-[2fr_3fr]">
       <DonutChart
         chartData={budgets.map((budget) => ({
           label: budget.category.label,

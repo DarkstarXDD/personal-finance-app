@@ -1,62 +1,49 @@
-import { PiTipJar, PiTipJarFill } from "react-icons/pi"
+import { Suspense } from "react"
+import { PiTipJar } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
-import MetricItem from "@/components/ui/MetricItem"
+import PotsSummary from "@/features/pots/components/PotsSummary"
+import PotsOverviewLoading from "@/features/pots/components/PotsSummaryLoading"
 import { getPots } from "@/features/pots/data-access"
-import { currencyFormatter } from "@/lib/utils"
 
-export default async function PotsOverview() {
-  const pots = await getPots(4)
-
+export default function PotsOverview() {
   return (
-    <Card className="grid content-start gap-8 shadow-none">
+    <Card size="md" className="grid content-start gap-6">
       <div className="flex items-center justify-between">
-        <Heading as="h2" variant="secondary">
+        <h2 className="text-primary text-xl leading-tight font-semibold">
           Pots
-        </Heading>
+        </h2>
+
         <Link withIcon href="/pots">
           See Details
         </Link>
       </div>
 
-      {pots.length > 0 ? (
-        <div className="grid gap-5 md:grid-cols-[2fr_3fr]">
-          <Card
-            size="sm"
-            className="bg-beige-100 flex items-center justify-start gap-4"
-          >
-            <PiTipJar className="text-green size-10" />
-            <dl className="grid gap-3">
-              <dt className="text-grey-500 text-sm leading-normal font-normal">
-                Total Saved
-              </dt>
-              <dd className="text-grey-900 text-3xl leading-tight font-bold">
-                $850
-              </dd>
-            </dl>
-          </Card>
+      <div className="@container">
+        <Suspense fallback={<PotsOverviewLoading />}>
+          <Pots />
+        </Suspense>
+      </div>
+    </Card>
+  )
+}
 
-          <div className="grid grid-cols-2 gap-4 md:grid-rows-2">
-            {pots.map((pot) => (
-              <MetricItem
-                key={pot.id}
-                label={pot.name}
-                value={currencyFormatter.format(Number(pot.currentAmount))}
-                color={pot.color.value}
-              />
-            ))}
-          </div>
-        </div>
+async function Pots() {
+  const { pots, potsSummary } = await getPots(4)
+
+  return (
+    <>
+      {pots.length > 0 ? (
+        <PotsSummary {...{ pots, potsSummary }} />
       ) : (
         <EmptyState
-          icon={PiTipJarFill}
+          icon={PiTipJar}
           title="No pots created yet"
           description="Start saving for your goals by creating your first pot."
         />
       )}
-    </Card>
+    </>
   )
 }
