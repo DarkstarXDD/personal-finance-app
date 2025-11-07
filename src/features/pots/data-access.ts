@@ -55,7 +55,7 @@ export async function createPot({
 // ================ Update Pot ================
 // ============================================
 
-export async function UpdatePot({
+export async function updatePot({
   id,
   name,
   target,
@@ -155,19 +155,43 @@ export type Pot = Omit<PotRaw, "target" | "currentAmount"> & {
   currentAmount: number
 }
 
+export type PotsSummary = {
+  count: number
+  totalSavedAmount: number
+  totalTargetAmount: number
+}
+
 export async function getPots(take?: number) {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
-  const pots = await prisma.pot.findMany({
-    where: { userId },
-    orderBy: { createdAt: "desc" },
-    take: take,
-    select: potSelect,
-  })
-  return pots.map((pot) => ({
+  const [pots, aggregates] = await prisma.$transaction([
+    prisma.pot.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      take: take,
+      select: potSelect,
+    }),
+
+    prisma.pot.aggregate({
+      where: { userId },
+      _sum: { currentAmount: true, target: true },
+      _count: true,
+    }),
+  ])
+
+  const normalizedPots: Pot[] = pots.map((pot) => ({
     ...pot,
     target: pot.target.toNumber(),
     currentAmount: pot.currentAmount.toNumber(),
   }))
+
+  return {
+    pots: normalizedPots,
+    potsSummary: {
+      count: aggregates._count,
+      totalSavedAmount: aggregates._sum.currentAmount?.toNumber() ?? 0,
+      totalTargetAmount: aggregates._sum.target?.toNumber() ?? 0,
+    },
+  }
 }

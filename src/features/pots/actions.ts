@@ -43,7 +43,7 @@ export async function updatePot(
   const parsed = potUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  const response = await pots.UpdatePot(parsed.data)
+  const response = await pots.updatePot(parsed.data)
   if (!response.success) return response.fieldErrors
 
   revalidatePath("/pots")
