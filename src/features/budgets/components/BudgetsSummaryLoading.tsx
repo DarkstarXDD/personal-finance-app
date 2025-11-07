@@ -2,7 +2,7 @@ import Skeleton from "@/components/ui/Skeleton"
 
 export default function BudgetsOverviewLoading() {
   return (
-    <div className="grid gap-6 md:grid-cols-2 md:items-center 2xl:grid-cols-1">
+    <div className="grid items-center gap-6 2xl:grid-cols-1 @xl:grid-cols-[2fr_3fr]">
       <div className="flex justify-center">
         <Skeleton className="size-60 rounded-full" />
       </div>
