@@ -1,51 +1,87 @@
+import { Suspense } from "react"
 import { PiReceiptFill } from "react-icons/pi"
 
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
-import Heading from "@/components/ui/Heading"
 import Link from "@/components/ui/Link"
+import RecurringBillsOverviewLoading from "@/features/overview/components/RecurringBillsOverviewLoading"
 import TableDesktop from "@/features/recurring-bills/components/TableDesktop"
 import TableMobile from "@/features/recurring-bills/components/TableMobile"
 import { getRecurringBills } from "@/features/recurring-bills/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
-export default async function RecurringBillsOverview() {
-  const { recurringBills, summary } = await getRecurringBills({})
-
+export default function RecurringBillsOverview() {
   return (
-    <Card className="grid content-start gap-8 shadow-none">
-      <div className="flex items-center justify-between">
-        <Heading as="h2" variant="secondary">
+    <Card size="md" className="grid content-start gap-6 md:px-0">
+      <div className="flex items-center justify-between md:px-6">
+        <h2 className="text-primary text-xl leading-tight font-semibold">
           Recurring Bills
-        </Heading>
+        </h2>
+
         <Link withIcon href="/recurring-bills">
           See Details
         </Link>
       </div>
 
-      {recurringBills.length > 0 ? (
-        <>
-          <dl className="grid gap-3">
-            <RecurringBillsOverviewItem
-              label="Paid Bills"
-              value={summary.monthlySummary.paid.total}
-              color="#277c78"
-            />
-            <RecurringBillsOverviewItem
-              label="Total Upcoming"
-              value={summary.monthlySummary.upcoming.total}
-              color="#f2cdac"
-            />
-            <RecurringBillsOverviewItem
-              label="Due Soon"
-              value={summary.monthlySummary.dueSoon.total}
-              color="#82c9d7"
-            />
-          </dl>
+      <Suspense fallback={<RecurringBillsOverviewLoading />}>
+        <RecurringBills />
+      </Suspense>
+    </Card>
+  )
+}
 
-          <TableMobile recurringBills={recurringBills.slice(0, 3)} />
-          <TableDesktop recurringBills={recurringBills.slice(0, 3)} />
-        </>
+async function RecurringBills() {
+  const { recurringBills, summary } = await getRecurringBills({})
+
+  const today = new Date()
+  const currentMonth = today.toLocaleDateString(undefined, { month: "long" })
+  return (
+    <>
+      {recurringBills.length > 0 ? (
+        <div className="grid gap-6">
+          <div className="grid gap-6 md:px-6">
+            <dl className="grid gap-3">
+              <RecurringBillsOverviewItem
+                label="Active Subscriptions"
+                count={summary.billCount}
+              />
+              <RecurringBillsOverviewItem
+                label="Monthly Cost"
+                value={summary.sum ?? 0}
+              />
+            </dl>
+
+            <div className="grid gap-4">
+              <h2 className="text-lg leading-tight font-semibold">
+                Summary for <span className="text-primary">{currentMonth}</span>
+              </h2>
+
+              <dl className="grid gap-3">
+                <RecurringBillsOverviewItem
+                  label="Paid Bills"
+                  value={summary.monthlySummary.paid.total}
+                />
+                <RecurringBillsOverviewItem
+                  label="Total Upcoming"
+                  value={summary.monthlySummary.upcoming.total}
+                />
+                <RecurringBillsOverviewItem
+                  label="Due Soon"
+                  value={summary.monthlySummary.dueSoon.total}
+                />
+              </dl>
+            </div>
+          </div>
+
+          <TableMobile
+            recurringBills={recurringBills.slice(0, 3)}
+            className="md:hidden"
+          />
+          <TableDesktop
+            recurringBills={recurringBills.slice(0, 3)}
+            className="hidden md:block"
+          />
+        </div>
       ) : (
         <EmptyState
           icon={PiReceiptFill}
@@ -53,29 +89,24 @@ export default async function RecurringBillsOverview() {
           description="They’ll appear here once you have some."
         />
       )}
-    </Card>
+    </>
   )
 }
 
 function RecurringBillsOverviewItem({
   label,
+  count,
   value,
-  color,
 }: {
   label: string
-  value: string | number
-  color: string
+  count?: number
+  value?: string | number
 }) {
   return (
-    <div
-      className="bg-beige-100 flex items-center justify-between gap-3 rounded-lg border-l-4 px-4 py-5"
-      style={{ borderColor: color }}
-    >
-      <dt className="text-grey-500 text-sm leading-normal font-normal">
-        {label}
-      </dt>
-      <dd className="text-grey-900 text-sm leading-normal font-bold">
-        {currencyFormatter.format(Number(value))}
+    <div className="flex items-center justify-between gap-2">
+      <dt className="text-sm font-medium">{label}</dt>
+      <dd className="text-primary text-xl font-semibold">
+        {count ?? currencyFormatter.format(Number(value))}
       </dd>
     </div>
   )
