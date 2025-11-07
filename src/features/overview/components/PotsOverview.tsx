@@ -4,8 +4,8 @@ import { PiTipJar } from "react-icons/pi"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Link from "@/components/ui/Link"
-import PotsOverviewLoading from "@/features/overview/components/PotsOverviewLoading"
 import PotsSummary from "@/features/pots/components/PotsSummary"
+import PotsOverviewLoading from "@/features/pots/components/PotsSummaryLoading"
 import { getPots } from "@/features/pots/data-access"
 
 export default function PotsOverview() {
