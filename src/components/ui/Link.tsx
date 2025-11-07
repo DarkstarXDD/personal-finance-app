@@ -4,10 +4,10 @@ import { PiCaretRightFill } from "react-icons/pi"
 import { tv, VariantProps } from "tailwind-variants"
 
 const LinkStyles = tv({
-  base: "ring-grey-500 rounded text-sm leading-normal font-normal underline ring-offset-4 transition-all outline-none focus-visible:ring-3",
+  base: "ring-brand block rounded text-sm font-normal underline outline-none focus-visible:ring-2",
   variants: {
     withIcon: {
-      true: "text-grey-500 hover:text-grey-900/85 group active:text-grey-900/85 justify flex items-center gap-2 no-underline hover:underline",
+      true: "text-tertiary hover:text-tertiary_hover group hover:bg-active active:bg-active active:text-tertiary_hover justify flex items-center gap-1 px-2 py-1 font-medium no-underline hover:underline active:underline",
       false: "text-grey-900 hover:text-grey-900/85 active:text-grey-900/85",
     },
   },
@@ -18,18 +18,20 @@ const LinkStyles = tv({
 
 type LinkVariants = VariantProps<typeof LinkStyles>
 
+type LinkProps = ComponentProps<typeof NextLink> & LinkVariants
+
 export default function Link({
   children,
   withIcon,
   className,
   ...props
-}: ComponentProps<typeof NextLink> & LinkVariants) {
+}: LinkProps) {
   return (
     <NextLink {...props} className={LinkStyles({ withIcon, className })}>
       {withIcon ? (
         <>
           {children}
-          <PiCaretRightFill className="shrink-0 transition-transform group-hover:translate-x-1" />
+          <PiCaretRightFill className="text-fg-quaternary size-4 shrink-0 transition-transform" />
         </>
       ) : (
         <>{children}</>

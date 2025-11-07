@@ -49,7 +49,10 @@ function SummaryItem({
 }: SummaryItemProps) {
   return (
     <li className="border-secondary flex items-start gap-4 border-b py-4 first:pt-0 last:border-none last:pb-0 @xs:items-center">
-      <span className="h-5 w-1 rounded-lg" style={{ backgroundColor: color }} />
+      <span
+        className="h-5 w-1 shrink-0 rounded-lg"
+        style={{ backgroundColor: color }}
+      />
 
       <div className="flex w-full flex-col gap-1 @xs:flex-row @xs:items-center @xs:justify-between">
         <span className="text-sm leading-none font-medium">
