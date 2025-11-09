@@ -82,7 +82,7 @@ function Select<T extends object>({
               initial={{ y: -12, opacity: 0.4 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
-              className="bg-primary border-secondary custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border p-1.5"
+              className="bg-primary border-secondary custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border p-1.5 shadow-sm"
             >
               <RacListBox className="outline-none" items={items}>
                 {children}
@@ -103,8 +103,8 @@ type SelectItemProps = Omit<RacListBoxItemProps, "children" | "className"> & {
 function SelectItem({ className, children, ...props }: SelectItemProps) {
   return (
     <RacListBoxItem
-      {...props}
       textValue={typeof children === "string" ? children : undefined}
+      {...props}
       className={cn(
         "text-md text-primary rac-selected:bg-active rac-focus-visible:bg-active rac-pressed:bg-active rac-hover:bg-active cursor-pointer rounded-md p-2 leading-normal font-medium outline-none",
         className

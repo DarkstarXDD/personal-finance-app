@@ -144,7 +144,7 @@ export default function AddTransactionDialog({
                   >
                     {(item) => (
                       <SelectItem textValue={item.label}>
-                        <span>{item.label}</span>
+                        {item.label}
                       </SelectItem>
                     )}
                   </Select>
