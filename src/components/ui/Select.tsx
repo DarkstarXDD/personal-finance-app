@@ -103,8 +103,8 @@ type SelectItemProps = Omit<RacListBoxItemProps, "children" | "className"> & {
 function SelectItem({ className, children, ...props }: SelectItemProps) {
   return (
     <RacListBoxItem
-      {...props}
       textValue={typeof children === "string" ? children : undefined}
+      {...props}
       className={cn(
         "text-md text-primary rac-selected:bg-active rac-focus-visible:bg-active rac-pressed:bg-active rac-hover:bg-active cursor-pointer rounded-md p-2 leading-normal font-medium outline-none",
         className
