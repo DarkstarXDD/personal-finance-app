@@ -82,7 +82,7 @@ function Select<T extends object>({
               initial={{ y: -12, opacity: 0.4 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
-              className="bg-primary border-secondary custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border p-1.5"
+              className="bg-primary border-secondary custom-scrollbar max-h-80 w-(--trigger-width) overflow-auto rounded-lg border p-1.5 shadow-sm"
             >
               <RacListBox className="outline-none" items={items}>
                 {children}
