@@ -8,15 +8,17 @@ import { useForm, Controller } from "react-hook-form"
 
 import Button from "@/components/ui/Button"
 import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
-import Label from "@/components/ui/FieldLabel"
 import NumberField from "@/components/ui/NumberField"
 import { withdrawFromPot } from "@/features/pots/actions"
+import { type Pot } from "@/features/pots/data-access"
 import { potAmountUpdateSchema } from "@/lib/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
-import type { Pot } from "@/features/pots/data-access"
+type WithdrawFromPotDialogProps = { pot: Pot }
 
-export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
+export default function WithdrawFromPotDialog({
+  pot,
+}: WithdrawFromPotDialogProps) {
   const form = useForm({
     resolver: zodResolver(potAmountUpdateSchema),
     defaultValues: { id: pot.id, amountToUpdate: 0 },
@@ -34,13 +36,15 @@ export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
       <Button variant="secondary" size="lg" className="w-full">
         - Withdraw
       </Button>
-      <Dialog title={`Withdraw from ‘${pot.name}’`}>
+
+      <Dialog
+        title={`Withdraw from ‘${pot.name}’`}
+        description="Move money from your pot to your balance."
+      >
         {({ close }) => (
           <div className="grid gap-5">
-            <p className="text-grey-500 text-sm leading-normal font-normal">
-              Move money from your pot to your balance.
-            </p>
             <ProgressBar
+              aria-label="New Amount"
               value={draftAmountInPot}
               minValue={0}
               maxValue={pot.target}
@@ -60,16 +64,18 @@ export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
                 )
 
                 return (
-                  <div className="grid gap-4">
+                  <div className="grid gap-1.5">
                     <div className="flex items-center justify-between">
-                      <Label>New Amount</Label>
-                      <span className="text-grey-900 text-3xl leading-tight font-bold">
+                      <p className="text-sm font-semibold">New Amount</p>
+
+                      <span className="text-primary text-2xl leading-tight font-semibold">
                         {valueText}
                       </span>
                     </div>
-                    <div className="bg-beige-100 flex h-2 rounded">
+
+                    <div className="bg-quaternary flex h-3 rounded">
                       <motion.div
-                        className="bg-grey-900 h-full shrink-0 rounded-l"
+                        className="bg-brand-solid h-full shrink-0 rounded-l"
                         animate={{
                           width: draftAmountAsPercentage + "%",
                         }}
@@ -85,18 +91,16 @@ export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
                         }}
                       />
                     </div>
-                    <div className="text-grey-500 flex items-center justify-between text-xs leading-normal">
-                      <span className="font-bold">
-                        {Math.round(percentage ?? 0)}%
-                      </span>
-                      <span className="font-normal">
-                        Target of ${pot.target}
-                      </span>
+
+                    <div className="flex items-center justify-between text-xs font-medium">
+                      <span>{Math.round(percentage ?? 0)}%</span>
+                      <span>Target of ${pot.target}</span>
                     </div>
                   </div>
                 )
               }}
             </ProgressBar>
+
             <form
               className="grid gap-5"
               onSubmit={form.handleSubmit(async (data) => {
@@ -109,6 +113,7 @@ export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
               })}
             >
               <input {...form.register("id")} type="hidden" />
+
               <Controller
                 name="amountToUpdate"
                 control={form.control}
@@ -123,9 +128,11 @@ export default function WithdrawFromPotDialog({ pot }: { pot: Pot }) {
                   />
                 )}
               />
+
               <Button
-                type="submit"
                 variant="primary"
+                size="lg"
+                type="submit"
                 isPending={form.formState.isSubmitting}
               >
                 Confirm Withdrawal
