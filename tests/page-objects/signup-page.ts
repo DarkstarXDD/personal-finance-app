@@ -13,7 +13,7 @@ export class SignUpPage {
     this.heading = page.getByRole("heading", { name: "Sign Up", level: 1 })
     this.nameInput = page.getByRole("textbox", { name: "Name" })
     this.emailInput = page.getByRole("textbox", { name: "Email" })
-    this.passwordInput = page.getByRole("textbox", { name: "Create Password" })
+    this.passwordInput = page.getByRole("textbox", { name: "Password" })
     this.signUpButton = page.getByRole("button", { name: "Create Account" })
   }
 

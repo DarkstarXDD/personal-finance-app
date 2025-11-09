@@ -83,9 +83,8 @@ test.describe("Transactions Page", () => {
     await expect(page.getByRole("cell", { name: "Game store" })).toBeVisible()
 
     await transactionPage.searchInput.fill("random string")
-    await expect(page.getByRole("paragraph")).toHaveText(
-      "No results match your filters."
-    )
+    await transactionPage.searchInput.press("Enter")
+    await expect(page.getByText("No results match your filters.")).toBeVisible()
   })
 
   test("can sort transactions", async ({ page, userSession }) => {
@@ -161,8 +160,6 @@ test.describe("Transactions Page", () => {
 
     await transactionPage.categoryFilterSelect.click()
     await page.getByRole("option", { name: "Travel" }).click()
-    await expect(page.getByRole("paragraph")).toHaveText(
-      "No results match your filters."
-    )
+    await expect(page.getByText("No results match your filters.")).toBeVisible()
   })
 })
