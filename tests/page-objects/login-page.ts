@@ -9,10 +9,10 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page
-    this.heading = page.getByRole("heading", { name: "Login", level: 1 })
+    this.heading = page.getByRole("heading", { name: "Log In", level: 1 })
     this.emailInput = page.getByRole("textbox", { name: "Email" })
     this.passwordInput = page.getByRole("textbox", { name: "Password" })
-    this.loginButton = page.getByRole("button", { name: "Login" })
+    this.loginButton = page.getByRole("button", { name: "Log In" })
   }
 
   async goto() {
