@@ -34,6 +34,7 @@ export default function AddToPotDialog({ pot }: AddToPotDialogProps) {
       <Button variant="secondary" size="lg" className="w-full">
         + Add
       </Button>
+
       <Dialog
         title={`Add to ‘${pot.name}’`}
         description="Add money to your pot to grow your savings and get closer to your goal"
@@ -60,6 +61,7 @@ export default function AddToPotDialog({ pot }: AddToPotDialogProps) {
                   <div className="grid gap-1.5">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-semibold">New Amount</p>
+
                       <span className="text-primary text-2xl leading-tight font-semibold">
                         {valueText}
                       </span>
@@ -102,6 +104,7 @@ export default function AddToPotDialog({ pot }: AddToPotDialogProps) {
               })}
             >
               <input {...form.register("id")} type="hidden" />
+
               <Controller
                 name="amountToUpdate"
                 control={form.control}
