@@ -73,7 +73,7 @@ export default function WithdrawFromPotDialog({
                       </span>
                     </div>
 
-                    <div className="bg-quaternary flex h-2 rounded">
+                    <div className="bg-quaternary flex h-3 rounded">
                       <motion.div
                         className="bg-brand-solid h-full shrink-0 rounded-l"
                         animate={{
