@@ -10,32 +10,26 @@ import {
   generatePaginationMobile,
   generatePaginationDesktop,
 } from "@/lib/helpers/pagination"
+import { cn } from "@/lib/utils"
 
 const paginationStyles = tv({
   slots: {
-    iconStyles: "text-grey-500 size-4 shrink-0",
-    textStyles: "text-grey-900 text-sm leading-normal font-normal",
     linkStyles:
-      "ring-beige-500 active:bg-beige-100 hover:bg-beige-100 border-beige-500 flex shrink-0 items-center justify-center gap-4 rounded-lg border outline-none focus-visible:ring-2 active:scale-97",
-    ulStyles: "flex w-full flex-wrap items-center justify-center gap-2",
+      "ring-brand active:bg-primary_hover hover:bg-primary_hover bg-primary border-primary focus-visible:border-brand flex shrink-0 items-center justify-center gap-1.5 rounded-lg border outline-none focus-visible:ring active:scale-97",
   },
+
   variants: {
-    isDisabled: { true: { linkStyles: "pointer-events-none opacity-40" } },
+    isDisabled: { true: { linkStyles: "pointer-events-none" } },
     size: {
       sm: { linkStyles: "size-8 sm:size-10" },
       lg: { linkStyles: "size-8 sm:h-10 sm:w-12 md:w-24.5" },
     },
     isActive: {
       true: {
-        textStyles: "text-white",
-        linkStyles:
-          "bg-grey-900 border-grey-900 hover:bg-grey-900/85 active:bg-grey-900/85",
+        linkStyles: "bg-brand-solid hover:bg-brand-solid active:bg-brand-solid",
       },
     },
   },
-  compoundSlots: [
-    { slots: ["textStyles"], size: "lg", className: "hidden md:block" },
-  ],
 })
 
 export default function Pagination({
@@ -59,12 +53,10 @@ export default function Pagination({
   const desktopPages = generatePaginationDesktop(currentPage, totalPages)
   const mobilePages = generatePaginationMobile(currentPage, totalPages)
 
-  const { ulStyles } = paginationStyles()
-
   return (
     <nav aria-label="Pagination" className={className}>
       {/* Mobile Pagination */}
-      <ul className={ulStyles({ className: "sm:hidden" })}>
+      <ul className="flex w-full flex-wrap items-center justify-center gap-2 sm:hidden">
         <PaginationPrevious
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
@@ -89,7 +81,7 @@ export default function Pagination({
       </ul>
 
       {/* Desktop Pagination */}
-      <ul className={ulStyles({ className: "hidden sm:flex" })}>
+      <ul className="hidden w-full flex-wrap items-center justify-center gap-2 sm:flex">
         <PaginationPrevious
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1 || currentPage > totalPages + 1}
@@ -120,11 +112,12 @@ export default function Pagination({
 // ============= Pagination Previous ==========
 // ============================================
 
-function PaginationPrevious({
-  isDisabled,
-  ...props
-}: ComponentProps<typeof Link> & { isDisabled?: boolean }) {
-  const { linkStyles, textStyles, iconStyles } = paginationStyles({
+type PaginationPreviousProps = ComponentProps<typeof Link> & {
+  isDisabled?: boolean
+}
+
+function PaginationPrevious({ isDisabled, ...props }: PaginationPreviousProps) {
+  const { linkStyles } = paginationStyles({
     size: "lg",
     isDisabled,
   })
@@ -133,8 +126,10 @@ function PaginationPrevious({
     return (
       <li className="mr-auto">
         <div className={linkStyles()}>
-          <PiCaretLeftFill className={iconStyles()} />
-          <span className={textStyles()}>Prev</span>
+          <PiCaretLeftFill className="text-fg-disabled_subtle size-4" />
+          <span className="text-fg-disabled hidden text-sm font-semibold md:block">
+            Prev
+          </span>
         </div>
       </li>
     )
@@ -142,8 +137,10 @@ function PaginationPrevious({
   return (
     <li className="mr-auto">
       <Link {...props} className={linkStyles()} aria-label="Previous Page">
-        <PiCaretLeftFill className={iconStyles()} />
-        <span className={textStyles()}>Prev</span>
+        <PiCaretLeftFill className="text-fg-quaternary size-4" />
+        <span className="text-secondary hidden text-sm font-semibold md:block">
+          Prev
+        </span>
       </Link>
     </li>
   )
@@ -153,11 +150,12 @@ function PaginationPrevious({
 // =============== Pagination Next ============
 // ============================================
 
-function PaginationNext({
-  isDisabled,
-  ...props
-}: ComponentProps<typeof Link> & { isDisabled?: boolean }) {
-  const { linkStyles, textStyles, iconStyles } = paginationStyles({
+type PaginationNextProps = ComponentProps<typeof Link> & {
+  isDisabled?: boolean
+}
+
+function PaginationNext({ isDisabled, ...props }: PaginationNextProps) {
+  const { linkStyles } = paginationStyles({
     size: "lg",
     isDisabled,
   })
@@ -166,8 +164,10 @@ function PaginationNext({
     return (
       <li className="ml-auto">
         <div className={linkStyles()}>
-          <span className={textStyles()}>Next</span>
-          <PiCaretRightFill className={iconStyles()} />
+          <span className="text-fg-disabled hidden text-sm font-semibold md:block">
+            Next
+          </span>
+          <PiCaretRightFill className="text-fg-disabled_subtle size-4" />
         </div>
       </li>
     )
@@ -175,8 +175,10 @@ function PaginationNext({
   return (
     <li className="ml-auto">
       <Link {...props} className={linkStyles()} aria-label="Next Page">
-        <span className={textStyles()}>Next</span>
-        <PiCaretRightFill className={iconStyles()} />
+        <span className="text-secondary hidden text-sm font-semibold md:block">
+          Next
+        </span>
+        <PiCaretRightFill className="text-fg-quaternary size-4" />
       </Link>
     </li>
   )
@@ -186,22 +188,31 @@ function PaginationNext({
 // ============== Pagination Number ===========
 // ============================================
 
+type PaginationNumberProps = ComponentProps<typeof Link> & {
+  pageNumber: string | number
+  isActive?: boolean
+}
+
 function PaginationNumber({
   pageNumber,
   isActive = false,
   ...props
-}: ComponentProps<typeof Link> & {
-  pageNumber: string | number
-  isActive?: boolean
-}) {
-  const { linkStyles, textStyles } = paginationStyles({
+}: PaginationNumberProps) {
+  const { linkStyles } = paginationStyles({
     size: "sm",
     isActive,
   })
   return (
     <li>
       <Link {...props} className={linkStyles()}>
-        <span className={textStyles()}>{pageNumber}</span>
+        <span
+          className={cn(
+            "text-quaternary text-sm font-medium",
+            isActive && "text-white"
+          )}
+        >
+          {pageNumber}
+        </span>
       </Link>
     </li>
   )
@@ -212,10 +223,9 @@ function PaginationNumber({
 // ============================================
 
 function PaginationEllipsis() {
-  const { textStyles } = paginationStyles({ size: "sm" })
   return (
     <li>
-      <span className={textStyles()}>...</span>
+      <span className="text-quaternary">...</span>
     </li>
   )
 }
