@@ -34,7 +34,7 @@ const meta = {
     variant: {
       control: "select",
       description: "Visual variant used for intent and emphasis.",
-      options: ["primary", "secondary", "destructive", "close"],
+      options: ["primary", "secondary", "destructive"],
       table: {
         type: { summary: '"primary" | "secondary" | "destructive"' },
         defaultValue: { summary: '"primary"' },
