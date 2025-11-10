@@ -1,6 +1,6 @@
 import Skeleton from "@/components/ui/Skeleton"
 
-export default function BudgetsOverviewLoading() {
+export default function BudgetsSummaryLoading() {
   return (
     <div className="grid items-center gap-6 2xl:grid-cols-1 @xl:grid-cols-[2fr_3fr]">
       <div className="flex justify-center">
