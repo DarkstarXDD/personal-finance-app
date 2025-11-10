@@ -1,3 +1,4 @@
+import { type Metadata } from "next"
 import { Suspense } from "react"
 
 import PageHeader from "@/components/common/PageHeader"
@@ -5,8 +6,6 @@ import { getCategories, getColors } from "@/data-access/lookups"
 import AddBudgetDialog from "@/features/budgets/components/AddBudgetDialog"
 import Budgets from "@/features/budgets/components/Budgets"
 import BudgetsLoading from "@/features/budgets/components/BudgetsLoading"
-
-import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Budgets - Personal Finance",
