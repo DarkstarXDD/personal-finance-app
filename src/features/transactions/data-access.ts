@@ -82,7 +82,7 @@ export async function getTransactions({
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+  // await new Promise((resolve) => setTimeout(resolve, 2000))
 
   let orderBy: Prisma.TransactionOrderByWithRelationInput
 
