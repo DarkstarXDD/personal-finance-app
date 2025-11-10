@@ -5,7 +5,7 @@ import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Link from "@/components/ui/Link"
 import PotsSummary from "@/features/pots/components/PotsSummary"
-import PotsOverviewLoading from "@/features/pots/components/PotsSummaryLoading"
+import PotsSummaryLoading from "@/features/pots/components/PotsSummaryLoading"
 import { getPots } from "@/features/pots/data-access"
 
 export default function PotsOverview() {
@@ -22,7 +22,7 @@ export default function PotsOverview() {
       </div>
 
       <div className="@container">
-        <Suspense fallback={<PotsOverviewLoading />}>
+        <Suspense fallback={<PotsSummaryLoading />}>
           <Pots />
         </Suspense>
       </div>
@@ -33,17 +33,14 @@ export default function PotsOverview() {
 async function Pots() {
   const { pots, potsSummary } = await getPots(4)
 
-  return (
-    <>
-      {pots.length > 0 ? (
-        <PotsSummary {...{ pots, potsSummary }} />
-      ) : (
-        <EmptyState
-          icon={PiTipJar}
-          title="No pots created yet"
-          description="Start saving for your goals by creating your first pot."
-        />
-      )}
-    </>
-  )
+  if (pots.length === 0)
+    return (
+      <EmptyState
+        icon={PiTipJar}
+        title="No pots created yet"
+        description="Start saving for your goals by creating your first pot."
+      />
+    )
+
+  return <PotsSummary {...{ pots, potsSummary }} />
 }
