@@ -14,11 +14,11 @@ const buttonStyles = tv({
   variants: {
     variant: {
       primary:
-        "bg-brand-solid border-brand-solid rac-hover:border-brand-solid_hover ring-brand rac-hover:bg-brand-solid_hover rac-pressed:bg-brand-solid_hover rac-pressed:border-brand-solid_hover text-white",
+        "bg-brand-solid border-brand-solid rac-hover:border-brand-solid_hover ring-brand rac-hover:bg-brand-solid_hover rac-pressed:bg-brand-solid_hover rac-pressed:border-brand-solid_hover rac-pending:bg-brand-solid_hover rac-pending:border-brand-solid_hover text-white",
       secondary:
-        "text-secondary ring-brand bg-primary border-primary rac-hover:bg-primary_hover rac-pressed:bg-primary_hover",
+        "text-secondary ring-brand bg-primary border-primary rac-hover:bg-primary_hover rac-pressed:bg-primary_hover rac-pending:bg-primary_hover",
       destructive:
-        "bg-error-solid border-error-solid rac-hover:border-error-solid_hover rac-hover:bg-error-solid_hover rac-pressed:bg-error-solid_hover ring-error text-white",
+        "bg-error-solid border-error-solid rac-hover:border-error-solid_hover rac-hover:bg-error-solid_hover rac-pending:border-error-solid_hover rac-pending:bg-error-solid_hover rac-pressed:bg-error-solid_hover ring-error text-white",
     },
     size: {
       md: "min-h-10 px-3.5 py-2 text-sm",
