@@ -60,7 +60,9 @@ test.describe("Transactions Page", () => {
     await transactionPage.categoryItem.click()
     await transactionPage.addTransactionButton.click()
     await expect(page.getByRole("cell", { name: "Random name" })).toBeVisible()
-    await expect(page.getByRole("cell", { name: "10" })).toBeVisible()
+    await expect(
+      page.getByRole("cell", { name: "+$10.00", exact: true })
+    ).toBeVisible()
     await expect(page.getByRole("cell", { name: "Education" })).toBeVisible()
   })
 
