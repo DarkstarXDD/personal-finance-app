@@ -26,14 +26,14 @@ export default async function TransactionsPage({
   const { query, sortby, category, page } = await searchParams
   const currentPage = Math.abs(Number(page) || 1)
 
-  const categories = await getCategories()
-
   const transactionsPromise = getTransactions({
     query,
     sortby,
     category,
     currentPage,
   })
+
+  const categories = await getCategories()
 
   return (
     <main className="grid content-start items-start gap-8">
