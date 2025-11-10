@@ -1,14 +1,10 @@
-import { PiChartDonutFill } from "react-icons/pi"
+import { Suspense } from "react"
 
 import PageHeader from "@/components/common/PageHeader"
-import EmptyState from "@/components/empty-states/EmptyState"
-import Card from "@/components/ui/Card"
 import { getCategories, getColors } from "@/data-access/lookups"
 import AddBudgetDialog from "@/features/budgets/components/AddBudgetDialog"
-import BudgetCard from "@/features/budgets/components/BudgetCard"
-import BudgetsSummary from "@/features/budgets/components/BudgetsSummary"
-import { getBudgets } from "@/features/budgets/data-access"
-import { getTransactionsForBudget } from "@/features/transactions/data-access"
+import Budgets from "@/features/budgets/components/Budgets"
+import BudgetsLoading from "@/features/budgets/components/BudgetsLoading"
 
 import type { Metadata } from "next"
 
@@ -19,16 +15,6 @@ export const metadata: Metadata = {
 export default async function BudgetsPage() {
   const categories = await getCategories()
   const colors = await getColors()
-  const budgets = await getBudgets()
-
-  const budgetsWithTransactions = await Promise.all(
-    budgets.map(async (budget) => {
-      const { transactions, totalSpent } = await getTransactionsForBudget(
-        budget.category.id
-      )
-      return { ...budget, transactions, totalSpent }
-    })
-  )
 
   return (
     <main className="@container grid gap-8">
@@ -38,35 +24,9 @@ export default async function BudgetsPage() {
         action={<AddBudgetDialog categories={categories} colors={colors} />}
       />
 
-      {budgets.length > 0 ? (
-        <div className="grid items-start gap-6 @6xl:grid-cols-[2fr_5fr]">
-          <Card size="lg" className="@container grid content-start gap-8">
-            <h2 className="text-primary text-lg leading-tight font-semibold">
-              Spending Summary
-            </h2>
-            <BudgetsSummary budgets={budgetsWithTransactions} />
-          </Card>
-
-          <div className="grid gap-6 @5xl:grid-cols-2">
-            {budgetsWithTransactions.map(async (budget) => (
-              <BudgetCard
-                key={budget.id}
-                budget={budget}
-                categories={categories}
-                colors={colors}
-              />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <Card>
-          <EmptyState
-            icon={PiChartDonutFill}
-            title="No budgets created yet"
-            description="Set spending limits for different categories."
-          />
-        </Card>
-      )}
+      <Suspense fallback={<BudgetsLoading />}>
+        <Budgets />
+      </Suspense>
     </main>
   )
 }
