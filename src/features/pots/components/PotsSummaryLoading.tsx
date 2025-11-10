@@ -1,6 +1,6 @@
 import Skeleton from "@/components/ui/Skeleton"
 
-export default function PotsOverviewLoading() {
+export default function PotsSummaryLoading() {
   return (
     <div className="grid items-start gap-8 2xl:grid-cols-1 @xl:grid-cols-[2fr_3fr]">
       <div className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2">

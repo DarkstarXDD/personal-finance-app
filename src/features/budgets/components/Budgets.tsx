@@ -21,9 +21,7 @@ export default async function Budgets() {
     })
   )
 
-  if (budgets.length === 0) {
-    return <BudgetsEmptyState />
-  }
+  if (budgets.length === 0) return <BudgetsEmptyState />
 
   return (
     <div className="grid items-start gap-6 @6xl:grid-cols-[2fr_5fr]">
