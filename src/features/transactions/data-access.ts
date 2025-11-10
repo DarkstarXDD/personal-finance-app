@@ -70,6 +70,8 @@ type GetTransactionsParams = {
   take?: number
 }
 
+export type GetTransactionsReturn = ReturnType<typeof getTransactions>
+
 export async function getTransactions({
   query = "",
   sortby = "latest",
@@ -80,7 +82,7 @@ export async function getTransactions({
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   let orderBy: Prisma.TransactionOrderByWithRelationInput
 
