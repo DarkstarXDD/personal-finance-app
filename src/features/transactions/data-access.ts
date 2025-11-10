@@ -70,6 +70,8 @@ type GetTransactionsParams = {
   take?: number
 }
 
+export type GetTransactionsReturn = ReturnType<typeof getTransactions>
+
 export async function getTransactions({
   query = "",
   sortby = "latest",
