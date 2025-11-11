@@ -85,3 +85,12 @@ export async function signOut() {
   cookieStore.delete("session")
   redirect("/login")
 }
+
+// ============================================
+// ============= Delete Account ===============
+// ============================================
+
+export async function deleteAccount() {
+  await account.deleteAccount()
+  signOut()
+}

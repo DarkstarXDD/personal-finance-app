@@ -131,3 +131,18 @@ export async function updatePassword({
     }
   }
 }
+
+// ============================================
+// ============== Delete Account ==============
+// ============================================
+
+export async function deleteAccount() {
+  const userId = await verifySession()
+  if (!userId) redirect("/login")
+
+  try {
+    await prisma.user.delete({ where: { id: userId } })
+  } catch (e) {
+    console.error(e)
+  }
+}
