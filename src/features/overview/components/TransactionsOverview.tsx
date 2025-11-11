@@ -1,11 +1,11 @@
 import { Suspense } from "react"
 import { PiArrowsDownUpFill } from "react-icons/pi"
 
+import TableLoading from "@/components/common/TableLoading"
 import EmptyState from "@/components/empty-states/EmptyState"
 import Card from "@/components/ui/Card"
 import Link from "@/components/ui/Link"
 import TableDesktop from "@/features/transactions/components/TableDesktop"
-import TableLoading from "@/features/transactions/components/TableLoading"
 import TableMobile from "@/features/transactions/components/TableMobile"
 import { getTransactions } from "@/features/transactions/data-access"
 

@@ -2,10 +2,10 @@ import { type Metadata } from "next"
 import { Suspense } from "react"
 
 import PageHeader from "@/components/common/PageHeader"
+import TableLoading from "@/components/common/TableLoading"
 import { getCategories } from "@/data-access/lookups"
 import AddTransactionDialog from "@/features/transactions/components/AddTransactionDialog"
 import TableFilters from "@/features/transactions/components/TableFilters"
-import TableLoading from "@/features/transactions/components/TableLoading"
 import TransactionTables from "@/features/transactions/components/TransactionTables"
 import { getTransactions } from "@/features/transactions/data-access"
 
