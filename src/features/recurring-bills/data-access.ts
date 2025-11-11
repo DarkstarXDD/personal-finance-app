@@ -77,6 +77,8 @@ export type Summary = {
   monthlySummary: MonthlySummary
 }
 
+export type GetRecurringBillsReturn = ReturnType<typeof getRecurringBills>
+
 type GetRecurringBillsParams = {
   query?: string
   sortby?: string
@@ -89,7 +91,7 @@ export async function getRecurringBills({
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 3000))
 
   let orderBy: Prisma.RecurringBillOrderByWithRelationInput
 
