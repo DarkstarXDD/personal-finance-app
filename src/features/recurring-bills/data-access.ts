@@ -91,7 +91,7 @@ export async function getRecurringBills({
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+  // await new Promise((resolve) => setTimeout(resolve, 3000))
 
   let orderBy: Prisma.RecurringBillOrderByWithRelationInput
 
