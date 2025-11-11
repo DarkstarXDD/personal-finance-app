@@ -4,7 +4,7 @@ import type {
   PotCreate,
   TransactionCreate,
   BudgetCreate,
-  PasswordUpdateSchema,
+  PasswordUpdate,
 } from "@/lib/schemas"
 
 export type DALReturn<T extends Record<string, string[]>> =
@@ -44,5 +44,5 @@ export type EmailUpdateErrors = {
 }
 
 export type PasswordUpdateErrors = {
-  [Key in keyof PasswordUpdateSchema]?: string[]
+  [Key in keyof PasswordUpdate]?: string[]
 }

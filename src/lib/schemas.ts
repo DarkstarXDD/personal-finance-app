@@ -27,7 +27,7 @@ export const passwordUpdateSchema = z
     error: "Passowrds don't match.",
     path: ["confirmPassword"],
   })
-export type PasswordUpdateSchema = z.infer<typeof passwordUpdateSchema>
+export type PasswordUpdate = z.infer<typeof passwordUpdateSchema>
 
 // ============================================
 // ==== Transaction Create Schema and Type ====

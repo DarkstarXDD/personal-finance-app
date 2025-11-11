@@ -12,7 +12,7 @@ import {
   emailSchema,
   type Email,
 } from "@/features/auth/schemas"
-import { passwordUpdateSchema, type PasswordUpdateSchema } from "@/lib/schemas"
+import { passwordUpdateSchema, type PasswordUpdate } from "@/lib/schemas"
 import {
   EmailUpdateErrors,
   NameUpdateErrors,
@@ -62,7 +62,7 @@ export async function updateEmail(
 // ============================================
 
 export async function updatePassword(
-  formData: PasswordUpdateSchema
+  formData: PasswordUpdate
 ): Promise<PasswordUpdateErrors | null> {
   const parsed = passwordUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
