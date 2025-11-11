@@ -1,5 +1,5 @@
+import TableLoading from "@/components/common/TableLoading"
 import Skeleton from "@/components/ui/Skeleton"
-import TableLoading from "@/features/transactions/components/TableLoading"
 
 export default function RecurringBillsOverviewLoading() {
   return (

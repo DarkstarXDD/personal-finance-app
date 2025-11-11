@@ -1,8 +1,15 @@
 import Card from "@/components/ui/Card"
-import { type Summary } from "@/features/recurring-bills/data-access"
+import {
+  type GetRecurringBillsReturn,
+  type Summary,
+} from "@/features/recurring-bills/data-access"
 import { currencyFormatter } from "@/lib/utils"
 
-export default function Summary({ summary }: { summary: Summary }) {
+type SummaryProps = { recurringBillsPromise: GetRecurringBillsReturn }
+
+export default async function Summary({ recurringBillsPromise }: SummaryProps) {
+  const { summary } = await recurringBillsPromise
+
   const today = new Date()
   const currentMonth = today.toLocaleDateString(undefined, { month: "long" })
 
