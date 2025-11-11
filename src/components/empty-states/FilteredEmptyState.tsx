@@ -1,10 +1,14 @@
 import { PiWarningCircleFill } from "react-icons/pi"
 
-export default function FilteredEmptyState({ message }: { message?: string }) {
+type FilteredEmptyStateProps = { message?: string }
+
+export default function FilteredEmptyState({
+  message,
+}: FilteredEmptyStateProps) {
   return (
     <div className="flex items-start justify-center gap-2 px-4 py-8">
-      <PiWarningCircleFill className="text-grey-500 size-5" />
-      <p className="text-grey-500 text-center text-sm leading-normal font-normal">
+      <PiWarningCircleFill className="text-fg-quaternary size-5" />
+      <p className="text-tertiary text-center text-sm">
         {message ?? "No results match your filters."}
       </p>
     </div>
