@@ -25,7 +25,7 @@ export class TransactionsPage {
     this.heading = page.getByRole("heading", { name: "Transactions", level: 1 })
     this.emptyState = page.getByRole("heading", {
       name: "No transactions",
-      level: 3,
+      level: 2,
     })
 
     this.searchInput = page.getByRole("searchbox", {
