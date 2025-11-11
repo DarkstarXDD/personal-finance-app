@@ -8,7 +8,7 @@ const LinkStyles = tv({
   variants: {
     withIcon: {
       true: "text-tertiary hover:text-tertiary_hover group hover:bg-active active:bg-active active:text-tertiary_hover justify flex items-center gap-1 px-2 py-1 font-medium no-underline hover:underline active:underline",
-      false: "text-grey-900 hover:text-grey-900/85 active:text-grey-900/85",
+      false: "text-primary hover:text-primary/85 active:text-primary/85",
     },
   },
   defaultVariants: {
