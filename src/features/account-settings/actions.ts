@@ -90,7 +90,16 @@ export async function signOut() {
 // ============= Delete Account ===============
 // ============================================
 
-export async function deleteAccount() {
-  await account.deleteAccount()
+export async function deleteAccount(
+  // Kept these two parameters to satisfy the function signature though these two are not needed
+  // Not the cleanest approach, so need to check back later
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _prev: unknown,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _formData: FormData
+): Promise<string | undefined> {
+  const response = await account.deleteAccount()
+  if (!response.success) return "Error deleting account. Please try again."
+
   signOut()
 }

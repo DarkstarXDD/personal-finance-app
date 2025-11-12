@@ -136,13 +136,15 @@ export async function updatePassword({
 // ============== Delete Account ==============
 // ============================================
 
-export async function deleteAccount() {
+export async function deleteAccount(): Promise<{ success: boolean }> {
   const userId = await verifySession()
   if (!userId) redirect("/login")
 
   try {
     await prisma.user.delete({ where: { id: userId } })
+    return { success: true }
   } catch (e) {
     console.error(e)
+    return { success: false }
   }
 }
