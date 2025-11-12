@@ -16,6 +16,12 @@ export class BudgetsPage {
   readonly addBudgetButton: Locator
 
   readonly budgetCardHeading: Locator
+  readonly budgetCardMaximumAmount: Locator
+  readonly optionsButton: Locator
+  readonly editMenuItem: Locator
+  readonly saveChangesButton: Locator
+  readonly deleteMenuItem: Locator
+  readonly confirmDeleteButton: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -37,7 +43,7 @@ export class BudgetsPage {
     this.categorySelect = page.getByRole("button", {
       name: "Select a Category...",
     })
-    this.categoryItem = page.getByRole("option", { name: "Education" })
+    this.categoryItem = page.getByRole("option", { name: "Bills" })
 
     this.amountInput = page.getByRole("textbox", { name: "Maximum Spend" })
 
@@ -50,9 +56,22 @@ export class BudgetsPage {
     })
 
     this.budgetCardHeading = page.getByRole("heading", {
-      name: "Education",
+      name: "Bills",
       level: 2,
     })
+    this.budgetCardMaximumAmount = page.getByTestId("maximum-amount")
+
+    this.optionsButton = page.getByRole("button", {
+      name: "Options",
+      exact: true,
+    })
+    this.editMenuItem = page.getByRole("menuitem", { name: "Edit Budget..." })
+    this.saveChangesButton = page.getByRole("button", { name: "Save Changes" })
+
+    this.deleteMenuItem = page.getByRole("menuitem", {
+      name: "Delete Budget...",
+    })
+    this.confirmDeleteButton = page.getByRole("button", { name: "Delete" })
   }
 
   async goto() {

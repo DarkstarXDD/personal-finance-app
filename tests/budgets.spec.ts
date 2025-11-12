@@ -1,3 +1,5 @@
+import { prisma } from "@/lib/prisma"
+
 import { test, expect } from "./fixtures/auth"
 import { BudgetsPage } from "./page-objects/budgets-page"
 
@@ -33,5 +35,55 @@ test.describe("Budgets Page", () => {
     await budgetsPage.addBudgetButton.click()
 
     await expect(budgetsPage.budgetCardHeading).toBeVisible()
+  })
+
+  test("can edit a budget", async ({ page, userSession }) => {
+    const categories = await prisma.category.findMany()
+    const colors = await prisma.color.findMany()
+    const updatedAmount = 200
+
+    await prisma.budget.create({
+      data: {
+        userId: userSession.userId,
+        categoryId: categories[0].id,
+        maximumSpend: 100,
+        colorId: colors[0].id,
+      },
+    })
+
+    const budgetsPage = new BudgetsPage(page)
+    await budgetsPage.goto()
+
+    await budgetsPage.optionsButton.click()
+    await budgetsPage.editMenuItem.click()
+    await budgetsPage.amountInput.fill(updatedAmount.toString())
+    await budgetsPage.saveChangesButton.click()
+
+    await expect(budgetsPage.budgetCardMaximumAmount).toContainText(
+      `of $${updatedAmount}.00`
+    )
+  })
+
+  test("can delete a budget", async ({ page, userSession }) => {
+    const categories = await prisma.category.findMany()
+    const colors = await prisma.color.findMany()
+
+    await prisma.budget.create({
+      data: {
+        userId: userSession.userId,
+        categoryId: categories[0].id,
+        maximumSpend: 100,
+        colorId: colors[0].id,
+      },
+    })
+
+    const budgetsPage = new BudgetsPage(page)
+    await budgetsPage.goto()
+
+    await budgetsPage.optionsButton.click()
+    await budgetsPage.deleteMenuItem.click()
+    await budgetsPage.confirmDeleteButton.click()
+
+    await expect(budgetsPage.emptyState).toBeVisible()
   })
 })
