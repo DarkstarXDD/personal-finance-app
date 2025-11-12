@@ -12,20 +12,15 @@ const meta = {
     docs: {
       description: {
         component:
-          "Compact, icon-only button for small actions. Renders a close or options icon and forwards standard button props.",
+          "Icon-only button for small actions such as Dialog close and Options menu trigger.",
       },
     },
   },
 
-  args: {
-    isDisabled: false,
-    onPress: fn(),
-  },
-
   argTypes: {
     variant: {
-      control: "select",
       description: "Visual variant selecting which icon to render.",
+      control: "select",
       options: ["close", "options"],
       table: {
         type: { summary: '"close" | "options"' },
@@ -33,16 +28,25 @@ const meta = {
       },
     },
     isDisabled: {
-      control: "boolean",
       description: "Disable interactions and apply disabled styles.",
-      table: { type: { summary: "boolean" } },
+      control: "boolean",
+      table: { defaultValue: { summary: "false" } },
     },
     onPress: {
       action: "onPress",
-      description: "Callback invoked when the button is pressed.",
-      table: { type: { summary: "() => void" } },
+      description:
+        "Callback to invoke when the button is pressed. Same as `onClick`.",
+      table: { type: { summary: "(e: PressEvent) => void" } },
     },
-    className: { table: { disable: true } },
+    className: {
+      description: "Optional class names to overide any styles.",
+    },
+  },
+
+  args: {
+    variant: "close",
+    isDisabled: false,
+    onPress: fn(),
   },
 } satisfies Meta<typeof IconButton>
 
