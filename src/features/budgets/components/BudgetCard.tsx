@@ -69,7 +69,7 @@ export default function BudgetCard({
             <span className="text-primary text-3xl leading-tight font-semibold">
               {currencyFormatter.format(budget.totalSpent)}
             </span>
-            <span className="font-medium">
+            <span className="font-medium" data-testid="maximum-amount">
               {" "}
               of {currencyFormatter.format(budget.maximumSpend)}
             </span>

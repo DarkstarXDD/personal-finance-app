@@ -4,7 +4,7 @@ import { test as base } from "@playwright/test"
 
 import { createToken } from "@/lib/session"
 
-import { createDummyUser } from "../utils"
+import { createDummyUser, deleteDummyUser } from "../utils"
 
 type Fixtures = {
   userSession: { userId: string }
@@ -26,6 +26,8 @@ export const test = base.extend<Fixtures>({
     ])
 
     await use({ userId: user.id })
+
+    await deleteDummyUser(user.id)
   },
 })
 

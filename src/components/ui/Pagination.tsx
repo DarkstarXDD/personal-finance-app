@@ -26,7 +26,8 @@ const paginationStyles = tv({
     },
     isActive: {
       true: {
-        linkStyles: "bg-brand-solid hover:bg-brand-solid active:bg-brand-solid",
+        linkStyles:
+          "bg-brand-solid border-brand-solid hover:bg-brand-solid active:bg-brand-solid ring-offset-2",
       },
     },
   },

@@ -26,3 +26,10 @@ export async function createDummyUser() {
 
   return { ...user, password: password }
 }
+
+// ============================================
+// ============ Delete Dummy User =============
+// ============================================
+export async function deleteDummyUser(userId: string) {
+  await prisma.user.delete({ where: { id: userId } })
+}

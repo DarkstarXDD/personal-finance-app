@@ -46,7 +46,9 @@ export class TransactionsPage {
     this.expenseRadio = page.getByTestId("expense-radio")
     this.counterpartyInput = page.getByRole("textbox", { name: "Counterparty" })
     this.amountInput = page.getByRole("textbox", { name: "Transaction Amount" })
-    this.categorySelect = page.getByRole("button", { name: "Select a Categor" })
+    this.categorySelect = page.getByRole("button", {
+      name: "Select a Category",
+    })
     this.categoryItem = page.getByRole("option", { name: "Education" })
     this.recurringCheckbox = page.locator('[name="isRecurring"]')
     this.addTransactionButton = page.getByRole("button", {
