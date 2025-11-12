@@ -1,8 +1,7 @@
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 import { PiUserFill } from "react-icons/pi"
 
 import Input from "@/components/ui/Input"
-
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
   title: "Components/UI/Input",
@@ -17,20 +16,13 @@ const meta = {
     },
   },
 
-  args: {
-    placeholder: "Placeholder",
-    type: "text",
-  },
-
   argTypes: {
     placeholder: {
-      control: "text",
       description: "Placeholder text for the input.",
-      table: { type: { summary: "string" } },
     },
     type: {
-      control: "select",
       description: "HTML input type.",
+      control: "select",
       options: ["text", "password", "email", "tel", "number"],
       table: {
         type: { summary: '"text" | "password" | "email" | "tel" | "number"' },
@@ -38,15 +30,18 @@ const meta = {
       },
     },
     icon: {
-      control: false,
-      description: "Leading icon component (IconType).",
-      table: { type: { summary: "IconType" } },
+      description:
+        "Leading icon component (IconType). Passing an icon will automatically render the input with the leading icon. No toggle prop is used.",
     },
     className: {
-      control: "text",
-      description: "Additional CSS class names forwarded to the input.",
-      table: { type: { summary: "string" } },
+      description:
+        "Optional class names to overide any styles. Classes are passed directly to the input element.",
     },
+  },
+
+  args: {
+    placeholder: "Placeholder",
+    type: "text",
   },
 } satisfies Meta<typeof Input>
 
