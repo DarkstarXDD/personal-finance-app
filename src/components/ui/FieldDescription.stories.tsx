@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs-vite"
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 
 import FieldDescription from "@/components/ui/FieldDescription"
 
@@ -15,20 +15,21 @@ const meta = {
     },
   },
 
-  args: {
-    children: "Help text",
-  },
-
   argTypes: {
     children: {
-      control: "text",
       description: "Text content to display as the description.",
+      control: "text",
       table: { type: { summary: "ReactNode" } },
     },
     className: {
+      description: "Optional class names to overide any styles.",
       control: "text",
       table: { type: { summary: "string" } },
     },
+  },
+
+  args: {
+    children: "Help text",
   },
 } satisfies Meta<typeof FieldDescription>
 

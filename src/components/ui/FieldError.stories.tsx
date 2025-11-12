@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs-vite"
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 import { TextField } from "react-aria-components"
 
 import FieldError from "@/components/ui/FieldError"
@@ -16,20 +16,21 @@ const meta = {
     },
   },
 
-  args: {
-    children: "Field error message.",
-  },
-
   argTypes: {
     children: {
-      control: "text",
       description: "Text content to display as the error message.",
+      control: "text",
       table: { type: { summary: "ReactNode" } },
     },
     className: {
+      description: "Optional class names to overide any styles.",
       control: "text",
       table: { type: { summary: "string" } },
     },
+  },
+
+  args: {
+    children: "Field error message.",
   },
 
   // Need to wrap the FieldError in some Field component from RAC. Otherwise the FieldError won't render anything
