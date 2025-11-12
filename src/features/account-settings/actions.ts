@@ -12,7 +12,7 @@ import {
   emailSchema,
   type Email,
 } from "@/features/auth/schemas"
-import { passwordUpdateSchema, type PasswordUpdateSchema } from "@/lib/schemas"
+import { passwordUpdateSchema, type PasswordUpdate } from "@/lib/schemas"
 import {
   EmailUpdateErrors,
   NameUpdateErrors,
@@ -62,7 +62,7 @@ export async function updateEmail(
 // ============================================
 
 export async function updatePassword(
-  formData: PasswordUpdateSchema
+  formData: PasswordUpdate
 ): Promise<PasswordUpdateErrors | null> {
   const parsed = passwordUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
@@ -84,4 +84,22 @@ export async function signOut() {
   const cookieStore = await cookies()
   cookieStore.delete("session")
   redirect("/login")
+}
+
+// ============================================
+// ============= Delete Account ===============
+// ============================================
+
+export async function deleteAccount(
+  // Kept these two parameters to satisfy the function signature though these two are not needed
+  // Not the cleanest approach, so need to check back later
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _prev: unknown,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _formData: FormData
+): Promise<string | undefined> {
+  const response = await account.deleteAccount()
+  if (!response.success) return "Error deleting account. Please try again."
+
+  signOut()
 }
