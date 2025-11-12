@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs-vite"
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 import { useState } from "react"
 
 import Button from "@/components/ui/Button"
@@ -12,53 +12,55 @@ const meta = {
     docs: {
       description: {
         component:
-          "Modal dialog overlay with animated entry. Provides a title, optional description, and slot-based children. Use `DialogTrigger` for an automatic trigger or control it via `isOpen`/`onOpenChange`.",
+          "Modal dialog with a slight animated entry. Provides a title, optional description, and slot-based children. Use `DialogTrigger` for an uncontrolled component or make it a controlled component via `isOpen`/`onOpenChange`.",
       },
     },
-  },
-  args: {
-    title: "Dialog Title",
-    description: "Dialog title support text.",
-    role: "dialog",
   },
 
   argTypes: {
     title: {
-      control: "text",
       description: "The title (heading) of the dialog.",
-      table: { type: { summary: "string" } },
     },
     description: {
-      control: "text",
-      description: "Optional supporting text shown beneath the title.",
-      table: { type: { summary: "string | ReactNode" } },
+      description: "Optional supporting text shown below the title.",
     },
     role: {
-      control: "select",
-      options: ["dialog", "alertdialog"],
       description:
         "Defines the role of the dialog, which affects accessibility.",
+      control: "select",
+      options: ["dialog", "alertdialog"],
       table: {
         defaultValue: { summary: "dialog" },
         type: { summary: '"dialog" | "alertdialog"' },
       },
     },
     isOpen: {
-      control: "boolean",
       description:
-        "Controlled open state for the dialog (use with onOpenChange).",
-      table: { type: { summary: "boolean" } },
+        "Controlled open state for the dialog (use with `onOpenChange`). Not needed if the `Dialog` is rendered inside a `DialogTrigger`.",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     onOpenChange: {
-      action: "onOpenChange",
-      description: "Callback when open state changes.",
+      description: "Callback to invoke when the open state changes.",
       table: { type: { summary: "(isOpen: boolean) => void" } },
     },
     children: {
-      control: { disable: true },
-      table: { type: { summary: "ReactNode | ({close}) => ReactNode" } },
+      description: "Content to be rendered inside the dialog.",
+      table: {
+        type: {
+          summary: "ReactNode | ({close}: DialogRenderProps) => ReactNode",
+        },
+      },
     },
-    className: { table: { disable: true } },
+  },
+
+  args: {
+    title: "Dialog Title",
+    description: "Dialog title support text.",
+    role: "dialog",
   },
 } satisfies Meta<typeof Dialog>
 
@@ -72,7 +74,7 @@ export const Default: Story = {
       <Button variant="primary">Open Dialog</Button>
       <Dialog {...args}>
         <div className="grid gap-4">
-          <p>
+          <p className="text-tertiary">
             This is a dialog content area. You can place any content here, such
             as forms, text, or other components.
           </p>
@@ -113,6 +115,7 @@ export const Controlled: Story = {
     }
     return <Example />
   },
+
   parameters: {
     docs: {
       description: {

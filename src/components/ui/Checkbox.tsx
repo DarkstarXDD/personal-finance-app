@@ -9,15 +9,23 @@ import {
 
 import { cn } from "@/lib/utils"
 
-type CheckboxProps = Omit<RacCheckboxProps, "children"> & {
+type CheckboxProps = Omit<RacCheckboxProps, "children" | "className"> & {
   children: ReactNode
+  className?: string
 }
 
-export default function Checkbox({ children, ...props }: CheckboxProps) {
+export default function Checkbox({
+  children,
+  className,
+  ...props
+}: CheckboxProps) {
   return (
     <RacCheckbox
       {...props}
-      className="group rac-disabled:cursor-not-allowed flex cursor-pointer items-start gap-2"
+      className={cn(
+        "group rac-disabled:cursor-not-allowed flex cursor-pointer items-start gap-2",
+        className
+      )}
     >
       {({ isSelected, isHovered, isPressed, isFocusVisible }) => (
         <>

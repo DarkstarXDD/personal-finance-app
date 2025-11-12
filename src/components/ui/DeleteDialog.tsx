@@ -41,7 +41,7 @@ type DialogProps = Omit<RacModalOverlayProps, "children"> & {
     formData: FormData
   ) => Promise<string | null | undefined>
   itemId?: string | number
-  children?: ReactNode | ((opts: RacDialogRenderProps) => ReactNode)
+  children?: ReactNode | (({ close }: RacDialogRenderProps) => ReactNode)
 }
 
 function DeleteDialog({
