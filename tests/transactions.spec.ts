@@ -68,7 +68,7 @@ test.describe("Transactions Page", () => {
 
   test("can search a transaction", async ({ page, userSession }) => {
     const categories = await prisma.category.findMany()
-    const tx = await prisma.transaction.create({
+    await prisma.transaction.create({
       data: {
         userId: userSession.userId,
         counterparty: "Game store",
