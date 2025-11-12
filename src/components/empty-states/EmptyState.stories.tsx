@@ -8,6 +8,15 @@ const meta = {
   title: "Components/EmptyStates/EmptyState",
   component: EmptyState,
 
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "A UI to display when the user has not created any data in the database. Usually every user will see this when they first signup.",
+      },
+    },
+  },
+
   argTypes: {
     icon: { description: "Icon to render." },
     title: { description: "Title of the empty state." },
