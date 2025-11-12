@@ -20,6 +20,11 @@ const meta = {
       description: "Whether to render the arrow icon or not.",
       table: { defaultValue: { summary: "false" } },
     },
+    className: {
+      description: "Optional class names to overide any styles.",
+      control: "text",
+      table: { type: { summary: "string" } },
+    },
   },
 
   args: {

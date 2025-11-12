@@ -31,7 +31,7 @@ const meta = {
     },
     icon: {
       description:
-        "Leading icon component (IconType). Passing an icon will automatically render the input with the leading icon. No toggle prop is used.",
+        "Optional leading icon. Passing an icon will automatically render the input with the leading icon. No toggle prop is used.",
     },
     className: {
       description:
