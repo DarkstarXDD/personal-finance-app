@@ -19,38 +19,31 @@ const meta = {
 
   argTypes: {
     label: {
-      control: "text",
       description:
         "Label for the field. If a visible label is not provided, an aria-label should be provided.",
     },
     placeholder: {
-      control: "text",
       description: "Placeholder text shown inside the input.",
-      table: { type: { summary: "string" } },
     },
     description: {
-      control: "text",
       description:
         "Optional help text for the field. If an error message is present in the UI, this will be hidden.",
-      table: { type: { summary: "string | ReactNode" } },
     },
     errorMessage: {
-      control: "text",
       description:
         "Error message to be rendered, if the field is marked as invalid.",
-      table: { type: { summary: "string | ReactNode" } },
     },
     isInvalid: {
-      control: "boolean",
       description: "Marks the field as invalid and applies invalid styles.",
+      control: "boolean",
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
       },
     },
     isDisabled: {
-      control: "boolean",
       description: "Disable interactions and applies disabled styles.",
+      control: "boolean",
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
@@ -71,8 +64,9 @@ const meta = {
   args: {
     label: "Text Field",
     placeholder: "Placeholder",
-    isInvalid: false,
     isDisabled: false,
+    isInvalid: false,
+    errorMessage: "Field error message.",
   },
 } satisfies Meta<typeof TextField>
 

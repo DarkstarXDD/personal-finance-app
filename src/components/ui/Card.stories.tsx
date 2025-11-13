@@ -39,6 +39,14 @@ const meta = {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia elit in iaculis vulputate. Sed pretium imperdiet ligula, sit amet rutrum tortor volutpat nec. Donec lobortis pharetra lectus, sed porttitor mauris pellentesque ut. Quisque mi mi, ornare id maximus nec, dignissim id arcu. Integer mollis semper sem non eleifend. Donec sed felis quam. Curabitur hendrerit odio ut feugiat vulputate. Sed vitae tincidunt nisi. Morbi orci mauris, fermentum id fringilla sit amet, aliquam vitae magna. Sed tempus lobortis felis. Nunc et risus elementum, volutpat est pretium, consequat odio. Sed vitae velit justo.",
     size: "lg",
   },
+
+  decorators: [
+    (Story) => (
+      <div className="max-w-xl">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Card>
 
 export default meta

@@ -18,31 +18,28 @@ const meta = {
 
   argTypes: {
     label: {
-      control: "text",
       description:
         "Label for the field. If a visible label is not provided, an aria-label should be provided.",
     },
     description: {
-      control: "text",
       description:
         "Optional help text for the field. If an error message is present in the UI, this will be hidden.",
     },
     errorMessage: {
-      control: "text",
       description:
         "Error message to be rendered, if the field is marked as invalid.",
     },
     isInvalid: {
-      control: "boolean",
       description: "Marks the field as invalid and applies invalid styles.",
+      control: "boolean",
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
       },
     },
     isDisabled: {
-      control: "boolean",
       description: "Disable interactions and applies disabled styles.",
+      control: "boolean",
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: "false" },
@@ -63,6 +60,8 @@ const meta = {
     label: "Number Field",
     icon: PiCurrencyDollarSimple,
     isDisabled: false,
+    isInvalid: false,
+    errorMessage: "Field error message.",
   },
 } satisfies Meta<typeof NumberField>
 
