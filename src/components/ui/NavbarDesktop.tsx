@@ -72,14 +72,19 @@ export default function NavbarDesktop({
       initial={false}
       animate={isExpanded ? "expanded" : "collapsed"}
     >
-      <div className="flex gap-3 py-4">
-        <LogoIcon className="size-9 text-white" />
+      <div className="flex items-center gap-3 py-4 pl-3">
+        <LogoIcon className="size-6 text-white" />
         <motion.div
           className="div"
           variants={buttonTextVariants}
           initial={false}
         >
-          <p className={cn("text-2xl font-bold text-white", className)}>
+          <p
+            className={cn(
+              "text-2xl leading-none font-bold text-white",
+              className
+            )}
+          >
             Finance
           </p>
         </motion.div>
