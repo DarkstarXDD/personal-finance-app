@@ -48,7 +48,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: (args) => (
-    <MenuTrigger>
+    <MenuTrigger defaultOpen>
       <IconButton variant="options" />
       <Menu {...args}>
         <MenuItem>Menu Item 01</MenuItem>

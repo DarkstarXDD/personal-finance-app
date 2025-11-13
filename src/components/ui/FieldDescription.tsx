@@ -1,14 +1,17 @@
-import {
-  Text as RacText,
-  type TextProps as RacTextProps,
-} from "react-aria-components"
+import { type ReactNode } from "react"
+import { Text as RacText } from "react-aria-components"
 
 import { cn } from "@/lib/utils"
+
+type FieldDescriptionProps = {
+  children: ReactNode
+  className?: string
+}
 
 export default function FieldDescription({
   children,
   className,
-}: RacTextProps) {
+}: FieldDescriptionProps) {
   return (
     <RacText
       slot="description"

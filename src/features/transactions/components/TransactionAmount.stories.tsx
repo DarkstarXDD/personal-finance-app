@@ -1,6 +1,6 @@
-import TransactionAmount from "@/features/transactions/components/TransactionAmount"
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import TransactionAmount from "@/features/transactions/components/TransactionAmount"
 
 const meta = {
   title: "Components/Transactions/TransactionAmount",
@@ -13,10 +13,6 @@ const meta = {
           "Renders a formatted transaction amount. Optionally, adds '+' or '−, and a color, if the transaction type is given.",
       },
     },
-  },
-
-  args: {
-    amount: "450",
   },
 
   argTypes: {
@@ -33,6 +29,10 @@ const meta = {
       control: "select",
       options: ["INCOME", "EXPENSE"],
     },
+  },
+
+  args: {
+    amount: "450",
   },
 } satisfies Meta<typeof TransactionAmount>
 

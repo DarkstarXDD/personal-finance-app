@@ -1,12 +1,9 @@
 import { type ReactNode } from "react"
-import {
-  FieldError as RacFieldError,
-  type FieldErrorProps as RacFieldErrorProps,
-} from "react-aria-components"
+import { FieldError as RacFieldError } from "react-aria-components"
 
 import { cn } from "@/lib/utils"
 
-type FieldErrorProps = Omit<RacFieldErrorProps, "children" | "className"> & {
+type FieldErrorProps = {
   children: ReactNode
   className?: string
 }
