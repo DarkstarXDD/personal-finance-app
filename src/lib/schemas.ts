@@ -34,7 +34,11 @@ export type PasswordUpdate = z.infer<typeof passwordUpdateSchema>
 // ============================================
 
 export const transactionCreateSchema = z.object({
-  counterparty: z.string().trim().min(1, "Counterparty name cannot be empty."),
+  counterparty: z
+    .string()
+    .trim()
+    .min(1, "Counterparty name cannot be empty.")
+    .max(30, "Counterparty name should be max 30 characters."),
   amount: z
     .number("Amount cannot be empty.")
     .nonnegative("Amount cannot be negative."),

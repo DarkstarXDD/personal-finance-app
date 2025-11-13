@@ -2,6 +2,8 @@
 
 import NextLink from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
+import { type ComponentProps } from "react"
+import { type IconType } from "react-icons"
 import {
   PiHouseFill as OverviewIcon,
   PiArrowsDownUpFill as TransactionsIcon,
@@ -10,24 +12,15 @@ import {
   PiReceiptFill as BillsIcon,
   PiGearSixFill as SettingsIcon,
 } from "react-icons/pi"
-import { tv } from "tailwind-variants"
 
-import type { ComponentProps } from "react"
-import type { IconType } from "react-icons"
+import { cn } from "@/lib/utils"
 
-const navbarMobileStyles = tv({
-  slots: {
-    navbarMobile: "bg-grey-900 w-full rounded-t-lg px-4 pt-2",
-    navItemsMobile: "flex items-center justify-between",
-  },
-})
+type NavbarMobileProps = { className?: string }
 
-const { navbarMobile, navItemsMobile } = navbarMobileStyles()
-
-export default function NavbarMobile({ className }: { className?: string }) {
+export default function NavbarMobile({ className }: NavbarMobileProps) {
   return (
-    <nav className={navbarMobile({ className })}>
-      <ul className={navItemsMobile()}>
+    <nav className={cn("bg-navbar w-full rounded-t-lg px-4 py-2", className)}>
+      <ul className="flex items-center justify-between">
         <NavItemMobile
           href="/"
           label="Overview"
@@ -64,36 +57,20 @@ export default function NavbarMobile({ className }: { className?: string }) {
   )
 }
 
-const navItemMobileStyles = tv({
-  slots: {
-    navItemMobile:
-      "text-grey-300 hover:text-grey-100 active:text-grey-100 border-grey-900 ring-grey-300 flex w-full flex-col items-center gap-1 rounded-t-lg border-b-4 px-3 py-2 transition-colors outline-none focus-visible:ring-3 md:px-4",
-    navItemTextMobile:
-      "hidden text-center text-xs leading-normal font-bold md:block",
-  },
-
-  variants: {
-    isActive: {
-      true: {
-        navItemMobile:
-          "bg-beige-100 text-green border-green hover:text-green active:text-green",
-        navItemTextMobile: "text-grey-900",
-      },
-    },
-  },
-})
-
-const { navItemMobile, navItemTextMobile } = navItemMobileStyles()
+type NavItemMobileProps = Omit<
+  ComponentProps<typeof NextLink>,
+  "children" | "className"
+> & {
+  label: string
+  icon: IconType
+}
 
 function NavItemMobile({
   label,
   href,
   icon: Icon,
   ...props
-}: Omit<ComponentProps<typeof NextLink>, "children" | "className"> & {
-  label: string
-  icon: IconType
-}) {
+}: NavItemMobileProps) {
   const currentSegment = useSelectedLayoutSegment()
 
   let segmentNameFromProps: string | null = null
@@ -105,15 +82,31 @@ function NavItemMobile({
   const isActive = currentSegment === segmentNameFromProps
 
   return (
-    <li className="w-full max-w-26 md:max-w-none">
+    <li className="w-full">
       <NextLink
         {...props}
         href={href}
-        className={navItemMobile({ isActive })}
+        className={cn(
+          "hover:bg-navbar_hover grid justify-items-center gap-1 rounded-md px-2.5 py-2.5 sm:px-3",
+          isActive && "bg-active hover:bg-active"
+        )}
         aria-label={label}
       >
-        <Icon className="size-6" />
-        <span className={navItemTextMobile({ isActive })}>{label}</span>
+        <Icon
+          className={cn(
+            "text-fg-quaternary size-6",
+            isActive && "text-fg-brand-primary"
+          )}
+        />
+
+        <span
+          className={cn(
+            "text-secondary_on-brand hidden text-xs font-semibold md:block",
+            isActive && "text-secondary"
+          )}
+        >
+          {label}
+        </span>
       </NextLink>
     </li>
   )

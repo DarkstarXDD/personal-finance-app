@@ -1,4 +1,6 @@
-export default function Logo() {
+import { cn } from "@/lib/utils"
+
+export default function Logo({ className }: { className?: string }) {
   return (
     <svg
       width="48"
@@ -6,7 +8,7 @@ export default function Logo() {
       viewBox="0 0 54 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="size-12"
+      className={cn("size-12", className)}
     >
       <g filter="url(#filter0_ddiii_2397_4835)">
         <g clipPath="url(#clip0_2397_4835)">
