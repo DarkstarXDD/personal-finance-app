@@ -3,7 +3,10 @@ import { Text as RacText } from "react-aria-components"
 
 import { cn } from "@/lib/utils"
 
-type FieldDescriptionProps = { children: ReactNode; className?: string }
+type FieldDescriptionProps = {
+  children: ReactNode
+  className?: string
+}
 
 export default function FieldDescription({
   children,

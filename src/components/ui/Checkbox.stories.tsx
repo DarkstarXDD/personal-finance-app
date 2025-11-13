@@ -1,6 +1,7 @@
-import Checkbox from "@/components/ui/Checkbox"
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
+import { fn } from "storybook/test"
 
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import Checkbox from "@/components/ui/Checkbox"
 
 const meta = {
   title: "Components/UI/Checkbox",
@@ -10,30 +11,35 @@ const meta = {
     docs: {
       description: {
         component:
-          "Compact animated checkbox used for boolean choices in forms.",
+          "Used for boolean choices in forms. The checkmark has a small animation.",
       },
     },
   },
 
-  args: { children: "Checkbox Label", isDisabled: false },
-
   argTypes: {
     children: {
-      control: "text",
       description: "Label text displayed next to the checkbox.",
-      table: { type: { summary: "ReactNode" } },
+      control: "text",
     },
     isDisabled: {
-      control: "boolean",
       description: "Disable interactions and apply disabled styles.",
-      table: { type: { summary: "boolean" } },
+      control: "boolean",
+      table: { defaultValue: { summary: "false" } },
     },
     onChange: {
-      action: "onChange",
-      description: "Callback fired when selection changes.",
+      description: "Callback to invoke when selection changes.",
       table: { type: { summary: "(checked: boolean) => void" } },
     },
-    className: { table: { disable: true } },
+    className: {
+      description:
+        "Optional class names to overide any styles. Classes are passed to the wrapper element of the checkbox and the label.",
+    },
+  },
+
+  args: {
+    children: "Checkbox Label",
+    isDisabled: false,
+    onChange: fn(),
   },
 } satisfies Meta<typeof Checkbox>
 

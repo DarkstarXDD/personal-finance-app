@@ -34,7 +34,7 @@ function DialogTrigger(props: DialogTriggerProps) {
 type DialogProps = Omit<RacModalOverlayProps, "children"> & {
   title: string
   description?: string
-  children?: ReactNode | ((opts: RacDialogRenderProps) => ReactNode)
+  children?: ReactNode | (({ close }: RacDialogRenderProps) => ReactNode)
   role?: "dialog" | "alertdialog"
 }
 

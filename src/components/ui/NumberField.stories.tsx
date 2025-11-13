@@ -1,8 +1,7 @@
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 import { PiCurrencyDollarSimple } from "react-icons/pi"
 
 import NumberField from "@/components/ui/NumberField"
-
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
   title: "Components/UI/NumberField",
@@ -12,8 +11,48 @@ const meta = {
     docs: {
       description: {
         component:
-          "Number only input with increment/decrement controls and optional leading icon.",
+          "Number only input with increment/decrement controls and optional leading icon. Combines FieldLabel, Input, FieldError and FieldDescription together.",
       },
+    },
+  },
+
+  argTypes: {
+    label: {
+      description:
+        "Label for the field. If a visible label is not provided, an aria-label should be provided.",
+    },
+    description: {
+      description:
+        "Optional help text for the field. If an error message is present in the UI, this will be hidden.",
+    },
+    errorMessage: {
+      description:
+        "Error message to be rendered, if the field is marked as invalid.",
+    },
+    isInvalid: {
+      description: "Marks the field as invalid and applies invalid styles.",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    isDisabled: {
+      description: "Disable interactions and applies disabled styles.",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    icon: {
+      description:
+        "Optional leading icon. Passing an icon will automatically render the input with the leading icon. No toggle prop is used.",
+      table: { type: { summary: "IconType" } },
+    },
+    className: {
+      description:
+        "Optional class names to overide any styles. Classes are passed to the wrapper element.",
     },
   },
 
@@ -21,38 +60,8 @@ const meta = {
     label: "Number Field",
     icon: PiCurrencyDollarSimple,
     isDisabled: false,
-  },
-
-  argTypes: {
-    label: {
-      control: "text",
-      description:
-        "Label for the field. If a visible label is not provided, an aria-label should be provided. ",
-      table: { type: { summary: "string" } },
-    },
-    description: {
-      control: "text",
-      description:
-        "Optional help text for the field. If an error message is present in the UI, this will be hidden.",
-      table: { type: { summary: "string | ReactNode" } },
-    },
-    errorMessage: {
-      control: "text",
-      description:
-        "Error message to be rendered, if the field is marked as invalid.",
-      table: { type: { summary: "string | ReactNode" } },
-    },
-    isInvalid: {
-      control: "boolean",
-      description: "Marks the field as invalid.",
-      table: { type: { summary: "boolean" } },
-    },
-    icon: {
-      control: false,
-      description: "Optional leading icon (IconType).",
-      table: { type: { summary: "IconType" } },
-    },
-    className: { table: { disable: true } },
+    isInvalid: false,
+    errorMessage: "Field error message.",
   },
 } satisfies Meta<typeof NumberField>
 

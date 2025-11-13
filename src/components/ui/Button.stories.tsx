@@ -1,8 +1,7 @@
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 import { fn } from "storybook/test"
 
 import Button from "@/components/ui/Button"
-
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
   title: "Components/UI/Buttons/Button",
@@ -11,8 +10,52 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "Compact, accessible button used across the app.",
+        component:
+          "Button component used across the app. Mainly used as form submit/cancel button, Dialog trigger and Select trigger.",
       },
+    },
+  },
+
+  argTypes: {
+    children: {
+      description: "Button label or content.",
+    },
+    variant: {
+      description: "Visual variant. Mostly changes the color.",
+      control: "select",
+      options: ["primary", "secondary", "destructive"],
+      table: {
+        type: { summary: '"primary" | "secondary" | "destructive"' },
+        defaultValue: { summary: '"primary"' },
+      },
+    },
+    size: {
+      description: "Mostly changes padding and minimum height.",
+      control: "select",
+      options: ["md", "lg", "xl"],
+      table: {
+        type: { summary: '"md" | "lg" | "xl"' },
+        defaultValue: { summary: '"xl"' },
+      },
+    },
+    isPending: {
+      description: "Show loading spinner and apply loading styles.",
+      control: "boolean",
+      table: { defaultValue: { summary: "false" } },
+    },
+    isDisabled: {
+      description: "Disable interactions and apply disabled styles.",
+      control: "boolean",
+      table: { defaultValue: { summary: "false" } },
+    },
+    onPress: {
+      action: "onPress",
+      description:
+        "Callback to invoke when the button is pressed. Same as `onClick`.",
+      table: { type: { summary: "(e: PressEvent) => void" } },
+    },
+    className: {
+      description: "Optional class names to overide any styles.",
     },
   },
 
@@ -23,47 +66,6 @@ const meta = {
     isDisabled: false,
     isPending: false,
     onPress: fn(),
-  },
-
-  argTypes: {
-    children: {
-      control: "text",
-      description: "Button label or content.",
-      table: { type: { summary: "ReactNode" } },
-    },
-    variant: {
-      control: "select",
-      description: "Visual variant used for intent and emphasis.",
-      options: ["primary", "secondary", "destructive"],
-      table: {
-        type: { summary: '"primary" | "secondary" | "destructive"' },
-        defaultValue: { summary: '"primary"' },
-      },
-    },
-    size: {
-      control: "select",
-      description: "Size token affecting padding and minimum height.",
-      options: ["md", "lg", "xl"],
-      table: {
-        type: { summary: '"md" | "lg" | "xl"' },
-        defaultValue: { summary: '"xl"' },
-      },
-    },
-    isPending: {
-      control: "boolean",
-      description: "Show loading state and spinner.",
-      table: { type: { summary: "boolean" } },
-    },
-    isDisabled: {
-      control: "boolean",
-      description: "Disable interactions and apply disabled styles.",
-      table: { type: { summary: "boolean" } },
-    },
-    onPress: {
-      action: "onPress",
-      description: "Callback invoked on user activation.",
-      table: { type: { summary: "() => void" } },
-    },
   },
 } satisfies Meta<typeof Button>
 

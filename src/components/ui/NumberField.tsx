@@ -66,7 +66,7 @@ export default function NumberField({
         <RacInput
           ref={ref}
           className={cn(
-            "text-primary text-md rac-disabled:cursor-not-allowed placeholder:text-placeholder h-full min-w-0 px-3.5 py-2 leading-normal font-normal outline-none",
+            "text-primary text-md rac-disabled:cursor-not-allowed placeholder:text-placeholder h-full w-full min-w-0 px-3.5 py-2 leading-normal font-normal outline-none",
             isIcon && "pl-9.5"
           )}
         />

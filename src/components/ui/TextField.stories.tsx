@@ -1,8 +1,7 @@
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 import { PiUserFill } from "react-icons/pi"
 
 import TextField from "@/components/ui/TextField"
-
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
   title: "Components/UI/TextField",
@@ -17,49 +16,56 @@ const meta = {
     },
   },
 
+  argTypes: {
+    label: {
+      description:
+        "Label for the field. If a visible label is not provided, an aria-label should be provided.",
+    },
+    placeholder: {
+      description: "Placeholder text shown inside the input.",
+    },
+    description: {
+      description:
+        "Optional help text for the field. If an error message is present in the UI, this will be hidden.",
+    },
+    errorMessage: {
+      description:
+        "Error message to be rendered, if the field is marked as invalid.",
+    },
+    isInvalid: {
+      description: "Marks the field as invalid and applies invalid styles.",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    isDisabled: {
+      description: "Disable interactions and applies disabled styles.",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    icon: {
+      description:
+        "Optional leading icon. Passing an icon will automatically render the input with the leading icon. No toggle prop is used.",
+      table: { type: { summary: "IconType" } },
+    },
+    className: {
+      description:
+        "Optional class names to overide any styles. Classes are passed to the wrapper element.",
+      table: { type: { summary: "string" } },
+    },
+  },
+
   args: {
     label: "Text Field",
     placeholder: "Placeholder",
-    isInvalid: false,
     isDisabled: false,
-  },
-
-  argTypes: {
-    label: {
-      control: "text",
-      description: "Field label text.",
-      table: { type: { summary: "string" } },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder text shown inside the input.",
-      table: { type: { summary: "string" } },
-    },
-    description: {
-      control: "text",
-      description: "Optional helper text shown under the field.",
-      table: { type: { summary: "string | ReactNode" } },
-    },
-    errorMessage: {
-      control: "text",
-      description: "Error text shown when field is invalid.",
-      table: { type: { summary: "string | ReactNode" } },
-    },
-    isInvalid: {
-      control: "boolean",
-      description: "Marks the field as invalid, applying invalid styles.",
-      table: { type: { summary: "boolean" } },
-    },
-    isDisabled: {
-      control: "boolean",
-      description: "Disable interactions and applies disabled styles.",
-      table: { type: { summary: "boolean" } },
-    },
-    icon: {
-      control: false,
-      description: "Optional leading icon (IconType).",
-      table: { type: { summary: "IconType" } },
-    },
+    isInvalid: false,
+    errorMessage: "Field error message.",
   },
 } satisfies Meta<typeof TextField>
 
@@ -69,16 +75,16 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 
+export const WithIcon: Story = {
+  args: { icon: PiUserFill },
+}
+
 export const WithDescription: Story = {
   args: { description: "Helper text." },
 }
 
 export const WithErrorMessage: Story = {
   args: { errorMessage: "Field error message.", isInvalid: true },
-}
-
-export const WithIcon: Story = {
-  args: { icon: PiUserFill },
 }
 
 export const Disabled: Story = {

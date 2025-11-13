@@ -1,8 +1,7 @@
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 import { PiArrowsOutSimpleFill } from "react-icons/pi"
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
-
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
   title: "Components/UI/RadioGroup",
@@ -18,35 +17,48 @@ const meta = {
     },
   },
 
+  argTypes: {
+    label: {
+      description:
+        "Label for the radio group. If a visible label is not provided, an aria-label should be provided.",
+    },
+    errorMessage: {
+      description:
+        "Error message to be rendered, if the field is marked as invalid.",
+    },
+    isInvalid: {
+      description: "Marks the field as invalid and applies invalid styles.",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    isDisabled: {
+      description:
+        "Disable interactions of all radio buttons and applies disabled styles.",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+  },
+
   args: {
     label: "Label",
     isDisabled: false,
+    isInvalid: false,
+    errorMessage: "Field error message.",
   },
 
-  argTypes: {
-    label: {
-      control: "text",
-      description:
-        "Label for the radio group. If a visible label is not provided, an aria-label should be provided.",
-      table: { type: { summary: "string" } },
-    },
-    errorMessage: {
-      control: "text",
-      description: "Error message to display when the group is invalid.",
-      table: { type: { summary: "string | ReactNode" } },
-    },
-    isInvalid: {
-      control: "boolean",
-      description:
-        "Mark the radio group as invalid and show the error message.",
-      table: { type: { summary: "boolean" } },
-    },
-    isDisabled: {
-      control: "boolean",
-      description: "Disable all radio items.",
-      table: { type: { summary: "boolean" } },
-    },
-  },
+  decorators: [
+    (Story) => (
+      <div className="m-auto max-w-lg">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof RadioGroup>
 
 export default meta

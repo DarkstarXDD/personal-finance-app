@@ -29,7 +29,9 @@ function RadioGroup({
   return (
     <RacRadioGroup {...props} className={cn("grid gap-1.5", className)}>
       <Label>{label}</Label>
+
       <div className={cn("flex flex-col gap-2")}>{children}</div>
+
       <FieldError>{errorMessage}</FieldError>
     </RacRadioGroup>
   )

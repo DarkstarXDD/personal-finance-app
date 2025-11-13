@@ -1,7 +1,7 @@
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
+
 import IconButton from "@/components/ui/IconButton"
 import { MenuTrigger, Menu, MenuItem } from "@/components/ui/Menu"
-
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
   title: "Components/UI/Menu",
@@ -15,24 +15,30 @@ const meta = {
     },
   },
 
-  args: {
-    placement: "bottom right",
-  },
-
   argTypes: {
     placement: {
+      description: "Popover placement relative to the trigger.",
       control: "select",
       options: ["bottom right", "bottom left", "top right", "top left"],
-      description: "Popover placement relative to the trigger.",
       table: {
         type: { summary: "string" },
         defaultValue: { summary: "bottom right" },
       },
     },
     children: {
-      control: { disable: true },
+      description: "Children should be MenuItem components.",
       table: { type: { summary: "ReactNode" } },
     },
+    className: {
+      description:
+        "Optional class names to overide any styles. Classes are passed to the Menu element.",
+      control: "text",
+      table: { type: { summary: "string" } },
+    },
+  },
+
+  args: {
+    placement: "bottom right",
   },
 } satisfies Meta<typeof Menu>
 
