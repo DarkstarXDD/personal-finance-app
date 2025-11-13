@@ -1,10 +1,11 @@
-import { Select, SelectItem } from "@/components/ui/Select"
+import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
 
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import { Select, SelectItem } from "@/components/ui/Select"
 
 const meta = {
   title: "Components/UI/Select",
   component: Select,
+
   parameters: {
     layout: "padded",
     docs: {
@@ -15,53 +16,70 @@ const meta = {
     },
   },
 
-  args: {
-    label: "Label",
-    placeholder: "Select an Item",
-    errorMessage: "Field error message",
-    isInvalid: false,
-    isDisabled: false,
-  },
-
   argTypes: {
     label: {
-      control: "text",
-      description: "Field label text.",
-      table: { type: { summary: "string" } },
+      description:
+        "Label for the field. If a visible label is not provided, an aria-label should be provided.",
     },
     placeholder: {
-      control: "text",
-      description: "Placeholder shown when no value is selected.",
-      table: { type: { summary: "string" } },
+      description: "Placeholder text shown when no value is selected.",
     },
     description: {
-      control: "text",
       description:
-        "Optional Helper text shown under the field when not invalid.",
-      table: { type: { summary: "ReactNode" } },
+        "Optional help text for the field. If an error message is present in the UI, this will be hidden.",
     },
     errorMessage: {
-      control: "text",
-      description: "Error message displayed when the field is invalid.",
-      table: { type: { summary: "ReactNode" } },
+      description:
+        "Error message to be rendered, if the field is marked as invalid.",
     },
     isInvalid: {
+      description: "Marks the field as invalid and applies invalid styles.",
       control: "boolean",
-      description: "Marks the field as invalid.",
-      table: { type: { summary: "boolean" } },
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     isDisabled: {
+      description: "Disable interactions and applies disabled styles.",
       control: "boolean",
-      description: "Disable interactions and apply disabled styles.",
-      table: { type: { summary: "boolean" } },
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     items: {
-      control: false,
       description: "Optional items iterable passed to the listbox.",
+      control: false,
       table: { type: { summary: "Iterable<T>" } },
     },
-    className: { table: { disable: true } },
+    children: {
+      description:
+        "Either `SelectItem` components or a function that will be called for each item in the `items` array and returns a `SelectItem`.",
+      table: { type: { summary: "ReactNode | ((item: T) => ReactNode)" } },
+    },
+    className: {
+      description:
+        "Optional class names to overide any styles. Classes are passed to the wrapper element.",
+      table: { type: { summary: "string" } },
+    },
   },
+
+  args: {
+    label: "Label",
+    placeholder: "Select an Item...",
+    isDisabled: false,
+    isInvalid: false,
+    errorMessage: "Field error message.",
+  },
+
+  decorators: [
+    (Story) => (
+      <div className="m-auto max-w-xs">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Select>
 
 export default meta
@@ -81,7 +99,7 @@ export const Default: Story = {
 
 export const WithDescription: Story = {
   args: {
-    description: "Helper text",
+    description: "Helper text.",
   },
   render: (args) => (
     <Select {...args}>
@@ -95,8 +113,8 @@ export const WithDescription: Story = {
 
 export const WithErrorMessage: Story = {
   args: {
-    description: "Helper text",
-    errorMessage: "Field error message",
+    description: "Helper text.",
+    errorMessage: "Field error message.",
     isInvalid: true,
   },
   render: (args) => (
