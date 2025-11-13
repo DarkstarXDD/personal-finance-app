@@ -86,6 +86,8 @@
   --text-color-white: var(--color-white);
   --text-color-primary: var(--color-grey-900);
   --text-color-secondary: var(--color-grey-700);
+  --text-color-secondary_hover: var(--color-grey-800);
+  --text-color-secondary_on-brand: var(--color-grey-300);
   --text-color-tertiary: var(--color-grey-600);
   --text-color-tertiary_hover: var(--color-grey-700);
   --text-color-quaternary: var(--color-grey-500);
@@ -129,6 +131,8 @@
   --background-color-error-secondary: var(--color-error-100);
   --background-color-error-solid: var(--color-error-600);
   --background-color-error-solid_hover: var(--color-error-700);
+  --background-color-navbar: var(--color-grey-900);
+  --background-color-navbar_hover: var(--color-grey-800);
   --background-color-overlay: var(--color-grey-950);
   --background-color-skeleton: var(--color-grey-300);
 

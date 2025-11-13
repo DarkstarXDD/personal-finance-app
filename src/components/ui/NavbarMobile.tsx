@@ -2,6 +2,8 @@
 
 import NextLink from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
+import { type ComponentProps } from "react"
+import { type IconType } from "react-icons"
 import {
   PiHouseFill as OverviewIcon,
   PiArrowsDownUpFill as TransactionsIcon,
@@ -12,8 +14,7 @@ import {
 } from "react-icons/pi"
 import { tv } from "tailwind-variants"
 
-import type { ComponentProps } from "react"
-import type { IconType } from "react-icons"
+import { cn } from "@/lib/utils"
 
 const navbarMobileStyles = tv({
   slots: {
@@ -85,15 +86,20 @@ const navItemMobileStyles = tv({
 
 const { navItemMobile, navItemTextMobile } = navItemMobileStyles()
 
+type NavbarMobileProps = Omit<
+  ComponentProps<typeof NextLink>,
+  "children" | "className"
+> & {
+  label: string
+  icon: IconType
+}
+
 function NavItemMobile({
   label,
   href,
   icon: Icon,
   ...props
-}: Omit<ComponentProps<typeof NextLink>, "children" | "className"> & {
-  label: string
-  icon: IconType
-}) {
+}: NavbarMobileProps) {
   const currentSegment = useSelectedLayoutSegment()
 
   let segmentNameFromProps: string | null = null
