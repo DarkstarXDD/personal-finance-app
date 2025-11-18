@@ -53,7 +53,7 @@ export default function DonutChart({ chartData }: { chartData: Slice[] }) {
           <p className="text-primary text-center font-semibold">
             {hovered.label}
           </p>
-          <p className="text-primary text-center font-medium">
+          <p className="text-tertiary text-center font-medium">
             {currencyFormatter.format(hovered.target)}
           </p>
         </div>
