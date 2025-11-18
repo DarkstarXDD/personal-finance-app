@@ -94,7 +94,7 @@ export default function LoginForm() {
           href="/signup"
           className="text-brand-secondary hover:text-brand-secondary_hover font-semibold underline"
         >
-          Sign Up
+          Sign up
         </Link>
       </p>
     </div>
