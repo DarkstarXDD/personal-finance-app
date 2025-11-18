@@ -29,7 +29,7 @@ export default function DonutChart({ chartData }: { chartData: Slice[] }) {
 
   const arcGenerator = d3
     .arc<d3.PieArcDatum<Slice>>()
-    .innerRadius(RADIUS * 0.6)
+    .innerRadius(RADIUS * 0.7)
     .outerRadius(RADIUS)
 
   return (
