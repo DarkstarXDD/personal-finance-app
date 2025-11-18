@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useForm, Controller } from "react-hook-form"
 
-import Logo from "@/components/icons/Logo"
+import LogoBadge from "@/components/icons/LogoBadge"
 import Button from "@/components/ui/Button"
 import TextField from "@/components/ui/TextField"
 import { registerUser } from "@/features/auth/actions"
@@ -20,7 +20,8 @@ export default function SignupForm() {
   return (
     <div className="mx-auto grid max-w-90 justify-items-center gap-8">
       <div className="grid w-full justify-items-center gap-6">
-        <Logo />
+        <LogoBadge />
+
         <form
           noValidate
           className="grid w-full gap-8"
@@ -56,6 +57,7 @@ export default function SignupForm() {
                 />
               )}
             />
+
             <Controller
               name="email"
               control={form.control}
@@ -72,6 +74,7 @@ export default function SignupForm() {
                 />
               )}
             />
+
             <Controller
               name="password"
               control={form.control}

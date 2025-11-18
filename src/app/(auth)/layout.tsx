@@ -3,7 +3,6 @@ import "@/styles/globals.css"
 import { type Metadata } from "next"
 import { type ReactNode } from "react"
 
-// import SideImage from "@/features/auth/components/SideImage"
 import { inter } from "@/lib/fonts"
 
 export const metadata: Metadata = {
@@ -41,10 +40,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       <body
         className={`${inter.variable} font-body text-tertiary text-md bg-primary grid min-h-dvh items-center leading-normal font-normal tracking-normal antialiased`}
       >
-        <div className="m-auto grid w-full max-w-400 items-center justify-items-center lg:grid-cols-[1fr_auto] lg:items-center">
-          <div className="w-full px-4 py-6 md:px-10 md:py-8">{children}</div>
-          {/* <SideImage /> */}
-        </div>
+        <div className="w-full px-4 py-6 md:px-10 md:py-8">{children}</div>
       </body>
     </html>
   )

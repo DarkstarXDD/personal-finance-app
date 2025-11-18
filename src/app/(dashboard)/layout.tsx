@@ -2,6 +2,7 @@ import "@/styles/globals.css"
 
 import { type Metadata } from "next"
 import { cookies } from "next/headers"
+import { type ReactNode } from "react"
 
 import NavbarDesktop from "@/components/ui/NavbarDesktop"
 import NavbarMobile from "@/components/ui/NavbarMobile"
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   },
 }
 
-type DashboardLayoutProps = Readonly<{ children: React.ReactNode }>
+type DashboardLayoutProps = Readonly<{ children: ReactNode }>
 
 export default async function DashboardLayout({
   children,
@@ -51,7 +52,9 @@ export default async function DashboardLayout({
           initialExpanded={isExpanded === "0" ? false : true}
           className="sticky bottom-0 hidden [grid-area:navbar] lg:top-0 lg:flex"
         />
+
         <div className="px-4 py-6 md:px-10 md:py-8">{children}</div>
+
         <NavbarMobile className="sticky bottom-0 [grid-area:navbar] lg:hidden" />
       </body>
     </html>
