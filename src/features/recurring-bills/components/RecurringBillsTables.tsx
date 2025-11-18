@@ -13,7 +13,12 @@ export default async function RecurringBillsTables({
 }: RecurringBillsTablesProps) {
   const { recurringBills, summary } = await recurringBillsPromise
 
-  if (summary.billCount === 0) return <RecurringBillsEmptyState />
+  if (summary.billCount === 0)
+    return (
+      <div className="md:px-6">
+        <RecurringBillsEmptyState />
+      </div>
+    )
 
   return (
     <>
