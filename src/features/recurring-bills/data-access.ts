@@ -11,9 +11,9 @@ import {
   type MonthlySummary,
   type BillMonthlyStatus,
 } from "@/features/recurring-bills/helpers"
+import { RecurringBillCreate } from "@/features/recurring-bills/schemas"
 import { prisma, type Prisma } from "@/lib/prisma"
-import { TransactionCreate } from "@/lib/schemas"
-import { TransactionCreateErrors, DALReturn } from "@/lib/types"
+import { type RecurringBillCreateErrors, type DALReturn } from "@/lib/types"
 
 // ============================================
 // =========== Create Recurring Bill ==========
@@ -22,8 +22,8 @@ import { TransactionCreateErrors, DALReturn } from "@/lib/types"
 export async function createRecurringBill({
   amount,
   counterparty,
-}: TransactionCreate): Promise<
-  DALReturn<TransactionCreateErrors> & { recurringBillId?: string }
+}: RecurringBillCreate): Promise<
+  DALReturn<RecurringBillCreateErrors> & { recurringBillId?: string }
 > {
   const userId = await verifySession()
   if (!userId) redirect("/login")
