@@ -7,6 +7,8 @@ A Finance management app with transaction tracking, budget management, savings g
 - Live site: [https://personal-finance-darkstar.vercel.app](https://personal-finance-darkstar.vercel.app/transactions)
 - Storybook: https://686e3fe27611a7cc8167dd9d-oklnboabxr.chromatic.com/
 
+#
+
 ### Built with
 
 - Next.js 15
@@ -24,6 +26,8 @@ A Finance management app with transaction tracking, budget management, savings g
 - Motion - Some small animations throughout the app Ex: Sidebar, dropdowns etc.
 - Storybook - Component and accessibility tests. Also visual tests on Chromatic
 - Playwright - E2E tests
+
+#
 
 ### Features
 
@@ -55,6 +59,8 @@ A Finance management app with transaction tracking, budget management, savings g
   - Supports editing account details such as email, username and password.
   - Supports deleting accounts, including all the data the user has created under that account.
 
+#
+
 ### Technical Details
 
 - All base components are built on top of React Aria Components. They are headless components so all styles were done by me using Tailwind. Each base component has it’s own Storybook entry.
@@ -68,6 +74,8 @@ A Finance management app with transaction tracking, budget management, savings g
 - GitHub Actions had few tests like linting and type checking, Storybook tests, Playwright E2E tests and Storybook publishing to Chromatic. I set the actions to run on each PR to `main` (this will run the actions on the feature branch) and also on each push to `main` (this will run the actions on the `main` itself after the PR is merged).
 - Disabled direct pushes to `main` in GitHub repo settings, so all commits have been made via feature PR’s. I also squashed and merged each PR. I think the commit history looks much more cleaner and organized that way.
 - I used Linear to track issues so all feature branch names were from Linear.
+
+#
 
 ### Credits
 
