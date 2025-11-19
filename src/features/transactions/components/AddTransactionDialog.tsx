@@ -13,7 +13,10 @@ import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { type Category } from "@/data-access/lookups"
 import { createTransaction } from "@/features/transactions/actions"
-import { TransactionCreate, transactionCreateSchema } from "@/lib/schemas"
+import {
+  transactionCreateSchema,
+  type TransactionCreate,
+} from "@/features/transactions/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 export default function AddTransactionDialog({

@@ -1,9 +1,9 @@
 import type { Signup, Login, Name, Email } from "@/features/auth/schemas"
 import type { RecurringBillCreate } from "@/features/recurring-bills/schemas"
+import type { TransactionCreate } from "@/features/transactions/schemas"
 import type {
   PotAmountUpdate,
   PotCreate,
-  TransactionCreate,
   BudgetCreate,
   PasswordUpdate,
 } from "@/lib/schemas"

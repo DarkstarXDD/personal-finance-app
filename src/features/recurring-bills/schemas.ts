@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { transactionCreateSchema } from "@/lib/schemas"
+import { transactionCreateSchema } from "@/features/transactions/schemas"
 
 export const recurringBillCreateSchema = transactionCreateSchema.pick({
   amount: true,
