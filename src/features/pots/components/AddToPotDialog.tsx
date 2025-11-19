@@ -11,7 +11,7 @@ import { DialogTrigger, Dialog } from "@/components/ui/Dialog"
 import NumberField from "@/components/ui/NumberField"
 import { addToPot } from "@/features/pots/actions"
 import { type Pot } from "@/features/pots/data-access"
-import { potAmountUpdateSchema } from "@/lib/schemas"
+import { potAmountUpdateSchema } from "@/features/pots/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 type AddToPotDialogProps = { pot: Pot }

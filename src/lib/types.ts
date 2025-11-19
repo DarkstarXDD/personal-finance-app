@@ -1,12 +1,9 @@
+import type { PasswordUpdate } from "@/features/account-settings/schemas"
 import type { Signup, Login, Name, Email } from "@/features/auth/schemas"
+import type { BudgetCreate } from "@/features/budgets/schemas"
+import type { PotAmountUpdate, PotCreate } from "@/features/pots/schemas"
 import type { RecurringBillCreate } from "@/features/recurring-bills/schemas"
-import type {
-  PotAmountUpdate,
-  PotCreate,
-  TransactionCreate,
-  BudgetCreate,
-  PasswordUpdate,
-} from "@/lib/schemas"
+import type { TransactionCreate } from "@/features/transactions/schemas"
 
 export type DALReturn<T extends Record<string, string[]>> =
   | { success: true }

@@ -7,10 +7,10 @@ import * as budgets from "@/features/budgets/data-access"
 import {
   budgetCreateSchema,
   budgetUpdateSchema,
-  idSchema,
   type BudgetCreate,
   type BudgetUpdate,
-} from "@/lib/schemas"
+} from "@/features/budgets/schemas"
+import { idSchema } from "@/lib/schemas"
 
 import type { BudgetCreateErrors } from "@/lib/types"
 

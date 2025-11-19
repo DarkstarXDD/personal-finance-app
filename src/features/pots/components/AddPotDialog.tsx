@@ -10,7 +10,7 @@ import { Select, SelectItem } from "@/components/ui/Select"
 import TextField from "@/components/ui/TextField"
 import { type Color } from "@/data-access/lookups"
 import { createPot } from "@/features/pots/actions"
-import { potCreateSchema } from "@/lib/schemas"
+import { potCreateSchema } from "@/features/pots/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 type AddPotDialogProps = { colors: Color[] }

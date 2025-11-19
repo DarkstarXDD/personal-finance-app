@@ -4,11 +4,10 @@ import { startOfMonth } from "date-fns"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
+import { type TransactionCreate } from "@/features/transactions/schemas"
 import { ITEMS_PER_PAGE } from "@/lib/constants"
 import { Prisma, prisma } from "@/lib/prisma"
-
-import type { TransactionCreate } from "@/lib/schemas"
-import type { TransactionCreateErrors, DALReturn } from "@/lib/types"
+import { type TransactionCreateErrors, DALReturn } from "@/lib/types"
 
 // ============================================
 // ============ Create Transaction ============

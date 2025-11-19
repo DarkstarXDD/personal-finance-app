@@ -5,14 +5,14 @@ import * as z from "zod"
 
 import * as pots from "@/features/pots/data-access"
 import {
-  idSchema,
   potCreateSchema,
   potUpdateSchema,
   potAmountUpdateSchema,
   type PotUpdate,
   type PotCreate,
   type PotAmountUpdate,
-} from "@/lib/schemas"
+} from "@/features/pots/schemas"
+import { idSchema } from "@/lib/schemas"
 
 import type { PotCreateErrors, PotAmountUpdateErrors } from "@/lib/types"
 

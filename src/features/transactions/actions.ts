@@ -5,7 +5,10 @@ import * as z from "zod"
 
 import * as recurringBills from "@/features/recurring-bills/data-access"
 import * as transactions from "@/features/transactions/data-access"
-import { transactionCreateSchema, type TransactionCreate } from "@/lib/schemas"
+import {
+  transactionCreateSchema,
+  type TransactionCreate,
+} from "@/features/transactions/schemas"
 
 import type { TransactionCreateErrors } from "@/lib/types"
 

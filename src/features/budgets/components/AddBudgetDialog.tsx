@@ -9,7 +9,7 @@ import NumberField from "@/components/ui/NumberField"
 import { Select, SelectItem } from "@/components/ui/Select"
 import { type Category, Color } from "@/data-access/lookups"
 import { createBudget } from "@/features/budgets/actions"
-import { budgetCreateSchema } from "@/lib/schemas"
+import { budgetCreateSchema } from "@/features/budgets/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 type AddBudgetDialogProps = {

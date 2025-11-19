@@ -10,7 +10,7 @@ import TextField from "@/components/ui/TextField"
 import { Color } from "@/data-access/lookups"
 import { updatePot } from "@/features/pots/actions"
 import { type Pot } from "@/features/pots/data-access"
-import { potUpdateSchema } from "@/lib/schemas"
+import { potUpdateSchema } from "@/features/pots/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 type EditPotDialog = {
