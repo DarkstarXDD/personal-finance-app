@@ -5,7 +5,11 @@ import { redirect } from "next/navigation"
 import { verifySession } from "@/data-access/auth"
 import { prisma, Prisma } from "@/lib/prisma"
 
-import type { PotAmountUpdate, PotCreate, PotUpdate } from "@/lib/schemas"
+import type {
+  PotAmountUpdate,
+  PotCreate,
+  PotUpdate,
+} from "@/features/pots/schemas"
 import type {
   PotCreateErrors,
   DALReturn,
