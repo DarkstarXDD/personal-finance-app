@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button"
 import Card from "@/components/ui/Card"
 import TextField from "@/components/ui/TextField"
 import { updatePassword } from "@/features/account-settings/actions"
-import { passwordUpdateSchema } from "@/lib/schemas"
+import { passwordUpdateSchema } from "@/features/account-settings/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 type PasswordProps = { className?: string }

@@ -7,12 +7,15 @@ import * as z from "zod"
 
 import * as account from "@/features/account-settings/data-access"
 import {
+  passwordUpdateSchema,
+  type PasswordUpdate,
+} from "@/features/account-settings/schemas"
+import {
   nameSchema,
   type Name,
   emailSchema,
   type Email,
 } from "@/features/auth/schemas"
-import { passwordUpdateSchema, type PasswordUpdate } from "@/lib/schemas"
 import {
   EmailUpdateErrors,
   NameUpdateErrors,
@@ -28,8 +31,6 @@ export async function updateName(
 ): Promise<NameUpdateErrors | null> {
   const parsed = nameSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
-
-  await new Promise((resolve) => setTimeout(resolve, 3000))
 
   const response = await account.updateName(parsed.data)
   if (!response.success) return response.fieldErrors
@@ -48,8 +49,6 @@ export async function updateEmail(
   const parsed = emailSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
 
-  await new Promise((resolve) => setTimeout(resolve, 3000))
-
   const response = await account.updateEmail(parsed.data)
   if (!response.success) return response.fieldErrors
 
@@ -66,8 +65,6 @@ export async function updatePassword(
 ): Promise<PasswordUpdateErrors | null> {
   const parsed = passwordUpdateSchema.safeParse(formData)
   if (!parsed.success) return z.flattenError(parsed.error).fieldErrors
-
-  await new Promise((resolve) => setTimeout(resolve, 3000))
 
   const response = await account.updatePassword(parsed.data)
   if (!response.success) return response.fieldErrors
