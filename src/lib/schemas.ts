@@ -30,28 +30,6 @@ export const passwordUpdateSchema = z
 export type PasswordUpdate = z.infer<typeof passwordUpdateSchema>
 
 // ============================================
-// ====== Budget Create Schema and Type =======
-// ============================================
-
-export const budgetCreateSchema = z.object({
-  categoryId: z.cuid("Please select a category."),
-  maximumSpend: z
-    .number("Maximum spend cannot be empty.")
-    .nonnegative("Maximum spend cannot be negative."),
-  colorId: z.cuid("Please select a color."),
-})
-export type BudgetCreate = z.infer<typeof budgetCreateSchema>
-
-// ============================================
-// ====== Budget Update Schema and Type =======
-// ============================================
-
-export const budgetUpdateSchema = budgetCreateSchema.extend({
-  id: z.cuid(),
-})
-export type BudgetUpdate = z.infer<typeof budgetUpdateSchema>
-
-// ============================================
 // ======== Pot Create Schema and Type ========
 // ============================================
 

@@ -9,7 +9,7 @@ import { Select, SelectItem } from "@/components/ui/Select"
 import { type Category, Color } from "@/data-access/lookups"
 import { updateBudget } from "@/features/budgets/actions"
 import { type Budget } from "@/features/budgets/data-access"
-import { budgetUpdateSchema } from "@/lib/schemas"
+import { budgetUpdateSchema } from "@/features/budgets/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
 type EditBudgetDialogProps = {
