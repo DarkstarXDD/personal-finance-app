@@ -1,4 +1,5 @@
 import DonutChart from "@/components/ui/DonutChart"
+import { colors } from "@/lib/data"
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
@@ -28,10 +29,10 @@ type Story = StoryObj<typeof meta>
 export const MultipleSlices: Story = {
   args: {
     chartData: [
-      { label: "Slice 1", current: 0, target: 25, color: "#606c38" },
-      { label: "Slice 2", current: 10, target: 35, color: "#283618" },
-      { label: "Slice 3", current: 2, target: 15, color: "#dda15e" },
-      { label: "Slice 4", current: 6, target: 25, color: "#bc6c25" },
+      { label: "Slice 1", current: 0, target: 25, color: colors[0].value },
+      { label: "Slice 2", current: 10, target: 35, color: colors[1].value },
+      { label: "Slice 3", current: 2, target: 15, color: colors[2].value },
+      { label: "Slice 4", current: 6, target: 25, color: colors[3].value },
     ],
   },
 }

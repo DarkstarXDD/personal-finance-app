@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-export default function Logo({ className }: { className?: string }) {
+export default function LogoBadge({ className }: { className?: string }) {
   return (
     <svg
       width="48"

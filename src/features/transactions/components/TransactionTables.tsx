@@ -18,7 +18,12 @@ export default async function TransactionTables({
     totalItemsWithoutFiltering,
   } = await transactionsPromise
 
-  if (totalItemsWithoutFiltering === 0) return <TransactionsEmptyState />
+  if (totalItemsWithoutFiltering === 0)
+    return (
+      <div className="md:px-6">
+        <TransactionsEmptyState />
+      </div>
+    )
 
   return (
     <>

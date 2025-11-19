@@ -135,6 +135,8 @@ export default function NavbarDesktop({
       </motion.ul>
 
       <RacButton
+        // The id is hardcoded like this because the ID RAC assigned was causing a hydration issue
+        id="navbar-button"
         className="rac-hover:bg-navbar_hover rac-pressed:bg-navbar_hover flex cursor-pointer items-center justify-start gap-3 rounded-md px-3 py-4"
         onPress={() =>
           setIsExpanded((prev) => {

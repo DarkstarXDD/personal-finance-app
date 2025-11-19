@@ -1,4 +1,5 @@
 import type { Signup, Login, Name, Email } from "@/features/auth/schemas"
+import type { RecurringBillCreate } from "@/features/recurring-bills/schemas"
 import type {
   PotAmountUpdate,
   PotCreate,
@@ -33,6 +34,10 @@ export type PotCreateErrors = {
 
 export type PotAmountUpdateErrors = {
   [Key in keyof PotAmountUpdate]?: string[]
+}
+
+export type RecurringBillCreateErrors = {
+  [key in keyof RecurringBillCreate]?: string[]
 }
 
 export type NameUpdateErrors = {

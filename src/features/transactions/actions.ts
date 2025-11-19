@@ -26,9 +26,10 @@ export async function createTransaction(
           "When type is Income, you cannot set a recurring bill.",
         ],
       }
-    const recurringBillResponse = await recurringBills.createRecurringBill(
-      parsed.data
-    )
+    const recurringBillResponse = await recurringBills.createRecurringBill({
+      amount: parsed.data.amount,
+      counterparty: parsed.data.counterparty,
+    })
     if (!recurringBillResponse.success) return recurringBillResponse.fieldErrors
 
     const response = await transactions.createTransaction({

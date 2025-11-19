@@ -2,6 +2,7 @@ import "@/styles/globals.css"
 
 import { type Metadata } from "next"
 import { cookies } from "next/headers"
+import { type ReactNode } from "react"
 
 import NavbarDesktop from "@/components/ui/NavbarDesktop"
 import NavbarMobile from "@/components/ui/NavbarMobile"
@@ -10,7 +11,7 @@ import { inter } from "@/lib/fonts"
 export const metadata: Metadata = {
   title: "Personal Finance App",
   description:
-    "Check out Darkstar's solution for the Personal Finance App challenge on Frontend Mentor",
+    "A finance management app with transaction tracking, budget management, savings goals, and recurring bill monitoring.",
 
   authors: {
     name: "Darkstar",
@@ -23,18 +24,11 @@ export const metadata: Metadata = {
     title: "Personal Finance App",
 
     description:
-      "Check out Darkstar's solution for the Personal Finance App challenge on Frontend Mentor",
-
-    images: {
-      url: "https://personal-finance-darkstar.vercel.app/og-img.jpeg",
-      type: "image/jpeg",
-      width: 1200,
-      height: 630,
-    },
+      "A finance management app with transaction tracking, budget management, savings goals, and recurring bill monitoring.",
   },
 }
 
-type DashboardLayoutProps = Readonly<{ children: React.ReactNode }>
+type DashboardLayoutProps = Readonly<{ children: ReactNode }>
 
 export default async function DashboardLayout({
   children,
@@ -51,7 +45,9 @@ export default async function DashboardLayout({
           initialExpanded={isExpanded === "0" ? false : true}
           className="sticky bottom-0 hidden [grid-area:navbar] lg:top-0 lg:flex"
         />
+
         <div className="px-4 py-6 md:px-10 md:py-8">{children}</div>
+
         <NavbarMobile className="sticky bottom-0 [grid-area:navbar] lg:hidden" />
       </body>
     </html>
