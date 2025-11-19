@@ -8,7 +8,7 @@ import { inter } from "@/lib/fonts"
 export const metadata: Metadata = {
   title: "Personal Finance App",
   description:
-    "Check out Darkstar's solution for the Personal Finance App challenge on Frontend Mentor",
+    "A finance management app with transaction tracking, budget management, savings goals, and recurring bill monitoring.",
 
   authors: {
     name: "Darkstar",
@@ -21,14 +21,7 @@ export const metadata: Metadata = {
     title: "Personal Finance App",
 
     description:
-      "Check out Darkstar's solution for the Personal Finance App challenge on Frontend Mentor",
-
-    images: {
-      url: "https://personal-finance-darkstar.vercel.app/og-img.jpeg",
-      type: "image/jpeg",
-      width: 1200,
-      height: 630,
-    },
+      "A finance management app with transaction tracking, budget management, savings goals, and recurring bill monitoring.",
   },
 }
 
