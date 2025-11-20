@@ -43,6 +43,7 @@ test.describe("Budgets Page", () => {
       },
     })
 
+    await budgetsPage.page.reload()
     await budgetsPage.optionsButton.click()
     await budgetsPage.editMenuItem.click()
     await budgetsPage.amountInput.fill(updatedAmount.toString())
