@@ -54,27 +54,24 @@ test.describe("Budgets Page", () => {
     )
   })
 
-  // Below test randomly fails. Not sure what's reason
-  // test("can delete a budget", async ({ page, userSession }) => {
-  //   const categories = await prisma.category.findMany()
-  //   const colors = await prisma.color.findMany()
+  test("can delete a budget", async ({ userSession, budgetsPage }) => {
+    const categories = await prisma.category.findMany()
+    const colors = await prisma.color.findMany()
 
-  //   await prisma.budget.create({
-  //     data: {
-  //       userId: userSession.userId,
-  //       categoryId: categories[0].id,
-  //       maximumSpend: 100,
-  //       colorId: colors[0].id,
-  //     },
-  //   })
+    await prisma.budget.create({
+      data: {
+        userId: userSession.userId,
+        categoryId: categories[0].id,
+        maximumSpend: 100,
+        colorId: colors[0].id,
+      },
+    })
 
-  //   const budgetsPage = new BudgetsPage(page)
-  //   await budgetsPage.goto()
+    await budgetsPage.page.reload()
+    await budgetsPage.optionsButton.click()
+    await budgetsPage.deleteMenuItem.click()
+    await budgetsPage.confirmDeleteButton.click()
 
-  //   await budgetsPage.optionsButton.click()
-  //   await budgetsPage.deleteMenuItem.click()
-  //   await budgetsPage.confirmDeleteButton.click()
-
-  //   await expect(budgetsPage.emptyState).toBeVisible()
-  // })
+    await expect(budgetsPage.emptyState).toBeVisible()
+  })
 })
