@@ -4,6 +4,7 @@ import { createToken } from "@/lib/session"
 import { BudgetsPage } from "tests/page-objects/budgets-page"
 import { LoginPage } from "tests/page-objects/login-page"
 import { OverviewPage } from "tests/page-objects/overview-page"
+import { PotsPage } from "tests/page-objects/pots-page"
 import { SignUpPage } from "tests/page-objects/signup-page"
 import { TransactionsPage } from "tests/page-objects/transactions-page"
 import {
@@ -30,6 +31,7 @@ type TestFixtures = {
   overviewPage: OverviewPage
   transactionsPage: TransactionsPage
   budgetsPage: BudgetsPage
+  potsPage: PotsPage
 }
 
 export const test = base.extend<TestFixtures>({
@@ -88,6 +90,12 @@ export const test = base.extend<TestFixtures>({
     const budgetsPage = new BudgetsPage(page)
     await budgetsPage.goto()
     await use(budgetsPage)
+  },
+
+  potsPage: async ({ page, userSession }, use) => {
+    const potsPage = new PotsPage(page)
+    await potsPage.goto()
+    await use(potsPage)
   },
 })
 
