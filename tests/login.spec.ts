@@ -1,8 +1,4 @@
-import { test, expect } from "./fixtures/login-fixture"
-
-// ============================================
-// ================= Login Page ===============
-// ============================================
+import { test, expect } from "./fixtures/fixtures"
 
 test.describe("Login Page", () => {
   test("renders all required elements", async ({ loginPage }) => {
@@ -35,9 +31,9 @@ test.describe("Login Page", () => {
   })
 
   test("can log in with correct credentials", async ({
+    page,
     dummyUser: { email, password },
     loginPage,
-    page,
   }) => {
     await loginPage.login({ email, password })
     await expect(
@@ -61,24 +57,14 @@ test.describe("Redirects", () => {
 
   test("visiting auth pages while logged in redirects to home", async ({
     page,
-    dummyUser: { email, password },
-    loginPage,
+    overviewPage,
   }) => {
-    await loginPage.login({ email, password: password })
-    await expect(
-      page.getByRole("heading", { name: "Overview", level: 1 })
-    ).toBeVisible()
-
-    // after logged in, try to visit /login, but should be redirected back to home
+    // try to visit /login, but should be redirected back to home
     await page.goto("/login")
-    await expect(
-      page.getByRole("heading", { name: "Overview", level: 1 })
-    ).toBeVisible()
+    await expect(overviewPage.heading).toBeVisible()
 
-    // same for /signup as well
+    // try to visit /signup, but should be redirected back to home
     await page.goto("/signup")
-    await expect(
-      page.getByRole("heading", { name: "Overview", level: 1 })
-    ).toBeVisible()
+    await expect(overviewPage.heading).toBeVisible()
   })
 })

@@ -1,19 +1,14 @@
 import { prisma } from "@/lib/prisma"
 
-import { test, expect } from "./fixtures/auth"
-import { BudgetsPage } from "./page-objects/budgets-page"
+import { test, expect } from "./fixtures/fixtures"
 
 test.describe("Budgets Page", () => {
-  test("renders empty state", async ({ page, userSession }) => {
-    const budgetsPage = new BudgetsPage(page)
-    await budgetsPage.goto()
+  test("renders empty state", async ({ budgetsPage }) => {
     await expect(budgetsPage.heading).toBeVisible()
     await expect(budgetsPage.emptyState).toBeVisible()
   })
 
-  test("shows form errors on empty submit", async ({ page, userSession }) => {
-    const budgetsPage = new BudgetsPage(page)
-    await budgetsPage.goto()
+  test("shows form errors on empty submit", async ({ budgetsPage }) => {
     await budgetsPage.dialogTrigger.click()
     await expect(budgetsPage.dialogHeading).toBeVisible()
     await budgetsPage.addBudgetButton.click()
@@ -21,10 +16,7 @@ test.describe("Budgets Page", () => {
     await budgetsPage.expectErrorMessage("Please select a color.")
   })
 
-  test("can create a budget", async ({ page, userSession }) => {
-    const budgetsPage = new BudgetsPage(page)
-    await budgetsPage.goto()
-
+  test("can create a budget", async ({ budgetsPage }) => {
     await budgetsPage.dialogTrigger.click()
     await expect(budgetsPage.dialogHeading).toBeVisible()
     await budgetsPage.categorySelect.click()
@@ -37,7 +29,7 @@ test.describe("Budgets Page", () => {
     await expect(budgetsPage.budgetCardHeading).toBeVisible()
   })
 
-  test("can edit a budget", async ({ page, userSession }) => {
+  test("can edit a budget", async ({ userSession, budgetsPage }) => {
     const categories = await prisma.category.findMany()
     const colors = await prisma.color.findMany()
     const updatedAmount = 200
@@ -50,9 +42,6 @@ test.describe("Budgets Page", () => {
         colorId: colors[0].id,
       },
     })
-
-    const budgetsPage = new BudgetsPage(page)
-    await budgetsPage.goto()
 
     await budgetsPage.optionsButton.click()
     await budgetsPage.editMenuItem.click()
