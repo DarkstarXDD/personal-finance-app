@@ -29,6 +29,7 @@ test.describe("Pots Page", () => {
     const targetAmount = 150
 
     await potsPage.addPotButton.click()
+    await expect(potsPage.dialogHeading).toBeVisible()
     await potsPage.nameInput.fill(potName)
     await potsPage.targetInput.fill(targetAmount.toString())
     await potsPage.selectTheme(colorLabel)
@@ -87,10 +88,10 @@ test.describe("Pots Page", () => {
     })
 
     await potsPage.page.reload()
-    await potsPage.addMoneyButton("Rainy Day").click()
+    await potsPage.addAmountButton("Rainy Day").click()
 
     await potsPage.addAmountInput.fill("25")
-    await potsPage.addMoneyConfirmButton.click()
+    await potsPage.addAmountConfirmButton.click()
 
     await expect(potsPage.potSavedAmount("Rainy Day")).toHaveText(
       currencyFormatter.format(75)
@@ -111,10 +112,10 @@ test.describe("Pots Page", () => {
     })
 
     await potsPage.page.reload()
-    await potsPage.withdrawButton("Emergency Fund").click()
+    await potsPage.withdrawAmountButton("Emergency Fund").click()
 
     await potsPage.withdrawAmountInput.fill("125")
-    await potsPage.withdrawConfirmButton.click()
+    await potsPage.withdrawAmountConfirmButton.click()
 
     await expect(potsPage.potSavedAmount("Emergency Fund")).toHaveText(
       currencyFormatter.format(175)

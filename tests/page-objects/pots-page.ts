@@ -14,8 +14,8 @@ export class PotsPage {
 
   readonly addAmountInput: Locator
   readonly withdrawAmountInput: Locator
-  readonly addMoneyConfirmButton: Locator
-  readonly withdrawConfirmButton: Locator
+  readonly addAmountConfirmButton: Locator
+  readonly withdrawAmountConfirmButton: Locator
 
   readonly editMenuItem: Locator
   readonly deleteMenuItem: Locator
@@ -52,10 +52,10 @@ export class PotsPage {
     this.withdrawAmountInput = page.getByRole("textbox", {
       name: "Amount to Withdraw",
     })
-    this.addMoneyConfirmButton = page.getByRole("button", {
+    this.addAmountConfirmButton = page.getByRole("button", {
       name: "Confirm Addition",
     })
-    this.withdrawConfirmButton = page.getByRole("button", {
+    this.withdrawAmountConfirmButton = page.getByRole("button", {
       name: "Confirm Withdrawal",
     })
 
