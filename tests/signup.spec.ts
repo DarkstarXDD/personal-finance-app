@@ -1,5 +1,4 @@
-import { test, expect } from "./fixtures/signup-fixture"
-import { createDummyUserData } from "./utils"
+import { test, expect } from "./fixtures/fixtures"
 
 test.describe("Sign Up Page", () => {
   test("renders all required elements", async ({ signUpPage }) => {
@@ -49,10 +48,10 @@ test.describe("Sign Up Page", () => {
 
   test("accepts valid inputs and creates account", async ({
     page,
+    dummyUserData,
     signUpPage,
   }) => {
-    const { name, email, password } = createDummyUserData()
-    await signUpPage.signUp({ name, email, password })
+    await signUpPage.signUp(dummyUserData)
     await expect(
       page.getByRole("heading", { name: "Overview", level: 1 })
     ).toBeVisible()

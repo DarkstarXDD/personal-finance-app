@@ -19,7 +19,7 @@ export default async function BudgetsPage() {
     <main className="@container grid gap-8">
       <PageHeader
         title="Budgets"
-        description="Set monthly limits and track how much you’ve spent in each category."
+        description="Set monthly spending limits by category. Each budget tracks spending for the current month."
         action={<AddBudgetDialog categories={categories} colors={colors} />}
       />
 

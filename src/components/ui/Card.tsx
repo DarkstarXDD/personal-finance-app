@@ -1,4 +1,4 @@
-import { type ReactNode } from "react"
+import { type ReactNode, type ComponentProps } from "react"
 import { tv, VariantProps } from "tailwind-variants"
 
 const cardStyles = tv({
@@ -17,8 +17,21 @@ const cardStyles = tv({
 
 type CardVariants = VariantProps<typeof cardStyles>
 
-type CardProps = { children: ReactNode; className?: string } & CardVariants
+type CardProps = {
+  children: ReactNode
+  className?: string
+} & ComponentProps<"div"> &
+  CardVariants
 
-export default function Card({ children, className, size }: CardProps) {
-  return <div className={cardStyles({ size, className })}>{children}</div>
+export default function Card({
+  children,
+  className,
+  size,
+  ...props
+}: CardProps) {
+  return (
+    <div {...props} className={cardStyles({ size, className })}>
+      {children}
+    </div>
+  )
 }

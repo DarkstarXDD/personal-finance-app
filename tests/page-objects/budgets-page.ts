@@ -5,33 +5,29 @@ export class BudgetsPage {
   readonly heading: Locator
   readonly emptyState: Locator
 
-  readonly dialogTrigger: Locator
-  readonly dialogHeading: Locator
-
-  readonly categorySelect: Locator
-  readonly categoryItem: Locator
-  readonly amountInput: Locator
-  readonly themeSelect: Locator
-  readonly themeItem: Locator
   readonly addBudgetButton: Locator
+  readonly dialogHeading: Locator
+  readonly categorySelect: Locator
+  readonly maxSpendInput: Locator
+  readonly themeSelect: Locator
+  readonly addBudgetSubmit: Locator
 
-  readonly budgetCardHeading: Locator
-  readonly budgetCardMaximumAmount: Locator
-  readonly optionsButton: Locator
   readonly editMenuItem: Locator
-  readonly saveChangesButton: Locator
   readonly deleteMenuItem: Locator
-  readonly confirmDeleteButton: Locator
+  readonly editDialogHeading: Locator
+  readonly editDialogSaveButton: Locator
+  readonly deleteConfirmButton: Locator
 
   constructor(page: Page) {
     this.page = page
+
     this.heading = page.getByRole("heading", { name: "Budgets", level: 1 })
     this.emptyState = page.getByRole("heading", {
       name: "No budgets created yet",
       level: 2,
     })
 
-    this.dialogTrigger = page.getByRole("button", {
+    this.addBudgetButton = page.getByRole("button", {
       name: "Add Budget...",
       exact: true,
     })
@@ -39,43 +35,65 @@ export class BudgetsPage {
       name: "New Budget",
       level: 2,
     })
-
     this.categorySelect = page.getByRole("button", {
-      name: "Select a Category...",
+      name: "Budget Category",
     })
-    this.categoryItem = page.getByRole("option", { name: "Bills" })
-
-    this.amountInput = page.getByRole("textbox", { name: "Maximum Spend" })
-
-    this.themeSelect = page.getByRole("button", { name: "Select a Color..." })
-    this.themeItem = page.getByRole("option", { name: "Brown" })
-
-    this.addBudgetButton = page.getByRole("button", {
+    this.maxSpendInput = page.getByRole("textbox", { name: "Maximum Spend" })
+    this.themeSelect = page.getByRole("button", { name: "Theme" })
+    this.addBudgetSubmit = page.getByRole("button", {
       name: "Add Budget",
       exact: true,
     })
 
-    this.budgetCardHeading = page.getByRole("heading", {
-      name: "Bills",
-      level: 2,
-    })
-    this.budgetCardMaximumAmount = page.getByTestId("maximum-amount")
-
-    this.optionsButton = page.getByRole("button", {
-      name: "Options",
-      exact: true,
-    })
     this.editMenuItem = page.getByRole("menuitem", { name: "Edit Budget..." })
-    this.saveChangesButton = page.getByRole("button", { name: "Save Changes" })
-
     this.deleteMenuItem = page.getByRole("menuitem", {
       name: "Delete Budget...",
     })
-    this.confirmDeleteButton = page.getByRole("button", { name: "Delete" })
+    this.editDialogHeading = page.getByRole("heading", {
+      name: "Edit Budget",
+      level: 2,
+    })
+    this.editDialogSaveButton = page.getByRole("button", {
+      name: "Save Changes",
+    })
+
+    this.deleteConfirmButton = page.getByRole("button", { name: "Delete" })
   }
 
   async goto() {
     await this.page.goto("/budgets")
+  }
+
+  async selectCategory(categoryLabel: string) {
+    await this.categorySelect.click()
+    await this.page.getByRole("option", { name: categoryLabel }).click()
+  }
+
+  async selectTheme(label: string) {
+    await this.themeSelect.click()
+    await this.page.getByRole("option", { name: label }).click()
+  }
+
+  budgetCard(budgetName: string) {
+    return this.page.locator("[data-testid='budget-card']", {
+      has: this.page.getByRole("heading", { name: budgetName, level: 2 }),
+    })
+  }
+
+  budgetHeading(budgetName: string) {
+    return this.page.getByRole("heading", { name: budgetName, level: 2 })
+  }
+
+  budgetCurrentAmount(budgetName: string) {
+    return this.budgetCard(budgetName).getByTestId("budget-current-amount")
+  }
+
+  budgetMaxAmount(budgetName: string) {
+    return this.budgetCard(budgetName).getByTestId("budget-max-amount")
+  }
+
+  budgetOptionsButton(budgetName: string) {
+    return this.budgetCard(budgetName).getByRole("button", { name: "Options" })
   }
 
   async expectErrorMessage(text: string) {

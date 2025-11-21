@@ -23,7 +23,7 @@ export default function PotCard({ pot, colors }: PotCardProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   return (
-    <Card size="lg" className="grid gap-8">
+    <Card data-testid="pot-card" size="lg" className="grid gap-8">
       <div className="flex items-center justify-start gap-4">
         <span
           className="size-4 rounded-full"
@@ -52,13 +52,19 @@ export default function PotCard({ pot, colors }: PotCardProps) {
       <div className="flex items-start justify-between gap-2">
         <p className="grid gap-1">
           <span className="text-sm font-medium">Saved</span>
-          <span className="text-primary text-3xl leading-tight font-semibold">
+          <span
+            data-testid="pot-saved-amount"
+            className="text-primary text-3xl leading-tight font-semibold"
+          >
             {currencyFormatter.format(pot.currentAmount)}
           </span>
         </p>
         <p className="grid justify-items-end gap-1">
           <span className="text-sm font-medium">Target</span>
-          <span className="text-lg leading-tight font-semibold">
+          <span
+            data-testid="pot-target-amount"
+            className="text-lg leading-tight font-semibold"
+          >
             {currencyFormatter.format(pot.target)}
           </span>
         </p>

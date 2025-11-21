@@ -1,64 +1,51 @@
 import { prisma } from "@/lib/prisma"
 
-import { test, expect } from "./fixtures/auth"
-import { TransactionsPage } from "./page-objects/transactions-page"
+import { test, expect } from "./fixtures/fixtures"
 
 test.describe("Transactions Page", () => {
-  test("renders empty state", async ({ page, userSession }) => {
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
-    await expect(transactionPage.heading).toBeVisible()
-    await expect(transactionPage.emptyState).toBeVisible()
+  test("renders empty state", async ({ transactionsPage }) => {
+    await expect(transactionsPage.heading).toBeVisible()
+    await expect(transactionsPage.emptyState).toBeVisible()
   })
 
-  test("shows form errors on empty submit", async ({ page, userSession }) => {
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
-    await transactionPage.dialogTrigger.click()
-    await expect(transactionPage.dialogHeading).toBeVisible()
-    await transactionPage.addTransactionButton.click()
-    await transactionPage.expectErrorMessage("Please pick a transaction type.")
-    await transactionPage.expectErrorMessage(
+  test("shows form errors on empty submit", async ({ transactionsPage }) => {
+    await transactionsPage.dialogTrigger.click()
+    await expect(transactionsPage.dialogHeading).toBeVisible()
+    await transactionsPage.addTransactionButton.click()
+    await transactionsPage.expectErrorMessage("Please pick a transaction type.")
+    await transactionsPage.expectErrorMessage(
       "Counterparty name cannot be empty."
     )
-    await transactionPage.expectErrorMessage("Please select a category.")
+    await transactionsPage.expectErrorMessage("Please select a category.")
   })
 
   test("recurring option disbaled when income type selected", async ({
-    page,
-    userSession,
+    transactionsPage,
   }) => {
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
-    await transactionPage.dialogTrigger.click()
-    await expect(transactionPage.dialogHeading).toBeVisible()
-    await transactionPage.incomeRadio.click()
-    await expect(transactionPage.recurringCheckbox).toBeDisabled()
+    await transactionsPage.dialogTrigger.click()
+    await expect(transactionsPage.dialogHeading).toBeVisible()
+    await transactionsPage.incomeRadio.click()
+    await expect(transactionsPage.recurringCheckbox).toBeDisabled()
   })
 
   test("recurring option enabled when expense type selected", async ({
-    page,
-    userSession,
+    transactionsPage,
   }) => {
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
-    await transactionPage.dialogTrigger.click()
-    await expect(transactionPage.dialogHeading).toBeVisible()
-    await transactionPage.expenseRadio.click()
-    await expect(transactionPage.recurringCheckbox).toBeEnabled()
+    await transactionsPage.dialogTrigger.click()
+    await expect(transactionsPage.dialogHeading).toBeVisible()
+    await transactionsPage.expenseRadio.click()
+    await expect(transactionsPage.recurringCheckbox).toBeEnabled()
   })
 
-  test("can create a transaction", async ({ page, userSession }) => {
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
-    await transactionPage.dialogTrigger.click()
-    await expect(transactionPage.dialogHeading).toBeVisible()
-    await transactionPage.incomeRadio.click()
-    await transactionPage.counterpartyInput.fill("Random name")
-    await transactionPage.amountInput.fill("10")
-    await transactionPage.categorySelect.click()
-    await transactionPage.categoryItem.click()
-    await transactionPage.addTransactionButton.click()
+  test("can create a transaction", async ({ page, transactionsPage }) => {
+    await transactionsPage.dialogTrigger.click()
+    await expect(transactionsPage.dialogHeading).toBeVisible()
+    await transactionsPage.incomeRadio.click()
+    await transactionsPage.counterpartyInput.fill("Random name")
+    await transactionsPage.amountInput.fill("10")
+    await transactionsPage.categorySelect.click()
+    await transactionsPage.categoryItem.click()
+    await transactionsPage.addTransactionButton.click()
     await expect(page.getByRole("cell", { name: "Random name" })).toBeVisible()
     await expect(
       page.getByRole("cell", { name: "+$10.00", exact: true })
@@ -66,7 +53,11 @@ test.describe("Transactions Page", () => {
     await expect(page.getByRole("cell", { name: "Education" })).toBeVisible()
   })
 
-  test("can search a transaction", async ({ page, userSession }) => {
+  test("can search a transaction", async ({
+    page,
+    userSession,
+    transactionsPage,
+  }) => {
     const categories = await prisma.category.findMany()
     await prisma.transaction.create({
       data: {
@@ -78,18 +69,19 @@ test.describe("Transactions Page", () => {
       },
     })
 
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
-
-    await transactionPage.searchInput.fill("Game")
+    await transactionsPage.searchInput.fill("Game")
     await expect(page.getByRole("cell", { name: "Game store" })).toBeVisible()
 
-    await transactionPage.searchInput.fill("random string")
-    await transactionPage.searchInput.press("Enter")
+    await transactionsPage.searchInput.fill("random string")
+    await transactionsPage.searchInput.press("Enter")
     await expect(page.getByText("No results match your filters.")).toBeVisible()
   })
 
-  test("can sort transactions", async ({ page, userSession }) => {
+  test("can sort transactions", async ({
+    page,
+    userSession,
+    transactionsPage,
+  }) => {
     const categories = await prisma.category.findMany()
     const baseData = {
       userId: userSession.userId,
@@ -107,24 +99,26 @@ test.describe("Transactions Page", () => {
       data: { ...baseData, counterparty: "Charlie", amount: 10 },
     })
 
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
     const rows = page.getByRole("row")
 
-    await transactionPage.sortFilterSelect.click()
+    await transactionsPage.sortFilterSelect.click()
     await page.getByRole("option", { name: "A to Z" }).click()
     await expect(rows.nth(1)).toHaveText(/Alpha/)
     await expect(rows.nth(2)).toHaveText(/Bravo/)
     await expect(rows.nth(3)).toHaveText(/Charlie/)
 
-    await transactionPage.sortFilterSelect.click()
+    await transactionsPage.sortFilterSelect.click()
     await page.getByRole("option", { name: "Highest" }).click()
     await expect(rows.nth(1)).toHaveText(/Bravo/)
     await expect(rows.nth(2)).toHaveText(/Charlie/)
     await expect(rows.nth(3)).toHaveText(/Alpha/)
   })
 
-  test("can filter by category", async ({ page, userSession }) => {
+  test("can filter by category", async ({
+    page,
+    userSession,
+    transactionsPage,
+  }) => {
     const categories = await prisma.category.findMany()
     const baseData = {
       userId: userSession.userId,
@@ -148,19 +142,17 @@ test.describe("Transactions Page", () => {
       },
     })
 
-    const transactionPage = new TransactionsPage(page)
-    await transactionPage.goto()
     const rows = page.getByRole("row")
 
-    await transactionPage.categoryFilterSelect.click()
+    await transactionsPage.categoryFilterSelect.click()
     await page.getByRole("option", { name: "Bills" }).click()
     await expect(rows.nth(1)).toHaveText(/Alpha/)
 
-    await transactionPage.categoryFilterSelect.click()
+    await transactionsPage.categoryFilterSelect.click()
     await page.getByRole("option", { name: "Education" }).click()
     await expect(rows.nth(1)).toHaveText(/Bravo/)
 
-    await transactionPage.categoryFilterSelect.click()
+    await transactionsPage.categoryFilterSelect.click()
     await page.getByRole("option", { name: "Travel" }).click()
     await expect(page.getByText("No results match your filters.")).toBeVisible()
   })
