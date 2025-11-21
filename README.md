@@ -31,7 +31,7 @@ A Finance management app with transaction tracking, budget management, savings g
 
 ### Features
 
-- 5 routes including Overview, Transactions, Budgets, Pots and Recurring bills.
+- 6 routes including Overview, Transactions, Budgets, Pots, Recurring Bills and Account Settings.
 - Transactions
   - Create incoming or outgoing transactions.
   - View past transactions: Supports searching, filtering, sorting and pagination.
