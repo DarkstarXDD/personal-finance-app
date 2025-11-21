@@ -38,7 +38,7 @@ export default function BudgetCard({
     Number(budget.maximumSpend) - Number(budget.totalSpent)
 
   return (
-    <Card size="lg">
+    <Card data-testid="budget-card" size="lg">
       <div className="grid gap-8 self-start">
         <div className="flex items-center justify-start gap-4">
           <span
@@ -66,10 +66,13 @@ export default function BudgetCard({
 
         <div className="grid gap-8">
           <p>
-            <span className="text-primary text-3xl leading-tight font-semibold">
+            <span
+              data-testid="budget-current-amount"
+              className="text-primary text-3xl leading-tight font-semibold"
+            >
               {currencyFormatter.format(budget.totalSpent)}
             </span>
-            <span className="font-medium" data-testid="maximum-amount">
+            <span data-testid="budget-max-amount" className="font-medium">
               {" "}
               of {currencyFormatter.format(budget.maximumSpend)}
             </span>

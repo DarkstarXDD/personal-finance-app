@@ -104,11 +104,11 @@ export class PotsPage {
     return this.potCard(potName).getByRole("button", { name: "Options" })
   }
 
-  addMoneyButton(potName: string) {
+  addAmountButton(potName: string) {
     return this.potCard(potName).getByRole("button", { name: "+ Add" })
   }
 
-  withdrawButton(potName: string) {
+  withdrawAmountButton(potName: string) {
     return this.potCard(potName).getByRole("button", { name: "- Withdraw" })
   }
 

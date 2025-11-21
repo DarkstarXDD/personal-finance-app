@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { currencyFormatter } from "@/lib/utils"
 
 import { test, expect } from "./fixtures/fixtures"
 
@@ -6,71 +7,91 @@ test.describe("Budgets Page", () => {
   test("renders empty state", async ({ budgetsPage }) => {
     await expect(budgetsPage.heading).toBeVisible()
     await expect(budgetsPage.emptyState).toBeVisible()
+    await expect(budgetsPage.addBudgetButton).toBeVisible()
   })
 
   test("shows form errors on empty submit", async ({ budgetsPage }) => {
-    await budgetsPage.dialogTrigger.click()
-    await expect(budgetsPage.dialogHeading).toBeVisible()
     await budgetsPage.addBudgetButton.click()
+    await expect(budgetsPage.dialogHeading).toBeVisible()
+    await budgetsPage.maxSpendInput.fill("")
+    await budgetsPage.addBudgetSubmit.click()
+
     await budgetsPage.expectErrorMessage("Please select a category.")
+    await budgetsPage.expectErrorMessage("Maximum spend cannot be empty.")
     await budgetsPage.expectErrorMessage("Please select a color.")
   })
 
   test("can create a budget", async ({ budgetsPage }) => {
-    await budgetsPage.dialogTrigger.click()
-    await expect(budgetsPage.dialogHeading).toBeVisible()
-    await budgetsPage.categorySelect.click()
-    await budgetsPage.categoryItem.click()
-    await budgetsPage.amountInput.fill("100")
-    await budgetsPage.themeSelect.click()
-    await budgetsPage.themeItem.click()
-    await budgetsPage.addBudgetButton.click()
+    const categories = await prisma.category.findMany()
+    const colors = await prisma.color.findMany()
+    const categoryLabel = categories[0].label
+    const colorLabel = colors[0].label
+    const budgetAmount = 100
 
-    await expect(budgetsPage.budgetCardHeading).toBeVisible()
+    await budgetsPage.addBudgetButton.click()
+    await expect(budgetsPage.dialogHeading).toBeVisible()
+    await budgetsPage.selectCategory(categoryLabel)
+    await budgetsPage.maxSpendInput.fill(budgetAmount.toString())
+    await budgetsPage.selectTheme(colorLabel)
+    await budgetsPage.addBudgetSubmit.click()
+
+    await expect(budgetsPage.budgetHeading(categoryLabel)).toBeVisible()
+    await expect(budgetsPage.budgetMaxAmount(categoryLabel)).toContainText(
+      currencyFormatter.format(budgetAmount)
+    )
   })
 
   test("can edit a budget", async ({ userSession, budgetsPage }) => {
     const categories = await prisma.category.findMany()
     const colors = await prisma.color.findMany()
-    const updatedAmount = 200
+    const [primaryColor, secondaryColor] = colors
+    const [primaryCategory, secondaryCategory] = categories
+    const updatedMaxSpend = 200
 
     await prisma.budget.create({
       data: {
         userId: userSession.userId,
-        categoryId: categories[0].id,
+        categoryId: primaryCategory.id,
         maximumSpend: 100,
-        colorId: colors[0].id,
+        colorId: primaryColor.id,
       },
     })
 
     await budgetsPage.page.reload()
-    await budgetsPage.optionsButton.click()
+    await budgetsPage.budgetOptionsButton(primaryCategory.label).click()
     await budgetsPage.editMenuItem.click()
-    await budgetsPage.amountInput.fill(updatedAmount.toString())
-    await budgetsPage.saveChangesButton.click()
+    await budgetsPage.selectCategory(secondaryCategory.label)
+    await budgetsPage.maxSpendInput.fill(updatedMaxSpend.toString())
+    await budgetsPage.selectTheme(secondaryColor.label)
+    await budgetsPage.editDialogSaveButton.click()
 
-    await expect(budgetsPage.budgetCardMaximumAmount).toContainText(
-      `of $${updatedAmount}.00`
-    )
+    await expect(
+      budgetsPage.budgetHeading(secondaryCategory.label)
+    ).toBeVisible()
+    await expect(
+      budgetsPage.budgetMaxAmount(secondaryCategory.label)
+    ).toContainText(currencyFormatter.format(updatedMaxSpend))
   })
 
   test("can delete a budget", async ({ userSession, budgetsPage }) => {
     const categories = await prisma.category.findMany()
     const colors = await prisma.color.findMany()
+    const category = categories[0]
+    const color = colors[0]
 
     await prisma.budget.create({
       data: {
         userId: userSession.userId,
-        categoryId: categories[0].id,
+        categoryId: category.id,
         maximumSpend: 100,
-        colorId: colors[0].id,
+        colorId: color.id,
       },
     })
 
     await budgetsPage.page.reload()
-    await budgetsPage.optionsButton.click()
+    await budgetsPage.budgetOptionsButton(category.label).click()
     await budgetsPage.deleteMenuItem.click()
-    await budgetsPage.confirmDeleteButton.click()
+    await budgetsPage.deleteConfirmButton.click()
 
     await expect(budgetsPage.emptyState).toBeVisible()
   })
