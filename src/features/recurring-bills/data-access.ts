@@ -12,8 +12,13 @@ import {
   type BillMonthlyStatus,
 } from "@/features/recurring-bills/helpers"
 import { RecurringBillCreate } from "@/features/recurring-bills/schemas"
+import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma, type Prisma } from "@/lib/prisma"
-import { type RecurringBillCreateErrors, type DALReturn } from "@/lib/types"
+import {
+  type DALReturn,
+  type DALDeleteItemReurn,
+  type RecurringBillCreateErrors,
+} from "@/lib/types"
 
 // ============================================
 // =========== Create Recurring Bill ==========
@@ -197,15 +202,19 @@ export async function getRecurringBills({
 
 export async function deleteRecurringBill(
   id: string
-): Promise<{ success: boolean }> {
+): Promise<DALDeleteItemReurn> {
   const session = await verifySession()
   if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return { success: false, message: DEMO_ACCOUNT_ERROR_MESSAGE }
+  }
 
   try {
     await prisma.recurringBill.delete({ where: { id, userId: session.userId } })
     return { success: true }
   } catch (e) {
     console.error(e)
-    return { success: false }
+    return { success: false, message: "Error deleting bill. Please try agian." }
   }
 }

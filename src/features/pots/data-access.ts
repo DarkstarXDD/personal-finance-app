@@ -3,6 +3,7 @@ import "server-only"
 import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
+import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma, Prisma } from "@/lib/prisma"
 
 import type {
@@ -11,8 +12,9 @@ import type {
   PotUpdate,
 } from "@/features/pots/schemas"
 import type {
-  PotCreateErrors,
   DALReturn,
+  PotCreateErrors,
+  DALDeleteItemReurn,
   PotAmountUpdateErrors,
 } from "@/lib/types"
 
@@ -27,6 +29,13 @@ export async function createPot({
 }: PotCreate): Promise<DALReturn<PotCreateErrors>> {
   const session = await verifySession()
   if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { name: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     await prisma.pot.create({
@@ -68,6 +77,13 @@ export async function updatePot({
   const session = await verifySession()
   if (!session) redirect("/login")
 
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { name: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
+
   try {
     await prisma.pot.update({
       where: { userId: session.userId, id },
@@ -99,15 +115,22 @@ export async function updatePot({
 // ================ Delete Pot ================
 // ============================================
 
-export async function deletePot(potId: string): Promise<{ success: boolean }> {
+export async function deletePot(potId: string): Promise<DALDeleteItemReurn> {
   const session = await verifySession()
   if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      message: DEMO_ACCOUNT_ERROR_MESSAGE,
+    }
+  }
 
   try {
     await prisma.pot.delete({ where: { id: potId, userId: session.userId } })
     return { success: true }
   } catch {
-    return { success: false }
+    return { success: false, message: "Error deleting pot. Please try agian." }
   }
 }
 
@@ -121,6 +144,13 @@ export async function updatePotAmount(
 ): Promise<DALReturn<PotAmountUpdateErrors>> {
   const session = await verifySession()
   if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { amountToUpdate: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     const amountToUpdateAsDecimal = new Prisma.Decimal(amountToUpdate)

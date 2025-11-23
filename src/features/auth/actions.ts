@@ -27,12 +27,6 @@ export async function registerUser(
 
   const passwordHash = await bcrypt.hash(parsed.data.password, 12)
 
-  // return {
-  //   email: [
-  //     "New account creation is temporarily unavailable due to maintenance.",
-  //   ],
-  // }
-
   try {
     const user = await prisma.user.create({
       data: { ...parsed.data, password: passwordHash },

@@ -96,7 +96,7 @@ export async function deleteAccount(
   _formData: FormData
 ): Promise<string | undefined> {
   const response = await account.deleteAccount()
-  if (!response.success) return "Error deleting account. Please try again."
+  if (!response.success) return response.message
 
   signOut()
 }

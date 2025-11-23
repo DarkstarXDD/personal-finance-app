@@ -64,7 +64,7 @@ export async function deletePot(
   if (!parsed.success) return "Error deleting pot. Please try agian."
 
   const response = await pots.deletePot(parsed.data.id)
-  if (!response.success) return "Error deleting pot. Please try again."
+  if (!response.success) return response.message
 
   revalidatePath("/pots")
   return null

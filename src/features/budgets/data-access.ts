@@ -7,8 +7,13 @@ import {
   type BudgetCreate,
   type BudgetUpdate,
 } from "@/features/budgets/schemas"
+import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma, Prisma } from "@/lib/prisma"
-import { type BudgetCreateErrors, type DALReturn } from "@/lib/types"
+import {
+  type DALReturn,
+  type DALDeleteItemReurn,
+  type BudgetCreateErrors,
+} from "@/lib/types"
 
 // ============================================
 // =============== Create Budget ==============
@@ -21,6 +26,13 @@ export async function createBudget({
 }: BudgetCreate): Promise<DALReturn<BudgetCreateErrors>> {
   const session = await verifySession()
   if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { categoryId: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     await prisma.budget.create({
@@ -49,6 +61,13 @@ export async function updateBudget({
   const session = await verifySession()
   if (!session) redirect("/login")
 
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { categoryId: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
+
   try {
     await prisma.budget.update({
       where: { userId: session.userId, id },
@@ -70,9 +89,13 @@ export async function updateBudget({
 
 export async function deleteBudget(
   budgetId: string
-): Promise<{ success: boolean }> {
+): Promise<DALDeleteItemReurn> {
   const session = await verifySession()
   if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return { success: false, message: DEMO_ACCOUNT_ERROR_MESSAGE }
+  }
 
   try {
     await prisma.budget.delete({
@@ -81,7 +104,10 @@ export async function deleteBudget(
     return { success: true }
   } catch (e) {
     console.error(e)
-    return { success: false }
+    return {
+      success: false,
+      message: "Error deleting budget. Please try agian.",
+    }
   }
 }
 
