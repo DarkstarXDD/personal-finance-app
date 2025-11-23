@@ -62,7 +62,7 @@ export async function deleteBudget(
   if (!parsed.success) return "Error deleting budget. Please try agian."
 
   const response = await budgets.deleteBudget(parsed.data.id)
-  if (!response.success) return "Error deleting budget. Please try agian."
+  if (!response.success) return response.message ?? ""
 
   revalidatePath("/budgets")
   return null

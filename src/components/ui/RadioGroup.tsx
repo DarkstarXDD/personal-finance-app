@@ -56,13 +56,10 @@ function RadioGroupItem({
 }: RadioGroupItemProps) {
   return (
     <RacRadio {...props} className="group w-full">
-      {({ isHovered, isPressed, isSelected, isDisabled, isFocusVisible }) => (
+      {({ isPressed, isSelected, isDisabled, isFocusVisible }) => (
         <div
           className={cn(
             "bg-primary border-primary group-rac-selected:border-brand group-rac-selected:bg-active relative flex cursor-pointer items-start justify-between gap-2 rounded-lg border px-3.5 py-3 text-sm",
-
-            // Hover
-            isHovered && "bg-primary_hover",
 
             // Pressed
             isPressed && "bg-primary_hover",
@@ -94,10 +91,10 @@ function RadioGroupItem({
               initial={{ scale: 0 }}
               animate={isSelected ? "selected" : "unSelected"}
               variants={{
-                selected: { scale: 0.7, opacity: 1 },
+                selected: { scale: 0.75, opacity: 1 },
                 unSelected: { scale: 0, opacity: 0 },
               }}
-              transition={{ type: "spring", stiffness: 350, damping: 30 }}
+              transition={{ type: "spring", stiffness: 375, damping: 30 }}
             />
           </span>
         </div>

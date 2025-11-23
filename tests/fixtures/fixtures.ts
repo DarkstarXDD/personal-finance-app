@@ -48,7 +48,7 @@ export const test = base.extend<TestFixtures>({
 
   userSession: async ({ context }, use) => {
     const user = await createDummyUser()
-    const sessionToken = await createToken({ userId: user.id })
+    const sessionToken = await createToken({ userId: user.id, role: "USER" })
     await context.addCookies([
       {
         name: "session",

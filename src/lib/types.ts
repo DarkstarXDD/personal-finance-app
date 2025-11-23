@@ -9,6 +9,10 @@ export type DALReturn<T extends Record<string, string[]>> =
   | { success: true }
   | { success: false; fieldErrors: T }
 
+export type DALDeleteItemReurn =
+  | { success: true }
+  | { success: false; message: string }
+
 export type RegisterUserErrors = {
   [Key in keyof Signup]?: string[]
 }

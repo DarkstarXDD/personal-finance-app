@@ -4,10 +4,13 @@ import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
 import { cache } from "react"
 
-import { verifySession } from "@/data-access/auth"
+import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma } from "@/lib/prisma"
-import {
+import { verifySession } from "@/lib/session"
+
+import type {
   DALReturn,
+  DALDeleteItemReurn,
   EmailUpdateErrors,
   NameUpdateErrors,
   PasswordUpdateErrors,
@@ -18,11 +21,11 @@ import {
 // ============================================
 
 export const getUser = cache(async () => {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   const user = await prisma.user.findUnique({
-    where: { id: userId },
+    where: { id: session.userId },
     select: { id: true, email: true, name: true },
   })
 
@@ -39,12 +42,19 @@ export async function updateName({
 }: {
   name: string
 }): Promise<DALReturn<NameUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { name: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: session.userId },
       data: { name },
     })
     return { success: true }
@@ -66,12 +76,19 @@ export async function updateEmail({
 }: {
   email: string
 }): Promise<DALReturn<EmailUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { email: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: session.userId },
       data: { email },
     })
     return { success: true }
@@ -95,12 +112,19 @@ export async function updatePassword({
   currentPassword: string
   newPassword: string
 }): Promise<DALReturn<PasswordUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { currentPassword: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: session.userId },
       select: { password: true },
     })
 
@@ -119,7 +143,7 @@ export async function updatePassword({
     const newPasswordHashed = await bcrypt.hash(newPassword, 12)
 
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: session.userId },
       data: { password: newPasswordHashed },
     })
     return { success: true }
@@ -136,15 +160,26 @@ export async function updatePassword({
 // ============== Delete Account ==============
 // ============================================
 
-export async function deleteAccount(): Promise<{ success: boolean }> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+export async function deleteAccount(): Promise<DALDeleteItemReurn> {
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      message:
+        "You are not allowed to delete the demo account. Please create a free account to manage your own data.",
+    }
+  }
 
   try {
-    await prisma.user.delete({ where: { id: userId } })
+    await prisma.user.delete({ where: { id: session.userId } })
     return { success: true }
   } catch (e) {
     console.error(e)
-    return { success: false }
+    return {
+      success: false,
+      message: "Error deleting account. Please try again.",
+    }
   }
 }

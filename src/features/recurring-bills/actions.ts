@@ -16,7 +16,7 @@ export async function deleteRecurringBill(
   }
 
   const response = await recurringBills.deleteRecurringBill(parsed.data.id)
-  if (!response.success) return "Error deleting bill. Please try again."
+  if (!response.success) return response.message
 
   revalidatePath("/recurring-bills")
   return null

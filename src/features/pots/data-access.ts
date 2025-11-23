@@ -2,8 +2,9 @@ import "server-only"
 
 import { redirect } from "next/navigation"
 
-import { verifySession } from "@/data-access/auth"
+import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma, Prisma } from "@/lib/prisma"
+import { verifySession } from "@/lib/session"
 
 import type {
   PotAmountUpdate,
@@ -11,8 +12,9 @@ import type {
   PotUpdate,
 } from "@/features/pots/schemas"
 import type {
-  PotCreateErrors,
   DALReturn,
+  PotCreateErrors,
+  DALDeleteItemReurn,
   PotAmountUpdateErrors,
 } from "@/lib/types"
 
@@ -25,13 +27,20 @@ export async function createPot({
   target,
   colorId,
 }: PotCreate): Promise<DALReturn<PotCreateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { name: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     await prisma.pot.create({
       data: {
-        userId,
+        userId: session.userId,
         name: name,
         target: target,
         colorId: colorId,
@@ -65,12 +74,19 @@ export async function updatePot({
   target,
   colorId,
 }: PotUpdate): Promise<DALReturn<PotCreateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { name: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     await prisma.pot.update({
-      where: { userId, id },
+      where: { userId: session.userId, id },
       data: {
         name: name,
         target: target,
@@ -99,15 +115,22 @@ export async function updatePot({
 // ================ Delete Pot ================
 // ============================================
 
-export async function deletePot(potId: string): Promise<{ success: boolean }> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+export async function deletePot(potId: string): Promise<DALDeleteItemReurn> {
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      message: DEMO_ACCOUNT_ERROR_MESSAGE,
+    }
+  }
 
   try {
-    await prisma.pot.delete({ where: { id: potId, userId } })
+    await prisma.pot.delete({ where: { id: potId, userId: session.userId } })
     return { success: true }
   } catch {
-    return { success: false }
+    return { success: false, message: "Error deleting pot. Please try agian." }
   }
 }
 
@@ -119,14 +142,21 @@ export async function updatePotAmount(
   { id, amountToUpdate }: PotAmountUpdate,
   operation: "increment" | "decrement"
 ): Promise<DALReturn<PotAmountUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { amountToUpdate: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
 
   try {
     const amountToUpdateAsDecimal = new Prisma.Decimal(amountToUpdate)
 
     await prisma.pot.update({
-      where: { userId, id },
+      where: { userId: session.userId, id },
       data: { currentAmount: { [operation]: amountToUpdateAsDecimal } },
     })
     return { success: true }
@@ -166,21 +196,21 @@ export type PotsSummary = {
 }
 
 export async function getPots(take?: number) {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   // await new Promise((resolve) => setTimeout(resolve, 2000))
 
   const [pots, aggregates] = await prisma.$transaction([
     prisma.pot.findMany({
-      where: { userId },
+      where: { userId: session.userId },
       orderBy: { createdAt: "desc" },
       take: take,
       select: potSelect,
     }),
 
     prisma.pot.aggregate({
-      where: { userId },
+      where: { userId: session.userId },
       _sum: { currentAmount: true, target: true },
       _count: true,
     }),

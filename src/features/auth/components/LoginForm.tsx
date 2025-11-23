@@ -8,6 +8,7 @@ import LogoBadge from "@/components/icons/LogoBadge"
 import Button from "@/components/ui/Button"
 import TextField from "@/components/ui/TextField"
 import { loginUser } from "@/features/auth/actions"
+import DemoLogin from "@/features/auth/components/DemoLogin"
 import { loginSchema } from "@/features/auth/schemas"
 import { setErrorsFromServer } from "@/lib/utils"
 
@@ -97,6 +98,10 @@ export default function LoginForm() {
           Sign up
         </Link>
       </p>
+
+      <div className="border-secondary w-full border-t" />
+
+      <DemoLogin />
     </div>
   )
 }
