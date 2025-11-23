@@ -25,13 +25,13 @@ export async function createRecurringBill({
 }: RecurringBillCreate): Promise<
   DALReturn<RecurringBillCreateErrors> & { recurringBillId?: string }
 > {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   try {
     const result = await prisma.recurringBill.create({
       data: {
-        userId,
+        userId: session.userId,
         counterparty,
         amount,
       },
@@ -88,8 +88,8 @@ export async function getRecurringBills({
   query = "",
   sortby = "daysAsc",
 }: GetRecurringBillsParams) {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   // await new Promise((resolve) => setTimeout(resolve, 3000))
 
@@ -122,13 +122,13 @@ export async function getRecurringBills({
   const [allRecurringBills, filteredRecurringBills, recurringBillsSummary] =
     await prisma.$transaction([
       prisma.recurringBill.findMany({
-        where: { userId },
+        where: { userId: session.userId },
         select: recurringBillSelect,
       }),
 
       prisma.recurringBill.findMany({
         where: {
-          userId,
+          userId: session.userId,
           counterparty: { contains: query, mode: "insensitive" },
         },
         orderBy: orderBy,
@@ -136,7 +136,7 @@ export async function getRecurringBills({
       }),
 
       prisma.recurringBill.aggregate({
-        where: { userId },
+        where: { userId: session.userId },
         _sum: { amount: true },
         _count: { _all: true },
       }),
@@ -198,11 +198,11 @@ export async function getRecurringBills({
 export async function deleteRecurringBill(
   id: string
 ): Promise<{ success: boolean }> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   try {
-    await prisma.recurringBill.delete({ where: { id, userId } })
+    await prisma.recurringBill.delete({ where: { id, userId: session.userId } })
     return { success: true }
   } catch (e) {
     console.error(e)

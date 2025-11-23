@@ -18,11 +18,11 @@ import {
 // ============================================
 
 export const getUser = cache(async () => {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   const user = await prisma.user.findUnique({
-    where: { id: userId },
+    where: { id: session.userId },
     select: { id: true, email: true, name: true },
   })
 
@@ -39,12 +39,12 @@ export async function updateName({
 }: {
   name: string
 }): Promise<DALReturn<NameUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   try {
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: session.userId },
       data: { name },
     })
     return { success: true }
@@ -66,12 +66,12 @@ export async function updateEmail({
 }: {
   email: string
 }): Promise<DALReturn<EmailUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   try {
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: session.userId },
       data: { email },
     })
     return { success: true }
@@ -95,12 +95,12 @@ export async function updatePassword({
   currentPassword: string
   newPassword: string
 }): Promise<DALReturn<PasswordUpdateErrors>> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: session.userId },
       select: { password: true },
     })
 
@@ -119,7 +119,7 @@ export async function updatePassword({
     const newPasswordHashed = await bcrypt.hash(newPassword, 12)
 
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: session.userId },
       data: { password: newPasswordHashed },
     })
     return { success: true }
@@ -137,11 +137,11 @@ export async function updatePassword({
 // ============================================
 
 export async function deleteAccount(): Promise<{ success: boolean }> {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   try {
-    await prisma.user.delete({ where: { id: userId } })
+    await prisma.user.delete({ where: { id: session.userId } })
     return { success: true }
   } catch (e) {
     console.error(e)

@@ -14,5 +14,6 @@ export const verifySession = cache(async () => {
   const session = await verifyToken(sessionCookie.value)
   if (!session) return null
 
-  return session.userId
+  // This makes sure user's who had JWT's created before the addition of the role field, gets a role
+  return { ...session, role: session.role ?? "USER" }
 })

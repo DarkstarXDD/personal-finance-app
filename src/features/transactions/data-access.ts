@@ -5,7 +5,7 @@ import { redirect } from "next/navigation"
 
 import { verifySession } from "@/data-access/auth"
 import { type TransactionCreate } from "@/features/transactions/schemas"
-import { ITEMS_PER_PAGE } from "@/lib/constants"
+import { ITEMS_PER_PAGE, DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { Prisma, prisma } from "@/lib/prisma"
 import { type TransactionCreateErrors, DALReturn } from "@/lib/types"
 
@@ -22,13 +22,22 @@ export async function createTransaction({
 }: TransactionCreate & { recurringBillId?: string }): Promise<
   DALReturn<TransactionCreateErrors>
 > {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
+
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { counterparty: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
+
+  console.log(session.role)
 
   try {
     await prisma.transaction.create({
       data: {
-        userId,
+        userId: session.userId,
         counterparty,
         amount,
         categoryId,
@@ -78,8 +87,8 @@ export async function getTransactions({
   currentPage = 1,
   take,
 }: GetTransactionsParams) {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   // await new Promise((resolve) => setTimeout(resolve, 2000))
 
@@ -109,7 +118,7 @@ export async function getTransactions({
   }
 
   const where: Prisma.TransactionWhereInput = {
-    userId,
+    userId: session.userId,
     category: { name: category != "all" ? category : undefined },
     counterparty: { contains: query, mode: "insensitive" },
   }
@@ -128,7 +137,7 @@ export async function getTransactions({
       prisma.transaction.count({ where }),
 
       // Transactions count without filters applied, for the global empty state
-      prisma.transaction.count({ where: { userId } }),
+      prisma.transaction.count({ where: { userId: session.userId } }),
     ])
 
   const totalPages = Math.ceil(filteredItemCount / ITEMS_PER_PAGE)
@@ -160,13 +169,13 @@ export type Transaction = Omit<TransactionRaw, "amount"> & {
 // because the same "transactionSelect" object is used as above.
 
 export async function getTransactionsForBudget(categoryId: string) {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   const [transactions, spent] = await prisma.$transaction([
     prisma.transaction.findMany({
       where: {
-        userId,
+        userId: session.userId,
         categoryId,
         createdAt: { gte: startOfMonth(new Date()) },
         transactionType: "EXPENSE",
@@ -178,7 +187,7 @@ export async function getTransactionsForBudget(categoryId: string) {
 
     prisma.transaction.aggregate({
       where: {
-        userId,
+        userId: session.userId,
         categoryId,
         createdAt: { gte: startOfMonth(new Date()) },
         transactionType: "EXPENSE",
@@ -201,12 +210,12 @@ export async function getTransactionsForBudget(categoryId: string) {
 // ============================================
 
 export async function getTransactionTotals() {
-  const userId = await verifySession()
-  if (!userId) redirect("/login")
+  const session = await verifySession()
+  if (!session) redirect("/login")
 
   const groupedTotals = await prisma.transaction.groupBy({
     by: "transactionType",
-    where: { userId },
+    where: { userId: session.userId },
     _sum: { amount: true },
   })
 

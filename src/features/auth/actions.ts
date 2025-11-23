@@ -38,7 +38,7 @@ export async function registerUser(
       data: { ...parsed.data, password: passwordHash },
       select: { id: true },
     })
-    await createSession({ userId: user.id })
+    await createSession({ userId: user.id, role: "USER" })
   } catch (e) {
     console.error("Server Error:", e)
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002")
@@ -65,7 +65,7 @@ export async function loginUser(
   try {
     const user = await prisma.user.findUnique({
       where: { email: parsed.data.email },
-      select: { id: true, password: true },
+      select: { id: true, password: true, role: true },
     })
     if (!user)
       return {
@@ -79,7 +79,7 @@ export async function loginUser(
     )
     if (!isPasswordValid)
       return { password: ["Incorrect password. Please try again."] }
-    await createSession({ userId: user.id })
+    await createSession({ userId: user.id, role: user.role })
   } catch (e) {
     console.error("Server Error:", e)
     return { email: ["Something went wrong. Please try again."] }
