@@ -2,7 +2,6 @@ import "server-only"
 
 import { redirect } from "next/navigation"
 
-import { verifySession } from "@/data-access/auth"
 import {
   getBillMonthlyStatus,
   getDaysUntilDue,
@@ -14,6 +13,7 @@ import {
 import { RecurringBillCreate } from "@/features/recurring-bills/schemas"
 import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma, type Prisma } from "@/lib/prisma"
+import { verifySession } from "@/lib/session"
 import {
   type DALReturn,
   type DALDeleteItemReurn,

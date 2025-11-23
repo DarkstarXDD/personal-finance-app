@@ -3,10 +3,10 @@ import "server-only"
 import { startOfMonth } from "date-fns"
 import { redirect } from "next/navigation"
 
-import { verifySession } from "@/data-access/auth"
 import { type TransactionCreate } from "@/features/transactions/schemas"
 import { ITEMS_PER_PAGE, DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { Prisma, prisma } from "@/lib/prisma"
+import { verifySession } from "@/lib/session"
 import { type TransactionCreateErrors, DALReturn } from "@/lib/types"
 
 // ============================================

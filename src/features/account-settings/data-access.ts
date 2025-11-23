@@ -4,9 +4,9 @@ import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
 import { cache } from "react"
 
-import { verifySession } from "@/data-access/auth"
 import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma } from "@/lib/prisma"
+import { verifySession } from "@/lib/session"
 
 import type {
   DALReturn,

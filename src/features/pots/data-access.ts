@@ -2,9 +2,9 @@ import "server-only"
 
 import { redirect } from "next/navigation"
 
-import { verifySession } from "@/data-access/auth"
 import { DEMO_ACCOUNT_ERROR_MESSAGE } from "@/lib/constants"
 import { prisma, Prisma } from "@/lib/prisma"
+import { verifySession } from "@/lib/session"
 
 import type {
   PotAmountUpdate,
