@@ -42,7 +42,7 @@ function Dialog({ title, description, children, role, ...props }: DialogProps) {
   return (
     <RacModalOverlay
       {...props}
-      className="bg-overlay/70 fixed inset-0 flex flex-col items-center justify-center overflow-y-auto p-5 transition-all duration-700"
+      className="bg-overlay/70 fixed inset-0 z-50 flex w-full flex-col items-center md:justify-center"
     >
       <MotionRacModal
         initial={{ scale: 0.85 }}
@@ -52,9 +52,12 @@ function Dialog({ title, description, children, role, ...props }: DialogProps) {
           stiffness: 300,
           damping: 20,
         }}
-        className="w-full max-w-lg will-change-transform"
+        className="max-h-(--visual-viewport-height) w-full max-w-lg px-5 will-change-transform"
       >
-        <RacDialog className="outline-none" role={role}>
+        <RacDialog
+          className="max-h-(--visual-viewport-height) overflow-auto py-5 outline-none"
+          role={role}
+        >
           {(dialogRenderProps) => (
             <Card size="md">
               <div className="mb-6 grid grid-cols-[1fr_auto] gap-2">
