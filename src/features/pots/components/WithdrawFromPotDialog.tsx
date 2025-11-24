@@ -74,14 +74,14 @@ export default function WithdrawFromPotDialog({
                     </div>
 
                     <div className="bg-quaternary flex h-3 rounded">
-                      <motion.div
-                        className="bg-brand-solid h-full shrink-0 rounded-l"
-                        animate={{
+                      <div
+                        className="bg-error-700 h-full shrink-0 rounded-l"
+                        style={{
                           width: draftAmountAsPercentage + "%",
                         }}
                       />
                       <motion.div
-                        className={`bg-red h-full origin-right ${draftAmountInPot < 0 ? "rounded" : "rounded-r"}`}
+                        className={`bg-error-300 h-full origin-right ${draftAmountInPot < 0 ? "rounded" : "rounded-r"}`}
                         initial={{ width: 0 }}
                         animate={{
                           width:

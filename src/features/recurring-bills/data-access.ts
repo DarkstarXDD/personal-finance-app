@@ -33,6 +33,13 @@ export async function createRecurringBill({
   const session = await verifySession()
   if (!session) redirect("/login")
 
+  if (session.role === "DEMO") {
+    return {
+      success: false,
+      fieldErrors: { counterparty: [DEMO_ACCOUNT_ERROR_MESSAGE] },
+    }
+  }
+
   try {
     const result = await prisma.recurringBill.create({
       data: {

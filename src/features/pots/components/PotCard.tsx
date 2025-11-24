@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
@@ -21,6 +20,8 @@ type PotCardProps = { pot: Pot; colors: Color[] }
 export default function PotCard({ pot, colors }: PotCardProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
+  const remainingAmount = Number(pot.target) - Number(pot.currentAmount)
 
   return (
     <Card data-testid="pot-card" size="lg" className="grid gap-8">
@@ -80,17 +81,24 @@ export default function PotCard({ pot, colors }: PotCardProps) {
         {({ percentage }) => (
           <div className="grid gap-1.5">
             <div className="bg-quaternary h-3 rounded">
-              <motion.div
+              <div
                 className="h-full rounded"
-                style={{ backgroundColor: pot.color.value }}
-                initial={{ width: 0 }}
-                animate={{ width: percentage + "%" }}
-                transition={{ delay: 0.18 }}
+                style={{
+                  backgroundColor: pot.color.value,
+                  width: percentage + "%",
+                }}
               />
             </div>
-            <p className="text-xs font-medium">
-              {Math.round(percentage ?? 0)}% complete
-            </p>
+
+            <div className="flex justify-between gap-2 text-sm font-medium">
+              <p>{Math.round(percentage ?? 0)}% complete</p>
+              <p>
+                {remainingAmount > 0
+                  ? currencyFormatter.format(remainingAmount)
+                  : currencyFormatter.format(0)}{" "}
+                remaining
+              </p>
+            </div>
           </div>
         )}
       </ProgressBar>
