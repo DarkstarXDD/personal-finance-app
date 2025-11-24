@@ -21,6 +21,8 @@ export default function PotCard({ pot, colors }: PotCardProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
+  const remainingAmount = Number(pot.target) - Number(pot.currentAmount)
+
   return (
     <Card data-testid="pot-card" size="lg" className="grid gap-8">
       <div className="flex items-center justify-start gap-4">
@@ -87,9 +89,16 @@ export default function PotCard({ pot, colors }: PotCardProps) {
                 }}
               />
             </div>
-            <p className="text-xs font-medium">
-              {Math.round(percentage ?? 0)}% complete
-            </p>
+
+            <div className="flex justify-between gap-2 text-sm font-medium">
+              <p>{Math.round(percentage ?? 0)}% complete</p>
+              <p>
+                {remainingAmount > 0
+                  ? currencyFormatter.format(remainingAmount)
+                  : currencyFormatter.format(0)}{" "}
+                remaining
+              </p>
+            </div>
           </div>
         )}
       </ProgressBar>
