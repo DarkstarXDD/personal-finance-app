@@ -1,7 +1,6 @@
 "use client"
 
 import { format } from "date-fns"
-import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 import { PiWarningCircleFill } from "react-icons/pi"
@@ -88,12 +87,12 @@ export default function BudgetCard({
             {({ percentage }) => (
               <div className="grid gap-1.5">
                 <div className="bg-quaternary h-3 rounded">
-                  <motion.div
+                  <div
                     className="h-full rounded"
-                    style={{ backgroundColor: budget.color.value }}
-                    initial={{ width: 0 }}
-                    animate={{ width: percentage + "%" }}
-                    transition={{ delay: 0.18 }}
+                    style={{
+                      backgroundColor: budget.color.value,
+                      width: percentage + "%",
+                    }}
                   />
                 </div>
 

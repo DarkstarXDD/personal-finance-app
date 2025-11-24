@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "motion/react"
 import { useState } from "react"
 import { ProgressBar } from "react-aria-components"
 
@@ -80,12 +79,12 @@ export default function PotCard({ pot, colors }: PotCardProps) {
         {({ percentage }) => (
           <div className="grid gap-1.5">
             <div className="bg-quaternary h-3 rounded">
-              <motion.div
+              <div
                 className="h-full rounded"
-                style={{ backgroundColor: pot.color.value }}
-                initial={{ width: 0 }}
-                animate={{ width: percentage + "%" }}
-                transition={{ delay: 0.18 }}
+                style={{
+                  backgroundColor: pot.color.value,
+                  width: percentage + "%",
+                }}
               />
             </div>
             <p className="text-xs font-medium">
