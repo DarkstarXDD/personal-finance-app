@@ -78,9 +78,18 @@
   --color-error-900: hsl(8, 65%, 29%);
   --color-error-950: hsl(8, 75%, 19%);
 
+  --color-success-25: hsl(142, 80%, 98%);
+  --color-success-50: hsl(145, 81%, 96%);
+  --color-success-100: hsl(141, 76%, 92%);
+  --color-success-200: hsl(144, 69%, 80%);
+  --color-success-300: hsl(148, 63%, 67%);
+  --color-success-400: hsl(150, 57%, 54%);
   --color-success-500: hsl(152, 77%, 39%);
   --color-success-600: hsl(153, 91%, 30%);
   --color-success-700: hsl(155, 90%, 24%);
+  --color-success-800: hsl(155, 84%, 20%);
+  --color-success-900: hsl(156, 83%, 16%);
+  --color-success-950: hsl(157, 82%, 11%);
 
   /* ------------ Text Colors ------------ */
   --text-color-white: var(--color-white);
