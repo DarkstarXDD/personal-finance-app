@@ -12,7 +12,7 @@ import NumberField from "@/components/ui/NumberField"
 import { addToPot } from "@/features/pots/actions"
 import { type Pot } from "@/features/pots/data-access"
 import { potAmountUpdateSchema } from "@/features/pots/schemas"
-import { setErrorsFromServer } from "@/lib/utils"
+import { setErrorsFromServer, currencyFormatter } from "@/lib/utils"
 
 type AddToPotDialogProps = { pot: Pot }
 
@@ -68,14 +68,14 @@ export default function AddToPotDialog({ pot }: AddToPotDialogProps) {
                     </div>
 
                     <div className="bg-quaternary flex h-3 rounded">
-                      <motion.div
-                        className="bg-brand-solid h-full shrink-0 rounded-l"
-                        animate={{
+                      <div
+                        className="bg-success-700 h-full shrink-0 rounded-l"
+                        style={{
                           width: currentAmountAsPercentage + "%",
                         }}
                       />
                       <motion.div
-                        className="bg-green h-full origin-right rounded-r"
+                        className="bg-success-300 h-full origin-right rounded-r"
                         initial={{ width: 0 }}
                         animate={{
                           width: amountInInputAsPercentage + "%",
@@ -85,7 +85,9 @@ export default function AddToPotDialog({ pot }: AddToPotDialogProps) {
 
                     <div className="flex items-center justify-between text-xs font-medium">
                       <span>{Math.round(percentage ?? 0)}%</span>
-                      <span>Target of ${pot.target}</span>
+                      <span>
+                        Target of {currencyFormatter.format(pot.target)}
+                      </span>
                     </div>
                   </div>
                 )
