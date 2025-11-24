@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 import { type ReactNode } from "react"
 import {
   MenuTrigger as RacMenuTrigger,
@@ -31,12 +31,14 @@ function Menu<T extends object>({
   placement = "bottom right",
   ...props
 }: MenuProps<T>) {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <RacPopover placement={placement}>
       <motion.div
         className="origin-top-right"
-        initial={{ y: -10, scale: 0.7 }}
-        animate={{ y: 0, scale: 1 }}
+        initial={shouldReduceMotion ? false : { y: -10, scale: 0.4 }}
+        animate={shouldReduceMotion ? false : { y: 0, scale: 1 }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
       >
         <RacMenu
