@@ -18,7 +18,7 @@ export default function OverviewPage() {
     <main className="grid gap-8">
       <PageHeader
         title="Overview"
-        description="summary of your financial activity across all sections."
+        description="Summary of your financial activity across all sections."
       />
 
       <Suspense fallback={<SummaryCardsLoading />}>
