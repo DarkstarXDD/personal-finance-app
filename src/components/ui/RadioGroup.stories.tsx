@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from "@storybook/nextjs-vite"
-import { PiArrowsOutSimpleFill } from "react-icons/pi"
+import { PiDesktop, PiLaptop, PiDeviceMobile } from "react-icons/pi"
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup"
 
@@ -69,13 +69,13 @@ export const Default: Story = {
   render: (args) => (
     <RadioGroup {...args}>
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiDesktop}
         title="Option 01"
         description="Small description for item."
         value="option-1"
       />
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiLaptop}
         title="Option 02"
         description="Small description for item."
         value="option-2"
@@ -89,19 +89,19 @@ export const WithErrorMessage: Story = {
   render: (args) => (
     <RadioGroup {...args}>
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiDesktop}
         title="Option 01"
         description="Small description for item."
         value="option-1"
       />
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiLaptop}
         title="Option 02"
         description="Small description for item."
         value="option-2"
       />
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiDeviceMobile}
         title="Option 03"
         description="Small description for item."
         value="option-3"
@@ -115,19 +115,19 @@ export const Disabled: Story = {
   render: (args) => (
     <RadioGroup {...args}>
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiDesktop}
         title="Option 01"
         description="Small description for item."
         value="option-1"
       />
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiLaptop}
         title="Option 02"
         description="Small description for item."
         value="option-2"
       />
       <RadioGroupItem
-        icon={PiArrowsOutSimpleFill}
+        icon={PiDeviceMobile}
         title="Option 03"
         description="Small description for item."
         value="option-3"
