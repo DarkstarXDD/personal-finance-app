@@ -56,13 +56,10 @@ function RadioGroupItem({
 }: RadioGroupItemProps) {
   return (
     <RacRadio {...props} className="group w-full">
-      {({ isPressed, isSelected, isDisabled, isFocusVisible }) => (
+      {({ isSelected, isDisabled, isFocusVisible }) => (
         <div
           className={cn(
             "bg-primary border-primary group-rac-selected:border-brand group-rac-selected:bg-active relative flex cursor-pointer items-start justify-between gap-2 rounded-lg border px-3.5 py-3 text-sm",
-
-            // Pressed
-            isPressed && "bg-primary_hover",
 
             // Focus visible
             isFocusVisible && "ring-brand border-brand ring",
