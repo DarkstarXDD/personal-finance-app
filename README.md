@@ -2,6 +2,8 @@
 
 A Finance management app with transaction tracking, budget management, savings goals, and recurring bill monitoring.
 
+![](./screenshots/pfa-routes-mockup.png)
+
 ### Links
 
 - Live site: [https://personal-finance-darkstar.vercel.app](https://personal-finance-darkstar.vercel.app/transactions)
